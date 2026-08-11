@@ -133,7 +133,7 @@ if errorlevel 1 (
 )
 
 echo Publishing immutable version for %FUNCTION_NAME%...
-for /f "usebackq delims=" %%V in (ws lambda publish-version --function-name "%FUNCTION_NAME%" --region "%REGION%" %PROFILE_ARG% --query Version --output text) do set "PUBLISHED_VERSION=%%V"
+for /f "usebackq delims=" %%V in (`aws lambda publish-version --function-name "%FUNCTION_NAME%" --region "%REGION%" %PROFILE_ARG% --query Version --output text`) do set "PUBLISHED_VERSION=%%V"
 
 if "%PUBLISHED_VERSION%"=="" (
     echo Failed to publish a version for %FUNCTION_NAME%.
