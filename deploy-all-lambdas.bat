@@ -105,8 +105,8 @@ if not exist "%DEFAULTS_FILE%" (
     exit /b 1
 )
 
-for /f "usebackq delims=" %%F in (powershell -NoProfile -ExecutionPolicy Bypass -Command "(Get-Content -Raw '%DEFAULTS_FILE%' ^| ConvertFrom-Json).'function-name'") do set "FUNCTION_NAME=%%F"
-for /f "usebackq delims=" %%R in (powershell -NoProfile -ExecutionPolicy Bypass -Command "(Get-Content -Raw '%DEFAULTS_FILE%' ^| ConvertFrom-Json).region") do set "REGION=%%R"
+for /f "usebackq delims=" %%F in (`powershell -NoProfile -ExecutionPolicy Bypass -Command "$json = ConvertFrom-Json -InputObject (Get-Content -Raw -LiteralPath $env:DEFAULTS_FILE); $json.'function-name'"`) do set "FUNCTION_NAME=%%F"
+for /f "usebackq delims=" %%R in (`powershell -NoProfile -ExecutionPolicy Bypass -Command "$json = ConvertFrom-Json -InputObject (Get-Content -Raw -LiteralPath $env:DEFAULTS_FILE); $json.region"`) do set "REGION=%%R"
 
 if "%FUNCTION_NAME%"=="" (
     echo Could not read function-name from %DEFAULTS_FILE%.
