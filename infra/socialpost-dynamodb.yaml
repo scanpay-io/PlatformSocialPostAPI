@@ -1,0 +1,232 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: DynamoDB tables required by PlatformSocialPostAPI.
+
+Parameters:
+  BillingMode:
+    Type: String
+    Default: PAY_PER_REQUEST
+    AllowedValues:
+      - PAY_PER_REQUEST
+
+Resources:
+  SocialConnectionTable:
+    Type: AWS::DynamoDB::Table
+    DeletionPolicy: Retain
+    UpdateReplacePolicy: Retain
+    Properties:
+      TableName: SocialConnection
+      BillingMode: !Ref BillingMode
+      SSESpecification:
+        SSEEnabled: true
+      PointInTimeRecoverySpecification:
+        PointInTimeRecoveryEnabled: true
+      AttributeDefinitions:
+        - AttributeName: SocialConnectionID
+          AttributeType: S
+        - AttributeName: OrganizationID
+          AttributeType: S
+        - AttributeName: Platform
+          AttributeType: S
+        - AttributeName: ExternalAccountID
+          AttributeType: S
+        - AttributeName: Status
+          AttributeType: S
+      KeySchema:
+        - AttributeName: SocialConnectionID
+          KeyType: HASH
+      GlobalSecondaryIndexes:
+        - IndexName: OrganizationID-index
+          KeySchema:
+            - AttributeName: OrganizationID
+              KeyType: HASH
+          Projection:
+            ProjectionType: ALL
+        - IndexName: Platform-index
+          KeySchema:
+            - AttributeName: Platform
+              KeyType: HASH
+          Projection:
+            ProjectionType: ALL
+        - IndexName: ExternalAccountID-index
+          KeySchema:
+            - AttributeName: ExternalAccountID
+              KeyType: HASH
+          Projection:
+            ProjectionType: ALL
+        - IndexName: Status-index
+          KeySchema:
+            - AttributeName: Status
+              KeyType: HASH
+          Projection:
+            ProjectionType: ALL
+
+  SocialConnectionTokenTable:
+    Type: AWS::DynamoDB::Table
+    DeletionPolicy: Retain
+    UpdateReplacePolicy: Retain
+    Properties:
+      TableName: SocialConnectionToken
+      BillingMode: !Ref BillingMode
+      SSESpecification:
+        SSEEnabled: true
+      PointInTimeRecoverySpecification:
+        PointInTimeRecoveryEnabled: true
+      AttributeDefinitions:
+        - AttributeName: TokenSecretID
+          AttributeType: S
+        - AttributeName: SocialConnectionID
+          AttributeType: S
+        - AttributeName: OrganizationID
+          AttributeType: S
+        - AttributeName: Platform
+          AttributeType: S
+      KeySchema:
+        - AttributeName: TokenSecretID
+          KeyType: HASH
+      GlobalSecondaryIndexes:
+        - IndexName: SocialConnectionID-index
+          KeySchema:
+            - AttributeName: SocialConnectionID
+              KeyType: HASH
+          Projection:
+            ProjectionType: ALL
+        - IndexName: OrganizationID-index
+          KeySchema:
+            - AttributeName: OrganizationID
+              KeyType: HASH
+          Projection:
+            ProjectionType: ALL
+        - IndexName: Platform-index
+          KeySchema:
+            - AttributeName: Platform
+              KeyType: HASH
+          Projection:
+            ProjectionType: ALL
+
+  SocialPostTable:
+    Type: AWS::DynamoDB::Table
+    DeletionPolicy: Retain
+    UpdateReplacePolicy: Retain
+    Properties:
+      TableName: SocialPost
+      BillingMode: !Ref BillingMode
+      SSESpecification:
+        SSEEnabled: true
+      PointInTimeRecoverySpecification:
+        PointInTimeRecoveryEnabled: true
+      AttributeDefinitions:
+        - AttributeName: SocialPostID
+          AttributeType: S
+        - AttributeName: OrganizationID
+          AttributeType: S
+        - AttributeName: ResourceType
+          AttributeType: S
+        - AttributeName: ResourceID
+          AttributeType: S
+        - AttributeName: OutreachItemID
+          AttributeType: S
+        - AttributeName: Status
+          AttributeType: S
+      KeySchema:
+        - AttributeName: SocialPostID
+          KeyType: HASH
+      GlobalSecondaryIndexes:
+        - IndexName: OrganizationID-index
+          KeySchema:
+            - AttributeName: OrganizationID
+              KeyType: HASH
+          Projection:
+            ProjectionType: ALL
+        - IndexName: ResourceType-index
+          KeySchema:
+            - AttributeName: ResourceType
+              KeyType: HASH
+          Projection:
+            ProjectionType: ALL
+        - IndexName: ResourceID-index
+          KeySchema:
+            - AttributeName: ResourceID
+              KeyType: HASH
+          Projection:
+            ProjectionType: ALL
+        - IndexName: OutreachItemID-index
+          KeySchema:
+            - AttributeName: OutreachItemID
+              KeyType: HASH
+          Projection:
+            ProjectionType: ALL
+        - IndexName: Status-index
+          KeySchema:
+            - AttributeName: Status
+              KeyType: HASH
+          Projection:
+            ProjectionType: ALL
+
+  SocialPostDeliveryTable:
+    Type: AWS::DynamoDB::Table
+    DeletionPolicy: Retain
+    UpdateReplacePolicy: Retain
+    Properties:
+      TableName: SocialPostDelivery
+      BillingMode: !Ref BillingMode
+      SSESpecification:
+        SSEEnabled: true
+      PointInTimeRecoverySpecification:
+        PointInTimeRecoveryEnabled: true
+      AttributeDefinitions:
+        - AttributeName: DeliveryID
+          AttributeType: S
+        - AttributeName: SocialPostID
+          AttributeType: S
+        - AttributeName: OrganizationID
+          AttributeType: S
+        - AttributeName: SocialConnectionID
+          AttributeType: S
+        - AttributeName: Platform
+          AttributeType: S
+        - AttributeName: Status
+          AttributeType: S
+      KeySchema:
+        - AttributeName: DeliveryID
+          KeyType: HASH
+      GlobalSecondaryIndexes:
+        - IndexName: SocialPostID-index
+          KeySchema:
+            - AttributeName: SocialPostID
+              KeyType: HASH
+          Projection:
+            ProjectionType: ALL
+        - IndexName: OrganizationID-index
+          KeySchema:
+            - AttributeName: OrganizationID
+              KeyType: HASH
+          Projection:
+            ProjectionType: ALL
+        - IndexName: SocialConnectionID-index
+          KeySchema:
+            - AttributeName: SocialConnectionID
+              KeyType: HASH
+          Projection:
+            ProjectionType: ALL
+        - IndexName: Platform-index
+          KeySchema:
+            - AttributeName: Platform
+              KeyType: HASH
+          Projection:
+            ProjectionType: ALL
+        - IndexName: Status-index
+          KeySchema:
+            - AttributeName: Status
+              KeyType: HASH
+          Projection:
+            ProjectionType: ALL
+
+Outputs:
+  SocialConnectionTableName:
+    Value: !Ref SocialConnectionTable
+  SocialConnectionTokenTableName:
+    Value: !Ref SocialConnectionTokenTable
+  SocialPostTableName:
+    Value: !Ref SocialPostTable
+  SocialPostDeliveryTableName:
+    Value: !Ref SocialPostDeliveryTable

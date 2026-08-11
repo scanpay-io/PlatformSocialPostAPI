@@ -1,0 +1,26 @@
+{
+  "Information": [
+    "This file provides default values for the deployment wizard inside Visual Studio and the AWS Lambda commands added to the .NET Core CLI.",
+    "To learn more about the Lambda commands with the .NET Core CLI execute the following command at the command line in the project root directory.",
+    "dotnet lambda help",
+    "All the command line options for the Lambda command can be specified in this file."
+  ],
+  "profile": "default",
+  "region": "us-east-1",
+  "configuration": "Release",
+  "framework": "net8.0",
+  "function-runtime": "dotnet8",
+  "function-memory-size": 1536,
+  "function-timeout": 29,
+  "function-handler": "ScanPay.Lambda.UpdateSocialPost::ScanPay.Lambda.UpdateSocialPost.Function::FunctionHandler",
+  "function-role": "arn:aws:iam::145505076425:role/DeployLambda",
+  "environment-variables": "\u0022account_number\u0022=\u0022145505076425\u0022;\u0022runway_type\u0022=\u0022development\u0022;\u0022region\u0022=\u0022us-east-1\u0022",
+  "tracing-mode": "PassThrough",
+  "function-name": "scanpay_update_social_post",
+  "function-subnets": "subnet-0c211233f4f47098b,subnet-00e95754ea47c10c5",
+  "function-security-groups": "sg-0ba456e8b803269a4",
+  "function-description": "000.001.000",
+  "image-tag": "",
+  "package-type": "Zip",
+  "function-architecture": "x86_64"
+}

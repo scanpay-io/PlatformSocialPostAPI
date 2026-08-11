@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <GenerateRuntimeConfigurationFiles>true</GenerateRuntimeConfigurationFiles>
+    <AWSProjectType>Lambda</AWSProjectType>
+    <RootNamespace>ScanPay.Lambda.GetSocialConnections</RootNamespace>
+    <AssemblyName>ScanPay.Lambda.GetSocialConnections</AssemblyName>
+    <Nullable>enable</Nullable>
+    <DefaultItemExcludes>$(DefaultItemExcludes);bin\**;obj\**;artifacts\**;**\bin\**;**\obj\**;**\artifacts\**</DefaultItemExcludes>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Amazon.Lambda.Core" Version="2.8.0" />
+    <PackageReference Include="Amazon.Lambda.Serialization.Json" Version="2.2.4" />
+  </ItemGroup>
+  <ItemGroup>
+    <DotNetCliToolReference Include="Amazon.Lambda.Tools" Version="2.2.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SocialPostAPIService\SocialPostAPIService.csproj" />
+    <ProjectReference Include="..\PlatformLibrary\DataModel\DataModel.csproj" />
+  </ItemGroup>
+</Project>

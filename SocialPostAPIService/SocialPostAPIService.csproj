@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <AssemblyName>ScanPay.SocialPostService</AssemblyName>
+    <RootNamespace>ScanPay.SocialPostService</RootNamespace>
+    <Nullable>enable</Nullable>
+    <DefaultItemExcludes>$(DefaultItemExcludes);bin\**;obj\**;artifacts\**;**\bin\**;**\obj\**;**\artifacts\**</DefaultItemExcludes>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\PlatformLibrary\DataModel\DataModel.csproj" />
+    <ProjectReference Include="..\PlatformLibrary\UtilityModel\UtilityModel.csproj" />
+  </ItemGroup>
+
+</Project>

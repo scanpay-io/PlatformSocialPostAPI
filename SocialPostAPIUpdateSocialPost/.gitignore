@@ -1,0 +1,13 @@
+.vs/
+*.suo
+*.user
+*.bin
+_ReSharper.*
+bin
+obj
+packages
+*.dtbcache
+db.lock
+storage.ide
+storage.ide-shm
+storage.ide-wal
