@@ -2,7 +2,7 @@
 setlocal
 
 set "ROOT=%~dp0"
-set "SOLUTION=%ROOT%SocialPostAPIService.sln"
+set "SOLUTION="
 set "AWS_PROFILE=%~1"
 set "CONFIGURATION=%~2"
 
@@ -32,7 +32,13 @@ if errorlevel 1 (
     exit /b 1
 )
 
-echo Building all SocialPost Lambda projects...
+call :find_solution
+if errorlevel 1 exit /b %ERRORLEVEL%
+
+call :ensure_lambda_projects
+if errorlevel 1 exit /b %ERRORLEVEL%
+
+echo Building Lambda solution...
 echo Solution: "%SOLUTION%"
 echo Configuration: %CONFIGURATION%
 if not "%AWS_PROFILE%"=="" echo AWS profile: %AWS_PROFILE%
@@ -44,36 +50,12 @@ if errorlevel 1 (
     exit /b 1
 )
 
-call :publish_project SocialPostAPIAuthorizeSocialConnection
-if errorlevel 1 exit /b %ERRORLEVEL%
-call :publish_project SocialPostAPICancelSocialPost
-if errorlevel 1 exit /b %ERRORLEVEL%
-call :publish_project SocialPostAPICreateSocialPost
-if errorlevel 1 exit /b %ERRORLEVEL%
-call :publish_project SocialPostAPIDeleteSocialConnection
-if errorlevel 1 exit /b %ERRORLEVEL%
-call :publish_project SocialPostAPIDeleteSocialPost
-if errorlevel 1 exit /b %ERRORLEVEL%
-call :publish_project SocialPostAPIGetSocialConnection
-if errorlevel 1 exit /b %ERRORLEVEL%
-call :publish_project SocialPostAPIGetSocialConnections
-if errorlevel 1 exit /b %ERRORLEVEL%
-call :publish_project SocialPostAPIGetSocialPost
-if errorlevel 1 exit /b %ERRORLEVEL%
-call :publish_project SocialPostAPIGetSocialPostAnalytics
-if errorlevel 1 exit /b %ERRORLEVEL%
-call :publish_project SocialPostAPIGetSocialPosts
-if errorlevel 1 exit /b %ERRORLEVEL%
-call :publish_project SocialPostAPIGetSocialPostStatus
-if errorlevel 1 exit /b %ERRORLEVEL%
-call :publish_project SocialPostAPIPublishSocialPost
-if errorlevel 1 exit /b %ERRORLEVEL%
-call :publish_project SocialPostAPIScheduleSocialPost
-if errorlevel 1 exit /b %ERRORLEVEL%
-call :publish_project SocialPostAPISocialConnectionCallback
-if errorlevel 1 exit /b %ERRORLEVEL%
-call :publish_project SocialPostAPIUpdateSocialPost
-if errorlevel 1 exit /b %ERRORLEVEL%
+for /d %%D in ("%ROOT%*") do (
+    if exist "%%~fD\aws-lambda-tools-defaults.json" (
+        call :publish_project "%%~nxD"
+        if errorlevel 1 exit /b 1
+    )
+)
 
 echo.
 echo All Lambda functions were uploaded to $LATEST and published as immutable versions.
@@ -149,10 +131,36 @@ echo   publish-all-lambdas.bat default Release
 echo   publish-all-lambdas.bat prod Release
 echo.
 echo What it does:
-echo   1. Builds SocialPostAPIService.sln.
+echo   1. Builds the .sln file in this folder.
 echo   2. Uploads each Lambda project to $LATEST.
 echo   3. Waits for each Lambda update to complete.
 echo   4. Publishes a new immutable numbered version for each Lambda.
 echo.
 echo It does not create or update aliases. Use promote-all-lambdas.bat for that.
+exit /b 0
+
+:find_solution
+for %%S in ("%ROOT%*.sln") do (
+    if not defined SOLUTION set "SOLUTION=%%~fS"
+)
+
+if "%SOLUTION%"=="" (
+    echo No .sln file was found in "%ROOT%".
+    exit /b 1
+)
+
+exit /b 0
+
+:ensure_lambda_projects
+set "LAMBDA_PROJECT_COUNT=0"
+for /d %%D in ("%ROOT%*") do (
+    if exist "%%~fD\aws-lambda-tools-defaults.json" set /a LAMBDA_PROJECT_COUNT+=1
+)
+
+if "%LAMBDA_PROJECT_COUNT%"=="0" (
+    echo No Lambda project folders with aws-lambda-tools-defaults.json were found in "%ROOT%".
+    exit /b 1
+)
+
+echo Found %LAMBDA_PROJECT_COUNT% Lambda project folder(s).
 exit /b 0

@@ -29,41 +29,20 @@ if errorlevel 1 (
     exit /b 1
 )
 
-echo Promoting latest published SocialPost Lambda versions...
+call :ensure_lambda_projects
+if errorlevel 1 exit /b %ERRORLEVEL%
+
+echo Promoting latest published Lambda versions...
 echo Target alias: %ALIAS_NAME%
 if not "%AWS_PROFILE%"=="" echo AWS profile: %AWS_PROFILE%
 echo.
 
-call :promote_project SocialPostAPIAuthorizeSocialConnection
-if errorlevel 1 exit /b %ERRORLEVEL%
-call :promote_project SocialPostAPICancelSocialPost
-if errorlevel 1 exit /b %ERRORLEVEL%
-call :promote_project SocialPostAPICreateSocialPost
-if errorlevel 1 exit /b %ERRORLEVEL%
-call :promote_project SocialPostAPIDeleteSocialConnection
-if errorlevel 1 exit /b %ERRORLEVEL%
-call :promote_project SocialPostAPIDeleteSocialPost
-if errorlevel 1 exit /b %ERRORLEVEL%
-call :promote_project SocialPostAPIGetSocialConnection
-if errorlevel 1 exit /b %ERRORLEVEL%
-call :promote_project SocialPostAPIGetSocialConnections
-if errorlevel 1 exit /b %ERRORLEVEL%
-call :promote_project SocialPostAPIGetSocialPost
-if errorlevel 1 exit /b %ERRORLEVEL%
-call :promote_project SocialPostAPIGetSocialPostAnalytics
-if errorlevel 1 exit /b %ERRORLEVEL%
-call :promote_project SocialPostAPIGetSocialPosts
-if errorlevel 1 exit /b %ERRORLEVEL%
-call :promote_project SocialPostAPIGetSocialPostStatus
-if errorlevel 1 exit /b %ERRORLEVEL%
-call :promote_project SocialPostAPIPublishSocialPost
-if errorlevel 1 exit /b %ERRORLEVEL%
-call :promote_project SocialPostAPIScheduleSocialPost
-if errorlevel 1 exit /b %ERRORLEVEL%
-call :promote_project SocialPostAPISocialConnectionCallback
-if errorlevel 1 exit /b %ERRORLEVEL%
-call :promote_project SocialPostAPIUpdateSocialPost
-if errorlevel 1 exit /b %ERRORLEVEL%
+for /d %%D in ("%ROOT%*") do (
+    if exist "%%~fD\aws-lambda-tools-defaults.json" (
+        call :promote_project "%%~nxD"
+        if errorlevel 1 exit /b 1
+    )
+)
 
 echo.
 echo All Lambda aliases were promoted to the latest published versions.
@@ -135,8 +114,22 @@ echo   promote-all-lambdas.bat development default
 echo   promote-all-lambdas.bat gany_prod prod
 echo.
 echo What it does:
-echo   1. Finds the latest published numbered version for each SocialPost Lambda.
+echo   1. Finds the latest published numbered version for each Lambda project folder.
 echo   2. Creates or updates the requested alias to point to that version.
 echo.
 echo It does not build, upload code, or publish new versions.
+exit /b 0
+
+:ensure_lambda_projects
+set "LAMBDA_PROJECT_COUNT=0"
+for /d %%D in ("%ROOT%*") do (
+    if exist "%%~fD\aws-lambda-tools-defaults.json" set /a LAMBDA_PROJECT_COUNT+=1
+)
+
+if "%LAMBDA_PROJECT_COUNT%"=="0" (
+    echo No Lambda project folders with aws-lambda-tools-defaults.json were found in "%ROOT%".
+    exit /b 1
+)
+
+echo Found %LAMBDA_PROJECT_COUNT% Lambda project folder(s).
 exit /b 0

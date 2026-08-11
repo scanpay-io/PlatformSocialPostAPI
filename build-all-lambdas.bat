@@ -2,7 +2,7 @@
 setlocal
 
 set "ROOT=%~dp0"
-set "SOLUTION=%ROOT%SocialPostAPIService.sln"
+set "SOLUTION="
 set "CONFIGURATION=%~1"
 
 if /I "%~1"=="--help" goto :help
@@ -15,7 +15,10 @@ if errorlevel 1 (
     exit /b 1
 )
 
-echo Building all SocialPost Lambda projects...
+call :find_solution
+if errorlevel 1 exit /b %ERRORLEVEL%
+
+echo Building Lambda solution...
 echo Solution: "%SOLUTION%"
 echo Configuration: %CONFIGURATION%
 echo.
@@ -30,4 +33,16 @@ echo.
 echo Examples:
 echo   build-all-lambdas.bat
 echo   build-all-lambdas.bat Release
+exit /b 0
+
+:find_solution
+for %%S in ("%ROOT%*.sln") do (
+    if not defined SOLUTION set "SOLUTION=%%~fS"
+)
+
+if "%SOLUTION%"=="" (
+    echo No .sln file was found in "%ROOT%".
+    exit /b 1
+)
+
 exit /b 0
