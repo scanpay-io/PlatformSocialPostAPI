@@ -21,37 +21,45 @@ namespace ScanPay.Lambda.AuthorizeSocialConnection
             JObject request,
             ILambdaContext context)
         {
-            return await ProxyExecApiAsync<SocialConnectionAuthorizeRequest, object>(
-                context: context,
-                operation: OperationName,
-                request: request,
-                action: async normalizedRequest =>
-                {
-                    normalizedRequest =
-                        SocialRequestResolver.Hydrate(
-                            request,
+            return await ProxyExecApiAsync<
+                SocialConnectionAuthorizeRequest,
+                SocialConnectionAuthorizeResponse>(
+                    context: context,
+                    operation: OperationName,
+                    request: request,
+                    action: async normalizedRequest =>
+                    {
+                        normalizedRequest =
+                            SocialRequestResolver.Hydrate(
+                                request,
+                                normalizedRequest);
+
+                        SocialRequestResolver.RequireOrganizationID(
                             normalizedRequest);
 
-                    SocialRequestResolver.RequireOrganizationID(
-                        normalizedRequest);
+                        return await SocialPostOperation.AuthorizeConnectionAsync(
+                            normalizedRequest,
+                            context);
+                    },
+                    correlationID:
+                        GetCorrelationID(
+                            request,
+                            context),
+                    serviceName:
+                        "SocialPostAPI",
+                    dataFactory: () =>
+                        new Dictionary<string, string>
+                        {
+                            ["component"] =
+                                "AuthorizeSocialConnection",
 
-                    return await SocialPostOperation.AuthorizeConnectionAsync(
-                        normalizedRequest,
-                        context);
-                },
-                correlationID:
-                    GetCorrelationID(
-                        request,
-                        context),
-                serviceName:
-                    "SocialPostAPI",
-                dataFactory: () =>
-                    new Dictionary<string, string>
-                    {
-                        ["component"] = "AuthorizeSocialConnection",
-                        ["lambda_request_id"] = context?.AwsRequestId ?? string.Empty,
-                        ["operation"] = OperationName
-                    });
+                            ["lambda_request_id"] =
+                                context?.AwsRequestId
+                                ?? string.Empty,
+
+                            ["operation"] =
+                                OperationName
+                        });
         }
     }
 }

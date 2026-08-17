@@ -21,6 +21,12 @@ namespace ScanPay.SocialPostService
             SocialConnectionAuthorizeRequest request,
             ILambdaContext context)
         {
+            if (request == null)
+            {
+                throw ResponseStatusFactory.BadRequest(
+                    "Request is required.");
+            }
+
             string platform =
                 NormalizePlatform(
                     request.SocialPlatform);
@@ -36,13 +42,18 @@ namespace ScanPay.SocialPostService
                     platform,
                     "CLIENT_ID");
 
+            /*
+             * IMPORTANT:
+             * The OAuth redirect URI is backend-controlled.
+             *
+             * Do not use request.RedirectUri here. With Meta Strict Mode,
+             * the redirect_uri sent to Facebook must exactly match the
+             * configured Valid OAuth Redirect URI.
+             */
             string redirectUri =
-                FormatValue.NotEmptyValue(request.RedirectUri)
-                    ? request.RedirectUri
-                    : GetRequiredSetting(
-                    provider?.RedirectUri,
-                    platform,
-                    "REDIRECT_URI");
+                ResolveConfiguredRedirectUri(
+                    provider,
+                    platform);
 
             string scope =
                 FormatValue.NotEmptyValue(provider?.Scopes)
@@ -57,31 +68,50 @@ namespace ScanPay.SocialPostService
                     request.EffectiveOrganizationID,
                     platform);
 
+            string authorizationUrl =
+                BuildAuthorizeUrl(
+                    platform,
+                    clientID,
+                    redirectUri,
+                    scope,
+                    state);
+
+            Logger.LogLine(
+                $"Social OAuth authorization URL created." +
+                $"{Environment.NewLine}" +
+                $"platform={platform}" +
+                $"{Environment.NewLine}" +
+                $"organization_id={request.EffectiveOrganizationID}" +
+                $"{Environment.NewLine}" +
+                $"redirect_uri={redirectUri}",
+                context);
+
             return new SocialConnectionAuthorizeResponse
-                {
-                    AuthorizationUrl =
-                        BuildAuthorizeUrl(
-                            platform,
-                            clientID,
-                            redirectUri,
-                            scope,
-                            state),
+            {
+                AuthorizationUrl =
+                    authorizationUrl,
 
-                    OAuthMessage =
-                        "Redirect the user to authorization_url.",
+                OAuthMessage =
+                    "Redirect the user to authorization_url.",
 
-                    Status =
-                        "success",
+                Status =
+                    "success",
 
-                    Code =
-                        200
-                };
+                Code =
+                    200
+            };
         }
 
         public async Task<SocialConnectionDb> CompleteCallbackAsync(
             SocialConnectionCallbackRequest request,
             ILambdaContext context)
         {
+            if (request == null)
+            {
+                throw ResponseStatusFactory.BadRequest(
+                    "Request is required.");
+            }
+
             ApplyState(
                 request);
 
@@ -106,9 +136,10 @@ namespace ScanPay.SocialPostService
                 await ResolveTokenAsync(
                     request,
                     platform,
-                    provider);
+                    provider,
+                    context);
 
-            var connectionID =
+            string connectionID =
                 FormatValue.NewID();
 
             string tokenSecretID =
@@ -207,7 +238,8 @@ namespace ScanPay.SocialPostService
         private static async Task<TokenExchangeResult> ResolveTokenAsync(
             SocialConnectionCallbackRequest request,
             string platform,
-            SocialServiceProvider? provider)
+            SocialServiceProvider? provider,
+            ILambdaContext context)
         {
             if (FormatValue.NotEmptyValue(request.AccessToken) ||
                 FormatValue.NotEmptyValue(request.TokenSecretID))
@@ -240,13 +272,27 @@ namespace ScanPay.SocialPostService
                     platform,
                     "CLIENT_SECRET");
 
+            /*
+             * IMPORTANT:
+             * The token exchange must use the exact same redirect URI that was
+             * used in the authorization request.
+             *
+             * Never take this value from request.RedirectUri.
+             */
             string redirectUri =
-                FormatValue.NotEmptyValue(request.RedirectUri)
-                    ? request.RedirectUri
-                    : GetRequiredSetting(
-                    provider?.RedirectUri,
-                    platform,
-                    "REDIRECT_URI");
+                ResolveConfiguredRedirectUri(
+                    provider,
+                    platform);
+
+            Logger.LogLine(
+                $"Social OAuth token exchange starting." +
+                $"{Environment.NewLine}" +
+                $"platform={platform}" +
+                $"{Environment.NewLine}" +
+                $"organization_id={request.EffectiveOrganizationID}" +
+                $"{Environment.NewLine}" +
+                $"redirect_uri={redirectUri}",
+                context);
 
             string tokenUrl =
                 TokenUrl(
@@ -282,6 +328,16 @@ namespace ScanPay.SocialPostService
 
             if (!response.IsSuccessStatusCode)
             {
+                Logger.LogLine(
+                    $"OAuth token exchange failed." +
+                    $"{Environment.NewLine}" +
+                    $"platform={platform}" +
+                    $"{Environment.NewLine}" +
+                    $"redirect_uri={redirectUri}" +
+                    $"{Environment.NewLine}" +
+                    $"response={body}",
+                    context);
+
                 throw ResponseStatusFactory.BadRequest(
                     $"OAuth token exchange failed for {platform}: {body}");
             }
@@ -291,28 +347,34 @@ namespace ScanPay.SocialPostService
                     body);
 
             int? expiresIn =
-                json.Value<int?>("expires_in");
+                json.Value<int?>(
+                    "expires_in");
 
             TokenExchangeResult token =
                 new()
-            {
-                AccessToken =
-                    json.Value<string>("access_token")
-                    ?? DefaultValue.EMPTY_STRING,
+                {
+                    AccessToken =
+                        json.Value<string>(
+                            "access_token")
+                        ?? DefaultValue.EMPTY_STRING,
 
-                RefreshToken =
-                    json.Value<string>("refresh_token")
-                    ?? DefaultValue.EMPTY_STRING,
+                    RefreshToken =
+                        json.Value<string>(
+                            "refresh_token")
+                        ?? DefaultValue.EMPTY_STRING,
 
-                Scope =
-                    json.Value<string>("scope")
-                    ?? DefaultValue.EMPTY_STRING,
+                    Scope =
+                        json.Value<string>(
+                            "scope")
+                        ?? DefaultValue.EMPTY_STRING,
 
-                ExpiresDateUtc =
-                    expiresIn.HasValue
-                        ? DefaultValue.UtcNow().AddSeconds(expiresIn.Value)
-                        : null
-            };
+                    ExpiresDateUtc =
+                        expiresIn.HasValue
+                            ? DefaultValue.UtcNow()
+                                .AddSeconds(
+                                    expiresIn.Value)
+                            : null
+                };
 
             await EnrichTokenAsync(
                 token,
@@ -325,7 +387,8 @@ namespace ScanPay.SocialPostService
             TokenExchangeResult token,
             string platform)
         {
-            if (FormatValue.EmptyValue(token.AccessToken))
+            if (FormatValue.EmptyValue(
+                    token.AccessToken))
             {
                 return;
             }
@@ -361,12 +424,48 @@ namespace ScanPay.SocialPostService
                     body);
 
             token.ExternalAccountID =
-                json.Value<string>("id")
+                json.Value<string>(
+                    "id")
                 ?? DefaultValue.EMPTY_STRING;
 
             token.DisplayName =
-                json.Value<string>("name")
+                json.Value<string>(
+                    "name")
                 ?? DefaultValue.EMPTY_STRING;
+        }
+
+        private static string ResolveConfiguredRedirectUri(
+            SocialServiceProvider? provider,
+            string platform)
+        {
+            string redirectUri =
+                GetRequiredSetting(
+                    provider?.RedirectUri,
+                    platform,
+                    "REDIRECT_URI");
+
+            redirectUri =
+                redirectUri.Trim();
+
+            if (!Uri.TryCreate(
+                    redirectUri,
+                    UriKind.Absolute,
+                    out Uri? uri))
+            {
+                throw ResponseStatusFactory.BadRequest(
+                    $"Configured OAuth redirect URI for '{platform}' is invalid.");
+            }
+
+            if (!string.Equals(
+                    uri.Scheme,
+                    Uri.UriSchemeHttps,
+                    StringComparison.OrdinalIgnoreCase))
+            {
+                throw ResponseStatusFactory.BadRequest(
+                    $"Configured OAuth redirect URI for '{platform}' must use HTTPS.");
+            }
+
+            return redirectUri;
         }
 
         private static string BuildAuthorizeUrl(
@@ -448,14 +547,16 @@ namespace ScanPay.SocialPostService
             string key)
         {
             string value =
-                FormatValue.NotEmptyValue(configuredValue)
+                FormatValue.NotEmptyValue(
+                    configuredValue)
                     ? configuredValue!
                     : GetSetting(
                         platform,
                         key,
                         DefaultValue.EMPTY_STRING);
 
-            if (FormatValue.EmptyValue(value))
+            if (FormatValue.EmptyValue(
+                    value))
             {
                 throw ResponseStatusFactory.BadRequest(
                     $"Missing OAuth setting SOCIAL_{platform.ToUpperInvariant()}_{key}.");
@@ -536,7 +637,8 @@ namespace ScanPay.SocialPostService
         private static void ApplyState(
             SocialConnectionCallbackRequest request)
         {
-            if (FormatValue.EmptyValue(request.State))
+            if (FormatValue.EmptyValue(
+                    request.State))
             {
                 return;
             }
@@ -550,7 +652,8 @@ namespace ScanPay.SocialPostService
 
                 padded =
                     padded.PadRight(
-                        padded.Length + ((4 - padded.Length % 4) % 4),
+                        padded.Length +
+                        ((4 - padded.Length % 4) % 4),
                         '=');
 
                 JObject state =
@@ -559,17 +662,21 @@ namespace ScanPay.SocialPostService
                             Convert.FromBase64String(
                                 padded)));
 
-                if (FormatValue.EmptyValue(request.OrganizationID))
+                if (FormatValue.EmptyValue(
+                        request.OrganizationID))
                 {
                     request.OrganizationID =
-                        state.Value<string>("organization_id")
+                        state.Value<string>(
+                            "organization_id")
                         ?? DefaultValue.EMPTY_STRING;
                 }
 
-                if (FormatValue.EmptyValue(request.SocialPlatform))
+                if (FormatValue.EmptyValue(
+                        request.SocialPlatform))
                 {
                     request.SocialPlatform =
-                        state.Value<string>("platform")
+                        state.Value<string>(
+                            "platform")
                         ?? DefaultValue.EMPTY_STRING;
                 }
             }
