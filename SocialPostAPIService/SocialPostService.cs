@@ -17,11 +17,14 @@ namespace ScanPay.SocialPostService
             ValidateCreateRequest(
                 request);
 
+            string socialPostID =
+                FormatValue.NewID();
+
             var post =
                 new SocialPostDb
                 {
                     SocialPostID =
-                        FormatValue.NewID(),
+                        socialPostID,
 
                     OrganizationID =
                         request.EffectiveOrganizationID,
@@ -39,7 +42,9 @@ namespace ScanPay.SocialPostService
                         request.Content,
 
                     DestinationUrl =
-                        request.DestinationUrl,
+                        AddSocialPostTracking(
+                            request.DestinationUrl,
+                            socialPostID),
 
                     Platforms =
                         NormalizePlatforms(
@@ -128,7 +133,9 @@ namespace ScanPay.SocialPostService
             if (FormatValue.NotEmptyValue(request.DestinationUrl))
             {
                 post.DestinationUrl =
-                    request.DestinationUrl;
+                    AddSocialPostTracking(
+                        request.DestinationUrl,
+                        post.SocialPostID);
             }
 
             if (request.Platforms?.Count > 0)
@@ -534,6 +541,60 @@ namespace ScanPay.SocialPostService
                     delivery.Status,
                     status,
                     StringComparison.OrdinalIgnoreCase));
+        }
+
+        private static string AddSocialPostTracking(
+            string resourceUrl,
+            string socialPostID)
+        {
+            if (FormatValue.EmptyValue(resourceUrl) ||
+                FormatValue.EmptyValue(socialPostID))
+            {
+                return resourceUrl;
+            }
+
+            UriBuilder uriBuilder;
+
+            try
+            {
+                uriBuilder =
+                    new UriBuilder(
+                        resourceUrl);
+            }
+            catch (UriFormatException)
+            {
+                return resourceUrl;
+            }
+
+            string query =
+                uriBuilder.Query;
+
+            if (query.StartsWith("?"))
+            {
+                query =
+                    query.Substring(1);
+            }
+
+            List<string> queryParameters =
+                query
+                    .Split(
+                        '&',
+                        StringSplitOptions.RemoveEmptyEntries)
+                    .Where(parameter =>
+                        !parameter.StartsWith(
+                            "socialpostid=",
+                            StringComparison.OrdinalIgnoreCase))
+                    .ToList();
+
+            queryParameters.Add(
+                $"socialpostid={Uri.EscapeDataString(socialPostID)}");
+
+            uriBuilder.Query =
+                string.Join(
+                    "&",
+                    queryParameters);
+
+            return uriBuilder.Uri.ToString();
         }
 
         private static void ValidateCreateRequest(
