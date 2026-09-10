@@ -6,7 +6,7 @@
     <RootNamespace>ScanPay.Lambda.SocialConnectionCallback</RootNamespace>
     <AssemblyName>ScanPay.Lambda.SocialConnectionCallback</AssemblyName>
     <Nullable>enable</Nullable>
-    <DefaultItemExcludes>$(DefaultItemExcludes);bin\**;obj\**;artifacts\**;**\bin\**;**\obj\**;**\artifacts\**</DefaultItemExcludes>
+    <DefaultItemExcludes>$(DefaultItemExcludes);bin\**;obj\**;artifacts\**;**\bin\**;**\obj\**;**\artifacts\**;_git_metadata_backup\**;**\_git_metadata_backup\**</DefaultItemExcludes>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Amazon.Lambda.Core" Version="2.8.0" />
@@ -17,6 +17,6 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SocialPostAPIService\SocialPostAPIService.csproj" />
-    <ProjectReference Include="..\PlatformLibrary\DataModel\DataModel.csproj" />
+    <ProjectReference Include="..\..\PlatformLibrary\DataModel\DataModel.csproj" />
   </ItemGroup>
 </Project>

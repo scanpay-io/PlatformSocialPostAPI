@@ -19,3 +19,9 @@ coverage/
 *.coveragexml
 
 *.log
+
+artifacts/
+*.bak
+.env
+.env.*
+.aws-sam/

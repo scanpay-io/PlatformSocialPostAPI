@@ -5,12 +5,12 @@
     <AssemblyName>ScanPay.SocialPostService</AssemblyName>
     <RootNamespace>ScanPay.SocialPostService</RootNamespace>
     <Nullable>enable</Nullable>
-    <DefaultItemExcludes>$(DefaultItemExcludes);bin\**;obj\**;artifacts\**;**\bin\**;**\obj\**;**\artifacts\**</DefaultItemExcludes>
+    <DefaultItemExcludes>$(DefaultItemExcludes);bin\**;obj\**;artifacts\**;**\bin\**;**\obj\**;**\artifacts\**;_git_metadata_backup\**;**\_git_metadata_backup\**</DefaultItemExcludes>
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\PlatformLibrary\DataModel\DataModel.csproj" />
-    <ProjectReference Include="..\PlatformLibrary\UtilityModel\UtilityModel.csproj" />
+    <ProjectReference Include="..\..\PlatformLibrary\DataModel\DataModel.csproj" />
+    <ProjectReference Include="..\..\PlatformLibrary\UtilityModel\UtilityModel.csproj" />
   </ItemGroup>
 
 </Project>
