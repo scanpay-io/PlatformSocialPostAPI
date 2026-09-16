@@ -11,6 +11,9 @@ namespace ScanPay.SocialPostService
         public const string Instagram =
             "instagram";
 
+        public const string Threads =
+            "threads";
+
         public const string LinkedIn =
             "linkedin";
 
@@ -19,6 +22,7 @@ namespace ScanPay.SocialPostService
             {
                 Facebook,
                 Instagram,
+                Threads,
                 LinkedIn
             };
 

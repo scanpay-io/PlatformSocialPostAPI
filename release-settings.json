@@ -1,0 +1,9 @@
+{
+  "SchemaVersion": 1,
+  "AccountId": "",
+  "Region": "us-east-1",
+  "BucketOwner": "",
+  "Prefix": "giveanywhere",
+  "Bucket": "",
+  "ExcludedProjects": []
+}

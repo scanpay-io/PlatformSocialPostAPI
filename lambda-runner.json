@@ -1,0 +1,23 @@
+{
+  "SourceRepositories": [
+    ".",
+    "..\\PlatformLibrary"
+  ],
+  "Lambdas": [
+    "SocialPostAPIAuthorizeSocialConnection",
+    "SocialPostAPICancelSocialPost",
+    "SocialPostAPICreateSocialPost",
+    "SocialPostAPIDeleteSocialConnection",
+    "SocialPostAPIDeleteSocialPost",
+    "SocialPostAPIGetSocialConnection",
+    "SocialPostAPIGetSocialConnections",
+    "SocialPostAPIGetSocialPost",
+    "SocialPostAPIGetSocialPostAnalytics",
+    "SocialPostAPIGetSocialPosts",
+    "SocialPostAPIGetSocialPostStatus",
+    "SocialPostAPIPublishSocialPost",
+    "SocialPostAPIScheduleSocialPost",
+    "SocialPostAPISocialConnectionCallback",
+    "SocialPostAPIUpdateSocialPost"
+  ]
+}

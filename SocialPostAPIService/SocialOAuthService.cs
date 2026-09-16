@@ -363,6 +363,10 @@ namespace ScanPay.SocialPostService
                             "refresh_token")
                         ?? DefaultValue.EMPTY_STRING,
 
+                    ExternalAccountID =
+                        json.Value<string>("user_id")
+                        ?? DefaultValue.EMPTY_STRING,
+
                     Scope =
                         json.Value<string>(
                             "scope")
@@ -393,17 +397,24 @@ namespace ScanPay.SocialPostService
                 return;
             }
 
-            if (!string.Equals(
-                    platform,
-                    SocialPlatform.Facebook,
-                    StringComparison.OrdinalIgnoreCase))
+            string? profileEndpoint = platform switch
+            {
+                SocialPlatform.Facebook =>
+                    "https://graph.facebook.com/v20.0/me?fields=id,name",
+                SocialPlatform.Instagram =>
+                    "https://graph.instagram.com/me?fields=user_id,username",
+                SocialPlatform.Threads =>
+                    "https://graph.threads.net/v1.0/me?fields=id,username",
+                _ => null
+            };
+
+            if (profileEndpoint == null)
             {
                 return;
             }
 
             string profileUrl =
-                "https://graph.facebook.com/v20.0/me" +
-                "?fields=id,name" +
+                profileEndpoint +
                 $"&access_token={Uri.EscapeDataString(token.AccessToken)}";
 
             using HttpResponseMessage response =
@@ -425,12 +436,12 @@ namespace ScanPay.SocialPostService
 
             token.ExternalAccountID =
                 json.Value<string>(
-                    "id")
-                ?? DefaultValue.EMPTY_STRING;
+                        platform == SocialPlatform.Instagram ? "user_id" : "id")
+                ?? token.ExternalAccountID;
 
             token.DisplayName =
                 json.Value<string>(
-                    "name")
+                        platform == SocialPlatform.Facebook ? "name" : "username")
                 ?? DefaultValue.EMPTY_STRING;
         }
 
@@ -491,7 +502,10 @@ namespace ScanPay.SocialPostService
                     "https://www.facebook.com/v20.0/dialog/oauth",
 
                 SocialPlatform.Instagram =>
-                    "https://api.instagram.com/oauth/authorize",
+                    "https://www.instagram.com/oauth/authorize",
+
+                SocialPlatform.Threads =>
+                    "https://threads.net/oauth/authorize",
 
                 SocialPlatform.LinkedIn =>
                     "https://www.linkedin.com/oauth/v2/authorization",
@@ -513,6 +527,9 @@ namespace ScanPay.SocialPostService
                 SocialPlatform.Instagram =>
                     "https://api.instagram.com/oauth/access_token",
 
+                SocialPlatform.Threads =>
+                    "https://graph.threads.net/oauth/access_token",
+
                 SocialPlatform.LinkedIn =>
                     "https://www.linkedin.com/oauth/v2/accessToken",
 
@@ -531,7 +548,10 @@ namespace ScanPay.SocialPostService
                     "pages_manage_posts pages_read_engagement",
 
                 SocialPlatform.Instagram =>
-                    "user_profile,user_media",
+                    "instagram_business_basic,instagram_business_content_publish",
+
+                SocialPlatform.Threads =>
+                    "threads_basic,threads_content_publish",
 
                 SocialPlatform.LinkedIn =>
                     "openid profile w_member_social",
@@ -547,19 +567,19 @@ namespace ScanPay.SocialPostService
             string key)
         {
             string value =
-                FormatValue.NotEmptyValue(
-                    configuredValue)
-                    ? configuredValue!
+                !string.IsNullOrWhiteSpace(configuredValue)
+                    ? configuredValue!.Trim()
                     : GetSetting(
                         platform,
                         key,
                         DefaultValue.EMPTY_STRING);
 
-            if (FormatValue.EmptyValue(
-                    value))
+            if (string.IsNullOrWhiteSpace(value))
             {
                 throw ResponseStatusFactory.BadRequest(
-                    $"Missing OAuth setting SOCIAL_{platform.ToUpperInvariant()}_{key}.");
+                    $"Missing OAuth setting SOCIAL_{platform.ToUpperInvariant()}_{key}. " +
+                    $"Configure cloud_services.social_service_providers.{platform}.{key.ToLowerInvariant()} " +
+                    "or the corresponding Lambda environment variable.");
             }
 
             return value;
@@ -570,11 +590,15 @@ namespace ScanPay.SocialPostService
             string key,
             string defaultValue)
         {
-            return Environment.GetEnvironmentVariable(
-                       $"SOCIAL_{platform.ToUpperInvariant()}_{key}")
-                   ?? Environment.GetEnvironmentVariable(
-                       $"SOCIAL_POST_{key}")
-                   ?? defaultValue;
+            string? value = Environment.GetEnvironmentVariable(
+                $"SOCIAL_{platform.ToUpperInvariant()}_{key}");
+
+            if (string.IsNullOrWhiteSpace(value))
+            {
+                value = Environment.GetEnvironmentVariable($"SOCIAL_POST_{key}");
+            }
+
+            return string.IsNullOrWhiteSpace(value) ? defaultValue : value.Trim();
         }
 
         private static async Task<SocialServiceProvider?> GetProviderAsync(
@@ -585,10 +609,9 @@ namespace ScanPay.SocialPostService
                 await AppConfigSettings.GetSocialServiceProvidersAsync(
                     context);
 
-            if (providers == null ||
-                !providers.TryGetValue(
-                    platform,
-                    out SocialServiceProvider? provider))
+            SocialServiceProvider? provider = FindProvider(providers, platform);
+
+            if (provider == null)
             {
                 return null;
             }
@@ -606,6 +629,25 @@ namespace ScanPay.SocialPostService
             }
 
             return provider;
+        }
+
+        private static SocialServiceProvider? FindProvider(
+            Dictionary<string, SocialServiceProvider>? providers,
+            string platform)
+        {
+            if (providers == null)
+                return null;
+
+            if (providers.TryGetValue(platform, out SocialServiceProvider? exact))
+                return exact;
+
+            foreach (var entry in providers)
+            {
+                if (string.Equals(entry.Key, platform, StringComparison.OrdinalIgnoreCase))
+                    return entry.Value;
+            }
+
+            return null;
         }
 
         private static string EncodeState(
