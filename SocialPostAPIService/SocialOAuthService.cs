@@ -394,16 +394,8 @@ namespace ScanPay.SocialPostService
                 return;
             }
 
-            string? profileEndpoint = platform switch
-            {
-                SocialPlatform.Facebook =>
-                    "https://graph.facebook.com/v20.0/me?fields=id,name",
-                SocialPlatform.Instagram =>
-                    "https://graph.instagram.com/me?fields=user_id,username",
-                SocialPlatform.Threads =>
-                    "https://graph.threads.net/v1.0/me?fields=id,username",
-                _ => null
-            };
+            string? profileEndpoint =
+                ProfileEndpoint(platform, token.ExternalAccountID);
 
             if (profileEndpoint == null)
             {
@@ -440,6 +432,33 @@ namespace ScanPay.SocialPostService
                 json.Value<string>(
                         platform == SocialPlatform.Facebook ? "name" : "username")
                 ?? DefaultValue.EMPTY_STRING;
+        }
+
+        private static string? ProfileEndpoint(
+            string platform,
+            string externalAccountID)
+        {
+            if (platform == SocialPlatform.Instagram)
+            {
+                // Instagram Login returns user_id during token exchange. Use the
+                // versioned user node rather than the legacy unversioned /me route.
+                if (string.IsNullOrWhiteSpace(externalAccountID))
+                    throw ResponseStatusFactory.BadRequest(
+                        "Instagram OAuth token exchange did not return user_id.");
+
+                return "https://graph.instagram.com/v25.0/" +
+                    Uri.EscapeDataString(externalAccountID) +
+                    "?fields=user_id,username";
+            }
+
+            return platform switch
+            {
+                SocialPlatform.Facebook =>
+                    "https://graph.facebook.com/v20.0/me?fields=id,name",
+                SocialPlatform.Threads =>
+                    "https://graph.threads.net/v1.0/me?fields=id,username",
+                _ => null
+            };
         }
 
         private static string ResolveConfiguredRedirectUri(
