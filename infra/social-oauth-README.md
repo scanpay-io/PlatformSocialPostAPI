@@ -30,8 +30,13 @@ commit credentials. This example is not automatically deployed.
 ```
 
 Use credentials belonging to each product. Instagram uses Instagram Login for
-professional accounts. Explicitly configured scopes override defaults: replace
-old `user_profile,user_media` scopes if present. Preserve posting/analytics flags
+professional accounts. Explicitly configured modern scopes override defaults.
+When Instagram scopes from configuration or environment variables contain legacy
+`user_profile` or `user_media`, the service removes those permissions and adds
+`instagram_business_basic,instagram_business_content_publish`, preserving other
+configured permissions. This also handles legacy values in cached configuration.
+Update stored legacy scopes when convenient; authorization logs include the
+resolved `scope` to verify deployment. Preserve posting/analytics flags
 according to the capabilities enabled in the deployment.
 
 Register the configured redirect in each product's OAuth settings. Both Lambda

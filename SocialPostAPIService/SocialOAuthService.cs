@@ -56,12 +56,7 @@ namespace ScanPay.SocialPostService
                     platform);
 
             string scope =
-                FormatValue.NotEmptyValue(provider?.Scopes)
-                    ? provider!.Scopes
-                    : GetSetting(
-                        platform,
-                        "SCOPES",
-                        DefaultScopes(platform));
+                ResolveScopes(provider, platform);
 
             string state =
                 EncodeState(
@@ -83,7 +78,9 @@ namespace ScanPay.SocialPostService
                 $"{Environment.NewLine}" +
                 $"organization_id={request.EffectiveOrganizationID}" +
                 $"{Environment.NewLine}" +
-                $"redirect_uri={redirectUri}",
+                $"redirect_uri={redirectUri}" +
+                $"{Environment.NewLine}" +
+                $"scope={scope}",
                 context);
 
             return new SocialConnectionAuthorizeResponse
@@ -537,6 +534,49 @@ namespace ScanPay.SocialPostService
                     throw ResponseStatusFactory.BadRequest(
                         "platform is invalid.")
             };
+        }
+
+        private static string ResolveScopes(
+            SocialServiceProvider? provider,
+            string platform)
+        {
+            string scope =
+                FormatValue.NotEmptyValue(provider?.Scopes)
+                    ? provider!.Scopes
+                    : GetSetting(platform, "SCOPES", DefaultScopes(platform));
+
+            if (platform != SocialPlatform.Instagram)
+                return scope;
+
+            // Old cloud configuration (including cached values) and environment
+            // overrides may still contain Basic Display scopes. This service uses
+            // Instagram Login for professional accounts and content publishing.
+            var scopes = new List<string>();
+            bool hasLegacyScopes = false;
+            foreach (string permission in scope.Split(
+                new[] { ',', ' ', '\t', '\r', '\n' },
+                StringSplitOptions.RemoveEmptyEntries))
+            {
+                if (permission == "user_profile" || permission == "user_media")
+                {
+                    hasLegacyScopes = true;
+                    continue;
+                }
+
+                if (!scopes.Contains(permission))
+                    scopes.Add(permission);
+            }
+
+            if (hasLegacyScopes)
+            {
+                foreach (string permission in DefaultScopes(platform).Split(','))
+                {
+                    if (!scopes.Contains(permission))
+                        scopes.Add(permission);
+                }
+            }
+
+            return string.Join(",", scopes);
         }
 
         private static string DefaultScopes(

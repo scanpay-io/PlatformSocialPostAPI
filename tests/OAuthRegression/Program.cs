@@ -65,4 +65,39 @@ foreach (var platform in new[] { "instagram", "threads" })
     Check((string)Call("TokenUrl", platform)! == (platform == "instagram" ? "https://api.instagram.com/oauth/access_token" : "https://graph.threads.net/oauth/access_token"), "Token host must match provider");
     Check((string)Call("ResolveConfiguredRedirectUri", provider, platform)! == provider.RedirectUri, "Configured redirect must be preserved");
 }
+string? oldInstagramScopes = Environment.GetEnvironmentVariable("SOCIAL_INSTAGRAM_SCOPES");
+string? oldSharedScopes = Environment.GetEnvironmentVariable("SOCIAL_POST_SCOPES");
+try
+{
+    const string expectedScopes = "instagram_business_basic,instagram_business_content_publish";
+    Environment.SetEnvironmentVariable("SOCIAL_INSTAGRAM_SCOPES", null);
+    Environment.SetEnvironmentVariable("SOCIAL_POST_SCOPES", null);
+    Check((string)Call("ResolveScopes", null!, "instagram")! == expectedScopes, "Missing scopes must use Instagram defaults");
+
+    foreach (string legacy in new[] { "user_profile,user_media", "user_profile", "user_media", " user_profile, user_media\tuser_profile " })
+    {
+        var provider = new SocialServiceProvider { Scopes = legacy };
+        string resolved = (string)Call("ResolveScopes", provider, "instagram")!;
+        Check(resolved == expectedScopes, "Legacy cloud scopes must migrate to Instagram Login publishing scopes");
+        string url = (string)Call("BuildAuthorizeUrl", "instagram", "1648676266617314", "https://stage.gogiveanywhere.com/social/connections/callback", resolved, "test-state")!;
+        Check(url.Contains("scope=" + Uri.EscapeDataString(expectedScopes)) && !url.Contains("user_profile") && !url.Contains("user_media"), "Authorization URL must not emit legacy scopes");
+    }
+
+    Environment.SetEnvironmentVariable("SOCIAL_INSTAGRAM_SCOPES", "user_profile,user_media");
+    Check((string)Call("ResolveScopes", null!, "instagram")! == expectedScopes, "Platform environment legacy scopes must migrate");
+    var modern = new SocialServiceProvider { Scopes = "instagram_business_basic,instagram_business_manage_comments" };
+    Check((string)Call("ResolveScopes", modern, "instagram")! == modern.Scopes, "Modern cloud scopes must remain authoritative");
+    var mixed = new SocialServiceProvider { Scopes = "user_media,instagram_business_manage_comments,instagram_business_basic" };
+    Check((string)Call("ResolveScopes", mixed, "instagram")! == "instagram_business_manage_comments,instagram_business_basic,instagram_business_content_publish", "Migration must preserve additional permissions without duplicating defaults");
+    Environment.SetEnvironmentVariable("SOCIAL_INSTAGRAM_SCOPES", null);
+    Environment.SetEnvironmentVariable("SOCIAL_POST_SCOPES", "user_profile,user_media");
+    Check((string)Call("ResolveScopes", null!, "instagram")! == expectedScopes, "Shared environment legacy scopes must migrate");
+    var other = new SocialServiceProvider { Scopes = "custom_scope another_scope" };
+    Check((string)Call("ResolveScopes", other, "threads")! == other.Scopes, "Other platforms must retain their configured scopes");
+}
+finally
+{
+    Environment.SetEnvironmentVariable("SOCIAL_INSTAGRAM_SCOPES", oldInstagramScopes);
+    Environment.SetEnvironmentVariable("SOCIAL_POST_SCOPES", oldSharedScopes);
+}
 Console.WriteLine($"Passed {checks} OAuth regression checks.");
