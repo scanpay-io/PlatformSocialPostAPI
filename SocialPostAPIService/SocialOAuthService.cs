@@ -379,14 +379,16 @@ namespace ScanPay.SocialPostService
 
             await EnrichTokenAsync(
                 token,
-                platform);
+                platform,
+                context);
 
             return token;
         }
 
         private static async Task EnrichTokenAsync(
             TokenExchangeResult token,
-            string platform)
+            string platform,
+            ILambdaContext context)
         {
             if (FormatValue.EmptyValue(
                     token.AccessToken))
@@ -402,6 +404,17 @@ namespace ScanPay.SocialPostService
                 return;
             }
 
+            // Log only the endpoint before credentials are appended. Include the
+            // invoked version so an API Gateway alias can be checked from one run.
+            Logger.LogLine(
+                $"Social OAuth profile lookup starting." +
+                $"{Environment.NewLine}method=GET" +
+                $"{Environment.NewLine}profile_endpoint={profileEndpoint}" +
+                $"{Environment.NewLine}lambda_version={context.FunctionVersion}" +
+                $"{Environment.NewLine}invoked_function_arn={context.InvokedFunctionArn}" +
+                $"{Environment.NewLine}lambda_request_id={context.AwsRequestId}",
+                context);
+
             string profileUrl =
                 profileEndpoint +
                 $"&access_token={Uri.EscapeDataString(token.AccessToken)}";
@@ -416,7 +429,10 @@ namespace ScanPay.SocialPostService
             if (!response.IsSuccessStatusCode)
             {
                 throw ResponseStatusFactory.BadRequest(
-                    $"OAuth profile lookup failed for {platform}: {body}");
+                    $"OAuth profile lookup failed for {platform} " +
+                    $"[GET {profileEndpoint}; HTTP {(int)response.StatusCode}; " +
+                    $"lambda_version={context.FunctionVersion}; " +
+                    $"request_id={context.AwsRequestId}]: {body}");
             }
 
             JObject json =
