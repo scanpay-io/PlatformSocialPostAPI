@@ -100,25 +100,25 @@ finally
     Environment.SetEnvironmentVariable("SOCIAL_INSTAGRAM_SCOPES", oldInstagramScopes);
     Environment.SetEnvironmentVariable("SOCIAL_POST_SCOPES", oldSharedScopes);
 }
-Check((string)Call("ProfileEndpoint", "instagram", "17841400000000000")! ==
-    "https://graph.instagram.com/v25.0/17841400000000000?fields=user_id,username",
-    "Instagram profile lookup must use the versioned token-exchange user node");
-Check((string)Call("ProfileEndpoint", "instagram", "id/path?query")! ==
-    "https://graph.instagram.com/v25.0/id%2Fpath%3Fquery?fields=user_id,username",
-    "Profile account ID must be escaped as a single path segment");
-foreach (string missingID in new[] { "", " " })
+Check((string)Call("ProfileEndpoint", "instagram")! ==
+    "https://graph.instagram.com/v25.0/me?fields=user_id,username",
+    "Instagram must resolve the authenticated profile without routing by the token-exchange ID");
+var instagramProfile = Newtonsoft.Json.Linq.JObject.Parse("{\"user_id\":17841400000000000,\"id\":\"different-id\",\"username\":\"test_profile\"}");
+Check((string)Call("ResolveProfileAccountID", instagramProfile, "instagram", "27968902972810319")! == "17841400000000000",
+    "Connection must store the profile user_id rather than the provisional token ID or id field");
+foreach (string invalidProfile in new[] { "{}", "{\"user_id\":null}", "{\"user_id\":\"\"}", "{\"user_id\":\" \"}" })
 {
     try
     {
-        Call("ProfileEndpoint", "instagram", missingID);
-        throw new Exception("Missing Instagram user ID must fail before profile lookup");
+        Call("ResolveProfileAccountID", Newtonsoft.Json.Linq.JObject.Parse(invalidProfile), "instagram", "27968902972810319");
+        throw new Exception("Missing Instagram profile ID must not fall back to the token ID");
     }
     catch (TargetInvocationException ex)
     {
-        Check(ex.InnerException!.Message.Contains("did not return user_id"), "Missing token-exchange user ID must produce an actionable error");
+        Check(ex.InnerException!.Message.Contains("did not return user_id"), "Missing profile user ID must produce an actionable error");
     }
 }
-Check((string)Call("ProfileEndpoint", "facebook", "")! == "https://graph.facebook.com/v20.0/me?fields=id,name", "Facebook profile lookup must remain unchanged");
-Check((string)Call("ProfileEndpoint", "threads", "")! == "https://graph.threads.net/v1.0/me?fields=id,username", "Threads profile lookup must remain unchanged");
-Check(Call("ProfileEndpoint", "linkedin", "") == null, "Platforms without profile enrichment must still skip lookup");
+Check((string)Call("ProfileEndpoint", "facebook")! == "https://graph.facebook.com/v20.0/me?fields=id,name", "Facebook profile lookup must remain unchanged");
+Check((string)Call("ProfileEndpoint", "threads")! == "https://graph.threads.net/v1.0/me?fields=id,username", "Threads profile lookup must remain unchanged");
+Check(Call("ProfileEndpoint", "linkedin") == null, "Platforms without profile enrichment must still skip lookup");
 Console.WriteLine($"Passed {checks} OAuth regression checks.");

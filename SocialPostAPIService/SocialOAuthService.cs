@@ -397,7 +397,7 @@ namespace ScanPay.SocialPostService
             }
 
             string? profileEndpoint =
-                ProfileEndpoint(platform, token.ExternalAccountID);
+                ProfileEndpoint(platform);
 
             if (profileEndpoint == null)
             {
@@ -440,9 +440,7 @@ namespace ScanPay.SocialPostService
                     body);
 
             token.ExternalAccountID =
-                json.Value<string>(
-                        platform == SocialPlatform.Instagram ? "user_id" : "id")
-                ?? token.ExternalAccountID;
+                ResolveProfileAccountID(json, platform, token.ExternalAccountID);
 
             token.DisplayName =
                 json.Value<string>(
@@ -450,25 +448,33 @@ namespace ScanPay.SocialPostService
                 ?? DefaultValue.EMPTY_STRING;
         }
 
-        private static string? ProfileEndpoint(
+        private static string ResolveProfileAccountID(
+            JObject profile,
             string platform,
-            string externalAccountID)
+            string tokenAccountID)
         {
             if (platform == SocialPlatform.Instagram)
             {
-                // Instagram Login returns user_id during token exchange. Use the
-                // versioned user node rather than the legacy unversioned /me route.
-                if (string.IsNullOrWhiteSpace(externalAccountID))
+                string? accountID = profile.Value<string>("user_id");
+                if (string.IsNullOrWhiteSpace(accountID))
                     throw ResponseStatusFactory.BadRequest(
-                        "Instagram OAuth token exchange did not return user_id.");
+                        "Instagram OAuth profile lookup did not return user_id.");
 
-                return "https://graph.instagram.com/v25.0/" +
-                    Uri.EscapeDataString(externalAccountID) +
-                    "?fields=user_id,username";
+                return accountID;
             }
 
+            return profile.Value<string>("id") ?? tokenAccountID;
+        }
+
+        private static string? ProfileEndpoint(
+            string platform)
+        {
             return platform switch
             {
+                // Resolve the authenticated account through the token, not the
+                // provisional user_id from the authorization-code exchange.
+                SocialPlatform.Instagram =>
+                    "https://graph.instagram.com/v25.0/me?fields=user_id,username",
                 SocialPlatform.Facebook =>
                     "https://graph.facebook.com/v20.0/me?fields=id,name",
                 SocialPlatform.Threads =>
