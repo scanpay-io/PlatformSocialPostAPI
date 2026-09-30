@@ -17,12 +17,22 @@ namespace ScanPay.SocialPostService
             ValidateCreateRequest(
                 request);
 
+            if (request.TikTok != null &&
+                (request.Platforms.Count != 1 || request.Platforms[0] != SocialPlatform.TikTok))
+                throw ResponseStatusFactory.BadRequest("TikTok videos must be created as separate posts.");
+
+            if (request.TextSocial != null &&
+                (request.Platforms.Count != 1 || !TextSocialPublishingService.Supports(request.Platforms[0])))
+                throw ResponseStatusFactory.BadRequest("X and LinkedIn posts must each target one selected account.");
+
             string socialPostID =
                 FormatValue.NewID();
 
             var post =
                 new SocialPostDb
                 {
+                    TikTok = request.TikTok,
+                    TextSocial = request.TextSocial,
                     SocialPostID =
                         socialPostID,
 
@@ -105,6 +115,14 @@ namespace ScanPay.SocialPostService
                     request.EffectiveOrganizationID,
                     request.SocialPostID,
                     context);
+
+            if (post.Platforms.Contains(SocialPlatform.TikTok) ||
+                request.Platforms?.Contains(SocialPlatform.TikTok) == true)
+                throw ResponseStatusFactory.BadRequest("Create a new TikTok video post with fresh privacy settings and consent.");
+
+            if (post.Platforms.Any(TextSocialPublishingService.Supports) ||
+                request.Platforms?.Any(TextSocialPublishingService.Supports) == true)
+                throw ResponseStatusFactory.BadRequest("Create a new X or LinkedIn post and confirm its destination before publishing.");
 
             if (FormatValue.NotEmptyValue(request.ResourceType))
             {
@@ -238,6 +256,12 @@ namespace ScanPay.SocialPostService
                     "Cancelled social posts cannot be published.");
             }
 
+            if (post.Platforms.Contains(SocialPlatform.TikTok))
+                return await new TikTokPublishingService().PublishAsync(post, context);
+
+            if (post.Platforms.Any(TextSocialPublishingService.Supports))
+                return await new TextSocialPublishingService().PublishAsync(post, context);
+
             List<SocialConnectionDb> connections =
                 await new SocialConnectionService()
                     .GetByOrganizationAsync(
@@ -273,6 +297,11 @@ namespace ScanPay.SocialPostService
             ScheduleSocialPostRequest request,
             ILambdaContext context)
         {
+            var requestedPost = await ReadAsync(request.EffectiveOrganizationID, request.SocialPostID, context);
+            if (requestedPost.Platforms.Any(TextSocialPublishingService.Supports))
+                throw ResponseStatusFactory.BadRequest("Use Publish now for X and LinkedIn. Scheduled delivery is not enabled.");
+            if (requestedPost.Platforms.Contains(SocialPlatform.TikTok))
+                throw ResponseStatusFactory.BadRequest("TikTok requires a fresh consent and privacy selection. Use Publish now.");
             if (!request.ScheduledDateUtc.HasValue ||
                 request.ScheduledDateUtc.Value <= DefaultValue.UtcNow())
             {
@@ -609,7 +638,7 @@ namespace ScanPay.SocialPostService
             ValidateOrganizationID(
                 request.EffectiveOrganizationID);
 
-            if (FormatValue.EmptyValue(request.Content))
+            if (FormatValue.EmptyValue(request.Content) && request.TikTok == null)
             {
                 throw ResponseStatusFactory.BadRequest(
                     "content is required.");

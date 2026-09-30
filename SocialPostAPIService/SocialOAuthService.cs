@@ -6,6 +6,7 @@ using ScanPay.Utility.Model;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using static ScanPay.Utility.Model.ResponseStatusException;
@@ -63,6 +64,10 @@ namespace ScanPay.SocialPostService
                     request.EffectiveOrganizationID,
                     platform);
 
+            if (SocialPlatform.UsesSignedState(platform))
+                state = SocialOAuthState.Create(request.EffectiveOrganizationID,
+                    GetRequiredSetting(provider?.ClientSecret, platform, "CLIENT_SECRET"), platform);
+
             string authorizationUrl =
                 BuildAuthorizeUrl(
                     platform,
@@ -70,6 +75,13 @@ namespace ScanPay.SocialPostService
                     redirectUri,
                     scope,
                     state);
+
+            if (platform == SocialPlatform.X)
+            {
+                string verifier = SocialOAuthState.XCodeVerifier(state,
+                    GetRequiredSetting(provider?.ClientSecret, platform, "CLIENT_SECRET"));
+                authorizationUrl += "&code_challenge_method=S256&code_challenge=" + SocialOAuthState.XCodeChallenge(verifier);
+            }
 
             Logger.LogLine(
                 $"Social OAuth authorization URL created." +
@@ -109,8 +121,9 @@ namespace ScanPay.SocialPostService
                     "Request is required.");
             }
 
-            ApplyState(
-                request);
+            // Signed state must never supply the authenticated tenant identity.
+            if (!SocialPlatform.UsesSignedState(request.SocialPlatform))
+                ApplyState(request);
 
             string platform =
                 NormalizePlatform(
@@ -127,6 +140,19 @@ namespace ScanPay.SocialPostService
             {
                 throw ResponseStatusFactory.BadRequest(
                     "code, access_token, or token_secret_id is required.");
+            }
+
+            if (SocialPlatform.UsesSignedState(platform))
+            {
+                SocialOAuthState.Validate(request.State, request.EffectiveOrganizationID,
+                    GetRequiredSetting(provider?.ClientSecret, platform, "CLIENT_SECRET"), platform);
+                if (string.IsNullOrWhiteSpace(request.Code) ||
+                    !string.IsNullOrWhiteSpace(request.AccessToken) ||
+                    !string.IsNullOrWhiteSpace(request.TokenSecretID))
+                    throw ResponseStatusFactory.BadRequest($"{platform} requires an authorization code.");
+                // Never accept client-provided account identity or token metadata.
+                request.ExternalAccountID = request.DisplayName = request.GrantedScopes = string.Empty;
+                request.TokenExpiresDateUtc = null;
             }
 
             TokenExchangeResult token =
@@ -295,9 +321,7 @@ namespace ScanPay.SocialPostService
                 TokenUrl(
                     platform);
 
-            using var content =
-                new FormUrlEncodedContent(
-                    new Dictionary<string, string>
+            var form = new Dictionary<string, string>
                     {
                         ["grant_type"] =
                             "authorization_code",
@@ -308,20 +332,31 @@ namespace ScanPay.SocialPostService
                         ["redirect_uri"] =
                             redirectUri,
 
-                        ["client_id"] =
+                        [platform == SocialPlatform.TikTok ? "client_key" : "client_id"] =
                             clientID,
 
                         ["client_secret"] =
                             clientSecret
-                    });
+                    };
+
+            using var exchange = new HttpRequestMessage(HttpMethod.Post, tokenUrl);
+            if (platform == SocialPlatform.X)
+            {
+                form.Remove("client_secret");
+                form["code_verifier"] = SocialOAuthState.XCodeVerifier(request.State, clientSecret);
+                exchange.Headers.Authorization = new AuthenticationHeaderValue("Basic",
+                    Convert.ToBase64String(Encoding.UTF8.GetBytes(clientID + ":" + clientSecret)));
+            }
+            exchange.Content = new FormUrlEncodedContent(form);
 
             using HttpResponseMessage response =
-                await HttpClient.PostAsync(
-                    tokenUrl,
-                    content);
+                await HttpClient.SendAsync(exchange);
 
             string body =
                 await response.Content.ReadAsStringAsync();
+
+            if (SocialPlatform.UsesSignedState(platform) && !response.IsSuccessStatusCode)
+                throw ResponseStatusFactory.BadRequest($"{platform} authorization failed. Check approved app permissions and reconnect.");
 
             if (!response.IsSuccessStatusCode)
             {
@@ -343,6 +378,11 @@ namespace ScanPay.SocialPostService
                 JObject.Parse(
                     body);
 
+            if (SocialPlatform.UsesSignedState(platform) &&
+                (json["error"] != null || string.IsNullOrWhiteSpace(json.Value<string>("access_token")) ||
+                 (platform == SocialPlatform.TikTok && string.IsNullOrWhiteSpace(json.Value<string>("open_id")))))
+                throw ResponseStatusFactory.BadRequest($"{platform} did not return a valid authorization token.");
+
             int? expiresIn =
                 json.Value<int?>(
                     "expires_in");
@@ -361,13 +401,13 @@ namespace ScanPay.SocialPostService
                         ?? DefaultValue.EMPTY_STRING,
 
                     ExternalAccountID =
-                        json.Value<string>("user_id")
+                        json.Value<string>(platform == SocialPlatform.TikTok ? "open_id" : "user_id")
                         ?? DefaultValue.EMPTY_STRING,
 
                     Scope =
                         json.Value<string>(
                             "scope")
-                        ?? DefaultValue.EMPTY_STRING,
+                        ?? (platform == SocialPlatform.LinkedIn ? ResolveScopes(provider, platform) : DefaultValue.EMPTY_STRING),
 
                     ExpiresDateUtc =
                         expiresIn.HasValue
@@ -393,6 +433,28 @@ namespace ScanPay.SocialPostService
             if (FormatValue.EmptyValue(
                     token.AccessToken))
             {
+                return;
+            }
+
+            if (platform == SocialPlatform.X || platform == SocialPlatform.LinkedIn)
+            {
+                var profile = await new TextSocialProviderClient().GetIdentityAsync(platform, token.AccessToken);
+                token.ExternalAccountID = profile.ID;
+                token.DisplayName = profile.Name;
+                return;
+            }
+
+            if (platform == SocialPlatform.TikTok)
+            {
+                using var profileRequest = new HttpRequestMessage(HttpMethod.Get,
+                    "https://open.tiktokapis.com/v2/user/info/?fields=open_id,display_name,avatar_url");
+                profileRequest.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token.AccessToken);
+                using var profileResponse = await HttpClient.SendAsync(profileRequest);
+                var profile = JObject.Parse(await profileResponse.Content.ReadAsStringAsync());
+                if (!profileResponse.IsSuccessStatusCode || profile["error"]?.Value<string>("code") != "ok" ||
+                    profile["data"]?["user"]?.Value<string>("open_id") != token.ExternalAccountID)
+                    throw ResponseStatusFactory.BadRequest("TikTok profile lookup failed. Please reconnect your account.");
+                token.DisplayName = profile["data"]?["user"]?.Value<string>("display_name") ?? "TikTok";
                 return;
             }
 
@@ -525,7 +587,7 @@ namespace ScanPay.SocialPostService
             string state)
         {
             return $"{AuthorizeUrl(platform)}?response_type=code" +
-                   $"&client_id={Uri.EscapeDataString(clientID)}" +
+                   $"&{(platform == SocialPlatform.TikTok ? "client_key" : "client_id")}={Uri.EscapeDataString(clientID)}" +
                    $"&redirect_uri={Uri.EscapeDataString(redirectUri)}" +
                    $"&scope={Uri.EscapeDataString(scope)}" +
                    $"&state={Uri.EscapeDataString(state)}";
@@ -536,6 +598,8 @@ namespace ScanPay.SocialPostService
         {
             return platform switch
             {
+                SocialPlatform.X => "https://x.com/i/oauth2/authorize",
+                SocialPlatform.TikTok => "https://www.tiktok.com/v2/auth/authorize/",
                 SocialPlatform.Facebook =>
                     "https://www.facebook.com/v20.0/dialog/oauth",
 
@@ -559,6 +623,8 @@ namespace ScanPay.SocialPostService
         {
             return platform switch
             {
+                SocialPlatform.X => "https://api.x.com/2/oauth2/token",
+                SocialPlatform.TikTok => "https://open.tiktokapis.com/v2/oauth/token/",
                 SocialPlatform.Facebook =>
                     "https://graph.facebook.com/v20.0/oauth/access_token",
 
@@ -625,6 +691,8 @@ namespace ScanPay.SocialPostService
         {
             return platform switch
             {
+                SocialPlatform.X => "tweet.read tweet.write users.read offline.access",
+                SocialPlatform.TikTok => "user.info.basic,video.publish,video.upload",
                 SocialPlatform.Facebook =>
                     "pages_manage_posts pages_read_engagement",
 
@@ -635,7 +703,7 @@ namespace ScanPay.SocialPostService
                     "threads_basic,threads_content_publish",
 
                 SocialPlatform.LinkedIn =>
-                    "openid profile w_member_social",
+                    "r_organization_admin w_organization_social",
 
                 _ =>
                     DefaultValue.EMPTY_STRING

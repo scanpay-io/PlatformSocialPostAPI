@@ -119,6 +119,12 @@ namespace ScanPay.SocialPostService
     public class CreateSocialPostRequest :
         SocialOrganizationRequest
     {
+        [JsonProperty("tiktok")]
+        public TikTokPostOptions? TikTok { get; set; }
+
+        [JsonProperty("text_social")]
+        public TextSocialPostOptions? TextSocial { get; set; }
+
         [JsonProperty("resource_type")]
         public string ResourceType { get; set; } =
             DefaultValue.EMPTY_STRING;

@@ -5,6 +5,13 @@ namespace ScanPay.SocialPostService
 {
     public static class SocialPlatform
     {
+        public const string TikTok = "tiktok";
+        public const string X = "x";
+
+        public static bool UsesSignedState(string platform) =>
+            string.Equals(platform, TikTok, StringComparison.OrdinalIgnoreCase) ||
+            string.Equals(platform, LinkedIn, StringComparison.OrdinalIgnoreCase) ||
+            string.Equals(platform, X, StringComparison.OrdinalIgnoreCase);
         public const string Facebook =
             "facebook";
 
@@ -23,7 +30,9 @@ namespace ScanPay.SocialPostService
                 Facebook,
                 Instagram,
                 Threads,
-                LinkedIn
+                LinkedIn,
+                TikTok,
+                X
             };
 
         public static bool IsValid(

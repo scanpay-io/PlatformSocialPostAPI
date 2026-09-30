@@ -121,4 +121,111 @@ foreach (string invalidProfile in new[] { "{}", "{\"user_id\":null}", "{\"user_i
 Check((string)Call("ProfileEndpoint", "facebook")! == "https://graph.facebook.com/v20.0/me?fields=id,name", "Facebook profile lookup must remain unchanged");
 Check((string)Call("ProfileEndpoint", "threads")! == "https://graph.threads.net/v1.0/me?fields=id,username", "Threads profile lookup must remain unchanged");
 Check(Call("ProfileEndpoint", "linkedin") == null, "Platforms without profile enrichment must still skip lookup");
-Console.WriteLine($"Passed {checks} OAuth regression checks.");
+Check(SocialPlatform.IsValid("tiktok"), "TikTok must pass platform validation");
+string tikTokUrl = (string)Call("BuildAuthorizeUrl", "tiktok", "test-key", "https://stage.gogiveanywhere.com/social/connections/callback", "user.info.basic,video.publish,video.upload", "state")!;
+Check(tikTokUrl.StartsWith("https://www.tiktok.com/v2/auth/authorize/?"), "TikTok authorization endpoint");
+Check(tikTokUrl.Contains("client_key=test-key") && !tikTokUrl.Contains("client_id="), "TikTok requires client_key");
+Check((string)Call("TokenUrl", "tiktok")! == "https://open.tiktokapis.com/v2/oauth/token/", "TikTok token endpoint");
+string signedState = SocialOAuthState.Create("org-a", "test-secret");
+SocialOAuthState.Validate(signedState, "org-a", "test-secret");
+void Reject(Action action, string description)
+{
+    bool rejected = false;
+    try { action(); } catch { rejected = true; }
+    Check(rejected, description);
+}
+Reject(() => SocialOAuthState.Validate(signedState, "org-b", "test-secret"), "State must reject another tenant");
+Reject(() => SocialOAuthState.Validate(signedState, "org-a", "wrong-secret"), "State signature must be checked");
+Reject(() => SocialOAuthState.Validate("invalid", "org-a", "test-secret"), "Malformed state must fail closed");
+var creator = Newtonsoft.Json.Linq.JObject.Parse("{ 'privacy_level_options': ['SELF_ONLY'], 'max_video_post_duration_sec': 60, 'comment_disabled': true }");
+var videoPost = new SocialPostDb
+{
+    Platforms = new() { "tiktok" },
+    TikTok = new TikTokPostOptions { ConnectionID = "connection", VideoUrl = "https://stage.gogiveanywhere.com/video.mp4", DurationSeconds = 15, PrivacyLevel = "SELF_ONLY", Consent = true }
+};
+TikTokPublishingService.Validate(videoPost, creator);
+videoPost.TikTok.Consent = false;
+Reject(() => TikTokPublishingService.Validate(videoPost, creator), "Sending requires explicit consent");
+videoPost.TikTok.Consent = true;
+videoPost.TikTok.VideoUrl = "https://gogiveanywhere.com.attacker.test/video.mp4";
+Reject(() => TikTokPublishingService.Validate(videoPost, creator), "Video domain suffix spoof must be rejected");
+videoPost.TikTok.VideoUrl = "https://stage.gogiveanywhere.com/video.mp4";
+videoPost.TikTok.PrivacyLevel = "PUBLIC_TO_EVERYONE";
+Reject(() => TikTokPublishingService.Validate(videoPost, creator), "Privacy must match creator options");
+videoPost.TikTok.PrivacyLevel = "SELF_ONLY";
+videoPost.TikTok.BrandedContent = true;
+Reject(() => TikTokPublishingService.Validate(videoPost, creator), "Branded content cannot be private");
+videoPost.TikTok.BrandedContent = false;
+videoPost.TikTok.AllowComments = true;
+Reject(() => TikTokPublishingService.Validate(videoPost, creator), "Disabled creator interactions cannot be enabled");
+videoPost.TikTok.AllowComments = false;
+videoPost.TikTok.DurationSeconds = 61;
+Reject(() => TikTokPublishingService.Validate(videoPost, creator), "Creator duration limit must be enforced");
+Check(SocialPlatform.IsValid("x"), "X must be accepted as a platform");
+Check((string)Call("TokenUrl", "x")! == "https://api.x.com/2/oauth2/token", "X uses OAuth 2 token endpoint");
+Check((string)Call("DefaultScopes", "linkedin")! == "r_organization_admin w_organization_social", "LinkedIn uses nonprofit Page scopes, not member-only OIDC scopes");
+Check(SocialOAuthState.XCodeChallenge("dBjftJeZ4CVP-mB92K27uhbUJU1p1r_wW1gFWFOEjXk") == "E9Melhoa2OwvFrEMTJguCHaoeK1t8URWbuGJSstw-cM", "PKCE S256 must match RFC 7636 test vector");
+string xState = SocialOAuthState.Create("org-a", "test-secret", "x");
+Check(SocialOAuthState.XCodeVerifier(xState, "test-secret").Length == 43, "PKCE verifier must have valid length");
+Check(SocialOAuthState.XCodeVerifier(xState, "test-secret") != SocialOAuthState.XCodeVerifier(xState, "other-secret"), "Public state cannot reveal verifier");
+Reject(() => SocialOAuthState.Validate(xState, "org-a", "test-secret", "linkedin"), "State must be bound to the provider");
+var textPost = new SocialPostDb
+{
+    Platforms = new() { "linkedin" }, Content = "Help our community", DestinationUrl = "https://gogiveanywhere.com/campaign",
+    TextSocial = new TextSocialPostOptions { ConnectionID = "connection", LinkedInPageUrn = "urn:li:organization:123", Consent = true }
+};
+Check(TextSocialPublishingService.Validate(textPost).EndsWith("https://gogiveanywhere.com/campaign"), "Campaign link must be included in published content");
+textPost.TextSocial.Consent = false;
+Reject(() => TextSocialPublishingService.Validate(textPost), "X/LinkedIn require publication consent");
+textPost.TextSocial.Consent = true;
+textPost.DestinationUrl = "javascript:alert(1)";
+Reject(() => TextSocialPublishingService.Validate(textPost), "Non-web links must be rejected");
+Check(!TextSocialProviderClient.CanPublishPage(Newtonsoft.Json.Linq.JObject.Parse("{'role':'ANALYST','state':'APPROVED'}")), "Analytics role cannot publish");
+Check(!TextSocialProviderClient.CanPublishPage(Newtonsoft.Json.Linq.JObject.Parse("{'role':'ADMINISTRATOR','state':'REVOKED'}")), "Revoked Page role cannot publish");
+Check(TextSocialProviderClient.CanPublishPage(Newtonsoft.Json.Linq.JObject.Parse("{'role':'CONTENT_ADMINISTRATOR','state':'APPROVED'}")), "Content administrators can publish");
+
+using var providerHttp = new HttpClient(new ProviderHttpHandler(async request =>
+{
+    Check(request.Headers.Authorization?.Parameter == "test-token", "Provider requests use the connected user's token");
+    if (request.Method == HttpMethod.Get)
+    {
+        Check(request.RequestUri!.AbsolutePath == "/rest/organizationAcls", "Page permissions are checked against LinkedIn");
+        return new HttpResponseMessage(System.Net.HttpStatusCode.OK)
+        {
+            Content = new StringContent("{'elements':[{'role':'ADMINISTRATOR','state':'APPROVED','organization':'urn:li:organization:123','roleAssignee':'urn:li:person:tester'}], 'paging':{'links':[]}}")
+        };
+    }
+    var body = Newtonsoft.Json.Linq.JObject.Parse(await request.Content!.ReadAsStringAsync());
+    var response = new HttpResponseMessage(System.Net.HttpStatusCode.Created);
+    if (request.RequestUri!.Host == "api.linkedin.com")
+    {
+        Check(request.Headers.Contains("LinkedIn-Version") && request.Headers.GetValues("X-Restli-Protocol-Version").Single() == "2.0.0", "LinkedIn version headers are required");
+        Check(body.Value<string>("author") == "urn:li:organization:123" && body.Value<string>("lifecycleState") == "PUBLISHED", "LinkedIn publishes as the chosen Page");
+        response.Headers.Add("x-restli-id", "urn:li:share:456");
+    }
+    else
+    {
+        Check(request.RequestUri.ToString() == "https://api.x.com/2/tweets" && body.Value<string>("text") == "Hello", "X request uses create-post text contract");
+        response.Content = new StringContent("{\"data\":{\"id\":\"789\"}}");
+    }
+    return response;
+}));
+var providerApi = new TextSocialProviderClient(providerHttp);
+await providerApi.VerifyLinkedInPageAsync("test-token", "urn:li:organization:123");
+bool denied = false;
+try { await providerApi.VerifyLinkedInPageAsync("test-token", "urn:li:organization:999"); } catch { denied = true; }
+Check(denied, "A client cannot supply a Page it does not manage");
+Check((await providerApi.PublishAsync("linkedin", "test-token", "Hello", "urn:li:organization:123")).ID == "urn:li:share:456", "LinkedIn post ID is read from its response header");
+Check((await providerApi.PublishAsync("x", "test-token", "Hello", "")).Url == "https://x.com/i/status/789", "X result is linked to the confirmed post");
+using var failingHttp = new HttpClient(new ProviderHttpHandler(_ => Task.FromResult(new HttpResponseMessage(System.Net.HttpStatusCode.Forbidden)
+{ Content = new StringContent("secret-provider-diagnostic") })));
+try
+{
+    await new TextSocialProviderClient(failingHttp).PublishAsync("x", "test-token", "Hello", "");
+    throw new Exception("Expected provider rejection");
+}
+catch (ScanPay.Utility.Model.ResponseStatusException error)
+{
+    Check(!error.Message.Contains("secret-provider-diagnostic"), "Provider diagnostics must not expose secrets");
+}
+Console.WriteLine($"Passed {checks} social OAuth and publishing regression checks.");

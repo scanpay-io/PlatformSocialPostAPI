@@ -85,6 +85,12 @@ namespace ScanPay.SocialPostService
     public class SocialConnectionResponse :
         LambdaResponse
     {
+        [JsonProperty("tiktok_creator_info")]
+        public Newtonsoft.Json.Linq.JObject? TikTokCreatorInfo { get; set; }
+
+        [JsonProperty("linkedin_pages")]
+        public List<SocialPage>? LinkedInPages { get; set; }
+
         [JsonProperty("social_connection")]
         public SocialConnectionFrontend? SocialConnection { get; set; }
     }

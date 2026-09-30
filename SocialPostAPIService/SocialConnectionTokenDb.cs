@@ -7,6 +7,7 @@ namespace ScanPay.SocialPostService
     [Alias("SocialConnectionToken")]
     public class SocialConnectionTokenDb
     {
+        public string RefreshLease { get; set; } = "";
         [PrimaryKey]
         public string TokenSecretID { get; set; } =
             DefaultValue.EMPTY_STRING;

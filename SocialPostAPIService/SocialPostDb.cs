@@ -8,6 +8,9 @@ namespace ScanPay.SocialPostService
     [Alias("SocialPost")]
     public class SocialPostDb
     {
+        public TikTokPostOptions? TikTok { get; set; }
+        public TextSocialPostOptions? TextSocial { get; set; }
+
         [PrimaryKey]
         public string SocialPostID { get; set; } =
             DefaultValue.EMPTY_STRING;
