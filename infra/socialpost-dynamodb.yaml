@@ -221,6 +221,33 @@ Resources:
           Projection:
             ProjectionType: ALL
 
+  SocialPostClickTable:
+    Type: AWS::DynamoDB::Table
+    DeletionPolicy: Retain
+    UpdateReplacePolicy: Retain
+    Properties:
+      TableName: SocialPostClick
+      BillingMode: !Ref BillingMode
+      SSESpecification:
+        SSEEnabled: true
+      PointInTimeRecoverySpecification:
+        PointInTimeRecoveryEnabled: true
+      AttributeDefinitions:
+        - AttributeName: ClickID
+          AttributeType: S
+        - AttributeName: SocialPostID
+          AttributeType: S
+      KeySchema:
+        - AttributeName: ClickID
+          KeyType: HASH
+      GlobalSecondaryIndexes:
+        - IndexName: SocialPostID-index
+          KeySchema:
+            - AttributeName: SocialPostID
+              KeyType: HASH
+          Projection:
+            ProjectionType: ALL
+
 Outputs:
   SocialConnectionTableName:
     Value: !Ref SocialConnectionTable

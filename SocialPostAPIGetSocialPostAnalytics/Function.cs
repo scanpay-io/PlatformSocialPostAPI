@@ -11,6 +11,12 @@ using System.Threading.Tasks;
 
 namespace ScanPay.Lambda.GetSocialPostAnalytics
 {
+    public class SocialAnalyticsRequest : SocialPostRequest
+    {
+        [Newtonsoft.Json.JsonProperty("campaign_id")]
+        public string CampaignID { get; set; } = "";
+    }
+
     public class Function :
         BaseLambdaClient
     {
@@ -21,21 +27,20 @@ namespace ScanPay.Lambda.GetSocialPostAnalytics
             JObject request,
             ILambdaContext context)
         {
-            return await ProxyExecApiAsync<SocialPostRequest, object>(
+            return await ProxyExecApiAsync<SocialAnalyticsRequest, object>(
                 context: context,
                 operation: OperationName,
                 request: request,
                 action: async normalizedRequest =>
                 {
-                    normalizedRequest =
-                        SocialRequestResolver.Hydrate(
-                            request,
-                            normalizedRequest);
+                    normalizedRequest = SocialRequestResolver.Hydrate(request, normalizedRequest);
 
                     string organizationID =
                         SocialRequestResolver.RequireOrganizationID(
                             normalizedRequest);
 
+                    if (string.IsNullOrWhiteSpace(normalizedRequest.SocialPostID))
+                        return await new SocialEngagementService().ReadCampaignAsync(organizationID, normalizedRequest.CampaignID, context);
                     return await SocialPostOperation.GetPostAnalyticsAsync(
                         organizationID,
                         normalizedRequest.SocialPostID,

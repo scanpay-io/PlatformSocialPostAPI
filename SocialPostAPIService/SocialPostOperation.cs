@@ -338,8 +338,11 @@ namespace ScanPay.SocialPostService
             var service =
                 new SocialPostService();
 
+            var post = await service.ReadAsync(organizationID, postID, context);
+
             return new SocialPostAnalyticsResponse
             {
+                Engagement = await new SocialEngagementService().ReadAsync(post, context),
                 SocialPost =
                     await service.ReadAsync(
                         organizationID,

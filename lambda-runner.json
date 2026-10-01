@@ -18,6 +18,7 @@
     "SocialPostAPIPublishSocialPost",
     "SocialPostAPIScheduleSocialPost",
     "SocialPostAPISocialConnectionCallback",
-    "SocialPostAPIUpdateSocialPost"
+    "SocialPostAPIUpdateSocialPost",
+    "SocialPostAPIRecordSocialPostClick"
   ]
 }

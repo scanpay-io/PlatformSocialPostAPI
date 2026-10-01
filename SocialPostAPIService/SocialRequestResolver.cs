@@ -17,6 +17,7 @@ namespace ScanPay.SocialPostService
                 normalizedRequest,
                 new Dictionary<string, string[]>
                 {
+                    ["CampaignID"] = new[] { "campaign_id", "campaign-id" },
                     ["OrganizationID"] =
                         new[]
                         {

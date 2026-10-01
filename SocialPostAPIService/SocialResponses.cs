@@ -144,6 +144,9 @@ namespace ScanPay.SocialPostService
     public class SocialPostAnalyticsResponse :
         LambdaResponse
     {
+        [JsonProperty("engagement")]
+        public SocialEngagementMetrics Engagement { get; set; } = new();
+
         [JsonProperty("social_post")]
         public SocialPostDb? SocialPost { get; set; }
 
