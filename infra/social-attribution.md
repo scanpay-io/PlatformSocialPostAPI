@@ -1,6 +1,6 @@
 # Social attribution rollout
 
-Source changes are not deployed. No payments or outreach were sent during development.
+API Gateway click routing was deployed on 2026-10-01 to API `6op50ujgu6`, stages `dev` and `prod`, using stack `giveanywhere-social-click-route`. The integration uses each stage's `runwayAlias` (`gany_dev` / `gany_prod`). Deployment IDs are `a6iu65` (dev) and `6eb7y8` (prod); previous IDs were `8f89si` and `h4mbu7`. The existing `/operations/dashboard` route was also published to prod with explicit approval. This does not confirm deployment of the remaining database or application changes. No payments or outreach were sent during development.
 
 ## Completion and analytics contract
 
@@ -18,7 +18,7 @@ The analytics Lambda also accepts `organization_id` and optional `campaign_id` w
 2. Run `social-attribution-index.ps1` with the intended AWS profile and region to add `SocialPostID-index` to the existing `TransactionAmount` table. Wait for ACTIVE before releasing analytics. The script does not replace the table.
 3. Allow the click Lambda GetItem on SocialPost and PutItem on SocialPostClick; allow analytics Query on SocialPostClick/SocialPostID-index and TransactionAmount/SocialPostID-index. Payment and CRM roles need GetItem on SocialPost. Preserve existing permissions.
 4. Deploy updated PlatformLibrary consumers: PaymentAPIOneTimePay, PaymentAPICompleteOneTimePay, recurring schedule/payment Lambdas, CRM pledge creation/read Lambdas, and SocialPostAPIGetSocialPostAnalytics. Deploy the new SocialPostAPIRecordSocialPostClick project, included in the solution and lambda-runner.json.
-5. Use `social-click-route.yaml` to add public POST /social/posts/clicks and CORS OPTIONS to the existing REST API; deploy the intended stage. Apply the API's public endpoint throttling. Add authenticated GET /social/analytics for campaign/organization rollups if required.
+5. `social-click-route.yaml` manages public POST /social/posts/clicks, CORS OPTIONS, and stage-scoped Lambda permissions on the existing REST API. Parameters are RestApiId, RootResourceId, and the unqualified ClickLambdaArn. It uses the existing runwayAlias stage variable. The dev and prod routes are deployed; future route updates require deploying the intended stages. Apply the API's public endpoint throttling. Add authenticated GET /social/analytics for campaign/organization rollups if required.
 6. Deploy DataAPILookupTinyUrl and QRCodeAPIGetRedirectUrl. They preserve a supplied `socialpostid` in the destination after cache lookup. Resolver callers must forward the incoming parameter.
 7. Deploy Web2.0 and GoGiveAnywhere.Intake. Verify each Intake `environment.socialTrackingUrl` points to the same backend environment as its payment API. Existing legacy payment URLs were not changed.
 8. In DEV, follow tagged direct and short links through refresh, authentication, test payment and completion. Verify one attributed transaction, correct amounts, failed/pending exclusion and duplicate completion behavior. These live payment checks have not been performed.

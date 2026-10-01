@@ -3,18 +3,30 @@ Description: Public social landing endpoint on an existing REST API. Deploy the 
 Parameters:
   RestApiId:
     Type: String
-  SocialPostsResourceId:
+  RootResourceId:
     Type: String
-    Description: Existing /social/posts API Gateway resource ID
+    Description: Existing API Gateway root resource ID
   ClickLambdaArn:
     Type: String
-    Description: Qualified ARN of scanpay_record_social_post_click for the target environment
+    Description: Unqualified ARN of scanpay_record_social_post_click; stages use runwayAlias
 Resources:
+  SocialResource:
+    Type: AWS::ApiGateway::Resource
+    Properties:
+      RestApiId: !Ref RestApiId
+      ParentId: !Ref RootResourceId
+      PathPart: social
+  PostsResource:
+    Type: AWS::ApiGateway::Resource
+    Properties:
+      RestApiId: !Ref RestApiId
+      ParentId: !Ref SocialResource
+      PathPart: posts
   ClickResource:
     Type: AWS::ApiGateway::Resource
     Properties:
       RestApiId: !Ref RestApiId
-      ParentId: !Ref SocialPostsResourceId
+      ParentId: !Ref PostsResource
       PathPart: clicks
   ClickMethod:
     Type: AWS::ApiGateway::Method
@@ -27,14 +39,21 @@ Resources:
       Integration:
         Type: AWS_PROXY
         IntegrationHttpMethod: POST
-        Uri: !Sub 'arn:${AWS::Partition}:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${ClickLambdaArn}/invocations'
-  ClickPermission:
+        Uri: !Sub 'arn:${AWS::Partition}:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${ClickLambdaArn}:${!stageVariables.runwayAlias}/invocations'
+  DevClickPermission:
     Type: AWS::Lambda::Permission
     Properties:
       Action: lambda:InvokeFunction
-      FunctionName: !Ref ClickLambdaArn
+      FunctionName: !Sub '${ClickLambdaArn}:gany_dev'
       Principal: apigateway.amazonaws.com
-      SourceArn: !Sub 'arn:${AWS::Partition}:execute-api:${AWS::Region}:${AWS::AccountId}:${RestApiId}/*/POST/social/posts/clicks'
+      SourceArn: !Sub 'arn:${AWS::Partition}:execute-api:${AWS::Region}:${AWS::AccountId}:${RestApiId}/dev/POST/social/posts/clicks'
+  ProdClickPermission:
+    Type: AWS::Lambda::Permission
+    Properties:
+      Action: lambda:InvokeFunction
+      FunctionName: !Sub '${ClickLambdaArn}:gany_prod'
+      Principal: apigateway.amazonaws.com
+      SourceArn: !Sub 'arn:${AWS::Partition}:execute-api:${AWS::Region}:${AWS::AccountId}:${RestApiId}/prod/POST/social/posts/clicks'
   ClickOptions:
     Type: AWS::ApiGateway::Method
     Properties:
