@@ -23,4 +23,6 @@ echo Example: publish-all-lambdas.bat 20260911-001 Release default
 echo Builds/packages, uploads code, publishes versions, and stores an S3 release manifest.
 echo Does not move aliases. Configure release-settings.json or GANY_RELEASE_* variables.
 echo Use --list to preview configured platforms without contacting AWS.
+echo Per run and API folder: success.log, failed.log, results.csv, summary.txt.
+echo Exit code 1 reports failures after all eligible Lambdas are processed.
 exit /b 0

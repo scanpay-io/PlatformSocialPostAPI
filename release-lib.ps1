@@ -73,6 +73,12 @@ function Save-Results($Rows,[string]$Directory,[string]$Title,[switch]$Print) {
  $sorted | Select-Object Platform,Lambda,FunctionName,Region,Version,Status,Detail,PreviousVersion,StartedUtc,FinishedUtc | Export-Csv (Join-Path $Directory 'results.csv') -NoTypeInformation -Encoding UTF8
  $lines=@($Title)+@($sorted | ForEach-Object {'{0,-9} {1} [{2}:{3}] {4}' -f $_.Status,$_.Lambda,$_.FunctionName,$_.Version,$_.Detail})
  $lines+='Succeeded: '+@($sorted | Where-Object Status -eq Succeeded).Count+'; Failed: '+@($sorted | Where-Object Status -ne Succeeded).Count
+ foreach($status in @('Succeeded','Failed')){
+  $selected=@($sorted | Where-Object {if($status -eq 'Succeeded'){$_.Status -eq 'Succeeded'}else{$_.Status -ne 'Succeeded'}})
+  $filename=if($status -eq 'Succeeded'){'success.log'}else{'failed.log'}
+  $report=@("$Title - $status`: $($selected.Count)")+@($selected | ForEach-Object {'{0}/{1} [{2}] {3}' -f $_.Platform,$_.Lambda,$_.FunctionName,$_.Detail})
+  $report | Set-Content (Join-Path $Directory $filename) -Encoding UTF8
+ }
  $lines | Set-Content (Join-Path $Directory 'summary.txt') -Encoding UTF8
  if($Print){$lines | ForEach-Object {Write-Host $_}}
 }

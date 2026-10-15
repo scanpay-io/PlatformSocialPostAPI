@@ -39,8 +39,7 @@ foreach (var platform in new[] { "instagram", "threads" })
         Check((string)Call("GetRequiredSetting", " ", platform, "CLIENT_ID")! == "environment-id", "Blank config must fall back");
         Environment.SetEnvironmentVariable(envName, " ");
         Environment.SetEnvironmentVariable("SOCIAL_POST_CLIENT_ID", "shared-id");
-        Check((string)Call("GetRequiredSetting", null, platform, "CLIENT_ID")! == "shared-id", "Blank environment setting must not block fallback");
-        Environment.SetEnvironmentVariable("SOCIAL_POST_CLIENT_ID", null);
+        Check((string)Call("GetSetting", platform, "CLIENT_ID", "")! == "", "Product credentials must not fall back to a shared app ID");
         try
         {
             Call("GetRequiredSetting", null, platform, "CLIENT_ID");
@@ -55,6 +54,26 @@ foreach (var platform in new[] { "instagram", "threads" })
     {
         Environment.SetEnvironmentVariable(envName, oldSpecific);
         Environment.SetEnvironmentVariable("SOCIAL_POST_CLIENT_ID", oldShared);
+    }
+
+    string secretEnvName = $"SOCIAL_{platform.ToUpperInvariant()}_CLIENT_SECRET";
+    string? oldSecret = Environment.GetEnvironmentVariable(secretEnvName);
+    string? oldSharedSecret = Environment.GetEnvironmentVariable("SOCIAL_POST_CLIENT_SECRET");
+    try
+    {
+        Environment.SetEnvironmentVariable(secretEnvName, null);
+        Environment.SetEnvironmentVariable("SOCIAL_POST_CLIENT_SECRET", "shared-secret");
+        Check((string)Call("GetSetting", platform, "CLIENT_SECRET", "")! == "", "Product credentials must not use a shared secret");
+        Check((string)Call("GetRequiredSetting", " configured-secret ", platform, "CLIENT_SECRET")! == "configured-secret", "Configured product secrets must be preserved and trimmed");
+        Environment.SetEnvironmentVariable(secretEnvName, " product-secret ");
+        Check((string)Call("GetRequiredSetting", null, platform, "CLIENT_SECRET")! == "product-secret", "Product-specific environment secrets must work");
+        Check((string)Call("GetSetting", "facebook", "CLIENT_SECRET", "")! ==
+            (Environment.GetEnvironmentVariable("SOCIAL_FACEBOOK_CLIENT_SECRET")?.Trim() is { Length: > 0 } facebookSecret ? facebookSecret : "shared-secret"), "Other platforms retain their existing credential fallback");
+    }
+    finally
+    {
+        Environment.SetEnvironmentVariable(secretEnvName, oldSecret);
+        Environment.SetEnvironmentVariable("SOCIAL_POST_CLIENT_SECRET", oldSharedSecret);
     }
 
     string scope = (string)Call("DefaultScopes", platform)!;

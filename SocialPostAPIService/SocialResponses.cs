@@ -91,6 +91,9 @@ namespace ScanPay.SocialPostService
         [JsonProperty("linkedin_pages")]
         public List<SocialPage>? LinkedInPages { get; set; }
 
+        [JsonProperty("facebook_pages")]
+        public List<SocialPage>? FacebookPages { get; set; }
+
         [JsonProperty("social_connection")]
         public SocialConnectionFrontend? SocialConnection { get; set; }
     }

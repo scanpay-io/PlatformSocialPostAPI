@@ -125,6 +125,9 @@ namespace ScanPay.SocialPostService
         [JsonProperty("text_social")]
         public TextSocialPostOptions? TextSocial { get; set; }
 
+        [JsonProperty("meta_social")]
+        public List<MetaSocialPostOptions> MetaSocial { get; set; } = new();
+
         [JsonProperty("resource_type")]
         public string ResourceType { get; set; } =
             DefaultValue.EMPTY_STRING;

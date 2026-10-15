@@ -10,6 +10,7 @@ namespace ScanPay.SocialPostService
     {
         public TikTokPostOptions? TikTok { get; set; }
         public TextSocialPostOptions? TextSocial { get; set; }
+        public List<MetaSocialPostOptions> MetaSocial { get; set; } = new();
 
         [PrimaryKey]
         public string SocialPostID { get; set; } =

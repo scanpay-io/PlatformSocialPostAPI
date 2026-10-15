@@ -694,7 +694,7 @@ namespace ScanPay.SocialPostService
                 SocialPlatform.X => "tweet.read tweet.write users.read offline.access",
                 SocialPlatform.TikTok => "user.info.basic,video.publish,video.upload",
                 SocialPlatform.Facebook =>
-                    "pages_manage_posts pages_read_engagement",
+                    "pages_show_list pages_manage_posts pages_read_engagement",
 
                 SocialPlatform.Instagram =>
                     "instagram_business_basic,instagram_business_content_publish",
@@ -742,7 +742,13 @@ namespace ScanPay.SocialPostService
             string? value = Environment.GetEnvironmentVariable(
                 $"SOCIAL_{platform.ToUpperInvariant()}_{key}");
 
-            if (string.IsNullOrWhiteSpace(value))
+            // Instagram Login and Threads require their own product credentials.
+            // A shared Meta/Facebook app ID can produce "Invalid platform app".
+            bool requiresProductCredential =
+                (platform == SocialPlatform.Instagram || platform == SocialPlatform.Threads) &&
+                (key == "CLIENT_ID" || key == "CLIENT_SECRET");
+
+            if (string.IsNullOrWhiteSpace(value) && !requiresProductCredential)
             {
                 value = Environment.GetEnvironmentVariable($"SOCIAL_POST_{key}");
             }

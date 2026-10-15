@@ -17,6 +17,15 @@ namespace ScanPay.SocialPostService
             ValidateCreateRequest(
                 request);
 
+            request.Platforms = NormalizePlatforms(request.Platforms);
+            if (request.Platforms.Any(p => p == SocialPlatform.TikTok || TextSocialPublishingService.Supports(p)) && request.Platforms.Count != 1)
+                throw ResponseStatusFactory.BadRequest("X, LinkedIn and TikTok must each be created as separate posts.");
+            if (request.MetaSocial == null || request.MetaSocial.Any(o => o == null))
+                throw ResponseStatusFactory.BadRequest("meta_social must be an array of platform settings.");
+            foreach (var options in request.MetaSocial) options.Platform = options.Platform?.Trim().ToLowerInvariant() ?? "";
+            if (request.MetaSocial.Any(o => !MetaSocialPublishingService.Supports(o.Platform) || !request.Platforms.Contains(o.Platform)))
+                throw ResponseStatusFactory.BadRequest("meta_social settings must match the selected Meta platforms.");
+
             if (request.TikTok != null &&
                 (request.Platforms.Count != 1 || request.Platforms[0] != SocialPlatform.TikTok))
                 throw ResponseStatusFactory.BadRequest("TikTok videos must be created as separate posts.");
@@ -33,6 +42,7 @@ namespace ScanPay.SocialPostService
                 {
                     TikTok = request.TikTok,
                     TextSocial = request.TextSocial,
+                    MetaSocial = request.MetaSocial,
                     SocialPostID =
                         socialPostID,
 
@@ -70,6 +80,9 @@ namespace ScanPay.SocialPostService
                         DefaultValue.UtcNow()
                 };
 
+            if (post.Platforms.All(MetaSocialPublishingService.Supports))
+                foreach (string platform in post.Platforms) MetaSocialPublishingService.Validate(post, platform);
+
             await DbCRUD<SocialPostDb>.CreateAsync(
                 post,
                 context);
@@ -89,7 +102,7 @@ namespace ScanPay.SocialPostService
             }
 
             SocialPostDb post =
-                await DbCRUD<SocialPostDb>.ReadAsync(
+                await DbCRUD<SocialPostDb>.ReadConsistentAsync(
                     socialPostID,
                     context);
 
@@ -116,6 +129,14 @@ namespace ScanPay.SocialPostService
                     request.SocialPostID,
                     context);
 
+            if (post.Status != SocialPostStatus.Draft || (await GetDeliveriesAsync(post.OrganizationID, post.SocialPostID, context)).Count > 0)
+                throw ResponseStatusFactory.BadRequest("Only an unsubmitted draft can be edited. Create a new post to change submitted content.");
+            if (request.ScheduledDateUtc.HasValue || (!string.IsNullOrWhiteSpace(request.Status) && request.Status != SocialPostStatus.Draft))
+                throw ResponseStatusFactory.BadRequest("Use Publish now. Delivery status is managed by the publishing service; scheduling is not enabled.");
+            if (request.Platforms?.Count > 0) request.Platforms = NormalizePlatforms(request.Platforms);
+            if (request.MetaSocial == null || request.MetaSocial.Any(o => o == null))
+                throw ResponseStatusFactory.BadRequest("meta_social must be an array of platform settings.");
+
             if (post.Platforms.Contains(SocialPlatform.TikTok) ||
                 request.Platforms?.Contains(SocialPlatform.TikTok) == true)
                 throw ResponseStatusFactory.BadRequest("Create a new TikTok video post with fresh privacy settings and consent.");
@@ -123,6 +144,8 @@ namespace ScanPay.SocialPostService
             if (post.Platforms.Any(TextSocialPublishingService.Supports) ||
                 request.Platforms?.Any(TextSocialPublishingService.Supports) == true)
                 throw ResponseStatusFactory.BadRequest("Create a new X or LinkedIn post and confirm its destination before publishing.");
+
+            var original = Newtonsoft.Json.JsonConvert.DeserializeObject<SocialPostDb>(Newtonsoft.Json.JsonConvert.SerializeObject(post))!;
 
             if (FormatValue.NotEmptyValue(request.ResourceType))
             {
@@ -185,9 +208,21 @@ namespace ScanPay.SocialPostService
             post.LastUpdate =
                 DefaultValue.UtcNow();
 
-            await DbCRUD<SocialPostDb>.SaveAsync(
-                post,
-                context);
+            if (request.MetaSocial?.Count > 0) post.MetaSocial = request.MetaSocial;
+            foreach (var options in post.MetaSocial) options.Platform = options.Platform?.Trim().ToLowerInvariant() ?? "";
+            if (post.Platforms.All(MetaSocialPublishingService.Supports))
+                foreach (string platform in post.Platforms) MetaSocialPublishingService.Validate(post, platform);
+
+            if (!await DbCRUD<SocialPostDb>.TryPatchAsync(post.SocialPostID, post.OrganizationID, original,
+                new Dictionary<string, object>
+                {
+                    [nameof(post.Status)] = post.Status, [nameof(post.LastUpdate)] = post.LastUpdate,
+                    [nameof(post.Content)] = post.Content, [nameof(post.DestinationUrl)] = post.DestinationUrl,
+                    [nameof(post.Platforms)] = post.Platforms, [nameof(post.MetaSocial)] = post.MetaSocial,
+                    [nameof(post.ResourceType)] = post.ResourceType, [nameof(post.ResourceID)] = post.ResourceID,
+                    [nameof(post.OutreachItemID)] = post.OutreachItemID
+                }, context))
+                throw ResponseStatusFactory.BadRequest("The draft changed or was submitted in another request. Reload it before editing.");
 
             return post;
         }
@@ -197,21 +232,7 @@ namespace ScanPay.SocialPostService
             string socialPostID,
             ILambdaContext context)
         {
-            SocialPostDb post =
-                await ReadAsync(
-                    organizationID,
-                    socialPostID,
-                    context);
-
-            post.Status =
-                SocialPostStatus.Cancelled;
-
-            post.LastUpdate =
-                DefaultValue.UtcNow();
-
-            await DbCRUD<SocialPostDb>.SaveAsync(
-                post,
-                context);
+            await CancelAsync(organizationID, socialPostID, context);
         }
 
         public async Task<List<SocialPostDb>> GetByOrganizationAsync(
@@ -262,75 +283,16 @@ namespace ScanPay.SocialPostService
             if (post.Platforms.Any(TextSocialPublishingService.Supports))
                 return await new TextSocialPublishingService().PublishAsync(post, context);
 
-            List<SocialConnectionDb> connections =
-                await new SocialConnectionService()
-                    .GetByOrganizationAsync(
-                        organizationID,
-                        context);
-
-            List<SocialPostDeliveryDb> deliveries =
-                await QueueDeliveriesAsync(
-                    post,
-                    connections,
-                    context);
-
-            post.Status =
-                deliveries.Any(delivery =>
-                    string.Equals(
-                        delivery.Status,
-                        SocialPostDeliveryStatus.Queued,
-                        StringComparison.OrdinalIgnoreCase))
-                    ? SocialPostStatus.Queued
-                    : SocialPostStatus.Failed;
-
-            post.LastUpdate =
-                DefaultValue.UtcNow();
-
-            await DbCRUD<SocialPostDb>.SaveAsync(
-                post,
-                context);
-
-            return post;
+            return await new MetaSocialPublishingService().PublishAsync(post, context);
         }
 
         public async Task<SocialPostDb> ScheduleAsync(
             ScheduleSocialPostRequest request,
             ILambdaContext context)
         {
-            var requestedPost = await ReadAsync(request.EffectiveOrganizationID, request.SocialPostID, context);
-            if (requestedPost.Platforms.Any(TextSocialPublishingService.Supports))
-                throw ResponseStatusFactory.BadRequest("Use Publish now for X and LinkedIn. Scheduled delivery is not enabled.");
-            if (requestedPost.Platforms.Contains(SocialPlatform.TikTok))
-                throw ResponseStatusFactory.BadRequest("TikTok requires a fresh consent and privacy selection. Use Publish now.");
-            if (!request.ScheduledDateUtc.HasValue ||
-                request.ScheduledDateUtc.Value <= DefaultValue.UtcNow())
-            {
-                throw ResponseStatusFactory.BadRequest(
-                    "scheduled_date_utc must be in the future.");
-            }
-
-            SocialPostDb post =
-                await ReadAsync(
-                    request.EffectiveOrganizationID,
-                    request.SocialPostID,
-                    context);
-
-            post.ScheduledDateUtc =
-                request.ScheduledDateUtc;
-
-            post.Status =
-                SocialPostStatus.Scheduled;
-
-            post.LastUpdate =
-                DefaultValue.UtcNow();
-
-            await DbCRUD<SocialPostDb>.SaveAsync(
-                post,
-                context);
-
-            return post;
+            await ReadAsync(request.EffectiveOrganizationID, request.SocialPostID, context);
+            throw ResponseStatusFactory.BadRequest("Scheduled delivery is not enabled. Use Publish now.");
         }
-
         public async Task<SocialPostDb> CancelAsync(
             string organizationID,
             string socialPostID,
@@ -342,21 +304,21 @@ namespace ScanPay.SocialPostService
                     socialPostID,
                     context);
 
-            post.Status =
-                SocialPostStatus.Cancelled;
-
-            post.LastUpdate =
-                DefaultValue.UtcNow();
-
-            await DbCRUD<SocialPostDb>.SaveAsync(
-                post,
-                context);
-
             List<SocialPostDeliveryDb> deliveries =
                 await GetDeliveriesAsync(
                     organizationID,
                     socialPostID,
                     context);
+
+            if (post.Status == SocialPostStatus.Publishing || deliveries.Any(d =>
+                d.Status is "initializing" or "processing" or "publishing" or "published" or "submission_unknown" or "sent_to_inbox"))
+                throw ResponseStatusFactory.BadRequest("This post has already been submitted. Check its status and manage it on the social platform.");
+            var updated = DefaultValue.UtcNow();
+            if (!await DbCRUD<SocialPostDb>.TryPatchAsync(post.SocialPostID, post.OrganizationID, post,
+                new Dictionary<string, object> { [nameof(post.Status)] = SocialPostStatus.Cancelled, [nameof(post.LastUpdate)] = updated }, context))
+                throw ResponseStatusFactory.BadRequest("This post changed in another request. Reload its status before cancelling.");
+            post.Status = SocialPostStatus.Cancelled;
+            post.LastUpdate = updated;
 
             foreach (SocialPostDeliveryDb delivery in deliveries
                          .Where(delivery =>
@@ -384,7 +346,7 @@ namespace ScanPay.SocialPostService
             string socialPostID,
             ILambdaContext context)
         {
-            await ReadAsync(
+            var post = await ReadAsync(
                 organizationID,
                 socialPostID,
                 context);
@@ -393,8 +355,16 @@ namespace ScanPay.SocialPostService
                 await DbCRUD<SocialPostDeliveryDb>.ReadAsync(
                     context);
 
+            foreach (string platform in post.Platforms)
+            {
+                var delivery = await DbCRUD<SocialPostDeliveryDb>.ReadConsistentAsync(platform + "-" + socialPostID, context);
+                if (delivery == null || delivery.OrganizationID != organizationID) continue;
+                deliveries.RemoveAll(d => d.DeliveryID == delivery.DeliveryID);
+                deliveries.Add(delivery);
+            }
+
             return deliveries
-                .Where(delivery =>
+                .Where(delivery => delivery.OrganizationID == organizationID &&
                     string.Equals(
                         delivery.SocialPostID,
                         socialPostID,
@@ -445,120 +415,6 @@ namespace ScanPay.SocialPostService
                 TotalDeliveries =
                     deliveries.Count
             };
-        }
-
-        private static async Task<List<SocialPostDeliveryDb>> QueueDeliveriesAsync(
-            SocialPostDb post,
-            List<SocialConnectionDb> connections,
-            ILambdaContext context)
-        {
-            List<SocialPostDeliveryDb> existingDeliveries =
-                await DbCRUD<SocialPostDeliveryDb>.ReadAsync(
-                    context);
-
-            List<SocialPostDeliveryDb> postDeliveries =
-                existingDeliveries
-                    .Where(delivery =>
-                        string.Equals(
-                            delivery.SocialPostID,
-                            post.SocialPostID,
-                            StringComparison.OrdinalIgnoreCase))
-                    .ToList();
-
-            var queuedDeliveries =
-                new List<SocialPostDeliveryDb>();
-
-            foreach (string platform in post.Platforms)
-            {
-                SocialPostDeliveryDb? existingDelivery =
-                    postDeliveries.FirstOrDefault(delivery =>
-                        string.Equals(
-                            delivery.Platform,
-                            platform,
-                            StringComparison.OrdinalIgnoreCase));
-
-                if (existingDelivery != null &&
-                    (string.Equals(
-                         existingDelivery.Status,
-                         SocialPostDeliveryStatus.Queued,
-                         StringComparison.OrdinalIgnoreCase) ||
-                     string.Equals(
-                         existingDelivery.Status,
-                         SocialPostDeliveryStatus.Publishing,
-                         StringComparison.OrdinalIgnoreCase) ||
-                     string.Equals(
-                         existingDelivery.Status,
-                         SocialPostDeliveryStatus.Published,
-                         StringComparison.OrdinalIgnoreCase)))
-                {
-                    queuedDeliveries.Add(
-                        existingDelivery);
-
-                    continue;
-                }
-
-                SocialConnectionDb? connection =
-                    connections.FirstOrDefault(item =>
-                        string.Equals(
-                            item.Platform,
-                            platform,
-                            StringComparison.OrdinalIgnoreCase) &&
-                        string.Equals(
-                            item.Status,
-                            SocialConnectionStatus.Connected,
-                            StringComparison.OrdinalIgnoreCase));
-
-                SocialPostDeliveryDb delivery =
-                    existingDelivery
-                    ?? new SocialPostDeliveryDb
-                    {
-                        DeliveryID =
-                            FormatValue.NewID(),
-
-                        SocialPostID =
-                            post.SocialPostID,
-
-                        OrganizationID =
-                            post.OrganizationID,
-
-                        Platform =
-                            platform,
-
-                        CreateDate =
-                            DefaultValue.UtcNow()
-                    };
-
-                delivery.SocialConnectionID =
-                    connection?.SocialConnectionID
-                    ?? "missing_connection";
-
-                delivery.Status =
-                    connection == null
-                        ? SocialPostDeliveryStatus.Failed
-                        : SocialPostDeliveryStatus.Queued;
-
-                delivery.ErrorCode =
-                    connection == null
-                        ? "missing_connection"
-                        : DefaultValue.EMPTY_STRING;
-
-                delivery.ErrorMessage =
-                    connection == null
-                        ? $"No connected {platform} social connection was found."
-                        : DefaultValue.EMPTY_STRING;
-
-                delivery.LastUpdate =
-                    DefaultValue.UtcNow();
-
-                await DbCRUD<SocialPostDeliveryDb>.SaveAsync(
-                    delivery,
-                    context);
-
-                queuedDeliveries.Add(
-                    delivery);
-            }
-
-            return queuedDeliveries;
         }
 
         private static int CountDeliveries(

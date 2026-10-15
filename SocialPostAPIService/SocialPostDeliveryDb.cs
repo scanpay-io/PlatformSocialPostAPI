@@ -7,6 +7,8 @@ namespace ScanPay.SocialPostService
     [Alias("SocialPostDelivery")]
     public class SocialPostDeliveryDb
     {
+        public string ContainerID { get; set; } = "";
+        public string TargetAccountID { get; set; } = "";
         [PrimaryKey]
         public string DeliveryID { get; set; } =
             DefaultValue.EMPTY_STRING;

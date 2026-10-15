@@ -168,3 +168,36 @@ Each PlatformAPI carries its own helper files and can operate independently. The
 - AWS Lambda versions: https://docs.aws.amazon.com/lambda/latest/dg/configuration-versions.html
 - Update function code and revision guards: https://docs.aws.amazon.com/lambda/latest/api/API_UpdateFunctionCode.html
 - Conditional S3 writes: https://docs.aws.amazon.com/AmazonS3/latest/userguide/conditional-writes.html
+## Continue-on-failure logging (October 2026)
+
+The master and each of the 34 PlatformAPI folders use the same reporting contract.
+All configured Lambda targets are assessed; a build, package, publish, or alias-update failure
+is recorded and processing continues to the next target. Publish inventory errors affect
+only the relevant targets; every occurrence of a duplicate AWS function is rejected so
+the same function cannot be overwritten twice. Missing platform inventories are reported
+as platform setup failures while the remaining platforms continue.
+
+Logs are saved beneath the command root in `artifacts/lambda-runs/<unique-run>-<mode>/`:
+
+- `success.log`: successful Lambdas with function names and result details.
+- `failed.log`: failed Lambdas with their error details, including run-level preflight errors.
+- `results.csv` and `summary.txt`: combined results and totals.
+- A subfolder per PlatformAPI contains the same reports and a log per Lambda.
+- Publish/deploy also create `run.log` before configuration and AWS preflight.
+
+Reports are refreshed as each Lambda completes. Exit code is 0 only for a successful run;
+1 means at least one failure or a blocking setup error. No need to scrape console output.
+All three BAT entry points support `--help` and `--list` without AWS changes.
+
+Account, bucket, immutable-release and deployment preflight guards remain required.
+Global setup failures cannot execute AWS operations. An incomplete published release is
+not deployable, and a failed deployment preflight blocks all alias mutations; all manifest
+entries are still checked and reported. Once alias promotion starts, a failed Lambda does
+not prevent attempts for later Lambdas.
+
+The inventories now include CRMAPIGetRecipientSummary, FileAPIHtmltoPDF and
+StoreAPIUpdateStoreItems, which were previously omitted. FileAPIHtmltoPDF uses the
+existing Dockerfile.release mapping and requires Docker Linux containers when publishing.
+UtilityAPIOperationalErrorListeners is a separate SAM/CloudFormation stack with multiple
+resources and no single function-name; it is not a single-function Lambda-runner target.
+Deploy that stack through its own documented workflow.

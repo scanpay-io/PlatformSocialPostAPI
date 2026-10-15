@@ -31,6 +31,19 @@ commit credentials. This example is not automatically deployed.
 
 Use credentials belonging to each product. Instagram uses Instagram Login for
 professional accounts. Explicitly configured modern scopes override defaults.
+Instagram and Threads credentials must come from their own provider configuration
+or `SOCIAL_INSTAGRAM_CLIENT_ID` / `SOCIAL_INSTAGRAM_CLIENT_SECRET` and
+`SOCIAL_THREADS_CLIENT_ID` / `SOCIAL_THREADS_CLIENT_SECRET`. These two providers
+do not fall back to `SOCIAL_POST_CLIENT_ID` or `SOCIAL_POST_CLIENT_SECRET`.
+Shared redirect and scope fallbacks remain supported.
+
+If Instagram displays `Invalid platform app` before redirecting back to the
+application, verify the configured ID belongs to the Instagram Login product
+in the intended Meta app, with its matching Instagram secret. Migrating scopes
+does not convert an obsolete Basic Display or another product's app ID. For
+Threads, verify the Threads app ID and matching secret. A nonempty but incorrect
+product ID cannot be validated by the local regression suite.
+
 When Instagram scopes from configuration or environment variables contain legacy
 `user_profile` or `user_media`, the service removes those permissions and adds
 `instagram_business_basic,instagram_business_content_publish`, preserving other

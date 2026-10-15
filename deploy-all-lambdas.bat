@@ -2,6 +2,10 @@
 setlocal EnableExtensions EnableDelayedExpansion
 if /I "%~1"=="--help" goto :help
 if /I "%~1"=="/?" goto :help
+if /I "%~1"=="--list" (
+ powershell -NoProfile -ExecutionPolicy Bypass -File "%~dp0release-runner.ps1" -Mode Deploy -Root "%~dp0." -List
+ exit /b !ERRORLEVEL!
+)
 if "%~1"=="" goto :missing
 if "%~2"=="" goto :missing
 set "PROFILE=%~3"
@@ -18,4 +22,6 @@ echo Example: deploy-all-lambdas.bat development 20260911-001 default
 echo Promotes exact versions from a Ready S3 manifest. Never builds or publishes.
 echo Rollback uses the same command with an earlier release ID.
 echo IMPORTANT: The second argument is now a release ID, not Release/Debug.
+echo Per run and API folder: success.log, failed.log, results.csv, summary.txt.
+echo Exit code 1 reports failures after all eligible Lambdas are processed.
 exit /b 0

@@ -20,7 +20,7 @@ function Invoke-Logged([string]$Exe,[string[]]$Arguments,[string]$Log) {
  } finally {$ErrorActionPreference=$old}
  if($code -ne 0){throw "$Exe exited with code $code"}
 }
-function Save-Summary($Rows,[string]$Directory,[string]$Title){
+function Save-Summary($Rows,[string]$Directory,[string]$Title,[switch]$Print){
  $sorted=@($Rows | Sort-Object @{Expression={if($_.Status -eq 'Succeeded'){0}else{1}}},Lambda)
  $sorted | Export-Csv (Join-Path $Directory 'results.csv') -NoTypeInformation -Encoding UTF8
  $text=@("",$Title)
@@ -28,8 +28,14 @@ function Save-Summary($Rows,[string]$Directory,[string]$Title){
  $ok=@($sorted | Where-Object Status -eq Succeeded).Count
  $bad=@($sorted | Where-Object Status -eq Failed).Count
  $text+="Succeeded: $ok; Failed: $bad"
+ foreach($status in @('Succeeded','Failed')){
+  $selected=@($sorted | Where-Object {if($status -eq 'Succeeded'){$_.Status -eq 'Succeeded'}else{$_.Status -ne 'Succeeded'}})
+  $filename=if($status -eq 'Succeeded'){'success.log'}else{'failed.log'}
+  $report=@("$Title - $status`: $($selected.Count)")+@($selected | ForEach-Object {'{0}/{1} [{2}] {3}' -f $_.Platform,$_.Lambda,$_.FunctionName,$_.Detail})
+  $report | Set-Content (Join-Path $Directory $filename) -Encoding UTF8
+ }
  $text | Set-Content (Join-Path $Directory 'summary.txt') -Encoding UTF8
- $text | ForEach-Object {Write-Host $_}
+ if($Print){$text | ForEach-Object {Write-Host $_}}
 }
 $platforms=if($Master){@(Get-ChildItem -LiteralPath $Root -Directory -Filter 'Platform*API' | Sort-Object Name)}else{@(Get-Item -LiteralPath $Root)}
 if(!$platforms.Count){throw 'No PlatformAPIs found'}
@@ -68,13 +74,16 @@ foreach($platform in $platforms){
   $row=[pscustomobject]@{Platform=$platform.Name;Lambda=$lambda;FunctionName=$functionName;Mode=$Mode;Status=$status;Detail=$detail;Log=$log;StartedUtc=$started;FinishedUtc=[DateTime]::UtcNow.ToString('o')}
   $rows.Add($row);$results.Add($row)
   # Flush after each Lambda so interrupted runs retain completed results.
+  Save-Summary $rows $platformDir ($platform.Name+' '+$Mode+' summary')
   $rows | Export-Csv (Join-Path $platformDir 'results.csv') -NoTypeInformation -Encoding UTF8
+  Save-Summary $results $runDir ($Mode+' all platforms summary')
   $results | Export-Csv (Join-Path $runDir 'results.csv') -NoTypeInformation -Encoding UTF8
   Write-Host "$status`: $lambda ($detail)"
  }
- Save-Summary $rows $platformDir ($platform.Name+' '+$Mode+' summary')
+ Save-Summary $rows $platformDir ($platform.Name+' '+$Mode+' summary') -Print
 }
 if($List){exit 0}
+Save-Summary $results $runDir ($Mode+' all platforms summary') -Print
 $failed=@($results | Where-Object Status -eq Failed).Count
 Write-Host "`nFinished: $($results.Count-$failed) succeeded; $failed failed. Logs: $runDir"
 if($failed){exit 1}

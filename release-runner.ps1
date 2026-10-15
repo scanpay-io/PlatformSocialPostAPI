@@ -9,6 +9,25 @@ $Root=[IO.Path]::GetFullPath($Root)
 . (Join-Path $PSScriptRoot 'release-lib.ps1')
 $script:Configuration=$Configuration;$script:ReleaseId=$ReleaseId;$script:AwsProfile=$AwsProfile
 $script:Log=$null
+if(!$List){
+ $attempt=[DateTime]::UtcNow.ToString('yyyyMMddTHHmmssZ')+'-'+[guid]::NewGuid().ToString('N').Substring(0,8)
+ $script:RunDir=Join-Path $Root ('artifacts\lambda-runs\'+$attempt+'-'+$Mode)
+ New-Item $script:RunDir -ItemType Directory -Force | Out-Null
+ $script:Log=Join-Path $script:RunDir 'run.log'
+ Set-Content $script:Log "$Mode $ReleaseId - started $attempt"
+ Write-Host "Logs: $($script:RunDir)"
+}
+trap {
+ if($script:RunDir){
+  $message='RUN FAILED: '+$_.Exception.Message
+  Add-Content -LiteralPath (Join-Path $script:RunDir 'run.log') -Value $message
+  Add-Content -LiteralPath (Join-Path $script:RunDir 'failed.log') -Value $message
+  if(!(Test-Path (Join-Path $script:RunDir 'success.log'))){Set-Content (Join-Path $script:RunDir 'success.log') 'Succeeded: 0'}
+  Add-Content -LiteralPath (Join-Path $script:RunDir 'summary.txt') -Value $message
+ }
+ Write-Error $_ -ErrorAction Continue
+ exit 1
+}
 $scope=if($Master){'All'}else{Split-Path $Root -Leaf}
 $platforms=if($Master){@(Get-ChildItem $Root -Directory -Filter 'Platform*API' | Sort-Object Name)}else{@(Get-Item $Root)}
 if($List){foreach($p in $platforms){$c=Get-Content (Join-Path $p.FullName 'lambda-runner.json') -Raw | ConvertFrom-Json;Write-Host "$($p.Name): $($c.Lambdas.Count) configured Lambdas"};exit 0}
@@ -20,9 +39,7 @@ if(!$script:Settings.Bucket -or !$script:Settings.Region -or $script:Settings.Ac
 if(!$script:Settings.BucketOwner){$script:Settings.BucketOwner=$script:Settings.AccountId}
 $script:Settings.Prefix=$script:Settings.Prefix.Trim('/')
 if($script:Settings.Prefix -notmatch '^[A-Za-z0-9_/-]+$'){throw 'Invalid release key prefix'}
-$attempt=[DateTime]::UtcNow.ToString('yyyyMMddTHHmmssZ')+'-'+[guid]::NewGuid().ToString('N').Substring(0,8)
-$script:RunDir=Join-Path $Root ('artifacts\lambda-runs\'+$attempt+'-'+$Mode)
-New-Item $script:RunDir -ItemType Directory -Force | Out-Null
+
 $env:AWS_PAGER=''
 $identity=Invoke-Aws @('sts','get-caller-identity')
 $script:AccountId=$identity.Account
@@ -37,40 +54,56 @@ foreach($flag in 'BlockPublicAcls','IgnorePublicAcls','BlockPublicPolicy','Restr
 $script:ReleaseKey=$script:Settings.Prefix+'/'+$script:AccountId+'/releases/'+$ReleaseId
 $manifestPath=Join-Path $script:RunDir 'manifest.json'
 $rows=New-Object 'System.Collections.Generic.List[object]'
+Save-Results $rows $script:RunDir ($Mode+' '+$ReleaseId)
 Write-Host "$Mode release $ReleaseId; scope $scope; account $($script:AccountId). Logs: $($script:RunDir)"
 if($Mode -eq 'Publish'){
- $targets=New-Object 'System.Collections.Generic.List[object]';$seen=@{};$inventoryErrors=@()
+ $targets=New-Object 'System.Collections.Generic.List[object]';$seen=@{}
  foreach($p in $platforms){
   try {
    $c=Get-Content (Join-Path $p.FullName 'lambda-runner.json') -Raw | ConvertFrom-Json
    if(!$c.Lambdas.Count){throw 'Empty Lambda inventory'}
-   foreach($name in $c.Lambdas){
-    if(($p.Name+'/'+$name) -in @($script:Settings.ExcludedProjects)){Write-Host "Excluded: $($p.Name)/$name";continue}
+  } catch {
+   $entry=New-Result $p.Name '(platform setup)';$entry.Detail=$_.Exception.Message;$entry.FinishedUtc=[DateTime]::UtcNow.ToString('o');$rows.Add($entry)
+   $dir=Join-Path $script:RunDir $p.Name;New-Item $dir -ItemType Directory -Force | Out-Null
+   Set-Content (Join-Path $dir 'setup.log') $entry.Detail
+   Save-Results @($entry) $dir ($p.Name+' setup failed')
+   Save-Results $rows $script:RunDir "Publish $ReleaseId"
+   continue
+  }
+  foreach($name in $c.Lambdas){
+   if(($p.Name+'/'+$name) -in @($script:Settings.ExcludedProjects)){Write-Host "Excluded: $($p.Name)/$name";continue}
+   $target=[pscustomobject]@{Platform=$p;Config=$c;Lambda=$name;InventoryError=''}
+   try {
     if($name -notmatch '^[A-Za-z0-9_-]+$'){throw 'Invalid Lambda project name'}
     $d=Get-Content (Join-Path $p.FullName "$name\aws-lambda-tools-defaults.json") -Raw | ConvertFrom-Json
+    if($d.'function-name' -notmatch '^[A-Za-z0-9_-]+$'){throw 'Invalid Lambda function name'}
     $region=$d.region;if(!$region){$region=$script:Settings.Region}
     $key=$region+'/'+$d.'function-name'
-    if($seen.ContainsKey($key)){$inventoryErrors+="Duplicate AWS function $key : $($seen[$key]) and $($p.Name)/$name"}else{$seen[$key]=$p.Name+'/'+$name}
-    $targets.Add([pscustomobject]@{Platform=$p;Config=$c;Lambda=$name})
-   }
-  }catch{$inventoryErrors+="$($p.Name): $($_.Exception.Message)"}
+    if($seen.ContainsKey($key)){
+     $target.InventoryError="Duplicate AWS function $key"
+     $seen[$key].InventoryError=$target.InventoryError
+    }else{$seen[$key]=$target}
+   }catch{$target.InventoryError=$_.Exception.Message}
+   $targets.Add($target)
+  }
  }
- if($inventoryErrors.Count -or !$targets.Count){throw ('Release inventory is invalid; no functions updated. '+($inventoryErrors -join '; '))}
+ if(!$targets.Count){throw 'No eligible Lambda targets found; see setup logs'}
  $reservation=Join-Path $script:RunDir 'reservation.json'
  Write-Json $reservation @{ReleaseId=$ReleaseId;Scope=$scope;AccountId=$script:AccountId;StartedUtc=[DateTime]::UtcNow.ToString('o');PublisherArn=$identity.Arn;Attempt=$attempt}
  Put-ReleaseObject ($script:ReleaseKey+'/reservation.json') $reservation | Out-Null
  # A previously used ID is never reused, including a failed or interrupted attempt.
  $sources=@();foreach($p in $platforms){$sources+=Source-Record $p.FullName}
  foreach($lib in 'PlatformLibrary','PlatformProcessorLibrary'){$parent=if($Master){$Root}else{Split-Path $Root};$path=Join-Path $parent $lib;if(Test-Path $path){$sources+=Source-Record $path}}
- $manifest=[ordered]@{SchemaVersion=1;ReleaseId=$ReleaseId;Scope=$scope;AccountId=$script:AccountId;Region=$script:Settings.Region;Configuration=$Configuration;Status='Publishing';CreatedUtc=[DateTime]::UtcNow.ToString('o');CompletedUtc='';PublisherArn=$identity.Arn;ExpectedCount=$targets.Count;ExcludedProjects=@($script:Settings.ExcludedProjects);Sources=$sources;Functions=@()}
+ $manifest=[ordered]@{SchemaVersion=1;ReleaseId=$ReleaseId;Scope=$scope;AccountId=$script:AccountId;Region=$script:Settings.Region;Configuration=$Configuration;Status='Publishing';CreatedUtc=[DateTime]::UtcNow.ToString('o');CompletedUtc='';PublisherArn=$identity.Arn;ExpectedCount=($targets.Count+$rows.Count);ExcludedProjects=@($script:Settings.ExcludedProjects);Sources=$sources;Functions=@()}
  foreach($group in ($targets | Group-Object {$_.Platform.Name} | Sort-Object Name)){
   $dir=Join-Path $script:RunDir $group.Name;New-Item $dir -ItemType Directory -Force | Out-Null
   foreach($target in ($group.Group | Sort-Object Lambda)){
-   $entry=New-Result $group.Name $target.Lambda;$script:Log=Join-Path $dir ($target.Lambda+'.log')
+   $entry=New-Result $group.Name $target.Lambda;$logName=if($target.Lambda -match '^[A-Za-z0-9_-]+$'){$target.Lambda}else{'invalid-'+[guid]::NewGuid().ToString('N')};$script:Log=Join-Path $dir ($logName+'.log')
    Write-Host ("Publishing $ReleaseId $($group.Name)/$($target.Lambda)")
    Set-Content $script:Log "Publishing $ReleaseId $($group.Name)/$($target.Lambda)"
-   try{Publish-One $entry $target.Platform.FullName $target.Config $dir;$entry.Status='Succeeded'}catch{$entry.Detail=$_.Exception.Message;Add-Content $script:Log $entry.Detail}
+   try{if($target.InventoryError){throw $target.InventoryError};Publish-One $entry $target.Platform.FullName $target.Config $dir;$entry.Status='Succeeded'}catch{$entry.Detail=$_.Exception.Message;Add-Content $script:Log $entry.Detail}
    $entry.FinishedUtc=[DateTime]::UtcNow.ToString('o');$rows.Add($entry)
+   Add-Content -LiteralPath $script:Log -Value ($entry.Status+': '+$entry.Detail)
    Write-Host "$($entry.Status): $($entry.Lambda) $($entry.Detail)"
    $manifest.Functions=@($rows.ToArray());Write-Json $manifestPath $manifest
    Save-Results $rows $script:RunDir "Publish $ReleaseId"

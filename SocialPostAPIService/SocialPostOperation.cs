@@ -54,6 +54,8 @@ namespace ScanPay.SocialPostService
                     ? await new TikTokPublishingService().CreatorAsync(connection, context) : null,
                 LinkedInPages = connection.Platform == SocialPlatform.LinkedIn
                     ? await new TextSocialPublishingService().LinkedInPagesAsync(connection, context) : null,
+                FacebookPages = connection.Platform == SocialPlatform.Facebook
+                    ? await new MetaSocialPublishingService().FacebookPagesAsync(connection, context) : null,
                 SocialConnection =
                     SocialConnectionFrontend.From(
                         connection),
@@ -307,6 +309,8 @@ namespace ScanPay.SocialPostService
             var currentPost = await service.ReadAsync(organizationID, postID, context);
             if (currentPost.Platforms.Contains(SocialPlatform.TikTok))
                 await new TikTokPublishingService().RefreshStatusAsync(currentPost, context);
+            if (currentPost.Platforms.TrueForAll(MetaSocialPublishingService.Supports))
+                await new MetaSocialPublishingService().RefreshStatusAsync(currentPost, context);
 
             return new SocialPostStatusResponse
             {

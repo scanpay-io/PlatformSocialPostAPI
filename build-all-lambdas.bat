@@ -13,5 +13,7 @@ exit /b %ERRORLEVEL%
 :help
 echo Usage: build-all-lambdas.bat [configuration]
 echo Use --list to preview Lambdas. Default configuration: Release.
-echo Continues after failures. Logs and sorted summaries: artifacts\lambda-runs.
+echo Continues after Lambda failures. Logs: artifacts\lambda-runs.
+echo Per run and API folder: success.log, failed.log, results.csv, summary.txt.
+echo Exit code 1 reports failures after all eligible Lambdas are processed.
 exit /b 0
