@@ -42,13 +42,20 @@ namespace ScanPay.SocialPostService
             return result["data"] as JObject ?? throw ResponseStatusFactory.BadRequest("TikTok returned an incomplete response.");
         }
 
-        public async Task<JObject> CreatorAsync(SocialConnectionDb connection, ILambdaContext context)
+        public static bool HasScope(SocialConnectionDb connection, string scope) =>
+            (connection.GrantedScopes ?? string.Empty)
+                .Split(new[] { ',', ' ', '\t', '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries)
+                .Contains(scope);
+
+        public async Task<JObject?> CreatorAsync(SocialConnectionDb connection, ILambdaContext context)
         {
             var token = await TokenAsync(connection, context);
+            // Upload-only connections cannot call the direct-post creator endpoint.
+            if (!HasScope(connection, "video.publish")) return null;
             return await PostAsync("post/publish/creator_info/query/", token.AccessToken, new JObject());
         }
 
-        public static void Validate(SocialPostDb post, JObject creator)
+        public static void Validate(SocialPostDb post, JObject? creator)
         {
             var options = post.TikTok ?? throw ResponseStatusFactory.BadRequest("TikTok post settings are required.");
             if (post.Platforms.Count != 1 || post.Platforms[0] != SocialPlatform.TikTok ||
@@ -58,12 +65,16 @@ namespace ScanPay.SocialPostService
                 video.Scheme != "https" || !string.IsNullOrEmpty(video.UserInfo) || !string.IsNullOrEmpty(video.Fragment) ||
                 !(video.Host == "gogiveanywhere.com" || video.Host.EndsWith(".gogiveanywhere.com", StringComparison.OrdinalIgnoreCase)))
                 throw ResponseStatusFactory.BadRequest("Use an HTTPS video URL hosted on the verified gogiveanywhere.com domain.");
+            // Inbox uploads allow up to ten minutes; users trim to their account limit in TikTok.
+            int maximumDuration = options.SendToInbox ? 600 : creator?.Value<int>("max_video_post_duration_sec") ?? 0;
             if (!double.IsFinite(options.DurationSeconds) || options.DurationSeconds <= 0 ||
-                options.DurationSeconds > creator.Value<int>("max_video_post_duration_sec"))
-                throw ResponseStatusFactory.BadRequest("The video duration exceeds this TikTok account's limit or could not be read.");
+                options.DurationSeconds > maximumDuration)
+                throw ResponseStatusFactory.BadRequest("The video duration exceeds the TikTok limit or could not be read.");
             if (post.Content.Length > 2200)
                 throw ResponseStatusFactory.BadRequest("TikTok captions must be at most 2200 characters.");
             if (options.SendToInbox) return;
+            if (creator == null)
+                throw ResponseStatusFactory.BadRequest("Reload TikTok creator settings before publishing.");
             var privacy = creator["privacy_level_options"]?.Values<string>().ToArray() ?? Array.Empty<string>();
             if (!privacy.Contains(options.PrivacyLevel))
                 throw ResponseStatusFactory.BadRequest("Choose an available TikTok privacy setting.");
@@ -81,9 +92,9 @@ namespace ScanPay.SocialPostService
             var connection = await new SocialConnectionService().ReadAsync(post.OrganizationID, options.ConnectionID, context);
             var token = await TokenAsync(connection, context);
             string scope = options.SendToInbox ? "video.upload" : "video.publish";
-            if (!connection.GrantedScopes.Split(',', ' ').Contains(scope))
+            if (!HasScope(connection, scope))
                 throw ResponseStatusFactory.BadRequest("Reconnect TikTok and grant the required publishing permission.");
-            Validate(post, await CreatorAsync(connection, context));
+            Validate(post, options.SendToInbox ? null : await CreatorAsync(connection, context));
 
             // A deterministic, conditional delivery record prevents duplicate sends, including after timeouts.
             var delivery = new SocialPostDeliveryDb

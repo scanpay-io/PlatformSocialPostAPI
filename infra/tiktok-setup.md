@@ -24,6 +24,11 @@ currently fails with TypeLoadException; its gany_dev alias worked.
 - Privacy has no default. Interaction permissions default off. Direct publishing
   requires consent, valid duration, available privacy, and compliant commercial
   disclosure. Draft uploads are delivered to the TikTok inbox for completion there.
+- The composer only offers modes granted by a connected, unexpired account:
+  `video.publish` for direct posts and `video.upload` for inbox uploads. Missing or
+  near-expired token metadata requires reconnection. Inbox-only connections do not
+  query the direct-post creator endpoint; inbox videos may be up to ten minutes,
+  with account-specific trimming and publishing completed in TikTok.
 - One conditional delivery record per post prevents duplicate initialization.
   Ambiguous failures are not retried automatically. Status polling distinguishes
   processing, published, inbox delivery, and failure; initialization is not success.
