@@ -9,7 +9,7 @@ void Check(bool ok) { if (!ok) throw new Exception("Check failed: " + (checks + 
 void Reject(Action action) { bool rejected = false; try { action(); } catch { rejected = true; } Check(rejected); }
 object? OAuth(string name, params object?[] args) => typeof(SocialOAuthService).GetMethod(name, BindingFlags.Static | BindingFlags.NonPublic)!.Invoke(null, args);
 var scopes = (string)OAuth("ResolveScopes", new ScanPay.DataModel.Model.SocialServiceProvider { Scopes = "r_organization_admin,w_organization_social" }, "linkedin")!;
-Check(scopes == "r_organization_admin w_organization_social");
+Check(scopes.Split(' ').ToHashSet().SetEquals(new[] { "rw_organization_admin", "w_organization_social" }));
 OAuth("ValidateLinkedInAuthorization", scopes, 3600); checks++;
 Reject(() => OAuth("ValidateLinkedInAuthorization", "r_organization_admin", 3600));
 Reject(() => OAuth("ValidateLinkedInAuthorization", scopes, null));
@@ -58,3 +58,4 @@ bool missingIdRejected = false;
 try { await new TextSocialProviderClient(missingIdHttp).PublishAsync("linkedin", "secret-token", "Approved post", "urn:li:organization:123"); } catch { missingIdRejected = true; }
 Check(missingIdRejected);
 Console.WriteLine($"LinkedIn regression passed: {checks} checks.");
+

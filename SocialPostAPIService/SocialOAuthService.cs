@@ -665,7 +665,8 @@ namespace ScanPay.SocialPostService
             if (platform == SocialPlatform.LinkedIn)
             {
                 var permissions = new HashSet<string>(scope.Split(new[] { ',', ' ', '\t', '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries));
-                permissions.Add("r_organization_admin");
+                permissions.Remove("r_organization_admin");
+                permissions.Add("rw_organization_admin");
                 permissions.Add("w_organization_social");
                 return string.Join(" ", permissions);
             }
@@ -707,7 +708,8 @@ namespace ScanPay.SocialPostService
         private static void ValidateLinkedInAuthorization(string scope, int? expiresIn)
         {
             var permissions = new HashSet<string>(scope.Split(new[] { ',', ' ', '\t', '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries));
-            if (!permissions.Contains("w_organization_social") || !permissions.Contains("r_organization_admin"))
+            if (!permissions.Contains("w_organization_social") ||
+                !(permissions.Contains("rw_organization_admin") || permissions.Contains("r_organization_admin")))
                 throw ResponseStatusFactory.BadRequest("Reconnect LinkedIn and grant Page administration and publishing permissions.");
             if (!expiresIn.HasValue || expiresIn.Value <= 0)
                 throw ResponseStatusFactory.BadRequest("LinkedIn did not return a valid token expiration. Reconnect the account.");
@@ -730,7 +732,7 @@ namespace ScanPay.SocialPostService
                     "threads_basic,threads_content_publish",
 
                 SocialPlatform.LinkedIn =>
-                    "r_organization_admin w_organization_social",
+                    "rw_organization_admin w_organization_social",
 
                 _ =>
                     DefaultValue.EMPTY_STRING

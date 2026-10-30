@@ -2,7 +2,7 @@
 
 The existing Connect LinkedIn action uses the authorize-connection endpoint with `platform: "linkedin"`. The callback requires the authorization code and signed state, bound to the authenticated GiveAnywhere organization. Redirects are backend configured. Connection responses exclude tokens; credentials remain in the backend SocialConnectionToken store. Ensure that table has encryption at rest and access limited to the service IAM role.
 
-Configure `cloud_services.social_service_providers.linkedin` with `supported`, `oauth_enabled`, `posting_enabled`, `client_id`, `client_secret`, and the exact HTTPS `redirect_uri` registered with LinkedIn. Obtain LinkedIn Community Management access for `r_organization_admin` and `w_organization_social`. Both permissions are requested even when a legacy scope override is configured. Reconnect existing accounts to grant them. Set `SOCIAL_LINKEDIN_API_VERSION` to a supported YYYYMM version (default 202609). Credential and redirect environment fallbacks follow the existing OAuth service; use provider configuration for refresh credentials too.
+Configure `cloud_services.social_service_providers.linkedin` with `supported`, `oauth_enabled`, `posting_enabled`, `client_id`, `client_secret`, and the exact HTTPS `redirect_uri` registered with LinkedIn. Obtain LinkedIn Community Management access for `rw_organization_admin` and `w_organization_social`. Both permissions are requested even when a legacy scope override is configured. Reconnect existing accounts to grant them. Set `SOCIAL_LINKEDIN_API_VERSION` to a supported YYYYMM version (default 202609). Credential and redirect environment fallbacks follow the existing OAuth service; use provider configuration for refresh credentials too.
 
 Read the connection to obtain `linkedin_pages`; the administrator must select a manageable organization Page. Create a post using the existing create endpoint:
 
@@ -40,3 +40,4 @@ dotnet run --project tests/LinkedInRegression -c Release
 ```
 
 All 24 LinkedIn checks passed after the clean rebuild. The earlier OAuth run passed 116 checks and Meta publishing run passed 119 checks.
+

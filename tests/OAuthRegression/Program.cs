@@ -205,7 +205,7 @@ uploadConnection.GrantedScopes = "video.upload.extra";
 Check(!TikTokPublishingService.HasScope(uploadConnection, "video.upload"), "Scope matching must be exact");
 Check(SocialPlatform.IsValid("x"), "X must be accepted as a platform");
 Check((string)Call("TokenUrl", "x")! == "https://api.x.com/2/oauth2/token", "X uses OAuth 2 token endpoint");
-Check((string)Call("DefaultScopes", "linkedin")! == "r_organization_admin w_organization_social", "LinkedIn uses nonprofit Page scopes, not member-only OIDC scopes");
+Check((string)Call("DefaultScopes", "linkedin")! == "rw_organization_admin w_organization_social", "LinkedIn uses nonprofit Page scopes, not member-only OIDC scopes");
 Check(SocialOAuthState.XCodeChallenge("dBjftJeZ4CVP-mB92K27uhbUJU1p1r_wW1gFWFOEjXk") == "E9Melhoa2OwvFrEMTJguCHaoeK1t8URWbuGJSstw-cM", "PKCE S256 must match RFC 7636 test vector");
 string xState = SocialOAuthState.Create("org-a", "test-secret", "x");
 Check(SocialOAuthState.XCodeVerifier(xState, "test-secret").Length == 43, "PKCE verifier must have valid length");
@@ -297,3 +297,4 @@ using var tokenTimeoutHttp = new HttpClient(new ProviderHttpHandler(_ => throw n
 try { await new InstagramTokenClient(tokenTimeoutHttp).ExchangeAsync("short", "secret"); throw new Exception("Expected failure"); }
 catch (ScanPay.Utility.Model.ResponseStatusException ex) { Check(!ex.ToString().Contains("credential-bearing"), "Token transport failures must redact credential-bearing URIs"); }
 Console.WriteLine($"Passed {checks} social OAuth and publishing regression checks.");
+
