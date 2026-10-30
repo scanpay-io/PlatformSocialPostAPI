@@ -193,4 +193,51 @@ legacyStore.Deliveries["old"] = new() { DeliveryID = "old", SocialPostID = "post
 await Reject(() => new MetaSocialPublishingService(new(http), legacyStore).PublishAsync(Post("threads"), null!), "Retired queue records need explicit recreation");
 var cancelled = Post("threads"); cancelled.Status = "cancelled";
 await Reject(() => service.PublishAsync(cancelled, null!), "Cancelled post must reject");
+// Explicit rejections are failed deliveries, while ambiguous responses retain duplicate protection.
+foreach (bool finalPublish in new[] { false, true })
+foreach (var responseCode in new[] { HttpStatusCode.BadRequest, HttpStatusCode.Forbidden, HttpStatusCode.TooManyRequests,
+    HttpStatusCode.OK, HttpStatusCode.InternalServerError, HttpStatusCode.RequestTimeout })
+{
+    var rejectionStore = MemoryStore.For("instagram");
+    var rejectionPost = Post("instagram");
+    if (finalPublish)
+        rejectionStore.Deliveries["instagram-post"] = new() { DeliveryID = "instagram-post", SocialPostID = "post", OrganizationID = "org",
+            Platform = "instagram", SocialConnectionID = "instagram", TargetAccountID = "123", ContainerID = "333", Status = "processing" };
+    int attempts = 0;
+    using var rejectionHttp = new HttpClient(new ProviderHttpHandler(request =>
+    {
+        if (request.Method == HttpMethod.Get) return Task.FromResult(Json("{'status_code':'FINISHED'}"));
+        attempts++;
+        return Task.FromResult(new HttpResponseMessage(responseCode)
+        { Content = new StringContent("{\"error\":{\"code\":190,\"message\":\"secret-token-diagnostic\"}}") });
+    }));
+    var rejectionService = new MetaSocialPublishingService(new(rejectionHttp), rejectionStore);
+    if (finalPublish) await rejectionService.RefreshStatusAsync(rejectionPost, null!);
+    else await rejectionService.PublishAsync(rejectionPost, null!);
+    bool uncertain = responseCode is HttpStatusCode.InternalServerError or HttpStatusCode.RequestTimeout;
+    var delivery = rejectionStore.Deliveries.Values.Single();
+    Check(delivery.Status == (uncertain ? "submission_unknown" : "failed") && rejectionPost.Status == delivery.Status,
+        "Explicit rejection and ambiguous remote outcomes must be distinguished at both write stages");
+    Check(!delivery.ErrorMessage.Contains("secret-token"), "Stored delivery errors must not leak provider diagnostics");
+    if (!uncertain) Check(delivery.ErrorCode == "190" && delivery.ErrorMessage.Contains("instagram"), "Safe rejection code and platform must be retained");
+    await rejectionService.PublishAsync(rejectionPost, null!);
+    await rejectionService.RefreshStatusAsync(rejectionPost, null!);
+    Check(attempts == 1, "Neither failed nor ambiguous deliveries may be resubmitted automatically");
+}
+var draftStore = MemoryStore.For("instagram");
+var draftPost = Post("instagram");
+await new MetaSocialPublishingService(new(http), draftStore).RefreshStatusAsync(draftPost, null!);
+Check(draftPost.Status == "draft" && draftStore.SavedPost == null, "Status checks must preserve unsubmitted drafts");
+foreach (var rawTimestamp in new[] { "2026-10-29T14:58:52.5183319Z", "2026-10-29T14:58:52.5183311Z", "2026-10-29T14:58:52.5183310Z" })
+{
+var timestampAttributes = new Dictionary<string, Amazon.DynamoDBv2.Model.AttributeValue>
+{
+    ["SocialPostID"] = new("post"), ["OrganizationID"] = new("org"), ["Status"] = new("failed"),
+    ["LastUpdate"] = new(rawTimestamp), ["PublishedDateUtc"] = new(rawTimestamp)
+};
+var timestampPost = DbCRUD<SocialPostDb>.FromStorageAttributes(timestampAttributes);
+var roundTrip = DbCRUD<SocialPostDb>.ToStorageAttributes(timestampPost);
+Check(roundTrip["LastUpdate"].S == rawTimestamp && roundTrip["PublishedDateUtc"].S == rawTimestamp,
+    "Dynamo timestamp reads must preserve exact precision for conditional publishing/cancellation updates");
+}
 Console.WriteLine($"Passed {checks} Meta publishing regression checks.");

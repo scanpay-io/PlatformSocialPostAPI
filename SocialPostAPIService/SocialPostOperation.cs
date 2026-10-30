@@ -236,13 +236,20 @@ namespace ScanPay.SocialPostService
             var service =
                 new SocialPostService();
 
+            var post = await service.QueueForPublishAsync(organizationID, postID, context);
+            var deliveries = await service.GetDeliveriesAsync(organizationID, postID, context);
             return new SocialPostResponse
             {
-                SocialPost =
-                    await service.QueueForPublishAsync(
-                        organizationID,
-                        postID,
-                        context),
+                SocialPost = post,
+                Deliveries = deliveries,
+                Message = post.Status switch
+                {
+                    SocialPostStatus.Failed => "Publishing failed. Review the delivery error before creating a new post.",
+                    "submission_unknown" => "Publication could not be confirmed. Check the platform before creating another post.",
+                    SocialPostStatus.PartiallyPublished => "Some destinations failed. Review each delivery before posting again.",
+                    SocialPostStatus.Publishing => "Publishing is in progress. Check post status to complete delivery.",
+                    _ => "Post status retrieved."
+                },
 
                 Status =
                     "success",

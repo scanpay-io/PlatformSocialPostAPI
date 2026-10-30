@@ -134,11 +134,20 @@ namespace ScanPay.SocialPostService
                     }
                     await store.SaveAsync(delivery);
                 }
-                catch
+                catch (MetaSubmissionRejectedException ex)
+                {
+                    delivery.Status = SocialPostDeliveryStatus.Failed;
+                    delivery.ErrorCode = ex.ErrorCode;
+                    delivery.ErrorMessage = ex.Message;
+                    await store.SaveAsync(delivery);
+                }
+                catch (Exception ex)
                 {
                     // A timeout or storage failure may follow an accepted remote write. Never resend automatically.
                     delivery.Status = "submission_unknown";
+                    delivery.ErrorCode = "submission_unconfirmed";
                     delivery.ErrorMessage = "Submission could not be confirmed. Check the platform before creating another post.";
+                    context?.Logger.LogLine($"Meta submission unconfirmed: platform={delivery.Platform}, delivery={delivery.DeliveryID}, exception={ex.GetType().Name}");
                     await store.SaveAsync(delivery);
                 }
             }));
@@ -152,6 +161,8 @@ namespace ScanPay.SocialPostService
             var store = storeOverride ?? new MetaPublishingStore(context);
             var connections = await store.ConnectionsAsync(post.OrganizationID);
             var deliveries = await store.DeliveriesAsync(post);
+            // Reading the status of an unsubmitted draft must not mark it failed.
+            if (deliveries.Count == 0) return;
             await Task.WhenAll(deliveries.Where(d => d.Status == "processing" &&
                 d.Platform is SocialPlatform.Instagram or SocialPlatform.Threads).Select(async delivery =>
             {
@@ -182,10 +193,19 @@ namespace ScanPay.SocialPostService
                     }
                     await store.SaveAsync(delivery);
                 }
-                catch
+                catch (MetaSubmissionRejectedException ex)
+                {
+                    delivery.Status = SocialPostDeliveryStatus.Failed;
+                    delivery.ErrorCode = ex.ErrorCode;
+                    delivery.ErrorMessage = ex.Message;
+                    await store.SaveAsync(delivery);
+                }
+                catch (Exception ex)
                 {
                     delivery.Status = "submission_unknown";
+                    delivery.ErrorCode = "publication_unconfirmed";
                     delivery.ErrorMessage = "Publication could not be confirmed. Check the platform before creating another post.";
+                    context?.Logger.LogLine($"Meta publication unconfirmed: platform={delivery.Platform}, delivery={delivery.DeliveryID}, exception={ex.GetType().Name}");
                     await store.SaveAsync(delivery);
                 }
             }));

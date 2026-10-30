@@ -270,4 +270,30 @@ catch (ScanPay.Utility.Model.ResponseStatusException error)
 {
     Check(!error.Message.Contains("secret-provider-diagnostic"), "Provider diagnostics must not expose secrets");
 }
+using var instagramHttp = new HttpClient(new ProviderHttpHandler(request =>
+{
+    Check(request.Method == HttpMethod.Get && request.RequestUri!.Host == "graph.instagram.com" &&
+        request.RequestUri.AbsolutePath == "/access_token", "Instagram long-lived token exchange uses Meta's token endpoint");
+    var query = System.Web.HttpUtility.ParseQueryString(request.RequestUri!.Query);
+    Check(query["grant_type"] == "ig_exchange_token" && query["access_token"] == "short&token" &&
+        query["client_secret"] == "secret+value", "Token exchange parameters must be encoded correctly");
+    return Task.FromResult(new HttpResponseMessage(System.Net.HttpStatusCode.OK)
+    { Content = new StringContent("{\"access_token\":\"long-token\",\"expires_in\":5184000}") });
+}));
+var started = DateTime.UtcNow;
+var instagramToken = await new InstagramTokenClient(instagramHttp).ExchangeAsync("short&token", "secret+value");
+Check(instagramToken.AccessToken == "long-token" && instagramToken.ExpiresDateUtc >= started.AddDays(60) &&
+    instagramToken.ExpiresDateUtc <= DateTime.UtcNow.AddDays(60), "Store the exchanged token and provider expiry");
+foreach (string result in new[] { "{}", "{\"access_token\":\"secret\"}", "{\"access_token\":\"secret\",\"expires_in\":0}", "not-json" })
+{
+    using var invalidTokenHttp = new HttpClient(new ProviderHttpHandler(_ => Task.FromResult(new HttpResponseMessage(System.Net.HttpStatusCode.OK)
+    { Content = new StringContent(result) })));
+    bool rejected = false;
+    try { await new InstagramTokenClient(invalidTokenHttp).ExchangeAsync("short", "secret"); }
+    catch (ScanPay.Utility.Model.ResponseStatusException ex) { rejected = true; Check(!ex.ToString().Contains("secret"), "Malformed token responses must not leak secrets"); }
+    Check(rejected, "Never persist an Instagram token with unknown expiry");
+}
+using var tokenTimeoutHttp = new HttpClient(new ProviderHttpHandler(_ => throw new HttpRequestException("credential-bearing-secret-uri")));
+try { await new InstagramTokenClient(tokenTimeoutHttp).ExchangeAsync("short", "secret"); throw new Exception("Expected failure"); }
+catch (ScanPay.Utility.Model.ResponseStatusException ex) { Check(!ex.ToString().Contains("credential-bearing"), "Token transport failures must redact credential-bearing URIs"); }
 Console.WriteLine($"Passed {checks} social OAuth and publishing regression checks.");

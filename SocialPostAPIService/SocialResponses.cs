@@ -121,6 +121,9 @@ namespace ScanPay.SocialPostService
     public class SocialPostResponse :
         LambdaResponse
     {
+        [JsonProperty("deliveries", NullValueHandling = NullValueHandling.Ignore)]
+        public List<SocialPostDeliveryDb>? Deliveries { get; set; }
+
         [JsonProperty("social_post")]
         public SocialPostDb? SocialPost { get; set; }
     }

@@ -82,6 +82,8 @@ namespace ScanPay.SocialPostService
 
             if (post.Platforms.All(MetaSocialPublishingService.Supports))
                 foreach (string platform in post.Platforms) MetaSocialPublishingService.Validate(post, platform);
+            if (post.Platforms.Contains(SocialPlatform.LinkedIn))
+                TextSocialPublishingService.Validate(post);
 
             await DbCRUD<SocialPostDb>.CreateAsync(
                 post,

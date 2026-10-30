@@ -1,5 +1,31 @@
 # Social attribution rollout
 
+## QA investigation: 29 October 2026
+
+AWS checks confirmed the analytics Lambda failed because `SocialPostClick` did not exist and `TransactionAmount` lacked `SocialPostID-index`. Both repairs were applied with user approval. The click-table stack update is complete, and the transaction index is ACTIVE with 8 read / 2 write capacity units. Existing table capacity was preserved. The original reported post's dev Analytics endpoint now returns successful delivery and engagement data.
+
+Executed change set `social-analytics-20261029` on `platform-socialpost-dynamodb` in `us-east-1`. It added only `SocialPostClickTable`, with no replacements. These tables are shared across API stages.
+
+The transaction table uses provisioned capacity. The migration now accepts explicit index capacity instead of refusing provisioned tables. Applied command:
+
+```powershell
+./infra/social-attribution-index.ps1 -Profile default -Region us-east-1 -ReadCapacityUnits 8 -WriteCapacityUnits 2
+```
+
+Runtime analytics queries passed after backfill, verifying the Lambda's access to both indexes. IAM simulation was unavailable, but the actual endpoint succeeded.
+
+Instagram diagnosis: Meta returned HTTP 401/code 190 for the affected connection, reporting expiry at 2026-10-26 06:00 UTC. The callback had stored a short-lived token with no expiry. New code exchanges authorization-code tokens for long-lived Instagram tokens and persists the provider expiry. Explicit rejections now become `failed` with safe delivery diagnostics; ambiguous outcomes retain duplicate protection.
+
+Live acceptance testing also exposed a shared-library timestamp bug: ServiceStack rounded `2026-10-29T14:58:52.5183319Z` to `...5183318Z` on read, causing conditional publish/cancel writes to reject unchanged records. The sibling PlatformLibrary `DbCRUD` now restores exact top-level DateTime values when reading raw storage attributes, consistently reading one record, or batch-reading records. Existing unrelated library edits were preserved.
+
+Release `20261029-social-qa-002` was published and deployed successfully to all 16 `gany_dev` aliases. It supersedes `20261029-social-qa-001`, whose live tests exposed the precision defect. The production aliases were not promoted; the publish function remains version 13 in `gany_prod`, while dev is version 15.
+
+Validation: 119 publishing regression checks and 116 OAuth checks passed. Eleven deployed API acceptance checks passed: draft creation/status/cancellation, repeated cancellation, expired-token rejection with reconnect guidance, duplicate-send protection, cancellation of a definitively rejected post, and analytics for the reported and newly created posts. POST tests used authenticated AWS API Gateway test invocation with `runwayAlias=gany_dev`; GET tests used the actual dev HTTPS endpoints. These are API integration checks, not browser end-to-end acceptance. Evidence is in `tmp/dev-social-verification.json` and `tmp/qa-dev-verification-002.log`; the final deployment audit is under `artifacts/lambda-runs/20261029T151354Z-a0ca7993-Deploy/`.
+
+Remaining acceptance: sign into the opened stage browser and reconnect Instagram, then verify successful publication from both the grid and Create Post UI. The browser remained at sign-in and no fresh Instagram authorization was available during this run. No successful Instagram publication is claimed. The original `submission_unknown` record was left unchanged: automatic approval review rejected a proposed historical-state rewrite, so verification used fresh QA data instead.
+
+Additional test limitation: the existing sibling-library metadata initialization stress test intermittently reported one error in 24,000 checks (enumeration/null-reference), and also completed with zero errors on a subsequent run. Its baseline comparison and current outputs are saved in `tmp/qa-dynamo-comparison.json`; the timestamp regression itself passed. This separate concurrency stress issue was not changed as part of the social-post fix.
+
 API Gateway click routing was deployed on 2026-10-01 to API `6op50ujgu6`, stages `dev` and `prod`, using stack `giveanywhere-social-click-route`. The integration uses each stage's `runwayAlias` (`gany_dev` / `gany_prod`). Deployment IDs are `a6iu65` (dev) and `6eb7y8` (prod); previous IDs were `8f89si` and `h4mbu7`. The existing `/operations/dashboard` route was also published to prod with explicit approval. This does not confirm deployment of the remaining database or application changes. No payments or outreach were sent during development.
 
 ## Completion and analytics contract

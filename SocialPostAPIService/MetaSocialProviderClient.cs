@@ -10,6 +10,18 @@ using static ScanPay.Utility.Model.ResponseStatusException;
 
 namespace ScanPay.SocialPostService
 {
+    // Only an explicit provider rejection proves that a write did not succeed.
+    public sealed class MetaSubmissionRejectedException : ScanPay.Utility.Model.ResponseStatusException
+    {
+        public string ErrorCode { get; }
+        public MetaSubmissionRejectedException(string platform, int status, string code)
+            : base(ScanPay.Utility.Model.ResponseStatus.StatusCode.BAD_REQUEST,
+                code == "190"
+                    ? $"Reconnect the {platform} account: its access token is expired or invalid (code 190)."
+                    : $"{platform} rejected the request (HTTP {status}, code {code}). Check account permissions and the public image URL; reconnect if the token expired.")
+        { ErrorCode = code; }
+    }
+
     // Never expose this type in an API response; Page tokens stay on the server.
     public record MetaPageCredential(string ID, string Name, string AccessToken);
 
@@ -38,12 +50,19 @@ namespace ScanPay.SocialPostService
             request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
             if (form != null) request.Content = new FormUrlEncodedContent(form);
             using var response = await client.SendAsync(request);
+            string content = await response.Content.ReadAsStringAsync();
+            JObject? body = null;
+            try { body = JObject.Parse(content); }
+            catch (Newtonsoft.Json.JsonException) { }
+            // Do not retain raw provider messages: they can contain credentials or user content.
+            string code = body?["error"]?["code"]?.Type == JTokenType.Integer
+                ? body["error"]!["code"]!.ToString() : "http_" + (int)response.StatusCode;
+            if (((int)response.StatusCode >= 400 && (int)response.StatusCode < 500 && (int)response.StatusCode != 408) ||
+                (response.IsSuccessStatusCode && body?["error"] != null))
+                throw new MetaSubmissionRejectedException(platform, (int)response.StatusCode, code);
             if (!response.IsSuccessStatusCode)
                 throw ResponseStatusFactory.BadRequest($"{platform} rejected the request (HTTP {(int)response.StatusCode}). Check permissions, content and rate limits; reconnect if the token expired.");
-            var body = JObject.Parse(await response.Content.ReadAsStringAsync());
-            if (body["error"] != null)
-                throw ResponseStatusFactory.BadRequest($"{platform} rejected the request. Check permissions and content.");
-            return body;
+            return body ?? throw new Newtonsoft.Json.JsonException("The provider returned an invalid response.");
         }
 
         public async Task<List<MetaPageCredential>> FacebookPagesAsync(string token)

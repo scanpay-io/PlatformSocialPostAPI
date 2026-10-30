@@ -8,6 +8,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using static ScanPay.Utility.Model.ResponseStatusException;
 
@@ -101,7 +102,14 @@ namespace ScanPay.SocialPostService
             if (post.Platforms.Count != 1 || !Supports(post.Platforms[0]) || options == null ||
                 string.IsNullOrWhiteSpace(options.ConnectionID) || !options.Consent)
                 throw ResponseStatusFactory.BadRequest("Select one connected account and confirm the post before publishing.");
-            string text = post.Content.Trim();
+            if (post.Platforms[0] == SocialPlatform.LinkedIn)
+            {
+                if (!Regex.IsMatch(options.LinkedInPageUrn ?? "", @"^urn:li:organization:[0-9]+$"))
+                    throw ResponseStatusFactory.BadRequest("Select a LinkedIn organization Page before publishing.");
+                if (options.AdditionalOptions?.Count > 0 || post.TikTok != null || post.MetaSocial?.Count > 0)
+                    throw ResponseStatusFactory.BadRequest("LinkedIn supports text and links only. Remove media attachments or unsupported publishing settings.");
+            }
+            string text = (post.Content ?? "").Trim();
             if (string.IsNullOrWhiteSpace(text)) throw ResponseStatusFactory.BadRequest("Post text is required.");
             if (!string.IsNullOrWhiteSpace(post.DestinationUrl))
             {
@@ -136,7 +144,8 @@ namespace ScanPay.SocialPostService
             {
                 DeliveryID = platform + "-" + post.SocialPostID, SocialPostID = post.SocialPostID,
                 OrganizationID = post.OrganizationID, SocialConnectionID = connection.SocialConnectionID,
-                Platform = platform, Status = "initializing"
+                Platform = platform, Status = "initializing",
+                TargetAccountID = platform == SocialPlatform.LinkedIn ? options.LinkedInPageUrn : connection.ExternalAccountID
             };
             if (!await DbCRUD<SocialPostDeliveryDb>.TryCreateAsync(delivery, context))
                 throw ResponseStatusFactory.BadRequest("This post was already submitted. Check its status before creating another.");

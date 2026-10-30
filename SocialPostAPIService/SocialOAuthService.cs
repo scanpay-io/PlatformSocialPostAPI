@@ -417,6 +417,16 @@ namespace ScanPay.SocialPostService
                             : null
                 };
 
+            if (platform == SocialPlatform.Instagram)
+            {
+                var longLived = await new InstagramTokenClient().ExchangeAsync(token.AccessToken, clientSecret);
+                token.AccessToken = longLived.AccessToken;
+                token.ExpiresDateUtc = longLived.ExpiresDateUtc;
+            }
+
+            if (platform == SocialPlatform.LinkedIn)
+                ValidateLinkedInAuthorization(token.Scope, expiresIn);
+
             await EnrichTokenAsync(
                 token,
                 platform,
@@ -652,6 +662,14 @@ namespace ScanPay.SocialPostService
                     ? provider!.Scopes
                     : GetSetting(platform, "SCOPES", DefaultScopes(platform));
 
+            if (platform == SocialPlatform.LinkedIn)
+            {
+                var permissions = new HashSet<string>(scope.Split(new[] { ',', ' ', '\t', '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries));
+                permissions.Add("r_organization_admin");
+                permissions.Add("w_organization_social");
+                return string.Join(" ", permissions);
+            }
+
             if (platform != SocialPlatform.Instagram)
                 return scope;
 
@@ -684,6 +702,15 @@ namespace ScanPay.SocialPostService
             }
 
             return string.Join(",", scopes);
+        }
+
+        private static void ValidateLinkedInAuthorization(string scope, int? expiresIn)
+        {
+            var permissions = new HashSet<string>(scope.Split(new[] { ',', ' ', '\t', '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries));
+            if (!permissions.Contains("w_organization_social") || !permissions.Contains("r_organization_admin"))
+                throw ResponseStatusFactory.BadRequest("Reconnect LinkedIn and grant Page administration and publishing permissions.");
+            if (!expiresIn.HasValue || expiresIn.Value <= 0)
+                throw ResponseStatusFactory.BadRequest("LinkedIn did not return a valid token expiration. Reconnect the account.");
         }
 
         private static string DefaultScopes(
