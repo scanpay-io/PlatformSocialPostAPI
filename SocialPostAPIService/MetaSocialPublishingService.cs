@@ -152,6 +152,13 @@ namespace ScanPay.SocialPostService
                 }
             }));
             await AggregateAsync(post, store);
+            // Complete ready containers without requiring the user to open the status dialog.
+            try { await RefreshStatusAsync(post, context); }
+            catch (Exception ex)
+            {
+                // A read failure does not imply that the accepted submission failed.
+                context?.Logger.LogLine($"Meta status refresh deferred: exception={ex.GetType().Name}");
+            }
             return post;
         }
 

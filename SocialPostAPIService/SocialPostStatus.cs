@@ -26,6 +26,8 @@ namespace ScanPay.SocialPostService
         public const string Failed =
             "failed";
 
+        public const string SubmissionUnknown = "submission_unknown";
+
         public const string Cancelled =
             "cancelled";
 
@@ -39,6 +41,7 @@ namespace ScanPay.SocialPostService
                 Published,
                 PartiallyPublished,
                 Failed,
+                SubmissionUnknown,
                 Cancelled
             };
 

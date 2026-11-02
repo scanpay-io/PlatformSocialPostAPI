@@ -281,7 +281,7 @@ using var instagramHttp = new HttpClient(new ProviderHttpHandler(request =>
     { Content = new StringContent("{\"access_token\":\"long-token\",\"expires_in\":5184000}") });
 }));
 var started = DateTime.UtcNow;
-var instagramToken = await new InstagramTokenClient(instagramHttp).ExchangeAsync("short&token", "secret+value");
+var instagramToken = await new MetaUserTokenClient(instagramHttp).ExchangeAsync("short&token", "secret+value");
 Check(instagramToken.AccessToken == "long-token" && instagramToken.ExpiresDateUtc >= started.AddDays(60) &&
     instagramToken.ExpiresDateUtc <= DateTime.UtcNow.AddDays(60), "Store the exchanged token and provider expiry");
 foreach (string result in new[] { "{}", "{\"access_token\":\"secret\"}", "{\"access_token\":\"secret\",\"expires_in\":0}", "not-json" })
@@ -289,12 +289,25 @@ foreach (string result in new[] { "{}", "{\"access_token\":\"secret\"}", "{\"acc
     using var invalidTokenHttp = new HttpClient(new ProviderHttpHandler(_ => Task.FromResult(new HttpResponseMessage(System.Net.HttpStatusCode.OK)
     { Content = new StringContent(result) })));
     bool rejected = false;
-    try { await new InstagramTokenClient(invalidTokenHttp).ExchangeAsync("short", "secret"); }
+    try { await new MetaUserTokenClient(invalidTokenHttp).ExchangeAsync("short", "secret"); }
     catch (ScanPay.Utility.Model.ResponseStatusException ex) { rejected = true; Check(!ex.ToString().Contains("secret"), "Malformed token responses must not leak secrets"); }
     Check(rejected, "Never persist an Instagram token with unknown expiry");
 }
 using var tokenTimeoutHttp = new HttpClient(new ProviderHttpHandler(_ => throw new HttpRequestException("credential-bearing-secret-uri")));
-try { await new InstagramTokenClient(tokenTimeoutHttp).ExchangeAsync("short", "secret"); throw new Exception("Expected failure"); }
+try { await new MetaUserTokenClient(tokenTimeoutHttp).ExchangeAsync("short", "secret"); throw new Exception("Expected failure"); }
 catch (ScanPay.Utility.Model.ResponseStatusException ex) { Check(!ex.ToString().Contains("credential-bearing"), "Token transport failures must redact credential-bearing URIs"); }
+using var threadsTokenHttp = new HttpClient(new ProviderHttpHandler(request =>
+{
+    var query = System.Web.HttpUtility.ParseQueryString(request.RequestUri!.Query);
+    Check(request.RequestUri.Host == "graph.threads.net" && request.RequestUri.AbsolutePath == "/access_token" &&
+        query["grant_type"] == "th_exchange_token" && query["access_token"] == "short&token" && query["client_secret"] == "secret+value",
+        "Threads exchanges its short-lived credential using the Threads endpoint and grant");
+    return Task.FromResult(new HttpResponseMessage(System.Net.HttpStatusCode.OK)
+    { Content = new StringContent("{\"access_token\":\"long-threads-token\",\"expires_in\":5184000}") });
+}));
+var threadsStarted = DateTime.UtcNow;
+var threadsToken = await new MetaUserTokenClient(threadsTokenHttp).ExchangeAsync("short&token", "secret+value", SocialPlatform.Threads);
+Check(threadsToken.AccessToken == "long-threads-token" && threadsToken.ExpiresDateUtc >= threadsStarted.AddDays(60),
+    "Threads stores the long-lived token and its expiry instead of an hour-long token without expiry");
 Console.WriteLine($"Passed {checks} social OAuth and publishing regression checks.");
 

@@ -417,9 +417,9 @@ namespace ScanPay.SocialPostService
                             : null
                 };
 
-            if (platform == SocialPlatform.Instagram)
+            if (platform is SocialPlatform.Instagram or SocialPlatform.Threads)
             {
-                var longLived = await new InstagramTokenClient().ExchangeAsync(token.AccessToken, clientSecret);
+                var longLived = await new MetaUserTokenClient().ExchangeAsync(token.AccessToken, clientSecret, platform);
                 token.AccessToken = longLived.AccessToken;
                 token.ExpiresDateUtc = longLived.ExpiresDateUtc;
             }

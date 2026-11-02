@@ -291,6 +291,7 @@ namespace ScanPay.SocialPostService
 
             return new SocialPostResponse
             {
+                Message = "Post cancelled locally. If submission was uncertain, check the social platform; cancellation does not remove a live post.",
                 SocialPost =
                     await service.CancelAsync(
                         organizationID,
@@ -349,7 +350,8 @@ namespace ScanPay.SocialPostService
             var service =
                 new SocialPostService();
 
-            var post = await service.ReadAsync(organizationID, postID, context);
+            var current = await GetPostStatusAsync(organizationID, postID, context);
+            var post = current.SocialPost!;
 
             return new SocialPostAnalyticsResponse
             {

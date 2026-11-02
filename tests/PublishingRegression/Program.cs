@@ -61,10 +61,10 @@ var service = new MetaSocialPublishingService(new(http), store);
 var post = Post("facebook", "instagram", "threads");
 await service.PublishAsync(post, null!);
 Check(store.Deliveries["facebook-post"].Status == "published", "Facebook must confirm publication");
-Check(store.Deliveries["instagram-post"].ContainerID == "111" && store.Deliveries["threads-post"].Status == "processing", "Containers are saved for polling");
-Check(post.Status == "publishing" && sends == 3, "Initialization is not publication");
+Check(store.Deliveries["instagram-post"].ContainerID == "111" && store.Deliveries["threads-post"].Status == "published", "Ready containers are published during Publish now");
+Check(post.Status == "published" && sends == 5, "Publish now completes ready containers");
 await service.PublishAsync(post, null!);
-Check(sends == 3, "Repeated publish must not duplicate remote sends");
+Check(sends == 5, "Repeated publish must not duplicate remote sends");
 await Task.WhenAll(service.RefreshStatusAsync(post, null!), service.RefreshStatusAsync(post, null!));
 Check(sends == 5 && store.Deliveries.Values.All(d => d.Status == "published"), "Concurrent polls publish each container once");
 await service.RefreshStatusAsync(post, null!);
@@ -240,4 +240,52 @@ var roundTrip = DbCRUD<SocialPostDb>.ToStorageAttributes(timestampPost);
 Check(roundTrip["LastUpdate"].S == rawTimestamp && roundTrip["PublishedDateUtc"].S == rawTimestamp,
     "Dynamo timestamp reads must preserve exact precision for conditional publishing/cancellation updates");
 }
+Check(SocialPostStatus.IsValid("submission_unknown"), "Unknown submissions are valid post statuses");
+foreach (bool failFirstRead in new[] { false, true })
+{
+    var deferredStore = MemoryStore.For("threads");
+    int reads = 0, writes = 0;
+    using var deferredHttp = new HttpClient(new ProviderHttpHandler(request =>
+    {
+        if (request.Method == HttpMethod.Get)
+        {
+            reads++;
+            if (reads == 1 && failFirstRead) throw new TaskCanceledException();
+            return Task.FromResult(Json(reads == 1 ? "{'status':'IN_PROGRESS'}" : "{'status':'FINISHED'}"));
+        }
+        writes++;
+        return Task.FromResult(Json("{'id':'777'}"));
+    }));
+    var deferredService = new MetaSocialPublishingService(new(deferredHttp), deferredStore);
+    var deferredPost = Post("threads");
+    await deferredService.PublishAsync(deferredPost, null!);
+    Check(deferredPost.Status == "publishing" && writes == 1, "Unready containers and transient status failures stay pending");
+    await Task.WhenAll(deferredService.RefreshStatusAsync(deferredPost, null!), deferredService.RefreshStatusAsync(deferredPost, null!));
+    Check(deferredPost.Status == "published" && writes == 2, "Concurrent later polls publish a pending Threads container only once");
+}
+foreach (string platform in new[] { "instagram", "threads" })
+{
+    var recoveryPost = Post(platform);
+    recoveryPost.Status = "failed";
+    Check(SocialPostService.CanRestoreDraft(recoveryPost, ""), "Legacy save requests without status can recover failed Meta posts");
+    recoveryPost.Status = "submission_unknown";
+    Check(SocialPostService.CanCancel(recoveryPost, new[] { new SocialPostDeliveryDb { Platform = platform, Status = "submission_unknown" } }),
+        "Both Meta container platforms allow local cancellation of uncertain submissions");
+}
+var unknownPost = Post("threads"); unknownPost.Status = "submission_unknown";
+Check(SocialPostService.CanCancel(unknownPost, new[] { new SocialPostDeliveryDb { Platform = "threads", Status = "submission_unknown" } }),
+    "Uncertain Threads submissions can be cancelled locally");
+foreach (string state in new[] { "initializing", "processing", "publishing", "published" })
+    Check(!SocialPostService.CanCancel(unknownPost, new[] { new SocialPostDeliveryDb { Platform = "threads", Status = state } }),
+        "Cancellation must not race an active or confirmed publication");
+foreach (string state in new[] { "failed", "cancelled", "published", "publishing", "submission_unknown" })
+{
+    var recoveryPost = Post("threads"); recoveryPost.Status = state;
+    Check(SocialPostService.CanRestoreDraft(recoveryPost, "draft") == (state is "failed" or "cancelled"),
+        "Draft recovery is limited to failed and cancelled attempts");
+}
+var summary = SocialPostService.SummarizeDeliveries(new[] { "initializing", "processing", "publishing", "submission_unknown", "failed", "published", "cancelled" }
+    .Select(s => new SocialPostDeliveryDb { Status = s }).ToList());
+Check(summary.Publishing == 3 && summary.SubmissionUnknown == 1 && summary.Failed == 1 && summary.Published == 1 && summary.Cancelled == 1 && summary.TotalDeliveries == 7,
+    "Analytics accounts for processing and uncertain deliveries without labelling them failed");
 Console.WriteLine($"Passed {checks} Meta publishing regression checks.");

@@ -19,6 +19,9 @@ namespace ScanPay.SocialPostService
         [JsonProperty("cancelled")]
         public int Cancelled { get; set; }
 
+        [JsonProperty("submission_unknown")]
+        public int SubmissionUnknown { get; set; }
+
         [JsonProperty("total_deliveries")]
         public int TotalDeliveries { get; set; }
     }

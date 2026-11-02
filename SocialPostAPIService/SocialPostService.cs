@@ -131,7 +131,9 @@ namespace ScanPay.SocialPostService
                     request.SocialPostID,
                     context);
 
-            if (post.Status != SocialPostStatus.Draft || (await GetDeliveriesAsync(post.OrganizationID, post.SocialPostID, context)).Count > 0)
+            request.Status = request.Status?.Trim().ToLowerInvariant() ?? "";
+            bool restoreDraft = CanRestoreDraft(post, request.Status);
+            if (!restoreDraft && (post.Status != SocialPostStatus.Draft || (await GetDeliveriesAsync(post.OrganizationID, post.SocialPostID, context)).Count > 0))
                 throw ResponseStatusFactory.BadRequest("Only an unsubmitted draft can be edited. Create a new post to change submitted content.");
             if (request.ScheduledDateUtc.HasValue || (!string.IsNullOrWhiteSpace(request.Status) && request.Status != SocialPostStatus.Draft))
                 throw ResponseStatusFactory.BadRequest("Use Publish now. Delivery status is managed by the publishing service; scheduling is not enabled.");
@@ -214,6 +216,19 @@ namespace ScanPay.SocialPostService
             foreach (var options in post.MetaSocial) options.Platform = options.Platform?.Trim().ToLowerInvariant() ?? "";
             if (post.Platforms.All(MetaSocialPublishingService.Supports))
                 foreach (string platform in post.Platforms) MetaSocialPublishingService.Validate(post, platform);
+
+            if (restoreDraft)
+            {
+                // Preserve the previous attempt and its duplicate-submission guard.
+                post.SocialPostID = FormatValue.NewID();
+                post.Status = SocialPostStatus.Draft;
+                post.PublishedDateUtc = null;
+                post.ScheduledDateUtc = null;
+                post.CreateDate = post.LastUpdate;
+                post.DestinationUrl = AddSocialPostTracking(post.DestinationUrl, post.SocialPostID);
+                await DbCRUD<SocialPostDb>.CreateAsync(post, context);
+                return post;
+            }
 
             if (!await DbCRUD<SocialPostDb>.TryPatchAsync(post.SocialPostID, post.OrganizationID, original,
                 new Dictionary<string, object>
@@ -312,8 +327,7 @@ namespace ScanPay.SocialPostService
                     socialPostID,
                     context);
 
-            if (post.Status == SocialPostStatus.Publishing || deliveries.Any(d =>
-                d.Status is "initializing" or "processing" or "publishing" or "published" or "submission_unknown" or "sent_to_inbox"))
+            if (!CanCancel(post, deliveries))
                 throw ResponseStatusFactory.BadRequest("This post has already been submitted. Check its status and manage it on the social platform.");
             var updated = DefaultValue.UtcNow();
             if (!await DbCRUD<SocialPostDb>.TryPatchAsync(post.SocialPostID, post.OrganizationID, post,
@@ -387,6 +401,21 @@ namespace ScanPay.SocialPostService
                     socialPostID,
                     context);
 
+            return SummarizeDeliveries(deliveries);
+        }
+
+        public static bool CanRestoreDraft(SocialPostDb post, string requestedStatus) =>
+            (string.IsNullOrWhiteSpace(requestedStatus) || requestedStatus == SocialPostStatus.Draft) &&
+            (post.Status is SocialPostStatus.Failed or SocialPostStatus.Cancelled) &&
+            post.Platforms.Count > 0 && post.Platforms.All(MetaSocialPublishingService.Supports);
+
+        public static bool CanCancel(SocialPostDb post, IReadOnlyCollection<SocialPostDeliveryDb> deliveries) =>
+            post.Status is not (SocialPostStatus.Publishing or SocialPostStatus.Published or SocialPostStatus.PartiallyPublished) &&
+            !deliveries.Any(d => d.Status is "initializing" or "processing" or "publishing" or "published" or "sent_to_inbox" ||
+                (d.Status == SocialPostStatus.SubmissionUnknown && !MetaSocialPublishingService.Supports(d.Platform)));
+
+        public static SocialPostAnalyticsSummary SummarizeDeliveries(List<SocialPostDeliveryDb> deliveries)
+        {
             return new SocialPostAnalyticsSummary
             {
                 Queued =
@@ -397,7 +426,8 @@ namespace ScanPay.SocialPostService
                 Publishing =
                     CountDeliveries(
                         deliveries,
-                        SocialPostDeliveryStatus.Publishing),
+                        SocialPostDeliveryStatus.Publishing) +
+                    CountDeliveries(deliveries, "initializing") + CountDeliveries(deliveries, "processing"),
 
                 Published =
                     CountDeliveries(
@@ -413,6 +443,8 @@ namespace ScanPay.SocialPostService
                     CountDeliveries(
                         deliveries,
                         SocialPostDeliveryStatus.Cancelled),
+
+                SubmissionUnknown = CountDeliveries(deliveries, SocialPostStatus.SubmissionUnknown),
 
                 TotalDeliveries =
                     deliveries.Count
