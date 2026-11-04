@@ -8,6 +8,8 @@ namespace ScanPay.SocialPostService
     [Alias("SocialPost")]
     public class SocialPostDb
     {
+        // Zero identifies legacy deliveries; each restored draft starts a new attempt.
+        public int PublishingAttempt { get; set; }
         public TikTokPostOptions? TikTok { get; set; }
         public TextSocialPostOptions? TextSocial { get; set; }
         public List<MetaSocialPostOptions> MetaSocial { get; set; } = new();

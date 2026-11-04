@@ -18,6 +18,8 @@ namespace ScanPay.SocialPostService
             : base(ScanPay.Utility.Model.ResponseStatus.StatusCode.BAD_REQUEST,
                 code == "190"
                     ? $"Reconnect the {platform} account: its access token is expired or invalid (code 190)."
+                    : platform == SocialPlatform.Instagram && (code == "36001" || code == "9004")
+                        ? "Instagram could not read the image. Use a direct, publicly accessible HTTPS JPEG image URL, not a website, profile or post link."
                     : $"{platform} rejected the request (HTTP {status}, code {code}). Check account permissions and the public image URL; reconnect if the token expired.")
         { ErrorCode = code; }
     }

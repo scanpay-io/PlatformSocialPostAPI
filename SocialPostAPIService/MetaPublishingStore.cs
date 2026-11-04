@@ -28,11 +28,12 @@ namespace ScanPay.SocialPostService
             new SocialConnectionService().GetByOrganizationAsync(organizationID, context);
         public async Task<SocialConnectionTokenDb?> TokenAsync(string id) =>
             await DbCRUD<SocialConnectionTokenDb>.ReadConsistentAsync(id, context);
-        public Task<List<SocialPostDeliveryDb>> DeliveriesAsync(SocialPostDb post) =>
-            new SocialPostService().GetDeliveriesAsync(post.OrganizationID, post.SocialPostID, context);
+        public async Task<List<SocialPostDeliveryDb>> DeliveriesAsync(SocialPostDb post) =>
+            (await new SocialPostService().GetDeliveriesAsync(post.OrganizationID, post.SocialPostID, context))
+                .Where(delivery => delivery.PublishingAttempt == post.PublishingAttempt).ToList();
         public Task<bool> BeginAsync(SocialPostDb post) => DbCRUD<SocialPostDb>.TryPatchAsync(
             post.SocialPostID, post.OrganizationID, post, new Dictionary<string, object>
-            { [nameof(post.Status)] = SocialPostStatus.Publishing, [nameof(post.LastUpdate)] = System.DateTime.UtcNow }, context);
+            { [nameof(post.PublishingAttempt)] = post.PublishingAttempt, [nameof(post.Status)] = SocialPostStatus.Publishing, [nameof(post.LastUpdate)] = System.DateTime.UtcNow }, context);
         public Task<bool> CreateAsync(SocialPostDeliveryDb delivery) => DbCRUD<SocialPostDeliveryDb>.TryCreateAsync(delivery, context);
         public Task<bool> ClaimAsync(SocialPostDeliveryDb delivery) => DbCRUD<SocialPostDeliveryDb>.TryPatchAsync(
             delivery.DeliveryID, delivery.OrganizationID, delivery,
@@ -41,11 +42,11 @@ namespace ScanPay.SocialPostService
         public async Task SaveAsync(SocialPostDb post)
         {
             var current = await DbCRUD<SocialPostDb>.ReadConsistentAsync(post.SocialPostID, context);
-            if (current == null || current.OrganizationID != post.OrganizationID || current.Status == SocialPostStatus.Cancelled) return;
+            if (current == null || current.OrganizationID != post.OrganizationID || current.Status is SocialPostStatus.Cancelled or SocialPostStatus.Draft || current.PublishingAttempt != post.PublishingAttempt) return;
             var deliveries = (await DeliveriesAsync(post)).Where(d => post.Platforms.Contains(d.Platform)).ToList();
             post.Status = MetaSocialPublishingService.AggregateStatus(deliveries, post.Platforms.Count);
             if (post.Status == SocialPostStatus.Published) post.PublishedDateUtc = deliveries.Max(d => d.PublishedDateUtc);
-            var changes = new Dictionary<string, object> { [nameof(post.Status)] = post.Status, [nameof(post.LastUpdate)] = post.LastUpdate };
+            var changes = new Dictionary<string, object> { [nameof(post.PublishingAttempt)] = post.PublishingAttempt, [nameof(post.Status)] = post.Status, [nameof(post.LastUpdate)] = post.LastUpdate };
             if (post.PublishedDateUtc.HasValue) changes[nameof(post.PublishedDateUtc)] = post.PublishedDateUtc.Value;
             await DbCRUD<SocialPostDb>.TryPatchAsync(post.SocialPostID, post.OrganizationID, current, changes, context);
         }

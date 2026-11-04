@@ -16,7 +16,7 @@ internal sealed class MemoryStore : IMetaPublishingStore
     public Task<List<SocialConnectionDb>> ConnectionsAsync(string organizationID) => Task.FromResult(Copy(Connections));
     public Task<SocialConnectionTokenDb?> TokenAsync(string id) => Task.FromResult(Tokens.TryGetValue(id, out var token) ? Copy(token) : null);
     public Task<List<SocialPostDeliveryDb>> DeliveriesAsync(SocialPostDb post)
-    { lock (gate) return Task.FromResult(Copy(Deliveries.Values.Where(d => d.OrganizationID == post.OrganizationID && d.SocialPostID == post.SocialPostID).ToList())); }
+    { lock (gate) return Task.FromResult(Copy(Deliveries.Values.Where(d => d.OrganizationID == post.OrganizationID && d.SocialPostID == post.SocialPostID && d.PublishingAttempt == post.PublishingAttempt).ToList())); }
     public Task<bool> BeginAsync(SocialPostDb post) => Task.FromResult(true);
     public Task<bool> CreateAsync(SocialPostDeliveryDb delivery)
     { lock (gate) return Task.FromResult(Deliveries.TryAdd(delivery.DeliveryID, Copy(delivery))); }

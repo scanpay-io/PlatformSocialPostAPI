@@ -133,7 +133,9 @@ namespace ScanPay.SocialPostService
 
             request.Status = request.Status?.Trim().ToLowerInvariant() ?? "";
             bool restoreDraft = CanRestoreDraft(post, request.Status);
-            if (!restoreDraft && (post.Status != SocialPostStatus.Draft || (await GetDeliveriesAsync(post.OrganizationID, post.SocialPostID, context)).Count > 0))
+            var deliveries = await GetDeliveriesAsync(post.OrganizationID, post.SocialPostID, context);
+            if (restoreDraft) ValidateDraftRestoration(post, deliveries);
+            if (!restoreDraft && (post.Status != SocialPostStatus.Draft || deliveries.Count > 0))
                 throw ResponseStatusFactory.BadRequest("Only an unsubmitted draft can be edited. Create a new post to change submitted content.");
             if (request.ScheduledDateUtc.HasValue || (!string.IsNullOrWhiteSpace(request.Status) && request.Status != SocialPostStatus.Draft))
                 throw ResponseStatusFactory.BadRequest("Use Publish now. Delivery status is managed by the publishing service; scheduling is not enabled.");
@@ -190,7 +192,7 @@ namespace ScanPay.SocialPostService
                         request.Platforms);
             }
 
-            if (FormatValue.NotEmptyValue(request.Status))
+            if (!restoreDraft && FormatValue.NotEmptyValue(request.Status))
             {
                 if (!SocialPostStatus.IsValid(
                         request.Status))
@@ -219,21 +221,14 @@ namespace ScanPay.SocialPostService
 
             if (restoreDraft)
             {
-                // Preserve the previous attempt and its duplicate-submission guard.
-                post.SocialPostID = FormatValue.NewID();
-                post.Status = SocialPostStatus.Draft;
-                post.PublishedDateUtc = null;
-                post.ScheduledDateUtc = null;
-                post.CreateDate = post.LastUpdate;
-                post.DestinationUrl = AddSocialPostTracking(post.DestinationUrl, post.SocialPostID);
-                await DbCRUD<SocialPostDb>.CreateAsync(post, context);
-                return post;
+                RestoreDraft(post, deliveries);
             }
 
             if (!await DbCRUD<SocialPostDb>.TryPatchAsync(post.SocialPostID, post.OrganizationID, original,
                 new Dictionary<string, object>
                 {
                     [nameof(post.Status)] = post.Status, [nameof(post.LastUpdate)] = post.LastUpdate,
+                    [nameof(post.PublishingAttempt)] = post.PublishingAttempt,
                     [nameof(post.Content)] = post.Content, [nameof(post.DestinationUrl)] = post.DestinationUrl,
                     [nameof(post.Platforms)] = post.Platforms, [nameof(post.MetaSocial)] = post.MetaSocial,
                     [nameof(post.ResourceType)] = post.ResourceType, [nameof(post.ResourceID)] = post.ResourceID,
@@ -373,14 +368,14 @@ namespace ScanPay.SocialPostService
 
             foreach (string platform in post.Platforms)
             {
-                var delivery = await DbCRUD<SocialPostDeliveryDb>.ReadConsistentAsync(platform + "-" + socialPostID, context);
+                var delivery = await DbCRUD<SocialPostDeliveryDb>.ReadConsistentAsync(MetaSocialPublishingService.DeliveryID(post, platform), context);
                 if (delivery == null || delivery.OrganizationID != organizationID) continue;
                 deliveries.RemoveAll(d => d.DeliveryID == delivery.DeliveryID);
                 deliveries.Add(delivery);
             }
 
             return deliveries
-                .Where(delivery => delivery.OrganizationID == organizationID &&
+                .Where(delivery => delivery.PublishingAttempt == post.PublishingAttempt && delivery.OrganizationID == organizationID &&
                     string.Equals(
                         delivery.SocialPostID,
                         socialPostID,
@@ -402,6 +397,22 @@ namespace ScanPay.SocialPostService
                     context);
 
             return SummarizeDeliveries(deliveries);
+        }
+
+        public static void ValidateDraftRestoration(SocialPostDb post, IReadOnlyCollection<SocialPostDeliveryDb> deliveries)
+        {
+            if (!CanRestoreDraft(post, SocialPostStatus.Draft) ||
+                deliveries.Any(delivery => delivery.Status != SocialPostDeliveryStatus.Failed ||
+                    !string.IsNullOrWhiteSpace(delivery.ExternalPostID)))
+                throw ResponseStatusFactory.BadRequest("Only confirmed failed posts or unsubmitted cancelled drafts can be restored. Check unresolved deliveries on Instagram before retrying.");
+        }
+
+        public static void RestoreDraft(SocialPostDb post, IReadOnlyCollection<SocialPostDeliveryDb> deliveries)
+        {
+            ValidateDraftRestoration(post, deliveries);
+            // Keep the record, creation date and tracking links. Retain old deliveries for audit.
+            post.PublishingAttempt = checked(post.PublishingAttempt + 1);
+            post.Status = SocialPostStatus.Draft;
         }
 
         public static bool CanRestoreDraft(SocialPostDb post, string requestedStatus) =>

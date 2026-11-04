@@ -41,3 +41,9 @@ dotnet run --project tests/LinkedInRegression -c Release
 
 All 24 LinkedIn checks passed after the clean rebuild. The earlier OAuth run passed 116 checks and Meta publishing run passed 119 checks.
 
+
+## Callback mapping fix — 2026-11-02
+
+The development API Gateway callback mapping omitted `state`. The reported authorization started at 08:37:02 UTC and failed at 08:37:06 UTC, before its 08:47:02 UTC expiration. The Lambda received no signed state and correctly rejected the callback. Forward `state` unchanged alongside code, platform, organization ID, and redirect URI; the template is in `social-connection-callback.vtl`.
+
+Updated REST API `6op50ujgu6`, resource `5s0egm`, POST integration and deployed stage `dev` as deployment `cb9g20` (previous deployment `e1xplq`). Verified with synthetic credentials that state is forwarded and invalid state is still rejected, then verified the deployed stage export. No real authorization code was replayed. A fresh end-to-end LinkedIn connection is required to verify token exchange and Page discovery.

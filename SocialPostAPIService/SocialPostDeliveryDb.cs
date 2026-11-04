@@ -7,6 +7,8 @@ namespace ScanPay.SocialPostService
     [Alias("SocialPostDelivery")]
     public class SocialPostDeliveryDb
     {
+        // Zero identifies legacy deliveries; each restored draft starts a new attempt.
+        public int PublishingAttempt { get; set; }
         public string ContainerID { get; set; } = "";
         public string TargetAccountID { get; set; } = "";
         [PrimaryKey]

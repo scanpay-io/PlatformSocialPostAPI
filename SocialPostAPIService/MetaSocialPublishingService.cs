@@ -14,6 +14,9 @@ namespace ScanPay.SocialPostService
         public MetaSocialPublishingService(MetaSocialProviderClient? client = null, IMetaPublishingStore? store = null)
         { this.client = client ?? new(); storeOverride = store; }
 
+        public static string DeliveryID(SocialPostDb post, string platform) =>
+            platform + "-" + post.SocialPostID + (post.PublishingAttempt == 0 ? "" : "-" + post.PublishingAttempt);
+
         public static bool Supports(string platform) => platform is SocialPlatform.Facebook or SocialPlatform.Instagram or SocialPlatform.Threads;
 
         public static string Validate(SocialPostDb post, string platform)
@@ -34,7 +37,24 @@ namespace ScanPay.SocialPostService
             if (platform == SocialPlatform.Instagram && string.IsNullOrWhiteSpace(image))
                 throw ResponseStatusFactory.BadRequest("Instagram requires a publicly accessible JPEG image URL in meta_social.image_url.");
             if (!string.IsNullOrWhiteSpace(image)) ValidateUrl(image, true);
+            if (platform == SocialPlatform.Instagram) ValidateInstagramImageUrl(image);
             return text;
+        }
+
+        public static void ValidateInstagramImageUrl(string value)
+        {
+            const string message = "Instagram needs a direct, publicly accessible HTTPS JPEG image URL. A website, Instagram profile or post link cannot be used as the image.";
+            if (!Uri.TryCreate(value, UriKind.Absolute, out var uri) || uri.Scheme != "https" ||
+                !string.IsNullOrEmpty(uri.UserInfo) || !string.IsNullOrEmpty(uri.Fragment) || uri.IsLoopback)
+                throw ResponseStatusFactory.BadRequest(message);
+            string host = uri.Host.ToLowerInvariant();
+            string extension = System.IO.Path.GetExtension(uri.AbsolutePath).ToLowerInvariant();
+            if (host == "instagram.com" || host.EndsWith(".instagram.com") ||
+                host == "yopmail.com" || host.EndsWith(".yopmail.com") ||
+                (uri.AbsolutePath == "/" && string.IsNullOrEmpty(uri.Query)) ||
+                new[] { ".html", ".htm", ".php", ".png", ".gif", ".webp", ".svg", ".pdf" }.Contains(extension))
+                throw ResponseStatusFactory.BadRequest(message);
+            // Extensionless and signed image URLs are valid. Meta verifies the actual media format.
         }
 
         private static void ValidateUrl(string value, bool image)
@@ -55,7 +75,7 @@ namespace ScanPay.SocialPostService
                 token.OrganizationID != connection.OrganizationID || token.SocialConnectionID != connection.SocialConnectionID ||
                 token.Platform != connection.Platform || string.IsNullOrWhiteSpace(token.AccessToken) ||
                 token.TokenExpiresDateUtc <= DateTime.UtcNow.AddMinutes(1))
-                throw ResponseStatusFactory.BadRequest($"Reconnect the {connection.Platform} account before posting.");
+                throw ResponseStatusFactory.BadRequest($"Reconnect the {connection.Platform} account before posting: its connection or access token is missing, expired or invalid.");
             return token;
         }
 
@@ -106,7 +126,8 @@ namespace ScanPay.SocialPostService
                 }
                 pending.Add((new SocialPostDeliveryDb
                 {
-                    DeliveryID = platform + "-" + post.SocialPostID, SocialPostID = post.SocialPostID,
+                    DeliveryID = DeliveryID(post, platform), SocialPostID = post.SocialPostID,
+                    PublishingAttempt = post.PublishingAttempt,
                     OrganizationID = post.OrganizationID, SocialConnectionID = connection.SocialConnectionID,
                     Platform = platform, TargetAccountID = target, Status = "initializing"
                 }, accessToken));

@@ -288,4 +288,68 @@ var summary = SocialPostService.SummarizeDeliveries(new[] { "initializing", "pro
     .Select(s => new SocialPostDeliveryDb { Status = s }).ToList());
 Check(summary.Publishing == 3 && summary.SubmissionUnknown == 1 && summary.Failed == 1 && summary.Published == 1 && summary.Cancelled == 1 && summary.TotalDeliveries == 7,
     "Analytics accounts for processing and uncertain deliveries without labelling them failed");
+
+// Restoring a rejected attempt keeps the post and starts a distinct delivery attempt.
+var restored = Post("instagram");
+restored.Status = "failed";
+var createdAt = restored.CreateDate;
+var originalLink = restored.DestinationUrl;
+var failedDelivery = new SocialPostDeliveryDb {
+    DeliveryID = "instagram-post", SocialPostID = "post", OrganizationID = "org",
+    Platform = "instagram", Status = "failed", ErrorCode = "36001"
+};
+SocialPostService.RestoreDraft(restored, new[] { failedDelivery });
+Check(restored.SocialPostID == "post" && restored.CreateDate == createdAt && restored.DestinationUrl == originalLink,
+    "Restore preserves the original post identity, creation date and tracking link");
+Check(restored.Status == "draft" && restored.PublishingAttempt == 1 && failedDelivery.Status == "failed",
+    "Restore retains failed delivery history and starts a new attempt");
+var retryStore = MemoryStore.For("instagram");
+retryStore.Deliveries[failedDelivery.DeliveryID] = failedDelivery;
+int retryWrites = 0;
+using var retryHttp = new HttpClient(new ProviderHttpHandler(request => {
+    if (request.Method == HttpMethod.Get) return Task.FromResult(Json("{'status_code':'FINISHED'}"));
+    Interlocked.Increment(ref retryWrites);
+    return Task.FromResult(Json("{'id':'12345'}"));
+}));
+var retryService = new MetaSocialPublishingService(new(retryHttp), retryStore);
+await retryService.RefreshStatusAsync(restored, null!);
+Check(restored.Status == "draft", "Reading a restored draft does not reapply the old failed status");
+await retryService.PublishAsync(restored, null!);
+await retryService.PublishAsync(restored, null!);
+Check(restored.Status == "published" && retryWrites == 2 && retryStore.Deliveries.Count == 2,
+    "Restored post republishes once, while the original rejected delivery remains intact");
+Check(retryStore.Deliveries["instagram-post-1"].SocialPostID == "post", "Retry still belongs to the same post");
+foreach (string state in new[] { "submission_unknown", "processing", "publishing", "published", "cancelled" }) {
+    var unsafePost = Post("instagram"); unsafePost.Status = "failed";
+    await Reject(() => { SocialPostService.RestoreDraft(unsafePost, new[] { new SocialPostDeliveryDb { Status = state } }); return Task.CompletedTask; },
+        "Restore must reject unresolved or successful deliveries");
+}
+foreach (string url in new[] { "https://www.instagram.com/", "https://instagram.com/p/example/", "https://yopmail.com/en/wm",
+    "https://example.org/photo.png", "http://example.org/photo.jpg", "https://localhost/photo.jpg", "not a URL" }) {
+    await Reject(() => { MetaSocialPublishingService.ValidateInstagramImageUrl(url); return Task.CompletedTask; }, "Invalid Instagram image URL must fail validation");
+}
+foreach (string url in new[] { "https://example.org/photo.JPG?signature=abc", "https://example.org/media/123?signature=abc" }) {
+    MetaSocialPublishingService.ValidateInstagramImageUrl(url); checks++;
+}
+foreach (string code in new[] { "36001", "9004", "190" }) {
+    var errorStore = MemoryStore.For("instagram");
+    using var errorHttp = new HttpClient(new ProviderHttpHandler(_ => Task.FromResult(new HttpResponseMessage(HttpStatusCode.BadRequest) {
+        Content = new StringContent("{\"error\":{\"code\":" + code + ",\"message\":\"do-not-expose-token\"}}")
+    })));
+    var errorPost = Post("instagram");
+    await new MetaSocialPublishingService(new(errorHttp), errorStore).PublishAsync(errorPost, null!);
+    var error = errorStore.Deliveries["instagram-post"];
+    Check(error.Status == "failed" && error.ErrorCode == code && !error.ErrorMessage.Contains("do-not-expose-token"), "Provider failure is retained safely");
+    Check(error.ErrorMessage.Contains(code == "190" ? "expired or invalid" : "JPEG"), "Provider error gives a specific correction");
+}
+var expiredStore = MemoryStore.For("instagram");
+expiredStore.Tokens["instagram"].TokenExpiresDateUtc = DateTime.UtcNow.AddMinutes(-1);
+using var noSendHttp = new HttpClient(new ProviderHttpHandler(_ => throw new Exception("Expired token must not reach Meta")));
+try {
+    await new MetaSocialPublishingService(new(noSendHttp), expiredStore).PublishAsync(Post("instagram"), null!);
+    throw new Exception("Expired token was accepted");
+} catch (ResponseStatusException exception) {
+    Check(exception.Message.Contains("Reconnect") && exception.Message.Contains("expired"), "Expired-token preflight explains reconnection");
+}
+
 Console.WriteLine($"Passed {checks} Meta publishing regression checks.");
