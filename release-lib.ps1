@@ -109,7 +109,12 @@ function Publish-One($Entry,[string]$PlatformPath,$PlatformConfig,[string]$Direc
  if($current.Architectures[0] -ne $arch){throw 'Architecture differs from live function; update infrastructure first'}
  $type=$defaults.'package-type';if(!$type){$type='Zip'}
  if($current.PackageType -ne $type){throw 'Package type differs from live function'}
- if($type -eq 'Zip' -and ($current.Runtime -ne $defaults.'function-runtime' -or $current.Handler -ne $defaults.'function-handler')){throw 'Runtime/handler differs from live function; update infrastructure first'}
+ $runtimeChange=$false
+ if($type -eq 'Zip'){
+  if($current.Handler -ne $defaults.'function-handler'){throw "Handler differs: live '$($current.Handler)', local '$($defaults.'function-handler')'; update infrastructure first"}
+  $runtimeChange=$current.Runtime -ne $defaults.'function-runtime'
+  if($runtimeChange -and ($current.Runtime -ne 'dotnet8' -or $defaults.'function-runtime' -ne 'dotnet10')){throw "Unsupported runtime migration: $($current.Runtime) -> $($defaults.'function-runtime'); update infrastructure first"}
+ }
  $beforeConfig=Config-Hash $current
  $payload=@{FunctionName=$Entry.FunctionArn;RevisionId=$current.RevisionId;Publish=$false}
  Push-Location $projectDir
@@ -142,7 +147,7 @@ function Publish-One($Entry,[string]$PlatformPath,$PlatformConfig,[string]$Direc
    $payload.S3Bucket=$script:Settings.Bucket;$payload.S3Key=$key
    if($stored.VersionId){$payload.S3ObjectVersion=$stored.VersionId}
    # Reuse an exact existing code/configuration snapshot instead of forcing version numbers.
-   if($current.CodeSha256 -eq $hash){$existing=Find-PublishedVersion $current $Entry.Region;if($existing){$Entry.Version=$existing.Version;$Entry.CodeSha256=$existing.CodeSha256;$Entry.ConfigSha256=Config-Hash $existing;$Entry.Detail='Reused exact published snapshot';return}}
+   if(!$runtimeChange -and $current.CodeSha256 -eq $hash){$existing=Find-PublishedVersion $current $Entry.Region;if($existing){$Entry.Version=$existing.Version;$Entry.CodeSha256=$existing.CodeSha256;$Entry.ConfigSha256=Config-Hash $existing;$Entry.Detail='Reused exact published snapshot';return}}
   }
  } finally {Pop-Location}
  $updated=Invoke-Aws @('lambda','update-function-code') $Entry.Region $payload
@@ -152,11 +157,27 @@ function Publish-One($Entry,[string]$PlatformPath,$PlatformConfig,[string]$Direc
  if($latest.State -ne 'Active' -or $latest.LastUpdateStatus -ne 'Successful' -or $latest.CodeSha256 -ne $updated.CodeSha256){throw 'Function is not active, update failed, or uploaded code changed'}
  if($type -eq 'Zip' -and $latest.CodeSha256 -ne $Entry.Artifact.Sha256){throw 'Uploaded code checksum does not match package'}
  if((Config-Hash $latest) -ne $beforeConfig){throw 'Function configuration changed during publication'}
+ if($runtimeChange){
+  $message="Migrating runtime for $($Entry.FunctionName): $($current.Runtime) -> $($defaults.'function-runtime')"
+  Write-Host $message;if($script:Log){Add-Content -LiteralPath $script:Log -Value $message}
+  # Only the runtime may change; retain guards for every other configuration field.
+  $expected=$latest | ConvertTo-Json -Depth 60 | ConvertFrom-Json
+  $expected.Runtime=$defaults.'function-runtime'
+  $expectedConfig=Config-Hash $expected
+  try {
+   Invoke-Aws @('lambda','update-function-configuration') $Entry.Region @{FunctionName=$Entry.FunctionArn;Runtime=$expected.Runtime;RevisionId=$latest.RevisionId} | Out-Null
+   Invoke-Aws @('lambda','wait','function-updated-v2','--function-name',$Entry.FunctionArn) $Entry.Region | Out-Null
+   $latest=Invoke-Aws @('lambda','get-function-configuration','--function-name',$Entry.FunctionArn) $Entry.Region
+   if($latest.State -ne 'Active' -or $latest.LastUpdateStatus -ne 'Successful' -or $latest.CodeSha256 -ne $updated.CodeSha256 -or (Config-Hash $latest) -ne $expectedConfig){throw 'Runtime update failed verification or code/configuration changed concurrently'}
+  } catch {
+   throw "Code was uploaded but runtime migration did not complete verification. No version was published or alias moved; inspect the unpublished function before retrying with a new release ID. $($_.Exception.Message)"
+  }
+ }
  $existing=Find-PublishedVersion $latest $Entry.Region
  if($existing){$version=$existing;$Entry.Detail='Reused exact published snapshot'}else{
   $version=Invoke-Aws @('lambda','publish-version') $Entry.Region @{FunctionName=$Entry.FunctionArn;CodeSha256=$latest.CodeSha256;RevisionId=$latest.RevisionId;Description=('Release '+$script:ReleaseId)}
   $Entry.Detail='Published immutable version'
  }
- if($version.Version -notmatch '^[1-9][0-9]*$' -or $version.CodeSha256 -ne $latest.CodeSha256){throw 'Published version did not match expected code'}
+ if($version.Version -notmatch '^[1-9][0-9]*$' -or $version.CodeSha256 -ne $latest.CodeSha256 -or (Config-Hash $version) -ne (Config-Hash $latest)){throw 'Published version did not match expected code'}
  $Entry.Version=$version.Version;$Entry.CodeSha256=$version.CodeSha256;$Entry.ConfigSha256=Config-Hash $version
 }
