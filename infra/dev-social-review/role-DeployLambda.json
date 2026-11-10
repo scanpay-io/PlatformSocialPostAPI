@@ -1,0 +1,28 @@
+{
+  "Role": {
+    "Path": "/",
+    "RoleName": "DeployLambda",
+    "RoleId": "AROASDYGHITEXGJPWMALO",
+    "Arn": "arn:aws:iam::145505076425:role/DeployLambda",
+    "CreateDate": "2019-11-12T16:53:50+00:00",
+    "AssumeRolePolicyDocument": {
+      "Version": "2012-10-17",
+      "Statement": [
+        {
+          "Effect": "Allow",
+          "Principal": {
+            "AWS": "arn:aws:iam::145505076425:root",
+            "Service": "lambda.amazonaws.com"
+          },
+          "Action": "sts:AssumeRole"
+        }
+      ]
+    },
+    "Description": "Allows Lambda functions to call AWS services on your behalf.",
+    "MaxSessionDuration": 3600,
+    "RoleLastUsed": {
+      "LastUsedDate": "2026-11-10T16:04:39+00:00",
+      "Region": "us-east-1"
+    }
+  }
+}

@@ -132,6 +132,11 @@ namespace ScanPay.SocialPostService
                     Platform = platform, TargetAccountID = target, Status = "initializing"
                 }, accessToken));
             }
+            foreach (var item in pending)
+            {
+                SocialTracking.PrepareDelivery(item.Delivery, post);
+                Validate(SocialTracking.WithDestination(post, item.Delivery.TrackingUrl), item.Delivery.Platform);
+            }
             if (pending.Count > 0 && !await store.BeginAsync(post))
                 throw ResponseStatusFactory.BadRequest("This post changed in another request. Reload its status before publishing.");
             await Task.WhenAll(pending.Select(async item =>
@@ -144,13 +149,13 @@ namespace ScanPay.SocialPostService
                     if (delivery.Platform == SocialPlatform.Facebook)
                     {
                         delivery.ExternalPostID = await client.PublishFacebookAsync(delivery.TargetAccountID, item.Token,
-                            post.Content.Trim(), post.DestinationUrl, options.ImageUrl);
+                            post.Content.Trim(), delivery.TrackingUrl, options.ImageUrl);
                         SetPublished(delivery);
                     }
                     else
                     {
                         delivery.ContainerID = await client.CreateContainerAsync(delivery.Platform, delivery.TargetAccountID,
-                            item.Token, Validate(post, delivery.Platform), options.ImageUrl);
+                            item.Token, Validate(SocialTracking.WithDestination(post, delivery.TrackingUrl), delivery.Platform), options.ImageUrl);
                         delivery.Status = "processing";
                     }
                     await store.SaveAsync(delivery);

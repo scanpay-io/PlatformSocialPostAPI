@@ -28,9 +28,7 @@ namespace ScanPay.Lambda.DeleteSocialPost
                 action: async normalizedRequest =>
                 {
                     normalizedRequest =
-                        SocialRequestResolver.Hydrate(
-                            request,
-                            normalizedRequest);
+                        await SocialAuthorization.HydrateAsync(request, normalizedRequest, context);
 
                     string organizationID =
                         SocialRequestResolver.RequireOrganizationID(

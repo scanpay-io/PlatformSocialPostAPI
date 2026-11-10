@@ -1,0 +1,44 @@
+{
+  "AttachedPolicies": [
+    {
+      "PolicyName": "LambdaDeploymentPolicy",
+      "PolicyArn": "arn:aws:iam::145505076425:policy/LambdaDeploymentPolicy"
+    },
+    {
+      "PolicyName": "AmazonCognitoPowerUser",
+      "PolicyArn": "arn:aws:iam::aws:policy/AmazonCognitoPowerUser"
+    },
+    {
+      "PolicyName": "AWSLambdaFullAccess",
+      "PolicyArn": "arn:aws:iam::aws:policy/AWSLambdaFullAccess"
+    },
+    {
+      "PolicyName": "AmazonSESFullAccess",
+      "PolicyArn": "arn:aws:iam::aws:policy/AmazonSESFullAccess"
+    },
+    {
+      "PolicyName": "AmazonSNSFullAccess",
+      "PolicyArn": "arn:aws:iam::aws:policy/AmazonSNSFullAccess"
+    },
+    {
+      "PolicyName": "AmazonSQSFullAccess",
+      "PolicyArn": "arn:aws:iam::aws:policy/AmazonSQSFullAccess"
+    },
+    {
+      "PolicyName": "AmazonVPCFullAccess",
+      "PolicyArn": "arn:aws:iam::aws:policy/AmazonVPCFullAccess"
+    },
+    {
+      "PolicyName": "AmazonElastiCacheFullAccess",
+      "PolicyArn": "arn:aws:iam::aws:policy/AmazonElastiCacheFullAccess"
+    },
+    {
+      "PolicyName": "AmazonDynamoDBFullAccess",
+      "PolicyArn": "arn:aws:iam::aws:policy/AmazonDynamoDBFullAccess"
+    },
+    {
+      "PolicyName": "AmazonS3FullAccess",
+      "PolicyArn": "arn:aws:iam::aws:policy/AmazonS3FullAccess"
+    }
+  ]
+}

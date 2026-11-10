@@ -1,0 +1,18 @@
+{
+  "RoleName": "DeployLambda",
+  "PolicyName": "GiveAnywhereSMSConfigurationSetSendPolicy",
+  "PolicyDocument": {
+    "Version": "2012-10-17",
+    "Statement": [
+      {
+        "Sid": "AllowConfiguredSmsDeliveryTracking",
+        "Effect": "Allow",
+        "Action": "sms-voice:SendTextMessage",
+        "Resource": [
+          "arn:aws:sms-voice:us-east-1:145505076425:configuration-set/GGA-DEV-CRM",
+          "arn:aws:sms-voice:us-east-1:145505076425:configuration-set/GGA-PROD-CRM"
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "function": "scanpay_get_social_post_analytics",
+  "configurationTarget": "$LATEST",
+  "expectedRevisionId": "49c7c9b2-ca3f-4dfc-8da7-b8c288b84ce4",
+  "environmentChange": {
+    "add": "SOCIAL_ANALYTICS_CURSOR_KEY",
+    "value": "Generate 32 cryptographically random bytes at apply time; base64 encode; preserve every existing environment entry; do not print or persist the value in review artifacts."
+  },
+  "publishOrMoveAliases": false,
+  "coordination": "User publishes the configuration with backend code to gany_dev; do not alter gany_prod version 17."
+}

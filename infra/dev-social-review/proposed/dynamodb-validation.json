@@ -1,0 +1,10 @@
+{
+    "Parameters": [
+        {
+            "ParameterKey": "BillingMode",
+            "DefaultValue": "PAY_PER_REQUEST",
+            "NoEcho": false
+        }
+    ],
+    "Description": "DynamoDB tables required by PlatformSocialPostAPI."
+}

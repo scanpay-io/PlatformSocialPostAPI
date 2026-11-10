@@ -1,0 +1,57 @@
+{
+#set($inputRoot = $input.path('$'))
+"account_id" : $input.json('$.account_id'), 
+"transaction_type_id" : $input.json('$.transaction_type_id'),
+"transaction_type" : $input.json('$.transaction_type'),
+"card" : $input.json('$.card'),
+"bank_account": $input.json('$.bank_account'),
+"payment_source_id": $input.json('$.payment_source_id'),
+"tip_amount": $input.json('$.tip_amount'),
+"amount" : $input.json('$.amount'),
+"allow_payer_cover_amount": $input.json('$.allow_payer_cover_amount'),
+"payer_cover_amount": $input.json('$.payer_cover_amount'),
+"payer_account_id" : $input.json('$.payer_account_id'),
+"payer_name" : $input.json('$.payer_name'),
+"payer_email" : $input.json('$.payer_email'),
+"payer_zip" : $input.json('$.payer_zip'),
+"payment_intent_id" : $input.json('$.payment_intent_id'),
+"sponsor_username" : $input.json('$.sponsor_username'),
+"no_share_giving" : $input.json('$.no_share_giving'),
+"existing_payment_source" : $input.json('$.existing_payment_source'),
+"key_values" : $input.json('$.key_values'),
+"action_id" : $input.json('$.action_id'),
+"email_id" : $input.json('$.email_id') 
+#if($inputRoot.containsKey('future_use'))
+,"future_use": "$inputRoot.future_use"
+#end
+#if($inputRoot.containsKey('payment_source_type'))
+,"payment_source_type": "$inputRoot.payment_source_type"
+#end
+#if($inputRoot.containsKey('recurring_frequency'))
+,"recurring_frequency": "$inputRoot.recurring_frequency"
+#end
+#if($inputRoot.containsKey('transaction_id'))
+,"transaction_id": "$inputRoot.transaction_id"
+#end
+#if($inputRoot.containsKey('create_account'))
+,"create_account": "$inputRoot.create_account"
+#end
+#if($inputRoot.containsKey('email_optin'))
+,"email_optin": "$inputRoot.email_optin"
+#end
+#if($inputRoot.containsKey('paypal_commerce'))
+,"paypal_commerce": $input.json('$.paypal_commerce')
+#end
+#if($inputRoot.containsKey('meta_data'))
+,"meta_data": $input.json('$.meta_data')
+#end
+#if($inputRoot.containsKey('additional_info'))
+,"additional_info": $input.json('$.additional_info')
+#end
+#if($inputRoot.containsKey('additional_information_version'))
+,"additional_information_version": $input.json('$.additional_information_version')
+#end
+#if($inputRoot.containsKey('sms_message_id'))
+,"sms_message_id": $input.json('$.sms_message_id')
+#end
+}

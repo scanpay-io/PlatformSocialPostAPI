@@ -39,3 +39,5 @@ Check(SocialEngagementService.Aggregate("org", postID, Array.Empty<SocialPostCli
 var foreign = Payment("foreign", "success", 30); foreign.Currency = "cad";
 Check(SocialEngagementService.Aggregate("org", postID, clicks, records.Append(foreign)).TotalAmountRaised == null, "Do not sum different country currencies");
 Console.WriteLine("Social attribution regression checks passed.");
+
+await CohortChecks.RunAsync();

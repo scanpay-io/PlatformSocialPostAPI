@@ -19,6 +19,8 @@ namespace ScanPay.SocialPostService
         public string ClickID { get; set; } = "";
         [JsonProperty("visitor_id")]
         public string VisitorID { get; set; } = "";
+        [JsonProperty("social_delivery_id")]
+        public string DeliveryID { get; set; } = "";
         [JsonProperty("social_platform")]
         public string SocialPlatformName { get; set; } = "";
     }
@@ -53,26 +55,48 @@ namespace ScanPay.SocialPostService
                 throw ResponseStatusFactory.BadRequest("social_post_id, click_id and visitor_id must be GUIDs.");
             var post = await DbCRUD<SocialPostDb>.ReadAsync(postID.ToString(), context);
             if (post == null) throw ResponseStatusFactory.NotFound("Social post was not found.");
-            var platform = (request.SocialPlatformName ?? "").Trim().ToLowerInvariant();
-            if (platform.Length == 0 && post.Platforms.Count == 1) platform = post.Platforms[0];
-            if (platform.Length > 0 && !post.Platforms.Contains(platform, StringComparer.OrdinalIgnoreCase))
-                throw ResponseStatusFactory.BadRequest("Platform does not belong to this post.");
+            SocialTracking.Ensure(post, context);
+            using var client = DbCRUD<SocialPostDb>.DBClient(context);
+            var deliveries = await new SocialInsightsStore(client)
+                .QueryAsync<SocialPostDeliveryDb>(SocialInsightsStore.Query("SocialPostDelivery", "SocialPostID", post.SocialPostID), 2000);
+            var selected = SelectDelivery(post, deliveries, request.DeliveryID, request.SocialPlatformName);
+            var platform = selected?.Platform ?? "unknown";
             // Conditional insert makes retries with the same click ID idempotent.
             await DbCRUD<SocialPostClickDb>.TryCreateAsync(new SocialPostClickDb
             {
                 ClickID = postID + ":" + clickID,
+                DeliveryID = selected?.DeliveryID ?? "",
+                AppName = post.AppName, Runway = post.Runway, AccountScopeKey = post.AccountScopeKey,
                 SocialPostID = postID.ToString(),
                 OrganizationID = post.OrganizationID,
                 CampaignID = post.ResourceID,
                 VisitorID = visitorID.ToString(),
-                Platform = platform.Length == 0 ? "unknown" : platform,
+                Platform = platform,
                 CreateDate = DateTime.UtcNow
             }, context);
         }
 
+        public static SocialPostDeliveryDb? SelectDelivery(SocialPostDb post, IEnumerable<SocialPostDeliveryDb> deliveries, string deliveryID, string platform)
+        {
+            var eligible = deliveries.Where(d => SocialTracking.Owns(d, post) && d.PublishedDateUtc.HasValue &&
+                d.PublishedDateUtc <= DateTime.UtcNow).ToList();
+            if (!string.IsNullOrEmpty(deliveryID))
+            {
+                var selected = eligible.SingleOrDefault(d => d.DeliveryID == deliveryID && !string.IsNullOrEmpty(d.TrackingUrl));
+                if (selected == null || !string.IsNullOrWhiteSpace(platform) && !string.Equals(selected.Platform, platform, StringComparison.OrdinalIgnoreCase))
+                    throw ResponseStatusFactory.NotFound("Published social delivery was not found.");
+                return selected;
+            }
+            if (eligible.Count == 0) throw ResponseStatusFactory.NotFound("Social post has no published delivery.");
+            // Old clients omit delivery IDs. Preserve post counts, never trust a client
+            // platform hint to manufacture delivery attribution on a multi-platform post.
+            return eligible.Count == 1 && !string.IsNullOrEmpty(eligible[0].TrackingUrl) ? eligible[0] : null;
+        }
+
         public async Task<SocialEngagementMetrics> ReadAsync(SocialPostDb post, ILambdaContext context)
         {
-            var records = await LoadAsync(post, context);
+            using var client = DbCRUD<SocialPostDb>.DBClient(context);
+            var records = await LoadAsync(post, new SocialInsightsStore(client), context);
             return Aggregate(post.OrganizationID, post.SocialPostID, records.Clicks, records.Transactions);
         }
 
@@ -84,9 +108,11 @@ namespace ScanPay.SocialPostService
             var clicks = new List<SocialPostClickDb>();
             var transactions = new List<TransactionAmountDb>();
             var byPost = new List<object>();
+            using var client = DbCRUD<SocialPostDb>.DBClient(context);
+            var store = new SocialInsightsStore(client);
             foreach (var post in posts)
             {
-                var records = await LoadAsync(post, context);
+                var records = await LoadAsync(post, store, context);
                 clicks.AddRange(records.Clicks);
                 transactions.AddRange(records.Transactions);
                 byPost.Add(new { social_post_id = post.SocialPostID, campaign_id = post.ResourceID,
@@ -96,29 +122,13 @@ namespace ScanPay.SocialPostService
                 engagement = Aggregate(organizationID, "", clicks, transactions), analytics = byPost };
         }
 
-        private async Task<(List<SocialPostClickDb> Clicks, List<TransactionAmountDb> Transactions)> LoadAsync(SocialPostDb post, ILambdaContext context)
+        private async Task<(List<SocialPostClickDb> Clicks, List<TransactionAmountDb> Transactions)> LoadAsync(SocialPostDb post, SocialInsightsStore store, ILambdaContext context)
         {
-            var clicks = new List<SocialPostClickDb>();
-            await foreach (var click in DbCRUD<SocialPostClickDb>.QueryAsync(new QueryRequest
-            {
-                TableName = "SocialPostClick", IndexName = "SocialPostID-index",
-                KeyConditionExpression = "SocialPostID = :post",
-                ExpressionAttributeValues = new() { [":post"] = new AttributeValue(post.SocialPostID) }
-            }, context)) clicks.Add(click);
-
-            var transactions = new List<TransactionAmountDb>();
-            await foreach (var transaction in DbCRUD<TransactionAmountDb>.QueryAsync(new QueryRequest
-            {
-                TableName = "TransactionAmount", IndexName = "SocialPostID-index",
-                KeyConditionExpression = "SocialPostID = :post",
-                FilterExpression = "PayeeAccountID = :organization",
-                ExpressionAttributeValues = new()
-                {
-                    [":organization"] = new AttributeValue(post.OrganizationID),
-                    [":post"] = new AttributeValue(post.SocialPostID)
-                }
-            }, context)) transactions.Add(transaction);
-            return (clicks, transactions);
+            SocialTracking.Ensure(post, context);
+            var clicks = await store.QueryAsync<SocialPostClickDb>(SocialInsightsStore.Query("SocialPostClick", "SocialPostID", post.SocialPostID));
+            var transactions = await store.QueryAsync<TransactionAmountDb>(SocialInsightsStore.Query("TransactionAmount", "SocialPostID", post.SocialPostID));
+            return (clicks.Where(c => c.AccountScopeKey == post.AccountScopeKey && c.AppName == post.AppName && c.Runway == post.Runway).ToList(),
+                transactions.Where(t => t.Runway == post.Runway && t.SocialAccountScopeKey == post.AccountScopeKey && FormatValue.EmptyValue(t.SmsMessageID)).ToList());
         }
 
         public static SocialEngagementMetrics Aggregate(string organizationID, string postID,
@@ -134,7 +144,7 @@ namespace ScanPay.SocialPostService
                 .Select(g => g.OrderByDescending(j => j.LastUpdate).ThenByDescending(j => j.CreateDate).First())
                 .Where(j => string.Equals(j.StatusState, "success", StringComparison.OrdinalIgnoreCase))
                 .ToList();
-            var amounts = paid.GroupBy(j => (j.Currency ?? "").ToLowerInvariant())
+            var amounts = paid.GroupBy(j => string.IsNullOrWhiteSpace(j.Currency) ? "unknown" : j.Currency.ToLowerInvariant())
                 .ToDictionary(g => g.Key, g => g.Sum(j => j.SocialDonationAmount));
             return new SocialEngagementMetrics
             {

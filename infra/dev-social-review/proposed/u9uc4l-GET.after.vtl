@@ -1,0 +1,15 @@
+{
+"queryStringParameters": {
+#set($query = $input.params().querystring)
+#set($separator = "")
+#foreach($key in ["contract", "post_id", "campaign_id", "from_utc", "to_utc", "outcome_before_utc", "view", "limit", "next_token"])
+#if($query.containsKey($key))
+$separator"$key": "$util.escapeJavaScript($query.get($key)).replaceAll("\\'","'")"
+#set($separator = ",")
+#end
+#end
+},
+"requestContext": {"authorizer": {"claims": {"sub": "$util.escapeJavaScript($context.authorizer.claims.sub).replaceAll("\\'","'")"}}},
+"organization_id": "$input.params('organizationid')",
+"post_id": "$input.params('postid')"
+}

@@ -80,6 +80,8 @@ namespace ScanPay.SocialPostService
                         DefaultValue.UtcNow()
                 };
 
+            SocialTracking.Stamp(post, context);
+
             if (post.Platforms.All(MetaSocialPublishingService.Supports))
                 foreach (string platform in post.Platforms) MetaSocialPublishingService.Validate(post, platform);
             if (post.Platforms.Contains(SocialPlatform.LinkedIn))
@@ -114,6 +116,7 @@ namespace ScanPay.SocialPostService
                     $"Social post({socialPostID}) was not found.");
             }
 
+            SocialTracking.Ensure(post, context);
             EnsureOrganizationOwnsPost(
                 organizationID,
                 post);
@@ -254,16 +257,14 @@ namespace ScanPay.SocialPostService
             ValidateOrganizationID(
                 organizationID);
 
-            List<SocialPostDb> posts =
-                await DbCRUD<SocialPostDb>.ReadAsync(
-                    context);
-
+            var posts = new List<SocialPostDb>();
+            int evaluated = 0;
+            await foreach (var post in DbCRUD<SocialPostDb>.QueryAsync(SocialInsightsStore.Query("SocialPost", "OrganizationID", organizationID), context))
+            {
+                if (++evaluated > 2000) throw ResponseStatusFactory.BadRequest("Too many posts. Use cohort_v1 analytics with a date range.");
+                if (SocialTracking.Owns(post, organizationID, SocialTracking.Scope(context, organizationID))) posts.Add(post);
+            }
             return posts
-                .Where(post =>
-                    string.Equals(
-                        post.OrganizationID,
-                        organizationID,
-                        StringComparison.OrdinalIgnoreCase))
                 .OrderByDescending(post =>
                     post.CreateDate)
                 .ToList();
@@ -362,9 +363,12 @@ namespace ScanPay.SocialPostService
                 socialPostID,
                 context);
 
-            List<SocialPostDeliveryDb> deliveries =
-                await DbCRUD<SocialPostDeliveryDb>.ReadAsync(
-                    context);
+            var deliveries = new List<SocialPostDeliveryDb>();
+            await foreach (var delivery in DbCRUD<SocialPostDeliveryDb>.QueryAsync(SocialInsightsStore.Query("SocialPostDelivery", "SocialPostID", socialPostID), context))
+            {
+                if (deliveries.Count >= 2000) throw ResponseStatusFactory.BadRequest("Too many delivery attempts.");
+                deliveries.Add(delivery);
+            }
 
             foreach (string platform in post.Platforms)
             {
@@ -375,7 +379,7 @@ namespace ScanPay.SocialPostService
             }
 
             return deliveries
-                .Where(delivery => delivery.PublishingAttempt == post.PublishingAttempt && delivery.OrganizationID == organizationID &&
+                .Where(delivery => SocialTracking.Owns(delivery, post) && delivery.PublishingAttempt == post.PublishingAttempt && delivery.OrganizationID == organizationID &&
                     string.Equals(
                         delivery.SocialPostID,
                         socialPostID,
@@ -477,54 +481,7 @@ namespace ScanPay.SocialPostService
             string resourceUrl,
             string socialPostID)
         {
-            if (FormatValue.EmptyValue(resourceUrl) ||
-                FormatValue.EmptyValue(socialPostID))
-            {
-                return resourceUrl;
-            }
-
-            UriBuilder uriBuilder;
-
-            try
-            {
-                uriBuilder =
-                    new UriBuilder(
-                        resourceUrl);
-            }
-            catch (UriFormatException)
-            {
-                return resourceUrl;
-            }
-
-            string query =
-                uriBuilder.Query;
-
-            if (query.StartsWith("?"))
-            {
-                query =
-                    query.Substring(1);
-            }
-
-            List<string> queryParameters =
-                query
-                    .Split(
-                        '&',
-                        StringSplitOptions.RemoveEmptyEntries)
-                    .Where(parameter =>
-                        !parameter.StartsWith(
-                            "socialpostid=",
-                            StringComparison.OrdinalIgnoreCase))
-                    .ToList();
-
-            queryParameters.Add(
-                $"socialpostid={Uri.EscapeDataString(socialPostID)}");
-
-            uriBuilder.Query =
-                string.Join(
-                    "&",
-                    queryParameters);
-
-            return uriBuilder.Uri.ToString();
+            return SocialTracking.Destination(resourceUrl, socialPostID, "");
         }
 
         private static void ValidateCreateRequest(

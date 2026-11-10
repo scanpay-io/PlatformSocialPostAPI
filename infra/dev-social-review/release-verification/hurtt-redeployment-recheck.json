@@ -1,0 +1,14 @@
+[
+  {
+    "test": "cohort",
+    "executedVersion": "18",
+    "status": 400,
+    "body": "{\"Status\":400,\"Message\":\"post_id must be a GUID and cannot be combined with cohort filters.\"}"
+  },
+  {
+    "test": "signed-cursor",
+    "executedVersion": "18",
+    "status": 500,
+    "body": "{\"Status\":500,\"Message\":\"Configure a separate SOCIAL_ANALYTICS_CURSOR_KEY of at least 32 random bytes (base64) for each environment.\"}"
+  }
+]

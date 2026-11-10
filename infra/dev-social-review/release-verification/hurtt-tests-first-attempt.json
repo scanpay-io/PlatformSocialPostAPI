@@ -1,0 +1,51 @@
+{
+  "run": "2c4ccb56-2af9-421b-88d7-40e91c1143a9",
+  "org": "1d3a11d5-ece9-4a24-ab3a-1b601fa15861",
+  "post": "99219b39-161a-4439-ade0-ad17f5b3342f",
+  "results": [
+    {
+      "name": "Temporary scoped fixture created (no provider publication)",
+      "passed": true,
+      "detail": {
+        "deliveries": 3,
+        "unpublished": 1
+      }
+    },
+    {
+      "name": "Public DEV click writes delivery attribution",
+      "passed": true
+    },
+    {
+      "name": "Public click retry succeeds with same event ID",
+      "passed": true
+    },
+    {
+      "name": "Caller cannot relabel platform",
+      "passed": true
+    },
+    {
+      "name": "Unpublished delivery rejected",
+      "passed": true
+    },
+    {
+      "name": "Wrong environment post rejected",
+      "passed": true
+    },
+    {
+      "name": "Persisted click has correct delivery, platform and DEV scope",
+      "passed": true
+    },
+    {
+      "name": "Verification interrupted",
+      "passed": false,
+      "detail": "lambda invoke: \r\naws: [ERROR]: the following arguments are required: --function-name\r\n\r\nusage: aws [options] <command> <subcommand> [<subcommand> ...] [parameters]\r\nTo see help text, you can run:\r\n\r\n  aws help\r\n  aws <command> help\r\n  aws <command> <subcommand> help\r\n\r\n"
+    },
+    {
+      "name": "Temporary fixture and click cleanup",
+      "passed": true,
+      "detail": {
+        "errors": []
+      }
+    }
+  ]
+}

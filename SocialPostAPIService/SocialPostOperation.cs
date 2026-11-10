@@ -350,8 +350,7 @@ namespace ScanPay.SocialPostService
             var service =
                 new SocialPostService();
 
-            var current = await GetPostStatusAsync(organizationID, postID, context);
-            var post = current.SocialPost!;
+            var post = await service.ReadAsync(organizationID, postID, context);
 
             return new SocialPostAnalyticsResponse
             {

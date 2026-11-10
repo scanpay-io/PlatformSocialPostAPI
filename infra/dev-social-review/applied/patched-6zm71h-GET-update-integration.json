@@ -1,0 +1,35 @@
+{
+  "type": "AWS",
+  "httpMethod": "POST",
+  "uri": "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:145505076425:function:scanpay_lookup_tinyurl:${stageVariables.runwayAlias}/invocations",
+  "requestTemplates": {
+    "application/json": "{\r\n\"short_code\": \"$input.params('shortcode')\"\r\n#set($query = $input.params().querystring)\n#foreach($key in [\"socialpostid\", \"socialdeliveryid\"])\n#if($query.containsKey($key))\n,\"$key\": \"$util.escapeJavaScript($query.get($key)).replaceAll(\"\\\\'\",\"'\")\"\n#end\n#end\n}"
+  },
+  "passthroughBehavior": "WHEN_NO_MATCH",
+  "contentHandling": "CONVERT_TO_TEXT",
+  "timeoutInMillis": 29000,
+  "cacheNamespace": "6zm71h",
+  "cacheKeyParameters": [],
+  "integrationResponses": {
+    "200": {
+      "statusCode": "200",
+      "responseParameters": {
+        "method.response.header.Access-Control-Allow-Origin": "'*'"
+      },
+      "responseTemplates": {
+        "application/json": null
+      }
+    },
+    "400": {
+      "statusCode": "400",
+      "selectionPattern": ".*\"Status\":400.*",
+      "responseParameters": {
+        "method.response.header.Access-Control-Allow-Origin": "'*'"
+      },
+      "responseTemplates": {
+        "application/json": "$input.path('$.errorMessage')"
+      }
+    }
+  },
+  "responseTransferMode": "BUFFERED"
+}

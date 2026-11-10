@@ -1,0 +1,25 @@
+{
+  "Aliases": [
+    {
+      "AliasArn": "arn:aws:lambda:us-east-1:145505076425:function:scanpay_add_donor_pledge:development",
+      "Name": "development",
+      "FunctionVersion": "61",
+      "Description": "Release crm-20261105-001",
+      "RevisionId": "d0e48d84-d8b5-42e5-abea-b25c63644e02"
+    },
+    {
+      "AliasArn": "arn:aws:lambda:us-east-1:145505076425:function:scanpay_add_donor_pledge:gany_dev",
+      "Name": "gany_dev",
+      "FunctionVersion": "61",
+      "Description": "Release crm-20261105-001",
+      "RevisionId": "1aa77be3-e443-464e-8c9a-ba05e070235a"
+    },
+    {
+      "AliasArn": "arn:aws:lambda:us-east-1:145505076425:function:scanpay_add_donor_pledge:gany_prod",
+      "Name": "gany_prod",
+      "FunctionVersion": "61",
+      "Description": "Release crm-20261105-001",
+      "RevisionId": "7a33d1f1-8c95-48b3-9e62-31689f5b987f"
+    }
+  ]
+}

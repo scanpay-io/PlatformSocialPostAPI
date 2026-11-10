@@ -1,0 +1,18 @@
+[
+  {
+    "ParameterKey": "RestApiId",
+    "ParameterValue": "6op50ujgu6"
+  },
+  {
+    "ParameterKey": "SocialResourceId",
+    "ParameterValue": "huiirm"
+  },
+  {
+    "ParameterKey": "CognitoAuthorizerId",
+    "ParameterValue": "waut26"
+  },
+  {
+    "ParameterKey": "AnalyticsLambdaArn",
+    "ParameterValue": "arn:aws:lambda:us-east-1:145505076425:function:scanpay_get_social_post_analytics"
+  }
+]

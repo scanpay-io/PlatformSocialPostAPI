@@ -1,0 +1,26 @@
+{
+  "RoleName": "DeployLambda",
+  "PolicyName": "Lambda_Auto_Scaling",
+  "PolicyDocument": {
+    "Version": "2012-10-17",
+    "Statement": [
+      {
+        "Sid": "VisualEditor0",
+        "Effect": "Allow",
+        "Action": [
+          "cloudwatch:PutMetricAlarm",
+          "iam:GetRole",
+          "iam:PassRole",
+          "application-autoscaling:*",
+          "cloudwatch:DescribeAlarms"
+        ],
+        "Resource": "*"
+      },
+      {
+        "Effect": "Allow",
+        "Action": "iam:CreateServiceLinkedRole",
+        "Resource": "arn:aws:iam::*:role/aws-service-role/*"
+      }
+    ]
+  }
+}

@@ -1,0 +1,26 @@
+[
+  {
+    "test": "Malformed identifiers rejected",
+    "status": 400,
+    "expected": 400,
+    "passed": true,
+    "clickKey": "invalid:320407ec-bf69-4632-9831-af6b2b65c731",
+    "response": "{\"Status\":400,\"Message\":\"social_post_id, click_id and visitor_id must be GUIDs.\"}"
+  },
+  {
+    "test": "Unknown post rejected",
+    "status": 404,
+    "expected": 404,
+    "passed": true,
+    "clickKey": "1471ce95-2207-4154-9db4-e99134db2163:707814c5-481e-4598-b6f4-558be6cba356",
+    "response": "{\"Status\":404,\"Message\":\"Social post was not found.\"}"
+  },
+  {
+    "test": "Unscoped historical post rejected",
+    "status": 404,
+    "expected": 404,
+    "passed": true,
+    "clickKey": "5d1d3394-2b84-4ca8-b96a-35192b5faa96:2cfb70ce-689e-4ea1-a2eb-40d52fcf7fe3",
+    "response": "{\"Status\":404,\"Message\":\"Social post was not found in this environment.\"}"
+  }
+]

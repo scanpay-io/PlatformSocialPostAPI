@@ -1,0 +1,21 @@
+{
+    "Parameters": [
+        {
+            "ParameterKey": "AnalyticsLambdaArn",
+            "NoEcho": false
+        },
+        {
+            "ParameterKey": "RestApiId",
+            "NoEcho": false
+        },
+        {
+            "ParameterKey": "CognitoAuthorizerId",
+            "NoEcho": false
+        },
+        {
+            "ParameterKey": "SocialResourceId",
+            "NoEcho": false
+        }
+    ],
+    "Description": "Authenticated social cohort analytics on the existing social API resource."
+}

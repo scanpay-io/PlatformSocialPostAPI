@@ -1,0 +1,13 @@
+{
+  "FunctionName": "scanpay_process_schedule_pay",
+  "FunctionArn": "arn:aws:lambda:us-east-1:145505076425:function:scanpay_process_schedule_pay:gany_dev",
+  "Version": "163",
+  "Role": "arn:aws:iam::145505076425:role/DeployLambda",
+  "Runtime": "dotnet10",
+  "LastModified": "2026-11-10T16:05:31.000+0000",
+  "CodeSha256": "Cyt7Tzr/Dz/zjPIJV4LCfq562p3LVL8SbQgGoaidWzA=",
+  "Timeout": 900,
+  "EnvironmentKeys": [],
+  "CursorKeyConfigured": false,
+  "State": "Active"
+}

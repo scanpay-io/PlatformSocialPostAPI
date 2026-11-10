@@ -1,0 +1,82 @@
+{
+  "Changes": [
+    {
+      "Type": "Resource",
+      "ResourceChange": {
+        "Action": "Add",
+        "LogicalResourceId": "AnalyticsMethod",
+        "ResourceType": "AWS::ApiGateway::Method",
+        "Scope": [],
+        "Details": []
+      }
+    },
+    {
+      "Type": "Resource",
+      "ResourceChange": {
+        "Action": "Add",
+        "LogicalResourceId": "AnalyticsResource",
+        "ResourceType": "AWS::ApiGateway::Resource",
+        "Scope": [],
+        "Details": []
+      }
+    },
+    {
+      "Type": "Resource",
+      "ResourceChange": {
+        "Action": "Add",
+        "LogicalResourceId": "DevPermission",
+        "ResourceType": "AWS::Lambda::Permission",
+        "Scope": [],
+        "Details": []
+      }
+    },
+    {
+      "Type": "Resource",
+      "ResourceChange": {
+        "Action": "Add",
+        "LogicalResourceId": "Options",
+        "ResourceType": "AWS::ApiGateway::Method",
+        "Scope": [],
+        "Details": []
+      }
+    }
+  ],
+  "ChangeSetName": "social-cohort-approved-20261110",
+  "ChangeSetId": "arn:aws:cloudformation:us-east-1:145505076425:changeSet/social-cohort-approved-20261110/e263460d-8c69-476a-bb15-8e6c1d894ed5",
+  "StackId": "arn:aws:cloudformation:us-east-1:145505076425:stack/giveanywhere-social-analytics-dev/646a7bd0-dd23-11f1-a112-0eea6d44b4f9",
+  "StackName": "giveanywhere-social-analytics-dev",
+  "Description": null,
+  "Parameters": [
+    {
+      "ParameterKey": "AnalyticsLambdaArn",
+      "ParameterValue": "arn:aws:lambda:us-east-1:145505076425:function:scanpay_get_social_post_analytics"
+    },
+    {
+      "ParameterKey": "RestApiId",
+      "ParameterValue": "6op50ujgu6"
+    },
+    {
+      "ParameterKey": "CognitoAuthorizerId",
+      "ParameterValue": "waut26"
+    },
+    {
+      "ParameterKey": "SocialResourceId",
+      "ParameterValue": "huiirm"
+    }
+  ],
+  "CreationTime": "2026-11-10T16:25:50.414000+00:00",
+  "ExecutionStatus": "AVAILABLE",
+  "Status": "CREATE_COMPLETE",
+  "StatusReason": null,
+  "NotificationARNs": [],
+  "RollbackConfiguration": {},
+  "Capabilities": [],
+  "Tags": null,
+  "ParentChangeSetId": null,
+  "IncludeNestedStacks": false,
+  "RootChangeSetId": null,
+  "OnStackFailure": null,
+  "ImportExistingResources": null,
+  "StackDriftStatus": null,
+  "DeploymentMode": null
+}

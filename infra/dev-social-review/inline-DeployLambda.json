@@ -1,0 +1,12 @@
+{
+  "PolicyNames": [
+    "ECRPushPolicy",
+    "giveanywhere-sms-insights-operations-cohort-read",
+    "giveanywhere-sms-insights-operations-send-replay",
+    "GiveAnywhereSMSConfigurationSetSendPolicy",
+    "GiveAnywhereSMSSendPolicy",
+    "lambda-layer",
+    "Lambda_Auto_Scaling",
+    "sms-appconfig-runtime"
+  ]
+}

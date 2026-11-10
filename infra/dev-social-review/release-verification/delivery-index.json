@@ -1,0 +1,30 @@
+{
+  "IndexName": "AccountPublishedAt-index",
+  "KeySchema": [
+    {
+      "AttributeName": "AccountScopeKey",
+      "KeyType": "HASH"
+    },
+    {
+      "AttributeName": "PublishedAtKey",
+      "KeyType": "RANGE"
+    }
+  ],
+  "Projection": {
+    "ProjectionType": "ALL"
+  },
+  "IndexStatus": "ACTIVE",
+  "ProvisionedThroughput": {
+    "NumberOfDecreasesToday": 0,
+    "ReadCapacityUnits": 0,
+    "WriteCapacityUnits": 0
+  },
+  "IndexSizeBytes": 0,
+  "ItemCount": 0,
+  "IndexArn": "arn:aws:dynamodb:us-east-1:145505076425:table/SocialPostDelivery/index/AccountPublishedAt-index",
+  "WarmThroughput": {
+    "ReadUnitsPerSecond": 12000,
+    "WriteUnitsPerSecond": 4000,
+    "Status": "ACTIVE"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "FunctionName": "scanpay_get_social_post",
+  "FunctionArn": "arn:aws:lambda:us-east-1:145505076425:function:scanpay_get_social_post:gany_dev",
+  "Version": "17",
+  "Role": "arn:aws:iam::145505076425:role/DeployLambda",
+  "Runtime": "dotnet10",
+  "LastModified": "2026-11-10T15:10:38.000+0000",
+  "CodeSha256": "uGafTqnca3TU0/lBP7wkMVzo+UUsYwpsYl1EkRsCeQQ=",
+  "Timeout": 29,
+  "EnvironmentKeys": [
+    "account_number",
+    "runway_type",
+    "region"
+  ],
+  "CursorKeyConfigured": false,
+  "State": "Active"
+}

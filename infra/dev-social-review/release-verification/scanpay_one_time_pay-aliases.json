@@ -1,0 +1,25 @@
+{
+  "Aliases": [
+    {
+      "AliasArn": "arn:aws:lambda:us-east-1:145505076425:function:scanpay_one_time_pay:development",
+      "Name": "development",
+      "FunctionVersion": "545",
+      "Description": "Release payment-20261105-001",
+      "RevisionId": "50d9f407-fd1a-42de-842d-b3c22c5f1ef2"
+    },
+    {
+      "AliasArn": "arn:aws:lambda:us-east-1:145505076425:function:scanpay_one_time_pay:gany_dev",
+      "Name": "gany_dev",
+      "FunctionVersion": "545",
+      "Description": "Release payment-20261105-001",
+      "RevisionId": "4cf43bdb-9368-4315-b161-21ee668b5e17"
+    },
+    {
+      "AliasArn": "arn:aws:lambda:us-east-1:145505076425:function:scanpay_one_time_pay:gany_prod",
+      "Name": "gany_prod",
+      "FunctionVersion": "545",
+      "Description": "Release payment-20261105-001",
+      "RevisionId": "28f1c2b2-ecdc-419d-9968-c1cb81d7218e"
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "FunctionName": "scanpay_complete_one_time_pay",
+  "FunctionArn": "arn:aws:lambda:us-east-1:145505076425:function:scanpay_complete_one_time_pay:gany_dev",
+  "Version": "613",
+  "Role": "arn:aws:iam::145505076425:role/DeployLambda",
+  "Runtime": "dotnet10",
+  "LastModified": "2026-11-10T15:42:57.000+0000",
+  "CodeSha256": "betXmFIegO6RQ1MVyEJPTPamerLZACQsGxPF1dcGiX8=",
+  "Timeout": 300,
+  "EnvironmentKeys": [
+    "account_number",
+    "runway_type",
+    "region"
+  ],
+  "CursorKeyConfigured": false,
+  "State": "Active"
+}

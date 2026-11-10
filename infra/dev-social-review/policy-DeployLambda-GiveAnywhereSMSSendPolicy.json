@@ -1,0 +1,15 @@
+{
+  "RoleName": "DeployLambda",
+  "PolicyName": "GiveAnywhereSMSSendPolicy",
+  "PolicyDocument": {
+    "Version": "2012-10-17",
+    "Statement": [
+      {
+        "Sid": "AllowGiveAnywhereSmsPool",
+        "Effect": "Allow",
+        "Action": "sms-voice:SendTextMessage",
+        "Resource": "arn:aws:sms-voice:us-east-1:145505076425:pool/pool-1c7de6d01ecc425bb84d6b6bc70202a4"
+      }
+    ]
+  }
+}

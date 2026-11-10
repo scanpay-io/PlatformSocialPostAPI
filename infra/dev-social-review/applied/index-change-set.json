@@ -1,0 +1,63 @@
+{
+  "Changes": [
+    {
+      "Type": "Resource",
+      "ResourceChange": {
+        "Action": "Modify",
+        "LogicalResourceId": "SocialPostDeliveryTable",
+        "PhysicalResourceId": "SocialPostDelivery",
+        "ResourceType": "AWS::DynamoDB::Table",
+        "Replacement": "False",
+        "Scope": [
+          "Properties"
+        ],
+        "Details": [
+          {
+            "Target": {
+              "Attribute": "Properties",
+              "Name": "GlobalSecondaryIndexes",
+              "RequiresRecreation": "Never"
+            },
+            "Evaluation": "Static",
+            "ChangeSource": "DirectModification"
+          },
+          {
+            "Target": {
+              "Attribute": "Properties",
+              "Name": "AttributeDefinitions",
+              "RequiresRecreation": "Never"
+            },
+            "Evaluation": "Static",
+            "ChangeSource": "DirectModification"
+          }
+        ]
+      }
+    }
+  ],
+  "ChangeSetName": "social-cohort-approved-20261110",
+  "ChangeSetId": "arn:aws:cloudformation:us-east-1:145505076425:changeSet/social-cohort-approved-20261110/e675a308-6748-48a7-8335-0085b0b4cd9b",
+  "StackId": "arn:aws:cloudformation:us-east-1:145505076425:stack/platform-socialpost-dynamodb/4acedae0-95ac-11f1-a64b-0e7c0f4679df",
+  "StackName": "platform-socialpost-dynamodb",
+  "Description": null,
+  "Parameters": [
+    {
+      "ParameterKey": "BillingMode",
+      "ParameterValue": "PAY_PER_REQUEST"
+    }
+  ],
+  "CreationTime": "2026-11-10T16:25:25.813000+00:00",
+  "ExecutionStatus": "AVAILABLE",
+  "Status": "CREATE_COMPLETE",
+  "StatusReason": null,
+  "NotificationARNs": [],
+  "RollbackConfiguration": {},
+  "Capabilities": [],
+  "Tags": null,
+  "ParentChangeSetId": null,
+  "IncludeNestedStacks": false,
+  "RootChangeSetId": null,
+  "OnStackFailure": null,
+  "ImportExistingResources": null,
+  "StackDriftStatus": null,
+  "DeploymentMode": null
+}

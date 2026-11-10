@@ -1,0 +1,12 @@
+{
+"organization_id": "$input.params('organizationid')",
+"post_id": "$input.params('postid')",
+  "content": $input.json('$.content'),
+  "destination_url": $input.json('$.destination_url'),
+  "platforms": $input.json('$.platforms'),
+  "status": $input.json('$.status'),
+  "scheduled_date_utc": $input.json('$.scheduled_date_utc')
+#if($input.path('$').containsKey('meta_social'))
+  ,"meta_social":$input.json('$.meta_social')
+#end
+}

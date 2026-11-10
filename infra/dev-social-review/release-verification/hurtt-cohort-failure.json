@@ -1,0 +1,11 @@
+{
+  "statusCode": 400,
+  "headers": {
+    "Content-Type": "application/json",
+    "Access-Control-Allow-Origin": "*",
+    "Access-Control-Allow-Headers": "Content-Type,Authorization,X-Requested-With",
+    "Access-Control-Allow-Methods": "OPTIONS,GET,POST,PUT,DELETE"
+  },
+  "body": "{\"Status\":400,\"Message\":\"post_id must be a GUID and cannot be combined with cohort filters.\"}",
+  "isBase64Encoded": false
+}

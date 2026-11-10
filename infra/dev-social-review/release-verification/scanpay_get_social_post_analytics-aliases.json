@@ -1,0 +1,25 @@
+{
+  "Aliases": [
+    {
+      "AliasArn": "arn:aws:lambda:us-east-1:145505076425:function:scanpay_get_social_post_analytics:development",
+      "Name": "development",
+      "FunctionVersion": "18",
+      "Description": "Release social-20261110-001",
+      "RevisionId": "c84da2e3-52d0-4eec-b50b-ec5bd3c3e718"
+    },
+    {
+      "AliasArn": "arn:aws:lambda:us-east-1:145505076425:function:scanpay_get_social_post_analytics:gany_dev",
+      "Name": "gany_dev",
+      "FunctionVersion": "18",
+      "Description": "Release social-20261110-001",
+      "RevisionId": "5595f9a0-3ab2-49b5-821e-ad418883a5f2"
+    },
+    {
+      "AliasArn": "arn:aws:lambda:us-east-1:145505076425:function:scanpay_get_social_post_analytics:gany_prod",
+      "Name": "gany_prod",
+      "FunctionVersion": "17",
+      "Description": "Release social-20261105-001",
+      "RevisionId": "07cc56ae-58ba-44c8-92e9-0fa33222c214"
+    }
+  ]
+}

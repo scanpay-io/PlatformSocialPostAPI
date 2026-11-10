@@ -1,0 +1,189 @@
+{
+  "item": [
+    {
+      "deploymentId": "c7k3t4",
+      "stageName": "dev",
+      "description": "development runway",
+      "cacheClusterEnabled": false,
+      "cacheClusterSize": "0.5",
+      "cacheClusterStatus": "NOT_AVAILABLE",
+      "methodSettings": {
+        "*/*": {
+          "metricsEnabled": false,
+          "loggingLevel": "OFF",
+          "dataTraceEnabled": false,
+          "throttlingBurstLimit": 5000,
+          "throttlingRateLimit": 10000,
+          "cachingEnabled": false,
+          "cacheTtlInSeconds": 300,
+          "cacheDataEncrypted": false,
+          "requireAuthorizationForCacheControl": true,
+          "unauthorizedCacheControlHeaderStrategy": "SUCCEED_WITH_RESPONSE_HEADER"
+        },
+        "~1campaign~1{campaignid}~1measurement/POST": {
+          "metricsEnabled": false,
+          "loggingLevel": "OFF",
+          "dataTraceEnabled": false,
+          "throttlingBurstLimit": 20,
+          "throttlingRateLimit": 10,
+          "cachingEnabled": false,
+          "cacheTtlInSeconds": 300,
+          "cacheDataEncrypted": false,
+          "requireAuthorizationForCacheControl": true,
+          "unauthorizedCacheControlHeaderStrategy": "SUCCEED_WITH_RESPONSE_HEADER"
+        },
+        "~1organization~1{organizationid}~1crm~1contacts~1{contactid}~1pledges~1{pledgeid}~1info/GET": {
+          "metricsEnabled": false,
+          "loggingLevel": "OFF",
+          "dataTraceEnabled": false,
+          "throttlingBurstLimit": 20,
+          "throttlingRateLimit": 10,
+          "cachingEnabled": false,
+          "cacheTtlInSeconds": 300,
+          "cacheDataEncrypted": false,
+          "requireAuthorizationForCacheControl": true,
+          "unauthorizedCacheControlHeaderStrategy": "SUCCEED_WITH_RESPONSE_HEADER"
+        },
+        "~1sms~1analytics/GET": {
+          "metricsEnabled": false,
+          "loggingLevel": "OFF",
+          "dataTraceEnabled": false,
+          "throttlingBurstLimit": 20,
+          "throttlingRateLimit": 10,
+          "cachingEnabled": false,
+          "cacheTtlInSeconds": 300,
+          "cacheDataEncrypted": false,
+          "requireAuthorizationForCacheControl": true,
+          "unauthorizedCacheControlHeaderStrategy": "SUCCEED_WITH_RESPONSE_HEADER"
+        },
+        "~1sms~1clicks/POST": {
+          "metricsEnabled": false,
+          "loggingLevel": "OFF",
+          "dataTraceEnabled": false,
+          "throttlingBurstLimit": 100,
+          "throttlingRateLimit": 50,
+          "cachingEnabled": false,
+          "cacheTtlInSeconds": 300,
+          "cacheDataEncrypted": false,
+          "requireAuthorizationForCacheControl": true,
+          "unauthorizedCacheControlHeaderStrategy": "SUCCEED_WITH_RESPONSE_HEADER"
+        },
+        "~1sms~1l~1{message_id}/GET": {
+          "metricsEnabled": false,
+          "loggingLevel": "OFF",
+          "dataTraceEnabled": false,
+          "throttlingBurstLimit": 200,
+          "throttlingRateLimit": 100,
+          "cachingEnabled": false,
+          "cacheTtlInSeconds": 300,
+          "cacheDataEncrypted": false,
+          "requireAuthorizationForCacheControl": true,
+          "unauthorizedCacheControlHeaderStrategy": "SUCCEED_WITH_RESPONSE_HEADER"
+        },
+        "~1tickets/POST": {
+          "metricsEnabled": false,
+          "loggingLevel": "OFF",
+          "dataTraceEnabled": false,
+          "throttlingBurstLimit": 10,
+          "throttlingRateLimit": 5,
+          "cachingEnabled": false,
+          "cacheTtlInSeconds": 300,
+          "cacheDataEncrypted": false,
+          "requireAuthorizationForCacheControl": true,
+          "unauthorizedCacheControlHeaderStrategy": "SUCCEED_WITH_RESPONSE_HEADER"
+        }
+      },
+      "variables": {
+        "runwayAlias": "gany_dev"
+      },
+      "tracingEnabled": false,
+      "createdDate": "2023-04-10T15:23:14-07:00",
+      "lastUpdatedDate": "2026-11-09T18:54:48-08:00"
+    },
+    {
+      "deploymentId": "vrokob",
+      "stageName": "prod",
+      "description": "production.",
+      "cacheClusterEnabled": false,
+      "cacheClusterSize": "0.5",
+      "cacheClusterStatus": "NOT_AVAILABLE",
+      "methodSettings": {
+        "*/*": {
+          "metricsEnabled": false,
+          "dataTraceEnabled": false,
+          "throttlingBurstLimit": 5000,
+          "throttlingRateLimit": 10000,
+          "cachingEnabled": false,
+          "cacheTtlInSeconds": 300,
+          "cacheDataEncrypted": false,
+          "requireAuthorizationForCacheControl": true,
+          "unauthorizedCacheControlHeaderStrategy": "SUCCEED_WITH_RESPONSE_HEADER"
+        },
+        "~1organization~1{organizationid}~1crm~1contacts~1{contactid}~1pledges~1{pledgeid}~1info/GET": {
+          "metricsEnabled": false,
+          "loggingLevel": "OFF",
+          "dataTraceEnabled": false,
+          "throttlingBurstLimit": 20,
+          "throttlingRateLimit": 10,
+          "cachingEnabled": false,
+          "cacheTtlInSeconds": 300,
+          "cacheDataEncrypted": false,
+          "requireAuthorizationForCacheControl": true,
+          "unauthorizedCacheControlHeaderStrategy": "SUCCEED_WITH_RESPONSE_HEADER"
+        },
+        "~1sms~1analytics/GET": {
+          "metricsEnabled": false,
+          "dataTraceEnabled": false,
+          "throttlingBurstLimit": 20,
+          "throttlingRateLimit": 10,
+          "cachingEnabled": false,
+          "cacheTtlInSeconds": 300,
+          "cacheDataEncrypted": false,
+          "requireAuthorizationForCacheControl": true,
+          "unauthorizedCacheControlHeaderStrategy": "SUCCEED_WITH_RESPONSE_HEADER"
+        },
+        "~1sms~1clicks/POST": {
+          "metricsEnabled": false,
+          "dataTraceEnabled": false,
+          "throttlingBurstLimit": 100,
+          "throttlingRateLimit": 50,
+          "cachingEnabled": false,
+          "cacheTtlInSeconds": 300,
+          "cacheDataEncrypted": false,
+          "requireAuthorizationForCacheControl": true,
+          "unauthorizedCacheControlHeaderStrategy": "SUCCEED_WITH_RESPONSE_HEADER"
+        },
+        "~1sms~1l~1{message_id}/GET": {
+          "metricsEnabled": false,
+          "dataTraceEnabled": false,
+          "throttlingBurstLimit": 200,
+          "throttlingRateLimit": 100,
+          "cachingEnabled": false,
+          "cacheTtlInSeconds": 300,
+          "cacheDataEncrypted": false,
+          "requireAuthorizationForCacheControl": true,
+          "unauthorizedCacheControlHeaderStrategy": "SUCCEED_WITH_RESPONSE_HEADER"
+        }
+      },
+      "variables": {
+        "runwayAlias": "gany_prod"
+      },
+      "tracingEnabled": false,
+      "createdDate": "2023-04-10T15:22:52-07:00",
+      "lastUpdatedDate": "2026-11-09T19:10:42-08:00"
+    },
+    {
+      "deploymentId": "8jf4oj",
+      "stageName": "transport-regression-dev",
+      "cacheClusterEnabled": false,
+      "cacheClusterStatus": "NOT_AVAILABLE",
+      "methodSettings": {},
+      "variables": {
+        "runwayAlias": "gany_dev"
+      },
+      "tracingEnabled": false,
+      "createdDate": "2026-10-29T20:58:23-07:00",
+      "lastUpdatedDate": "2026-10-29T20:58:23-07:00"
+    }
+  ]
+}

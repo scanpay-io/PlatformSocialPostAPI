@@ -28,9 +28,7 @@ namespace ScanPay.Lambda.UpdateSocialPost
                 action: async normalizedRequest =>
                 {
                     normalizedRequest =
-                        SocialRequestResolver.Hydrate(
-                            request,
-                            normalizedRequest);
+                        await SocialAuthorization.HydrateAsync(request, normalizedRequest, context);
 
                     return await SocialPostOperation.UpdatePostAsync(
                         normalizedRequest,

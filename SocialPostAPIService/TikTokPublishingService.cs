@@ -106,6 +106,10 @@ namespace ScanPay.SocialPostService
                 Platform = SocialPlatform.TikTok,
                 Status = "initializing"
             };
+            // Inbox uploads do not publish a caption/link; keep them explicitly untracked.
+            SocialTracking.PrepareDelivery(delivery, post, !options.SendToInbox);
+            string caption = post.Content + (string.IsNullOrEmpty(delivery.TrackingUrl) ? "" : "\n\n" + delivery.TrackingUrl);
+            if (caption.Length > 2200) throw ResponseStatusFactory.BadRequest("The caption including its tracking link exceeds 2200 characters.");
             if (!await DbCRUD<SocialPostDeliveryDb>.TryCreateAsync(delivery, context))
                 throw ResponseStatusFactory.BadRequest("This TikTok post was already submitted. Check its status before creating another.");
 
@@ -115,7 +119,7 @@ namespace ScanPay.SocialPostService
                 if (!options.SendToInbox)
                     body["post_info"] = new JObject
                     {
-                        ["title"] = post.Content, ["privacy_level"] = options.PrivacyLevel,
+                        ["title"] = caption, ["privacy_level"] = options.PrivacyLevel,
                         ["disable_comment"] = !options.AllowComments, ["disable_duet"] = !options.AllowDuet,
                         ["disable_stitch"] = !options.AllowStitch, ["brand_organic_toggle"] = options.YourBrand,
                         ["brand_content_toggle"] = options.BrandedContent, ["is_aigc"] = options.IsAigc

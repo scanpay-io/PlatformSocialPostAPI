@@ -147,6 +147,8 @@ namespace ScanPay.SocialPostService
                 Platform = platform, Status = "initializing",
                 TargetAccountID = platform == SocialPlatform.LinkedIn ? options.LinkedInPageUrn : connection.ExternalAccountID
             };
+            SocialTracking.PrepareDelivery(delivery, post);
+            text = Validate(SocialTracking.WithDestination(post, delivery.TrackingUrl));
             if (!await DbCRUD<SocialPostDeliveryDb>.TryCreateAsync(delivery, context))
                 throw ResponseStatusFactory.BadRequest("This post was already submitted. Check its status before creating another.");
             try

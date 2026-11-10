@@ -1,0 +1,12 @@
+{
+  "Version": "$LATEST",
+  "RevisionId": "49c7c9b2-ca3f-4dfc-8da7-b8c288b84ce4",
+  "LastModified": "2026-11-10T15:11:16.000+0000",
+  "CodeSha256": "V/8Ys08EeY1TiQIxMgSZf8mvT7kN+KOJ7YWeAb+7erI=",
+  "EnvironmentKeys": [
+    "account_number",
+    "runway_type",
+    "region"
+  ],
+  "CursorKeyConfigured": false
+}

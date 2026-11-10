@@ -8,6 +8,9 @@ namespace ScanPay.SocialPostService
     [Alias("SocialPost")]
     public class SocialPostDb
     {
+        public string AppName { get; set; } = "";
+        public string Runway { get; set; } = "";
+        public string AccountScopeKey { get; set; } = "";
         // Zero identifies legacy deliveries; each restored draft starts a new attempt.
         public int PublishingAttempt { get; set; }
         public TikTokPostOptions? TikTok { get; set; }

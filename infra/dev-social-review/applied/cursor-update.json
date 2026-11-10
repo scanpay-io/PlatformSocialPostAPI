@@ -1,0 +1,11 @@
+{
+  "RevisionId": "f64c6ebe-b637-4b3a-ba77-b9627f42d21c",
+  "LastUpdateStatus": "InProgress",
+  "EnvironmentKeys": [
+    "SOCIAL_ANALYTICS_CURSOR_KEY",
+    "account_number",
+    "runway_type",
+    "region"
+  ],
+  "published": false
+}

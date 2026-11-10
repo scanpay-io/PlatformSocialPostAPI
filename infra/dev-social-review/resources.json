@@ -1,0 +1,4719 @@
+{
+  "position": "aWQ9U3d2dm5lZQ%3D%3D",
+  "items": [
+    {
+      "id": "023xru",
+      "parentId": "9pqgh1",
+      "pathPart": "statuses",
+      "path": "/organization/{organizationid}/raffles/{raffleid}/prizes/statuses"
+    },
+    {
+      "id": "06w948",
+      "parentId": "vux6pg",
+      "pathPart": "thresholds",
+      "path": "/organization/{organizationid}/crm/segmentation/thresholds",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {},
+        "PUT": {}
+      }
+    },
+    {
+      "id": "0a1rxp",
+      "parentId": "gg7h0a",
+      "pathPart": "ai",
+      "path": "/organization/{organizationid}/generative/ai",
+      "resourceMethods": {
+        "OPTIONS": {},
+        "POST": {}
+      }
+    },
+    {
+      "id": "0a9ky7",
+      "parentId": "5ltlosd1ne",
+      "pathPart": "campaign",
+      "path": "/campaign",
+      "resourceMethods": {
+        "OPTIONS": {},
+        "POST": {}
+      }
+    },
+    {
+      "id": "0btkm7",
+      "parentId": "y7w0sh",
+      "pathPart": "sms",
+      "path": "/organization/{organizationid}/crm/sms"
+    },
+    {
+      "id": "0gh7xx",
+      "parentId": "tmtlu6",
+      "pathPart": "url",
+      "path": "/qrcode/{qrcodeid}/url",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {}
+      }
+    },
+    {
+      "id": "0j1awq",
+      "parentId": "6xg7sf",
+      "pathPart": "onboarding",
+      "path": "/organization/{organizationid}/onboarding",
+      "resourceMethods": {
+        "OPTIONS": {},
+        "POST": {}
+      }
+    },
+    {
+      "id": "0kyr9n",
+      "parentId": "1j81o2",
+      "pathPart": "checkout",
+      "path": "/store/checkout",
+      "resourceMethods": {
+        "OPTIONS": {},
+        "POST": {}
+      }
+    },
+    {
+      "id": "0o0wzj",
+      "parentId": "9gi7vb",
+      "pathPart": "{categoryid}",
+      "path": "/organization/{organizationid}/ticketcategories/{categoryid}",
+      "resourceMethods": {
+        "DELETE": {},
+        "GET": {},
+        "OPTIONS": {},
+        "PUT": {}
+      }
+    },
+    {
+      "id": "0ormna",
+      "parentId": "mco6a6",
+      "pathPart": "info",
+      "path": "/classes/{admissionid}/info",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {},
+        "PUT": {}
+      }
+    },
+    {
+      "id": "0t2mba",
+      "parentId": "4m85wf",
+      "pathPart": "{recommendationid}",
+      "path": "/organization/{organizationid}/generative/ai/status/{recommendationid}",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {}
+      }
+    },
+    {
+      "id": "0vt1uo",
+      "parentId": "shnome",
+      "pathPart": "paypal",
+      "path": "/give/onetime/paypal"
+    },
+    {
+      "id": "1143y3",
+      "parentId": "6xg7sf",
+      "pathPart": "bulletin",
+      "path": "/organization/{organizationid}/bulletin"
+    },
+    {
+      "id": "18guil",
+      "parentId": "mznm0g",
+      "pathPart": "{campaignid}",
+      "path": "/individual/{individualid}/campaigns/sponsored/{campaignid}",
+      "resourceMethods": {
+        "DELETE": {},
+        "GET": {},
+        "OPTIONS": {},
+        "PUT": {}
+      }
+    },
+    {
+      "id": "1a8ywa",
+      "parentId": "mzxl67",
+      "pathPart": "exists",
+      "path": "/user/exists"
+    },
+    {
+      "id": "1bfye5",
+      "parentId": "u53rnf",
+      "pathPart": "qrcode",
+      "path": "/organization/location/{locationid}/qrcode",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {}
+      }
+    },
+    {
+      "id": "1bxqsq",
+      "parentId": "tm9poy",
+      "pathPart": "sent",
+      "path": "/organization/{organizationid}/crm/emails/schedules/sent",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {}
+      }
+    },
+    {
+      "id": "1daa0a",
+      "parentId": "odwimf",
+      "pathPart": "default",
+      "path": "/{accountid}/wallet/{walletid}/paymentsource/default",
+      "resourceMethods": {
+        "OPTIONS": {},
+        "PUT": {}
+      }
+    },
+    {
+      "id": "1fa0mi",
+      "parentId": "28a9l1",
+      "pathPart": "{executionkey}",
+      "path": "/data/sql/{executionkey}"
+    },
+    {
+      "id": "1i06zh",
+      "parentId": "k52106",
+      "pathPart": "cancel",
+      "path": "/resources/videos/cancel",
+      "resourceMethods": {
+        "OPTIONS": {},
+        "POST": {}
+      }
+    },
+    {
+      "id": "1j1vev",
+      "parentId": "t9aq7x",
+      "pathPart": "{accounttype}",
+      "path": "/{accountid}/onboarding/{accounttype}",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {}
+      }
+    },
+    {
+      "id": "1j81o2",
+      "parentId": "5ltlosd1ne",
+      "pathPart": "store",
+      "path": "/store",
+      "resourceMethods": {
+        "OPTIONS": {},
+        "POST": {}
+      }
+    },
+    {
+      "id": "1lsugq",
+      "parentId": "pb1lyx",
+      "pathPart": "bankaccount",
+      "path": "/wallet/{walletid}/bankaccount"
+    },
+    {
+      "id": "1ps56l",
+      "parentId": "7b2s40",
+      "pathPart": "searchbyname",
+      "path": "/organization/{organizationid}/storeitems/searchbyname",
+      "resourceMethods": {
+        "OPTIONS": {},
+        "POST": {}
+      }
+    },
+    {
+      "id": "1t6nre",
+      "parentId": "pvasui",
+      "pathPart": "contacts",
+      "path": "/organization/{organizationid}/crm/contactgroups/{groupid}/contacts",
+      "resourceMethods": {
+        "DELETE": {},
+        "GET": {},
+        "OPTIONS": {},
+        "POST": {}
+      }
+    },
+    {
+      "id": "1xunof",
+      "parentId": "rlauni",
+      "pathPart": "cancel",
+      "path": "/organization/{organizationid}/subscription/addons/cancel",
+      "resourceMethods": {
+        "OPTIONS": {},
+        "POST": {}
+      }
+    },
+    {
+      "id": "1yucex",
+      "parentId": "lqidmh",
+      "pathPart": "{memberid}",
+      "path": "/organization/{organizationid}/community/{communityid}/member/{memberid}",
+      "resourceMethods": {
+        "DELETE": {},
+        "GET": {},
+        "OPTIONS": {}
+      }
+    },
+    {
+      "id": "20yzlr",
+      "parentId": "tmge02",
+      "pathPart": "onboarded",
+      "path": "/organization/onboarded",
+      "resourceMethods": {
+        "OPTIONS": {},
+        "POST": {}
+      }
+    },
+    {
+      "id": "215trf",
+      "parentId": "y7w0sh",
+      "pathPart": "contactgroups",
+      "path": "/organization/{organizationid}/crm/contactgroups",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {},
+        "POST": {}
+      }
+    },
+    {
+      "id": "22ax9b",
+      "parentId": "vrfq47",
+      "pathPart": "status",
+      "path": "/give/spotlight/status"
+    },
+    {
+      "id": "22mulc",
+      "parentId": "pb1lyx",
+      "pathPart": "card",
+      "path": "/wallet/{walletid}/card"
+    },
+    {
+      "id": "24jzo9",
+      "parentId": "nqtmbe",
+      "pathPart": "outreach-assets",
+      "path": "/organization/{organizationid}/chats/conversations/{conversationid}/outreach-assets",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {}
+      }
+    },
+    {
+      "id": "28a9l1",
+      "parentId": "xzww61",
+      "pathPart": "sql",
+      "path": "/data/sql",
+      "resourceMethods": {
+        "OPTIONS": {},
+        "POST": {}
+      }
+    },
+    {
+      "id": "2akce1",
+      "parentId": "tmtlu6",
+      "pathPart": "info",
+      "path": "/qrcode/{qrcodeid}/info",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {}
+      }
+    },
+    {
+      "id": "2b9fr9",
+      "parentId": "5ltlosd1ne",
+      "pathPart": "classes",
+      "path": "/classes"
+    },
+    {
+      "id": "2e4rvo",
+      "parentId": "wvvnee",
+      "pathPart": "{messageid}",
+      "path": "/organization/{organizationid}/text-messages/{messageid}",
+      "resourceMethods": {
+        "DELETE": {},
+        "GET": {},
+        "OPTIONS": {}
+      }
+    },
+    {
+      "id": "2g3ji8",
+      "parentId": "6xg7sf",
+      "pathPart": "storeitemattributes",
+      "path": "/organization/{organizationid}/storeitemattributes",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {},
+        "POST": {}
+      }
+    },
+    {
+      "id": "2kff4d",
+      "parentId": "kcevva",
+      "pathPart": "additional-information",
+      "path": "/campaign/{campaignid}/additional-information"
+    },
+    {
+      "id": "2n00mw",
+      "parentId": "qj2za9",
+      "pathPart": "process",
+      "path": "/organization/{organizationid}/subscription/addons/change/process",
+      "resourceMethods": {
+        "OPTIONS": {},
+        "POST": {}
+      }
+    },
+    {
+      "id": "2qrm5e",
+      "parentId": "z63o0o",
+      "pathPart": "give",
+      "path": "/individual/{individualid}/give"
+    },
+    {
+      "id": "2vnawr",
+      "parentId": "2x4om9",
+      "pathPart": "text-messages",
+      "path": "/organization/{organizationid}/crm/contacts/{contactid}/text-messages",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {}
+      }
+    },
+    {
+      "id": "2x4om9",
+      "parentId": "3lopwx",
+      "pathPart": "{contactid}",
+      "path": "/organization/{organizationid}/crm/contacts/{contactid}",
+      "resourceMethods": {
+        "DELETE": {},
+        "GET": {},
+        "OPTIONS": {},
+        "PUT": {}
+      }
+    },
+    {
+      "id": "367san",
+      "parentId": "ia5vqq",
+      "pathPart": "{recurringid}",
+      "path": "/individual/{individualid}/give/recurring/{type}/{recurringid}",
+      "resourceMethods": {
+        "DELETE": {},
+        "GET": {},
+        "OPTIONS": {},
+        "PUT": {}
+      }
+    },
+    {
+      "id": "38inlt",
+      "parentId": "vpsdm3",
+      "pathPart": "fields",
+      "path": "/ticket/event/{eventid}/fields",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {},
+        "POST": {},
+        "PUT": {}
+      }
+    },
+    {
+      "id": "3aftug",
+      "parentId": "vb83kw",
+      "pathPart": "sendcode",
+      "path": "/{accountid}/email/sendcode",
+      "resourceMethods": {
+        "OPTIONS": {},
+        "POST": {}
+      }
+    },
+    {
+      "id": "3hh1bk",
+      "parentId": "yyetyp",
+      "pathPart": "card",
+      "path": "/{accountid}/wallet/{walletid}/card"
+    },
+    {
+      "id": "3hp6ie",
+      "parentId": "kfs6j0",
+      "pathPart": "branding",
+      "path": "/organization/{organizationid}/personalize/branding",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {},
+        "PUT": {}
+      }
+    },
+    {
+      "id": "3k5fio",
+      "parentId": "tmtlu6",
+      "pathPart": "dashboard",
+      "path": "/qrcode/{qrcodeid}/dashboard"
+    },
+    {
+      "id": "3kzzbo",
+      "parentId": "md06vi",
+      "pathPart": "discount",
+      "path": "/organization/{organizationid}/promocodes/discount",
+      "resourceMethods": {
+        "OPTIONS": {},
+        "POST": {}
+      }
+    },
+    {
+      "id": "3lopwx",
+      "parentId": "y7w0sh",
+      "pathPart": "contacts",
+      "path": "/organization/{organizationid}/crm/contacts",
+      "resourceMethods": {
+        "DELETE": {},
+        "GET": {},
+        "OPTIONS": {},
+        "POST": {}
+      }
+    },
+    {
+      "id": "3lv5qy",
+      "parentId": "gx5p3r",
+      "pathPart": "verify",
+      "path": "/{accountid}/mfa/phonenumber/verify",
+      "resourceMethods": {
+        "OPTIONS": {},
+        "POST": {}
+      }
+    },
+    {
+      "id": "3o0mdx",
+      "parentId": "fmjva1",
+      "pathPart": "{channel}",
+      "path": "/organization/{organizationid}/coverfees/{channel}",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {}
+      }
+    },
+    {
+      "id": "3sazk3",
+      "parentId": "zeva6e",
+      "pathPart": "articles",
+      "path": "/resources/articles",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {},
+        "POST": {}
+      }
+    },
+    {
+      "id": "3sj5od",
+      "parentId": "yyetyp",
+      "pathPart": "bankaccount",
+      "path": "/{accountid}/wallet/{walletid}/bankaccount"
+    },
+    {
+      "id": "3vh2qi",
+      "parentId": "1j81o2",
+      "pathPart": "order",
+      "path": "/store/order"
+    },
+    {
+      "id": "3xnw8w",
+      "parentId": "5ltlosd1ne",
+      "pathPart": "sms",
+      "path": "/sms"
+    },
+    {
+      "id": "3yc9xo",
+      "parentId": "80worx",
+      "pathPart": "pickups",
+      "path": "/organization/{organizationid}/classes/{classid}/sessions/{sessionid}/pickups",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {},
+        "POST": {}
+      }
+    },
+    {
+      "id": "3yf48c",
+      "parentId": "eoice0",
+      "pathPart": "{orderid}",
+      "path": "/organization/{organizationid}/raffles/orders/{orderid}",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {}
+      }
+    },
+    {
+      "id": "40aio2",
+      "parentId": "gkafiz",
+      "pathPart": "{orderid}",
+      "path": "/organization/{organizationid}/classes/orders/{orderid}",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {},
+        "PUT": {}
+      }
+    },
+    {
+      "id": "43qnmw",
+      "parentId": "bob4os",
+      "pathPart": "web",
+      "path": "/chat/web",
+      "resourceMethods": {
+        "OPTIONS": {},
+        "POST": {}
+      }
+    },
+    {
+      "id": "446j0o",
+      "parentId": "lperpj",
+      "pathPart": "addons",
+      "path": "/organization/subscription/addons"
+    },
+    {
+      "id": "4izr8t",
+      "parentId": "hrlwwn",
+      "pathPart": "{type}",
+      "path": "/individual/{individualid}/download/{type}"
+    },
+    {
+      "id": "4jsc7v",
+      "parentId": "fy6wu9",
+      "pathPart": "checkout",
+      "path": "/organization/{organizationid}/subscription/cart/checkout",
+      "resourceMethods": {
+        "OPTIONS": {},
+        "POST": {}
+      }
+    },
+    {
+      "id": "4k6zsp",
+      "parentId": "pg68rb",
+      "pathPart": "{paymentid}",
+      "path": "/organization/{organizationid}/crm/contacts/{contactid}/pledges/{pledgeid}/payments/{paymentid}",
+      "resourceMethods": {
+        "DELETE": {},
+        "GET": {},
+        "OPTIONS": {},
+        "PUT": {}
+      }
+    },
+    {
+      "id": "4kcda4",
+      "parentId": "u18lx5",
+      "pathPart": "drawings",
+      "path": "/organization/{organizationid}/raffles/{raffleid}/drawings"
+    },
+    {
+      "id": "4ls8tt",
+      "parentId": "uw56i5",
+      "pathPart": "{code}",
+      "path": "/{accountid}/referral/program/{code}",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {},
+        "PUT": {}
+      }
+    },
+    {
+      "id": "4lx1j0",
+      "parentId": "owrlk6",
+      "pathPart": "page",
+      "path": "/organization/{organizationid}/campaigns/{campaignid}/download/page",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {}
+      }
+    },
+    {
+      "id": "4m85wf",
+      "parentId": "0a1rxp",
+      "pathPart": "status",
+      "path": "/organization/{organizationid}/generative/ai/status"
+    },
+    {
+      "id": "4ttisi",
+      "parentId": "70ifu6",
+      "pathPart": "all",
+      "path": "/organization/{organizationid}/campaigns/all",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {}
+      }
+    },
+    {
+      "id": "532gys",
+      "parentId": "z63o0o",
+      "pathPart": "verify",
+      "path": "/individual/{individualid}/verify",
+      "resourceMethods": {
+        "OPTIONS": {},
+        "POST": {}
+      }
+    },
+    {
+      "id": "53n5hn",
+      "parentId": "1j81o2",
+      "pathPart": "{storeid}",
+      "path": "/store/{storeid}",
+      "resourceMethods": {
+        "DELETE": {},
+        "OPTIONS": {},
+        "PUT": {}
+      }
+    },
+    {
+      "id": "55447a",
+      "parentId": "lqsxa3",
+      "pathPart": "info",
+      "path": "/ticket/{ticketid}/info",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {},
+        "PUT": {}
+      }
+    },
+    {
+      "id": "55hd1v",
+      "parentId": "d5xe46",
+      "pathPart": "info",
+      "path": "/campaign/{campaignid}/teams/{teamid}/dashboard/info",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {}
+      }
+    },
+    {
+      "id": "582xhj",
+      "parentId": "lqidmh",
+      "pathPart": "invite",
+      "path": "/organization/{organizationid}/community/{communityid}/member/invite",
+      "resourceMethods": {
+        "OPTIONS": {},
+        "POST": {}
+      }
+    },
+    {
+      "id": "59urq6",
+      "parentId": "vpsdm3",
+      "pathPart": "tickettypes",
+      "path": "/ticket/event/{eventid}/tickettypes",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {},
+        "POST": {}
+      }
+    },
+    {
+      "id": "5dyq1f",
+      "parentId": "m8r49v",
+      "pathPart": "{postid}",
+      "path": "/organization/{organizationid}/social/posts/{postid}",
+      "resourceMethods": {
+        "DELETE": {},
+        "GET": {},
+        "OPTIONS": {},
+        "PUT": {}
+      }
+    },
+    {
+      "id": "5ez5qi",
+      "parentId": "9am875",
+      "pathPart": "braintree",
+      "path": "/webhook/braintree",
+      "resourceMethods": {
+        "OPTIONS": {},
+        "POST": {}
+      }
+    },
+    {
+      "id": "5f4jdh",
+      "parentId": "bdfwf9",
+      "pathPart": "groups",
+      "path": "/organization/{organizationid}/mailinglist/{contactid}/groups",
+      "resourceMethods": {
+        "OPTIONS": {},
+        "POST": {}
+      }
+    },
+    {
+      "id": "5k14ua",
+      "parentId": "5ltlosd1ne",
+      "pathPart": "operations",
+      "path": "/operations"
+    },
+    {
+      "id": "5ltlosd1ne",
+      "path": "/"
+    },
+    {
+      "id": "5luxr6",
+      "parentId": "tvti4t",
+      "pathPart": "opt-in",
+      "path": "/organization/{organizationid}/text-messages/consent/opt-in",
+      "resourceMethods": {
+        "OPTIONS": {},
+        "POST": {}
+      }
+    },
+    {
+      "id": "5njofv",
+      "parentId": "5ltlosd1ne",
+      "pathPart": "individual",
+      "path": "/individual"
+    },
+    {
+      "id": "5q6xp8",
+      "parentId": "bn6dls",
+      "pathPart": "{type}",
+      "path": "/organization/{organizationid}/crm/emails/templates/types/{type}",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {}
+      }
+    },
+    {
+      "id": "5run5x",
+      "parentId": "o3g4vk",
+      "pathPart": "accept",
+      "path": "/campaign/team/captain/accept",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {}
+      }
+    },
+    {
+      "id": "5s0egm",
+      "parentId": "64sn51",
+      "pathPart": "callback",
+      "path": "/organization/{organizationid}/social/connections/callback",
+      "resourceMethods": {
+        "OPTIONS": {},
+        "POST": {}
+      }
+    },
+    {
+      "id": "5sospi",
+      "parentId": "28a9l1",
+      "pathPart": "trigger",
+      "path": "/data/sql/trigger",
+      "resourceMethods": {
+        "OPTIONS": {},
+        "POST": {}
+      }
+    },
+    {
+      "id": "5uzy7a",
+      "parentId": "vpsdm3",
+      "pathPart": "availability",
+      "path": "/ticket/event/{eventid}/availability",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {}
+      }
+    },
+    {
+      "id": "5vn0f2",
+      "parentId": "wua2j5",
+      "pathPart": "sendcode",
+      "path": "/login/sendcode"
+    },
+    {
+      "id": "5w2ptf",
+      "parentId": "1j81o2",
+      "pathPart": "print-on-demand",
+      "path": "/store/print-on-demand"
+    },
+    {
+      "id": "60tvpb",
+      "parentId": "kcevva",
+      "pathPart": "images",
+      "path": "/campaign/{campaignid}/images",
+      "resourceMethods": {
+        "DELETE": {},
+        "GET": {},
+        "OPTIONS": {},
+        "POST": {}
+      }
+    },
+    {
+      "id": "62o40p",
+      "parentId": "qrjt1y",
+      "pathPart": "channel",
+      "path": "/organization/{organizationid}/subscription/summary/channel"
+    },
+    {
+      "id": "64sn51",
+      "parentId": "90fzmg",
+      "pathPart": "connections",
+      "path": "/organization/{organizationid}/social/connections",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {},
+        "POST": {}
+      }
+    },
+    {
+      "id": "65qpfh",
+      "parentId": "90pvyf",
+      "pathPart": "conversations",
+      "path": "/organization/{organizationid}/chats/conversations"
+    },
+    {
+      "id": "6aze0i",
+      "parentId": "70ifu6",
+      "pathPart": "bystatus",
+      "path": "/organization/{organizationid}/campaigns/bystatus"
+    },
+    {
+      "id": "6d0na2",
+      "parentId": "wzwps2",
+      "pathPart": "eventtypes",
+      "path": "/organization/{organizationid}/sponsorship/packages/eventtypes"
+    },
+    {
+      "id": "6h1z95",
+      "parentId": "8p705u",
+      "pathPart": "{shortcode}",
+      "path": "/organization/lookupurl/{shortcode}",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {}
+      }
+    },
+    {
+      "id": "6id5ma",
+      "parentId": "f7wsma",
+      "pathPart": "email",
+      "path": "/organization/tracking/email"
+    },
+    {
+      "id": "6n5224",
+      "parentId": "ewnou9",
+      "pathPart": "credit",
+      "path": "/{accountid}/referral/credit",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {}
+      }
+    },
+    {
+      "id": "6oee6t",
+      "parentId": "fc7w5x",
+      "pathPart": "{method}",
+      "path": "/give/onetime/braintree/{method}"
+    },
+    {
+      "id": "6slejd",
+      "parentId": "5k14ua",
+      "pathPart": "dashboard",
+      "path": "/operations/dashboard",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {}
+      }
+    },
+    {
+      "id": "6tzew4",
+      "parentId": "3hh1bk",
+      "pathPart": "{cardid}",
+      "path": "/{accountid}/wallet/{walletid}/card/{cardid}",
+      "resourceMethods": {
+        "DELETE": {},
+        "GET": {},
+        "OPTIONS": {}
+      }
+    },
+    {
+      "id": "6w3tpk",
+      "parentId": "5ltlosd1ne",
+      "pathPart": "utility",
+      "path": "/utility"
+    },
+    {
+      "id": "6xg7sf",
+      "parentId": "tmge02",
+      "pathPart": "{organizationid}",
+      "path": "/organization/{organizationid}",
+      "resourceMethods": {
+        "OPTIONS": {},
+        "PUT": {}
+      }
+    },
+    {
+      "id": "6yil8p",
+      "parentId": "mqat4g",
+      "pathPart": "{drawingid}",
+      "path": "/organization/{organizationid}/raffles/{raffleid}/prizes/{prizeid}/drawing/{drawingid}",
+      "resourceMethods": {
+        "OPTIONS": {},
+        "PUT": {}
+      }
+    },
+    {
+      "id": "6zm71h",
+      "parentId": "rhyrh2",
+      "pathPart": "{shortcode}",
+      "path": "/data/tinyurl/{shortcode}",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {}
+      }
+    },
+    {
+      "id": "70ifu6",
+      "parentId": "6xg7sf",
+      "pathPart": "campaigns",
+      "path": "/organization/{organizationid}/campaigns",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {},
+        "POST": {}
+      }
+    },
+    {
+      "id": "719igt",
+      "parentId": "kng2xa",
+      "pathPart": "{storeid}",
+      "path": "/organization/{organizationid}/stores/{storeid}",
+      "resourceMethods": {
+        "DELETE": {},
+        "GET": {},
+        "OPTIONS": {},
+        "PUT": {}
+      }
+    },
+    {
+      "id": "74o8qc",
+      "parentId": "wvvnee",
+      "pathPart": "scheduled",
+      "path": "/organization/{organizationid}/text-messages/scheduled",
+      "resourceMethods": {
+        "OPTIONS": {},
+        "POST": {}
+      }
+    },
+    {
+      "id": "766ws5",
+      "parentId": "n9hppt",
+      "pathPart": "{year}",
+      "path": "/{accountid}/bank/activities/{year}",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {}
+      }
+    },
+    {
+      "id": "773mc5",
+      "parentId": "md06vi",
+      "pathPart": "validate",
+      "path": "/organization/{organizationid}/promocodes/validate",
+      "resourceMethods": {
+        "OPTIONS": {},
+        "POST": {}
+      }
+    },
+    {
+      "id": "781qgf",
+      "parentId": "zhgznx",
+      "pathPart": "info",
+      "path": "/organization/{organizationid}/campaigns/{campaignid}/info",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {}
+      }
+    },
+    {
+      "id": "788jy0",
+      "parentId": "kcevva",
+      "pathPart": "sponsor",
+      "path": "/campaign/{campaignid}/sponsor"
+    },
+    {
+      "id": "7b2s40",
+      "parentId": "6xg7sf",
+      "pathPart": "storeitems",
+      "path": "/organization/{organizationid}/storeitems",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {}
+      }
+    },
+    {
+      "id": "7clnfk",
+      "parentId": "kcevva",
+      "pathPart": "trackingcodes",
+      "path": "/campaign/{campaignid}/trackingcodes",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {}
+      }
+    },
+    {
+      "id": "7eo837",
+      "parentId": "su5cm2",
+      "pathPart": "{code}",
+      "path": "/organization/{organizationid}/promocodes/usage/{code}"
+    },
+    {
+      "id": "7fcs5l",
+      "parentId": "6xg7sf",
+      "pathPart": "tickettypes",
+      "path": "/organization/{organizationid}/tickettypes",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {}
+      }
+    },
+    {
+      "id": "7garjt",
+      "parentId": "5k14ua",
+      "pathPart": "business-development",
+      "path": "/operations/business-development",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {},
+        "POST": {}
+      }
+    },
+    {
+      "id": "7hteg7",
+      "parentId": "sr7xcj",
+      "pathPart": "info",
+      "path": "/organization/{organizationid}/community/dashboard/info",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {}
+      }
+    },
+    {
+      "id": "7jg3sv",
+      "parentId": "5k14ua",
+      "pathPart": "accounts",
+      "path": "/operations/accounts",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {}
+      }
+    },
+    {
+      "id": "7q95pv",
+      "parentId": "5k14ua",
+      "pathPart": "referral-commissions",
+      "path": "/operations/referral-commissions",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {}
+      }
+    },
+    {
+      "id": "809905",
+      "parentId": "y7w0sh",
+      "pathPart": "emails",
+      "path": "/organization/{organizationid}/crm/emails",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {}
+      }
+    },
+    {
+      "id": "80worx",
+      "parentId": "ea1bc9",
+      "pathPart": "{sessionid}",
+      "path": "/organization/{organizationid}/classes/{classid}/sessions/{sessionid}"
+    },
+    {
+      "id": "81pem5",
+      "parentId": "t9aq7x",
+      "pathPart": "refresh",
+      "path": "/{accountid}/onboarding/refresh",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {}
+      }
+    },
+    {
+      "id": "8kyct2",
+      "parentId": "6w3tpk",
+      "pathPart": "{accountid}",
+      "path": "/utility/{accountid}"
+    },
+    {
+      "id": "8m7fu4",
+      "parentId": "6xg7sf",
+      "pathPart": "transportation",
+      "path": "/organization/{organizationid}/transportation"
+    },
+    {
+      "id": "8marve",
+      "parentId": "90pvyf",
+      "pathPart": "{sessionid}",
+      "path": "/organization/{organizationid}/chats/{sessionid}"
+    },
+    {
+      "id": "8p705u",
+      "parentId": "tmge02",
+      "pathPart": "lookupurl",
+      "path": "/organization/lookupurl"
+    },
+    {
+      "id": "8qaplu",
+      "parentId": "4kcda4",
+      "pathPart": "{drawingid}",
+      "path": "/organization/{organizationid}/raffles/{raffleid}/drawings/{drawingid}",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {}
+      }
+    },
+    {
+      "id": "8s7xd6",
+      "parentId": "5ltlosd1ne",
+      "pathPart": "donation-optimization",
+      "path": "/donation-optimization",
+      "resourceMethods": {
+        "OPTIONS": {},
+        "POST": {}
+      }
+    },
+    {
+      "id": "8tuqxe",
+      "parentId": "cv92pw",
+      "pathPart": "actions",
+      "path": "/organization/{organizationid}/crm/emails/templates/actions",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {}
+      }
+    },
+    {
+      "id": "8yon1g",
+      "parentId": "suwuew",
+      "pathPart": "import",
+      "path": "/organization/ein/{number}/import",
+      "resourceMethods": {
+        "OPTIONS": {},
+        "POST": {}
+      }
+    },
+    {
+      "id": "8z4aww",
+      "parentId": "6xg7sf",
+      "pathPart": "upload",
+      "path": "/organization/{organizationid}/upload"
+    },
+    {
+      "id": "90fzmg",
+      "parentId": "6xg7sf",
+      "pathPart": "social",
+      "path": "/organization/{organizationid}/social"
+    },
+    {
+      "id": "90pvyf",
+      "parentId": "6xg7sf",
+      "pathPart": "chats",
+      "path": "/organization/{organizationid}/chats",
+      "resourceMethods": {
+        "OPTIONS": {},
+        "POST": {}
+      }
+    },
+    {
+      "id": "932428",
+      "parentId": "bjbop3",
+      "pathPart": "{typeid}",
+      "path": "/organization/{organizationid}/sponsorship/packages/eventtypes/{type}/{typeid}",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {}
+      }
+    },
+    {
+      "id": "933s8h",
+      "parentId": "809905",
+      "pathPart": "{addressid}",
+      "path": "/organization/{organizationid}/crm/emails/{addressid}",
+      "resourceMethods": {
+        "DELETE": {},
+        "GET": {},
+        "OPTIONS": {},
+        "PUT": {}
+      }
+    },
+    {
+      "id": "93io8j",
+      "parentId": "ewnou9",
+      "pathPart": "info",
+      "path": "/{accountid}/referral/info",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {}
+      }
+    },
+    {
+      "id": "942d9t",
+      "parentId": "f9zzd2",
+      "pathPart": "items",
+      "path": "/organization/{organizationid}/auctions/{auctionid}/items",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {},
+        "POST": {}
+      }
+    },
+    {
+      "id": "98v807",
+      "parentId": "80worx",
+      "pathPart": "pickup-schedule",
+      "path": "/organization/{organizationid}/classes/{classid}/sessions/{sessionid}/pickup-schedule",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {}
+      }
+    },
+    {
+      "id": "9am875",
+      "parentId": "5ltlosd1ne",
+      "pathPart": "webhook",
+      "path": "/webhook"
+    },
+    {
+      "id": "9ge8rv",
+      "parentId": "wclx46",
+      "pathPart": "{status}",
+      "path": "/organization/{organizationid}/classes/orders/status/{status}",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {}
+      }
+    },
+    {
+      "id": "9gi7vb",
+      "parentId": "6xg7sf",
+      "pathPart": "ticketcategories",
+      "path": "/organization/{organizationid}/ticketcategories",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {},
+        "POST": {}
+      }
+    },
+    {
+      "id": "9gy765",
+      "parentId": "ewnou9",
+      "pathPart": "earnings",
+      "path": "/{accountid}/referral/earnings",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {}
+      }
+    },
+    {
+      "id": "9pqgh1",
+      "parentId": "u18lx5",
+      "pathPart": "prizes",
+      "path": "/organization/{organizationid}/raffles/{raffleid}/prizes",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {},
+        "POST": {}
+      }
+    },
+    {
+      "id": "9q37zp",
+      "parentId": "0btkm7",
+      "pathPart": "senders",
+      "path": "/organization/{organizationid}/crm/sms/senders",
+      "resourceMethods": {
+        "DELETE": {},
+        "GET": {},
+        "OPTIONS": {},
+        "POST": {}
+      }
+    },
+    {
+      "id": "9vxx94",
+      "parentId": "4izr8t",
+      "pathPart": "{typeid}",
+      "path": "/individual/{individualid}/download/{type}/{typeid}",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {},
+        "POST": {}
+      }
+    },
+    {
+      "id": "9xz8u6",
+      "parentId": "2qrm5e",
+      "pathPart": "recurring",
+      "path": "/individual/{individualid}/give/recurring"
+    },
+    {
+      "id": "a6ffj7",
+      "parentId": "5w2ptf",
+      "pathPart": "catalog",
+      "path": "/store/print-on-demand/catalog",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {}
+      }
+    },
+    {
+      "id": "a7tm0c",
+      "parentId": "zhgznx",
+      "pathPart": "trackingcodes",
+      "path": "/organization/{organizationid}/campaigns/{campaignid}/trackingcodes",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {}
+      }
+    },
+    {
+      "id": "aa938s",
+      "parentId": "xzxifx",
+      "pathPart": "schedule",
+      "path": "/organization/{organizationid}/classes/{classid}/schedule",
+      "resourceMethods": {
+        "OPTIONS": {},
+        "POST": {}
+      }
+    },
+    {
+      "id": "adka4k",
+      "parentId": "mznm0g",
+      "pathPart": "dashboard",
+      "path": "/individual/{individualid}/campaigns/sponsored/dashboard"
+    },
+    {
+      "id": "ag1qrl",
+      "parentId": "z63o0o",
+      "pathPart": "sponsorship",
+      "path": "/individual/{individualid}/sponsorship",
+      "resourceMethods": {
+        "OPTIONS": {},
+        "POST": {}
+      }
+    },
+    {
+      "id": "agxf8e",
+      "parentId": "m8ci9d",
+      "pathPart": "{communityid}",
+      "path": "/organization/{organizationid}/community/{communityid}",
+      "resourceMethods": {
+        "DELETE": {},
+        "GET": {},
+        "OPTIONS": {},
+        "PUT": {}
+      }
+    },
+    {
+      "id": "aj9g8u",
+      "parentId": "qbhhi8",
+      "pathPart": "profile",
+      "path": "/user/{userid}/profile",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {},
+        "PUT": {}
+      }
+    },
+    {
+      "id": "ap428k",
+      "parentId": "5k14ua",
+      "pathPart": "measurement-dashboard",
+      "path": "/operations/measurement-dashboard",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {}
+      }
+    },
+    {
+      "id": "asab85",
+      "parentId": "vrfq47",
+      "pathPart": "{spotlightid}",
+      "path": "/give/spotlight/{spotlightid}",
+      "resourceMethods": {
+        "DELETE": {},
+        "GET": {},
+        "OPTIONS": {},
+        "PUT": {}
+      }
+    },
+    {
+      "id": "axh9tq",
+      "parentId": "db2u92",
+      "pathPart": "{message_id}",
+      "path": "/sms/l/{message_id}",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {}
+      }
+    },
+    {
+      "id": "ay5w11",
+      "parentId": "llpgt0",
+      "pathPart": "{spotlightid}",
+      "path": "/organization/{organizationid}/community/{communityid}/spotlights/{spotlightid}",
+      "resourceMethods": {
+        "DELETE": {},
+        "OPTIONS": {}
+      }
+    },
+    {
+      "id": "b3shd6",
+      "parentId": "9xz8u6",
+      "pathPart": "setup",
+      "path": "/individual/{individualid}/give/recurring/setup",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {}
+      }
+    },
+    {
+      "id": "bdfwf9",
+      "parentId": "vhl4yk",
+      "pathPart": "{contactid}",
+      "path": "/organization/{organizationid}/mailinglist/{contactid}"
+    },
+    {
+      "id": "be7qa9",
+      "parentId": "5k14ua",
+      "pathPart": "support",
+      "path": "/operations/support"
+    },
+    {
+      "id": "bgrqcl",
+      "parentId": "loxq9c",
+      "pathPart": "program",
+      "path": "/referral/program",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {},
+        "POST": {}
+      }
+    },
+    {
+      "id": "bit1k2",
+      "parentId": "kcevva",
+      "pathPart": "intakesettings",
+      "path": "/campaign/{campaignid}/intakesettings",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {},
+        "PUT": {}
+      }
+    },
+    {
+      "id": "bjbop3",
+      "parentId": "6d0na2",
+      "pathPart": "{type}",
+      "path": "/organization/{organizationid}/sponsorship/packages/eventtypes/{type}",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {}
+      }
+    },
+    {
+      "id": "bk26x9",
+      "parentId": "0kyr9n",
+      "pathPart": "items",
+      "path": "/store/checkout/items",
+      "resourceMethods": {
+        "OPTIONS": {},
+        "POST": {}
+      }
+    },
+    {
+      "id": "bn6dls",
+      "parentId": "cv92pw",
+      "pathPart": "types",
+      "path": "/organization/{organizationid}/crm/emails/templates/types"
+    },
+    {
+      "id": "bob4os",
+      "parentId": "5ltlosd1ne",
+      "pathPart": "chat",
+      "path": "/chat"
+    },
+    {
+      "id": "bpy6ly",
+      "parentId": "haxq2y",
+      "pathPart": "{campaignid}",
+      "path": "/individual/{individualid}/campaigns/{campaignid}",
+      "resourceMethods": {
+        "DELETE": {},
+        "GET": {},
+        "OPTIONS": {},
+        "PUT": {}
+      }
+    },
+    {
+      "id": "bxa7op",
+      "parentId": "jhu2dg",
+      "pathPart": "submit",
+      "path": "/operations/marketing/submit",
+      "resourceMethods": {
+        "OPTIONS": {},
+        "POST": {}
+      }
+    },
+    {
+      "id": "bxkqve",
+      "parentId": "809905",
+      "pathPart": "send",
+      "path": "/organization/{organizationid}/crm/emails/send",
+      "resourceMethods": {
+        "OPTIONS": {},
+        "POST": {}
+      }
+    },
+    {
+      "id": "c27w34",
+      "parentId": "9am875",
+      "pathPart": "stripe",
+      "path": "/webhook/stripe",
+      "resourceMethods": {
+        "OPTIONS": {},
+        "POST": {}
+      }
+    },
+    {
+      "id": "c5wxv4",
+      "parentId": "oim57x",
+      "pathPart": "forgot",
+      "path": "/login/username/forgot",
+      "resourceMethods": {
+        "OPTIONS": {},
+        "POST": {}
+      }
+    },
+    {
+      "id": "cjmzmk",
+      "parentId": "8s7xd6",
+      "pathPart": "exposure",
+      "path": "/donation-optimization/exposure",
+      "resourceMethods": {
+        "OPTIONS": {},
+        "POST": {}
+      }
+    },
+    {
+      "id": "ck9wh5",
+      "parentId": "tvti4t",
+      "pathPart": "opt-out",
+      "path": "/organization/{organizationid}/text-messages/consent/opt-out",
+      "resourceMethods": {
+        "OPTIONS": {},
+        "POST": {}
+      }
+    },
+    {
+      "id": "cpqhbd",
+      "parentId": "6xg7sf",
+      "pathPart": "tickets",
+      "path": "/organization/{organizationid}/tickets",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {},
+        "POST": {}
+      }
+    },
+    {
+      "id": "cqzb6t",
+      "parentId": "g9qfhh",
+      "pathPart": "members",
+      "path": "/campaign/{campaignid}/teams/{teamid}/members",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {},
+        "POST": {}
+      }
+    },
+    {
+      "id": "cug2y1",
+      "parentId": "qyqog6",
+      "pathPart": "{organizationid}",
+      "path": "/operations/platform-accounts/{organizationid}",
+      "resourceMethods": {
+        "OPTIONS": {},
+        "PUT": {}
+      }
+    },
+    {
+      "id": "cv92pw",
+      "parentId": "809905",
+      "pathPart": "templates",
+      "path": "/organization/{organizationid}/crm/emails/templates",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {},
+        "POST": {}
+      }
+    },
+    {
+      "id": "cvlgef",
+      "parentId": "jhu2dg",
+      "pathPart": "delete",
+      "path": "/operations/marketing/delete",
+      "resourceMethods": {
+        "OPTIONS": {},
+        "POST": {}
+      }
+    },
+    {
+      "id": "czbsfz",
+      "parentId": "0vt1uo",
+      "pathPart": "order",
+      "path": "/give/onetime/paypal/order",
+      "resourceMethods": {
+        "OPTIONS": {},
+        "POST": {}
+      }
+    },
+    {
+      "id": "d0gffa",
+      "parentId": "zhgznx",
+      "pathPart": "contribution",
+      "path": "/organization/{organizationid}/campaigns/{campaignid}/contribution",
+      "resourceMethods": {
+        "OPTIONS": {},
+        "POST": {}
+      }
+    },
+    {
+      "id": "d5xe46",
+      "parentId": "g9qfhh",
+      "pathPart": "dashboard",
+      "path": "/campaign/{campaignid}/teams/{teamid}/dashboard"
+    },
+    {
+      "id": "d80tzt",
+      "parentId": "7b2s40",
+      "pathPart": "store",
+      "path": "/organization/{organizationid}/storeitems/store"
+    },
+    {
+      "id": "d8ucmh",
+      "parentId": "942d9t",
+      "pathPart": "{itemid}",
+      "path": "/organization/{organizationid}/auctions/{auctionid}/items/{itemid}",
+      "resourceMethods": {
+        "DELETE": {},
+        "GET": {},
+        "OPTIONS": {},
+        "POST": {},
+        "PUT": {}
+      }
+    },
+    {
+      "id": "d9hads",
+      "parentId": "3sazk3",
+      "pathPart": "{articleid}",
+      "path": "/resources/articles/{articleid}",
+      "resourceMethods": {
+        "DELETE": {},
+        "GET": {},
+        "OPTIONS": {},
+        "PUT": {}
+      }
+    },
+    {
+      "id": "db2u92",
+      "parentId": "3xnw8w",
+      "pathPart": "l",
+      "path": "/sms/l"
+    },
+    {
+      "id": "ddtjvr",
+      "parentId": "kht01u",
+      "pathPart": "campaigns",
+      "path": "/{accountid}/campaigns",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {}
+      }
+    },
+    {
+      "id": "dk6l2m",
+      "parentId": "fdb526",
+      "pathPart": "clicks",
+      "path": "/social/posts/clicks",
+      "resourceMethods": {
+        "OPTIONS": {},
+        "POST": {}
+      }
+    },
+    {
+      "id": "dlgbtp",
+      "parentId": "766ws5",
+      "pathPart": "{month}",
+      "path": "/{accountid}/bank/activities/{year}/{month}",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {}
+      }
+    },
+    {
+      "id": "dnnbie",
+      "parentId": "2x4om9",
+      "pathPart": "pledges",
+      "path": "/organization/{organizationid}/crm/contacts/{contactid}/pledges",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {},
+        "POST": {}
+      }
+    },
+    {
+      "id": "dpry1o",
+      "parentId": "dz1w2k",
+      "pathPart": "available",
+      "path": "/organization/{organizationid}/categories/available",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {}
+      }
+    },
+    {
+      "id": "drvgpe",
+      "parentId": "tw2nqp",
+      "pathPart": "info",
+      "path": "/organization/ein/{number}/dashboard/info",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {}
+      }
+    },
+    {
+      "id": "dwnuh8",
+      "parentId": "ua0vz6",
+      "pathPart": "{documentid}",
+      "path": "/organization/{organizationid}/crm/contacts/{contactid}/documents/{documentid}",
+      "resourceMethods": {
+        "DELETE": {},
+        "GET": {},
+        "OPTIONS": {},
+        "PUT": {}
+      }
+    },
+    {
+      "id": "dx8baj",
+      "parentId": "65qpfh",
+      "pathPart": "recent",
+      "path": "/organization/{organizationid}/chats/conversations/recent",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {}
+      }
+    },
+    {
+      "id": "dz1w2k",
+      "parentId": "6xg7sf",
+      "pathPart": "categories",
+      "path": "/organization/{organizationid}/categories",
+      "resourceMethods": {
+        "DELETE": {},
+        "GET": {},
+        "OPTIONS": {},
+        "POST": {}
+      }
+    },
+    {
+      "id": "e0njhs",
+      "parentId": "d8ucmh",
+      "pathPart": "bids",
+      "path": "/organization/{organizationid}/auctions/{auctionid}/items/{itemid}/bids",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {}
+      }
+    },
+    {
+      "id": "e54byv",
+      "parentId": "809905",
+      "pathPart": "verify",
+      "path": "/organization/{organizationid}/crm/emails/verify"
+    },
+    {
+      "id": "e9ahm0",
+      "parentId": "adka4k",
+      "pathPart": "info",
+      "path": "/individual/{individualid}/campaigns/sponsored/dashboard/info",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {}
+      }
+    },
+    {
+      "id": "e9pdmu",
+      "parentId": "2x4om9",
+      "pathPart": "notes",
+      "path": "/organization/{organizationid}/crm/contacts/{contactid}/notes",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {},
+        "POST": {}
+      }
+    },
+    {
+      "id": "ea1bc9",
+      "parentId": "xzxifx",
+      "pathPart": "sessions",
+      "path": "/organization/{organizationid}/classes/{classid}/sessions",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {}
+      }
+    },
+    {
+      "id": "edcqn2",
+      "parentId": "md06vi",
+      "pathPart": "{promocodeid}",
+      "path": "/organization/{organizationid}/promocodes/{promocodeid}",
+      "resourceMethods": {
+        "DELETE": {},
+        "GET": {},
+        "OPTIONS": {},
+        "PUT": {}
+      }
+    },
+    {
+      "id": "edjhl5",
+      "parentId": "t1x9jn",
+      "pathPart": "{month}",
+      "path": "/{accountid}/referral/redeem/history/{year}/{month}",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {}
+      }
+    },
+    {
+      "id": "eih44b",
+      "parentId": "8kyct2",
+      "pathPart": "remove",
+      "path": "/utility/{accountid}/remove",
+      "resourceMethods": {
+        "DELETE": {}
+      }
+    },
+    {
+      "id": "ekijhd",
+      "parentId": "cpqhbd",
+      "pathPart": "all",
+      "path": "/organization/{organizationid}/tickets/all",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {}
+      }
+    },
+    {
+      "id": "enq22l",
+      "parentId": "jhu2dg",
+      "pathPart": "render",
+      "path": "/operations/marketing/render",
+      "resourceMethods": {
+        "OPTIONS": {},
+        "POST": {}
+      }
+    },
+    {
+      "id": "eoice0",
+      "parentId": "qdjh9z",
+      "pathPart": "orders",
+      "path": "/organization/{organizationid}/raffles/orders",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {},
+        "POST": {}
+      }
+    },
+    {
+      "id": "ewnou9",
+      "parentId": "kht01u",
+      "pathPart": "referral",
+      "path": "/{accountid}/referral"
+    },
+    {
+      "id": "eyn6j9",
+      "parentId": "pa0pr2",
+      "pathPart": "{code}",
+      "path": "/login/mfa/verify/{code}",
+      "resourceMethods": {
+        "OPTIONS": {},
+        "POST": {}
+      }
+    },
+    {
+      "id": "f78vof",
+      "parentId": "ewnou9",
+      "pathPart": "payout",
+      "path": "/{accountid}/referral/payout",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {}
+      }
+    },
+    {
+      "id": "f7wsma",
+      "parentId": "tmge02",
+      "pathPart": "tracking",
+      "path": "/organization/tracking"
+    },
+    {
+      "id": "f9zzd2",
+      "parentId": "z3iiw3",
+      "pathPart": "{auctionid}",
+      "path": "/organization/{organizationid}/auctions/{auctionid}",
+      "resourceMethods": {
+        "DELETE": {},
+        "GET": {},
+        "OPTIONS": {},
+        "PUT": {}
+      }
+    },
+    {
+      "id": "fc7w5x",
+      "parentId": "shnome",
+      "pathPart": "braintree",
+      "path": "/give/onetime/braintree"
+    },
+    {
+      "id": "fdb526",
+      "parentId": "huiirm",
+      "pathPart": "posts",
+      "path": "/social/posts"
+    },
+    {
+      "id": "fdbbo9",
+      "parentId": "40aio2",
+      "pathPart": "info",
+      "path": "/organization/{organizationid}/classes/orders/{orderid}/info",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {}
+      }
+    },
+    {
+      "id": "ff46o7",
+      "parentId": "8marve",
+      "pathPart": "status",
+      "path": "/organization/{organizationid}/chats/{sessionid}/status",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {}
+      }
+    },
+    {
+      "id": "fjjbsx",
+      "parentId": "ufj4x2",
+      "pathPart": "{itemid}",
+      "path": "/organization/subscription/addons/menu/items/{itemid}",
+      "resourceMethods": {
+        "DELETE": {},
+        "GET": {},
+        "OPTIONS": {},
+        "PUT": {}
+      }
+    },
+    {
+      "id": "fmjva1",
+      "parentId": "6xg7sf",
+      "pathPart": "coverfees",
+      "path": "/organization/{organizationid}/coverfees"
+    },
+    {
+      "id": "fo5ugz",
+      "parentId": "0btkm7",
+      "pathPart": "trigger",
+      "path": "/organization/{organizationid}/crm/sms/trigger",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {},
+        "PUT": {}
+      }
+    },
+    {
+      "id": "fum4wg",
+      "parentId": "ewnou9",
+      "pathPart": "link",
+      "path": "/{accountid}/referral/link",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {}
+      }
+    },
+    {
+      "id": "fv0a3a",
+      "parentId": "3xnw8w",
+      "pathPart": "clicks",
+      "path": "/sms/clicks",
+      "resourceMethods": {
+        "OPTIONS": {},
+        "POST": {}
+      }
+    },
+    {
+      "id": "fy6wu9",
+      "parentId": "uqnduc",
+      "pathPart": "cart",
+      "path": "/organization/{organizationid}/subscription/cart"
+    },
+    {
+      "id": "fzco1m",
+      "parentId": "kcevva",
+      "pathPart": "teams",
+      "path": "/campaign/{campaignid}/teams",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {},
+        "POST": {}
+      }
+    },
+    {
+      "id": "g28axf",
+      "parentId": "zmwar9",
+      "pathPart": "{name}",
+      "path": "/utility/idfromname/{name}",
+      "resourceMethods": {
+        "GET": {}
+      }
+    },
+    {
+      "id": "g9qfhh",
+      "parentId": "fzco1m",
+      "pathPart": "{teamid}",
+      "path": "/campaign/{campaignid}/teams/{teamid}",
+      "resourceMethods": {
+        "DELETE": {},
+        "GET": {},
+        "OPTIONS": {},
+        "PUT": {}
+      }
+    },
+    {
+      "id": "g9v7e2",
+      "parentId": "zhgznx",
+      "pathPart": "images",
+      "path": "/organization/{organizationid}/campaigns/{campaignid}/images",
+      "resourceMethods": {
+        "DELETE": {},
+        "GET": {},
+        "OPTIONS": {},
+        "POST": {}
+      }
+    },
+    {
+      "id": "gfqyhw",
+      "parentId": "1fa0mi",
+      "pathPart": "result",
+      "path": "/data/sql/{executionkey}/result",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {}
+      }
+    },
+    {
+      "id": "gg7h0a",
+      "parentId": "6xg7sf",
+      "pathPart": "generative",
+      "path": "/organization/{organizationid}/generative"
+    },
+    {
+      "id": "gk56zk",
+      "parentId": "u8ndgz",
+      "pathPart": "checkout",
+      "path": "/ticket/event/checkout",
+      "resourceMethods": {
+        "OPTIONS": {},
+        "POST": {}
+      }
+    },
+    {
+      "id": "gkafiz",
+      "parentId": "wpbjdg",
+      "pathPart": "orders",
+      "path": "/organization/{organizationid}/classes/orders",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {}
+      }
+    },
+    {
+      "id": "gkhcsr",
+      "parentId": "op1iny",
+      "pathPart": "attach",
+      "path": "/{accountid}/bank/external-accounts/attach",
+      "resourceMethods": {
+        "OPTIONS": {},
+        "POST": {}
+      }
+    },
+    {
+      "id": "gkkzs1",
+      "parentId": "agxf8e",
+      "pathPart": "artifacts",
+      "path": "/organization/{organizationid}/community/{communityid}/artifacts",
+      "resourceMethods": {
+        "DELETE": {},
+        "OPTIONS": {},
+        "POST": {}
+      }
+    },
+    {
+      "id": "gnpecy",
+      "parentId": "uqnduc",
+      "pathPart": "cancel",
+      "path": "/organization/{organizationid}/subscription/cancel",
+      "resourceMethods": {
+        "OPTIONS": {},
+        "POST": {}
+      }
+    },
+    {
+      "id": "gnyjit",
+      "parentId": "5k14ua",
+      "pathPart": "access",
+      "path": "/operations/access",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {}
+      }
+    },
+    {
+      "id": "gp3bte",
+      "parentId": "6w3tpk",
+      "pathPart": "schedulepay",
+      "path": "/utility/schedulepay",
+      "resourceMethods": {
+        "OPTIONS": {},
+        "POST": {}
+      }
+    },
+    {
+      "id": "gsir03",
+      "parentId": "i740c2",
+      "pathPart": "{type}",
+      "path": "/organization/{organizationid}/crm/emails/sent/{type}",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {}
+      }
+    },
+    {
+      "id": "gtcta4",
+      "parentId": "g9qfhh",
+      "pathPart": "invite",
+      "path": "/campaign/{campaignid}/teams/{teamid}/invite",
+      "resourceMethods": {
+        "OPTIONS": {},
+        "POST": {}
+      }
+    },
+    {
+      "id": "gx5p3r",
+      "parentId": "rrpbmw",
+      "pathPart": "phonenumber",
+      "path": "/{accountid}/mfa/phonenumber"
+    },
+    {
+      "id": "gxe314",
+      "parentId": "5ltlosd1ne",
+      "pathPart": "password",
+      "path": "/password",
+      "resourceMethods": {
+        "OPTIONS": {},
+        "PUT": {}
+      }
+    },
+    {
+      "id": "gxq91g",
+      "parentId": "023xru",
+      "pathPart": "{status}",
+      "path": "/organization/{organizationid}/raffles/{raffleid}/prizes/statuses/{status}",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {}
+      }
+    },
+    {
+      "id": "gzlxns",
+      "parentId": "6xg7sf",
+      "pathPart": "profile",
+      "path": "/organization/{organizationid}/profile",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {},
+        "PUT": {}
+      }
+    },
+    {
+      "id": "h1owou",
+      "parentId": "kcevva",
+      "pathPart": "contribution",
+      "path": "/campaign/{campaignid}/contribution",
+      "resourceMethods": {
+        "OPTIONS": {},
+        "POST": {}
+      }
+    },
+    {
+      "id": "haxq2y",
+      "parentId": "z63o0o",
+      "pathPart": "campaigns",
+      "path": "/individual/{individualid}/campaigns",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {},
+        "POST": {}
+      }
+    },
+    {
+      "id": "hdva5q",
+      "parentId": "zeva6e",
+      "pathPart": "manage",
+      "path": "/resources/manage",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {}
+      }
+    },
+    {
+      "id": "hfj37r",
+      "parentId": "d9hads",
+      "pathPart": "publish",
+      "path": "/resources/articles/{articleid}/publish",
+      "resourceMethods": {
+        "OPTIONS": {},
+        "POST": {}
+      }
+    },
+    {
+      "id": "hgu1y1",
+      "parentId": "qr54l8",
+      "pathPart": "info",
+      "path": "/organization/{organizationid}/crm/contacts/{contactid}/pledges/{pledgeid}/info",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {}
+      }
+    },
+    {
+      "id": "hgujzx",
+      "parentId": "kcevva",
+      "pathPart": "updates",
+      "path": "/campaign/{campaignid}/updates",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {},
+        "POST": {}
+      }
+    },
+    {
+      "id": "hmrb05",
+      "parentId": "5dyq1f",
+      "pathPart": "publish",
+      "path": "/organization/{organizationid}/social/posts/{postid}/publish",
+      "resourceMethods": {
+        "OPTIONS": {},
+        "POST": {}
+      }
+    },
+    {
+      "id": "ho420s",
+      "parentId": "lnlmhc",
+      "pathPart": "orders",
+      "path": "/organization/{organizationid}/sponsorship/orders",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {}
+      }
+    },
+    {
+      "id": "hq4pla",
+      "parentId": "5k14ua",
+      "pathPart": "promo-discounts",
+      "path": "/operations/promo-discounts",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {}
+      }
+    },
+    {
+      "id": "hrlwwn",
+      "parentId": "z63o0o",
+      "pathPart": "download",
+      "path": "/individual/{individualid}/download"
+    },
+    {
+      "id": "huiirm",
+      "parentId": "5ltlosd1ne",
+      "pathPart": "social",
+      "path": "/social"
+    },
+    {
+      "id": "hz484q",
+      "parentId": "pb1lyx",
+      "pathPart": "paymentsource",
+      "path": "/wallet/{walletid}/paymentsource",
+      "resourceMethods": {
+        "OPTIONS": {},
+        "POST": {}
+      }
+    },
+    {
+      "id": "i16o6t",
+      "parentId": "wua2j5",
+      "pathPart": "mfa",
+      "path": "/login/mfa"
+    },
+    {
+      "id": "i1wql5",
+      "parentId": "rx4mux",
+      "pathPart": "collect",
+      "path": "/{accountid}/referral/commissions/collect",
+      "resourceMethods": {
+        "OPTIONS": {},
+        "POST": {}
+      }
+    },
+    {
+      "id": "i1ypuo",
+      "parentId": "5k14ua",
+      "pathPart": "campaigns",
+      "path": "/operations/campaigns",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {},
+        "POST": {}
+      }
+    },
+    {
+      "id": "i33at5",
+      "parentId": "wq2ufv",
+      "pathPart": "{recurringid}",
+      "path": "/{accountid}/give/recurring/{recurringid}",
+      "resourceMethods": {
+        "DELETE": {},
+        "GET": {},
+        "OPTIONS": {},
+        "PUT": {}
+      }
+    },
+    {
+      "id": "i3kadv",
+      "parentId": "pcju0c",
+      "pathPart": "print-on-demand-options",
+      "path": "/organization/{organizationid}/storeitems/{itemid}/print-on-demand-options",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {}
+      }
+    },
+    {
+      "id": "i5mzwx",
+      "parentId": "53n5hn",
+      "pathPart": "items",
+      "path": "/store/{storeid}/items",
+      "resourceMethods": {
+        "DELETE": {},
+        "OPTIONS": {},
+        "POST": {},
+        "PUT": {}
+      }
+    },
+    {
+      "id": "i740c2",
+      "parentId": "809905",
+      "pathPart": "sent",
+      "path": "/organization/{organizationid}/crm/emails/sent",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {}
+      }
+    },
+    {
+      "id": "i7yygu",
+      "parentId": "ho420s",
+      "pathPart": "{orderid}",
+      "path": "/organization/{organizationid}/sponsorship/orders/{orderid}"
+    },
+    {
+      "id": "ia5vqq",
+      "parentId": "9xz8u6",
+      "pathPart": "{type}",
+      "path": "/individual/{individualid}/give/recurring/{type}",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {},
+        "POST": {}
+      }
+    },
+    {
+      "id": "inlw52",
+      "parentId": "1a8ywa",
+      "pathPart": "{email}",
+      "path": "/user/exists/{email}",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {}
+      }
+    },
+    {
+      "id": "ipwull",
+      "parentId": "squso9",
+      "pathPart": "{attributeid}",
+      "path": "/organization/{organizationid}/ticketattributes/{attributeid}",
+      "resourceMethods": {
+        "DELETE": {},
+        "GET": {},
+        "OPTIONS": {},
+        "PUT": {}
+      }
+    },
+    {
+      "id": "itooq0",
+      "parentId": "e9pdmu",
+      "pathPart": "{noteid}",
+      "path": "/organization/{organizationid}/crm/contacts/{contactid}/notes/{noteid}",
+      "resourceMethods": {
+        "DELETE": {},
+        "GET": {},
+        "OPTIONS": {},
+        "PUT": {}
+      }
+    },
+    {
+      "id": "itp4mn",
+      "parentId": "rlauni",
+      "pathPart": "all",
+      "path": "/organization/{organizationid}/subscription/addons/all",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {}
+      }
+    },
+    {
+      "id": "ix2cnn",
+      "parentId": "7eo837",
+      "pathPart": "class",
+      "path": "/organization/{organizationid}/promocodes/usage/{code}/class"
+    },
+    {
+      "id": "iycyqb",
+      "parentId": "be7qa9",
+      "pathPart": "{proxy+}",
+      "path": "/operations/support/{proxy+}",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {},
+        "POST": {}
+      }
+    },
+    {
+      "id": "j06ghf",
+      "parentId": "1lsugq",
+      "pathPart": "{bankaccountid}",
+      "path": "/wallet/{walletid}/bankaccount/{bankaccountid}",
+      "resourceMethods": {
+        "DELETE": {},
+        "GET": {},
+        "OPTIONS": {}
+      }
+    },
+    {
+      "id": "j10jgi",
+      "parentId": "kht01u",
+      "pathPart": "onboarded",
+      "path": "/{accountid}/onboarded",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {}
+      }
+    },
+    {
+      "id": "j37k5x",
+      "parentId": "788jy0",
+      "pathPart": "poster",
+      "path": "/campaign/{campaignid}/sponsor/poster",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {},
+        "POST": {}
+      }
+    },
+    {
+      "id": "j4kce5",
+      "parentId": "6w3tpk",
+      "pathPart": "html2pdf",
+      "path": "/utility/html2pdf",
+      "resourceMethods": {
+        "OPTIONS": {},
+        "POST": {}
+      }
+    },
+    {
+      "id": "j7b0j9",
+      "parentId": "2b9fr9",
+      "pathPart": "checkout",
+      "path": "/classes/checkout",
+      "resourceMethods": {
+        "OPTIONS": {},
+        "POST": {}
+      }
+    },
+    {
+      "id": "j83oyw",
+      "parentId": "i7yygu",
+      "pathPart": "claims",
+      "path": "/organization/{organizationid}/sponsorship/orders/{orderid}/claims",
+      "resourceMethods": {
+        "OPTIONS": {},
+        "POST": {}
+      }
+    },
+    {
+      "id": "j947p5",
+      "parentId": "wq2ufv",
+      "pathPart": "setup",
+      "path": "/{accountid}/give/recurring/setup",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {}
+      }
+    },
+    {
+      "id": "jcjet5",
+      "parentId": "lqidmh",
+      "pathPart": "artifacts",
+      "path": "/organization/{organizationid}/community/{communityid}/member/artifacts",
+      "resourceMethods": {
+        "OPTIONS": {},
+        "POST": {}
+      }
+    },
+    {
+      "id": "jhu2dg",
+      "parentId": "5k14ua",
+      "pathPart": "marketing",
+      "path": "/operations/marketing"
+    },
+    {
+      "id": "ji0l5g",
+      "parentId": "5dyq1f",
+      "pathPart": "status",
+      "path": "/organization/{organizationid}/social/posts/{postid}/status",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {}
+      }
+    },
+    {
+      "id": "jimi05",
+      "parentId": "6xg7sf",
+      "pathPart": "aboutus",
+      "path": "/organization/{organizationid}/aboutus",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {}
+      }
+    },
+    {
+      "id": "jqii0e",
+      "parentId": "y189cn",
+      "pathPart": "info",
+      "path": "/individual/{individualid}/sponsorship/dashboard/info",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {}
+      }
+    },
+    {
+      "id": "jsgz0w",
+      "parentId": "kcevva",
+      "pathPart": "info",
+      "path": "/campaign/{campaignid}/info",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {}
+      }
+    },
+    {
+      "id": "jtxv6e",
+      "parentId": "22mulc",
+      "pathPart": "{cardid}",
+      "path": "/wallet/{walletid}/card/{cardid}",
+      "resourceMethods": {
+        "DELETE": {},
+        "GET": {},
+        "OPTIONS": {}
+      }
+    },
+    {
+      "id": "jwzt38",
+      "parentId": "5vn0f2",
+      "pathPart": "{username}",
+      "path": "/login/sendcode/{username}",
+      "resourceMethods": {
+        "OPTIONS": {},
+        "POST": {}
+      }
+    },
+    {
+      "id": "k1zxs6",
+      "parentId": "rrpbmw",
+      "pathPart": "setup",
+      "path": "/{accountid}/mfa/setup",
+      "resourceMethods": {
+        "OPTIONS": {},
+        "POST": {}
+      }
+    },
+    {
+      "id": "k4yqpg",
+      "parentId": "ea1bc9",
+      "pathPart": "pickup-schedules",
+      "path": "/organization/{organizationid}/classes/{classid}/sessions/pickup-schedules",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {}
+      }
+    },
+    {
+      "id": "k52106",
+      "parentId": "zeva6e",
+      "pathPart": "videos",
+      "path": "/resources/videos"
+    },
+    {
+      "id": "k908lw",
+      "parentId": "9pqgh1",
+      "pathPart": "{prizeid}",
+      "path": "/organization/{organizationid}/raffles/{raffleid}/prizes/{prizeid}",
+      "resourceMethods": {
+        "DELETE": {},
+        "GET": {},
+        "OPTIONS": {},
+        "PUT": {}
+      }
+    },
+    {
+      "id": "k9chw8",
+      "parentId": "cv92pw",
+      "pathPart": "html",
+      "path": "/organization/{organizationid}/crm/emails/templates/html",
+      "resourceMethods": {
+        "OPTIONS": {},
+        "POST": {}
+      }
+    },
+    {
+      "id": "kbtjak",
+      "parentId": "y6cdbo",
+      "pathPart": "print-on-demand-publication",
+      "path": "/store/items/{itemid}/print-on-demand-publication",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {},
+        "POST": {}
+      }
+    },
+    {
+      "id": "kcevva",
+      "parentId": "0a9ky7",
+      "pathPart": "{campaignid}",
+      "path": "/campaign/{campaignid}",
+      "resourceMethods": {
+        "DELETE": {},
+        "GET": {},
+        "OPTIONS": {},
+        "PUT": {}
+      }
+    },
+    {
+      "id": "kfs6j0",
+      "parentId": "6xg7sf",
+      "pathPart": "personalize",
+      "path": "/organization/{organizationid}/personalize",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {},
+        "PUT": {}
+      }
+    },
+    {
+      "id": "kht01u",
+      "parentId": "5ltlosd1ne",
+      "pathPart": "{accountid}",
+      "path": "/{accountid}"
+    },
+    {
+      "id": "kng2xa",
+      "parentId": "6xg7sf",
+      "pathPart": "stores",
+      "path": "/organization/{organizationid}/stores",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {},
+        "POST": {}
+      }
+    },
+    {
+      "id": "ktl25a",
+      "parentId": "tyjdfz",
+      "pathPart": "{teamid}",
+      "path": "/individual/{individualid}/sponsorship/teams/{teamid}",
+      "resourceMethods": {
+        "DELETE": {},
+        "GET": {},
+        "OPTIONS": {},
+        "PUT": {}
+      }
+    },
+    {
+      "id": "kumzlx",
+      "parentId": "3k5fio",
+      "pathPart": "info",
+      "path": "/qrcode/{qrcodeid}/dashboard/info",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {}
+      }
+    },
+    {
+      "id": "kw4w20",
+      "parentId": "6xg7sf",
+      "pathPart": "download",
+      "path": "/organization/{organizationid}/download"
+    },
+    {
+      "id": "kwupe4",
+      "parentId": "xzxifx",
+      "pathPart": "attendees",
+      "path": "/organization/{organizationid}/classes/{classid}/attendees",
+      "resourceMethods": {
+        "OPTIONS": {},
+        "POST": {}
+      }
+    },
+    {
+      "id": "kx214i",
+      "parentId": "z3iiw3",
+      "pathPart": "all",
+      "path": "/organization/{organizationid}/auctions/all",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {}
+      }
+    },
+    {
+      "id": "kyh4ut",
+      "parentId": "cpqhbd",
+      "pathPart": "{ticketid}",
+      "path": "/organization/{organizationid}/tickets/{ticketid}",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {}
+      }
+    },
+    {
+      "id": "l0l076",
+      "parentId": "6xg7sf",
+      "pathPart": "member",
+      "path": "/organization/{organizationid}/member"
+    },
+    {
+      "id": "l3ck80",
+      "parentId": "xzxifx",
+      "pathPart": "fields",
+      "path": "/organization/{organizationid}/classes/{classid}/fields",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {},
+        "POST": {},
+        "PUT": {}
+      }
+    },
+    {
+      "id": "l73a1x",
+      "parentId": "cqzb6t",
+      "pathPart": "{memberid}",
+      "path": "/campaign/{campaignid}/teams/{teamid}/members/{memberid}",
+      "resourceMethods": {
+        "DELETE": {},
+        "GET": {},
+        "OPTIONS": {},
+        "PUT": {}
+      }
+    },
+    {
+      "id": "l9u4rf",
+      "parentId": "bgrqcl",
+      "pathPart": "{programid}",
+      "path": "/referral/program/{programid}",
+      "resourceMethods": {
+        "DELETE": {},
+        "GET": {},
+        "OPTIONS": {},
+        "PUT": {}
+      }
+    },
+    {
+      "id": "lho5uk",
+      "parentId": "hgujzx",
+      "pathPart": "{updateid}",
+      "path": "/campaign/{campaignid}/updates/{updateid}",
+      "resourceMethods": {
+        "DELETE": {},
+        "GET": {},
+        "OPTIONS": {},
+        "PUT": {}
+      }
+    },
+    {
+      "id": "lhye7f",
+      "parentId": "gk56zk",
+      "pathPart": "items",
+      "path": "/ticket/event/checkout/items",
+      "resourceMethods": {
+        "OPTIONS": {},
+        "POST": {}
+      }
+    },
+    {
+      "id": "li3c70",
+      "parentId": "kht01u",
+      "pathPart": "bank",
+      "path": "/{accountid}/bank"
+    },
+    {
+      "id": "llpgt0",
+      "parentId": "agxf8e",
+      "pathPart": "spotlights",
+      "path": "/organization/{organizationid}/community/{communityid}/spotlights",
+      "resourceMethods": {
+        "DELETE": {},
+        "GET": {},
+        "OPTIONS": {},
+        "POST": {}
+      }
+    },
+    {
+      "id": "llxhda",
+      "parentId": "wkhcz1",
+      "pathPart": "{status}",
+      "path": "/organization/communities/{status}",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {}
+      }
+    },
+    {
+      "id": "lmu2vc",
+      "parentId": "e54byv",
+      "pathPart": "status",
+      "path": "/organization/{organizationid}/crm/emails/verify/status",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {}
+      }
+    },
+    {
+      "id": "lnlmhc",
+      "parentId": "6xg7sf",
+      "pathPart": "sponsorship",
+      "path": "/organization/{organizationid}/sponsorship"
+    },
+    {
+      "id": "loxq9c",
+      "parentId": "5ltlosd1ne",
+      "pathPart": "referral",
+      "path": "/referral"
+    },
+    {
+      "id": "lperpj",
+      "parentId": "tmge02",
+      "pathPart": "subscription",
+      "path": "/organization/subscription"
+    },
+    {
+      "id": "lpl8wl",
+      "parentId": "p8u701",
+      "pathPart": "{enable}",
+      "path": "/{accountid}/mfa/enable/{enable}",
+      "resourceMethods": {
+        "OPTIONS": {},
+        "POST": {}
+      }
+    },
+    {
+      "id": "lqidmh",
+      "parentId": "agxf8e",
+      "pathPart": "member",
+      "path": "/organization/{organizationid}/community/{communityid}/member",
+      "resourceMethods": {
+        "DELETE": {},
+        "GET": {},
+        "OPTIONS": {},
+        "POST": {}
+      }
+    },
+    {
+      "id": "lqsxa3",
+      "parentId": "x4689z",
+      "pathPart": "{ticketid}",
+      "path": "/ticket/{ticketid}"
+    },
+    {
+      "id": "ltx7pi",
+      "parentId": "d9hads",
+      "pathPart": "unpublish",
+      "path": "/resources/articles/{articleid}/unpublish",
+      "resourceMethods": {
+        "OPTIONS": {},
+        "POST": {}
+      }
+    },
+    {
+      "id": "lxv9j0",
+      "parentId": "jhu2dg",
+      "pathPart": "options",
+      "path": "/operations/marketing/options",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {}
+      }
+    },
+    {
+      "id": "m34a1v",
+      "parentId": "5ltlosd1ne",
+      "pathPart": "logout",
+      "path": "/logout",
+      "resourceMethods": {
+        "OPTIONS": {},
+        "POST": {}
+      }
+    },
+    {
+      "id": "m8ci9d",
+      "parentId": "6xg7sf",
+      "pathPart": "community",
+      "path": "/organization/{organizationid}/community",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {},
+        "POST": {}
+      }
+    },
+    {
+      "id": "m8r49v",
+      "parentId": "90fzmg",
+      "pathPart": "posts",
+      "path": "/organization/{organizationid}/social/posts",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {},
+        "POST": {}
+      }
+    },
+    {
+      "id": "maxqof",
+      "parentId": "wvvnee",
+      "pathPart": "bulk",
+      "path": "/organization/{organizationid}/text-messages/bulk",
+      "resourceMethods": {
+        "OPTIONS": {},
+        "POST": {}
+      }
+    },
+    {
+      "id": "mc0z8c",
+      "parentId": "tmge02",
+      "pathPart": "ein",
+      "path": "/organization/ein"
+    },
+    {
+      "id": "mco6a6",
+      "parentId": "2b9fr9",
+      "pathPart": "{admissionid}",
+      "path": "/classes/{admissionid}"
+    },
+    {
+      "id": "md06vi",
+      "parentId": "6xg7sf",
+      "pathPart": "promocodes",
+      "path": "/organization/{organizationid}/promocodes",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {},
+        "POST": {}
+      }
+    },
+    {
+      "id": "mex6km",
+      "parentId": "y1rhlb",
+      "pathPart": "setup",
+      "path": "/{accountid}/wallet/setup",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {}
+      }
+    },
+    {
+      "id": "mf4h37",
+      "parentId": "dx8baj",
+      "pathPart": "{count}",
+      "path": "/organization/{organizationid}/chats/conversations/recent/{count}",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {}
+      }
+    },
+    {
+      "id": "mhuj8x",
+      "parentId": "1143y3",
+      "pathPart": "videos",
+      "path": "/organization/{organizationid}/bulletin/videos",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {},
+        "POST": {}
+      }
+    },
+    {
+      "id": "mitil2",
+      "parentId": "2x4om9",
+      "pathPart": "OptIn",
+      "path": "/organization/{organizationid}/crm/contacts/{contactid}/OptIn",
+      "resourceMethods": {
+        "OPTIONS": {},
+        "POST": {}
+      }
+    },
+    {
+      "id": "mml9hj",
+      "parentId": "jhu2dg",
+      "pathPart": "status",
+      "path": "/operations/marketing/status",
+      "resourceMethods": {
+        "OPTIONS": {},
+        "POST": {}
+      }
+    },
+    {
+      "id": "mmngv5",
+      "parentId": "5dyq1f",
+      "pathPart": "schedule",
+      "path": "/organization/{organizationid}/social/posts/{postid}/schedule",
+      "resourceMethods": {
+        "OPTIONS": {},
+        "POST": {}
+      }
+    },
+    {
+      "id": "mmrm70",
+      "parentId": "6oee6t",
+      "pathPart": "token",
+      "path": "/give/onetime/braintree/{method}/token",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {}
+      }
+    },
+    {
+      "id": "mnidsf",
+      "parentId": "0a9ky7",
+      "pathPart": "team",
+      "path": "/campaign/team"
+    },
+    {
+      "id": "mq387o",
+      "parentId": "kcevva",
+      "pathPart": "measurement",
+      "path": "/campaign/{campaignid}/measurement",
+      "resourceMethods": {
+        "OPTIONS": {},
+        "POST": {}
+      }
+    },
+    {
+      "id": "mqat4g",
+      "parentId": "k908lw",
+      "pathPart": "drawing",
+      "path": "/organization/{organizationid}/raffles/{raffleid}/prizes/{prizeid}/drawing",
+      "resourceMethods": {
+        "OPTIONS": {},
+        "POST": {}
+      }
+    },
+    {
+      "id": "mznm0g",
+      "parentId": "haxq2y",
+      "pathPart": "sponsored",
+      "path": "/individual/{individualid}/campaigns/sponsored",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {},
+        "POST": {}
+      }
+    },
+    {
+      "id": "mzxl67",
+      "parentId": "5ltlosd1ne",
+      "pathPart": "user",
+      "path": "/user",
+      "resourceMethods": {
+        "OPTIONS": {},
+        "POST": {}
+      }
+    },
+    {
+      "id": "n1e4uc",
+      "parentId": "kht01u",
+      "pathPart": "referrals",
+      "path": "/{accountid}/referrals",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {}
+      }
+    },
+    {
+      "id": "n2gwyd",
+      "parentId": "fy6wu9",
+      "pathPart": "items",
+      "path": "/organization/{organizationid}/subscription/cart/items",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {},
+        "POST": {}
+      }
+    },
+    {
+      "id": "n6wu6n",
+      "parentId": "uw7loo",
+      "pathPart": "fields",
+      "path": "/ticket/event/{eventid}/tickettypes/{tickettypeid}/fields",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {},
+        "POST": {},
+        "PUT": {}
+      }
+    },
+    {
+      "id": "n9hppt",
+      "parentId": "li3c70",
+      "pathPart": "activities",
+      "path": "/{accountid}/bank/activities"
+    },
+    {
+      "id": "naegkq",
+      "parentId": "jhu2dg",
+      "pathPart": "preview",
+      "path": "/operations/marketing/preview",
+      "resourceMethods": {
+        "OPTIONS": {},
+        "POST": {}
+      }
+    },
+    {
+      "id": "nbs62o",
+      "parentId": "zm0ox8",
+      "pathPart": "{orderid}",
+      "path": "/ticket/event/order/{orderid}",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {},
+        "PUT": {}
+      }
+    },
+    {
+      "id": "nbwthj",
+      "parentId": "jhu2dg",
+      "pathPart": "draft",
+      "path": "/operations/marketing/draft",
+      "resourceMethods": {
+        "OPTIONS": {},
+        "POST": {}
+      }
+    },
+    {
+      "id": "nqtmbe",
+      "parentId": "65qpfh",
+      "pathPart": "{conversationid}",
+      "path": "/organization/{organizationid}/chats/conversations/{conversationid}",
+      "resourceMethods": {
+        "DELETE": {},
+        "GET": {},
+        "OPTIONS": {}
+      }
+    },
+    {
+      "id": "nruh1y",
+      "parentId": "6xg7sf",
+      "pathPart": "revenuemodel",
+      "path": "/organization/{organizationid}/revenuemodel",
+      "resourceMethods": {
+        "OPTIONS": {},
+        "PUT": {}
+      }
+    },
+    {
+      "id": "o2i2sc",
+      "parentId": "64sn51",
+      "pathPart": "{connectionid}",
+      "path": "/organization/{organizationid}/social/connections/{connectionid}",
+      "resourceMethods": {
+        "DELETE": {},
+        "GET": {},
+        "OPTIONS": {}
+      }
+    },
+    {
+      "id": "o3g4vk",
+      "parentId": "mnidsf",
+      "pathPart": "captain",
+      "path": "/campaign/team/captain"
+    },
+    {
+      "id": "o68ysf",
+      "parentId": "18guil",
+      "pathPart": "download",
+      "path": "/individual/{individualid}/campaigns/sponsored/{campaignid}/download"
+    },
+    {
+      "id": "odov9q",
+      "parentId": "ix2cnn",
+      "pathPart": "signups",
+      "path": "/organization/{organizationid}/promocodes/usage/{code}/class/signups",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {}
+      }
+    },
+    {
+      "id": "odwimf",
+      "parentId": "yyetyp",
+      "pathPart": "paymentsource",
+      "path": "/{accountid}/wallet/{walletid}/paymentsource",
+      "resourceMethods": {
+        "OPTIONS": {},
+        "POST": {}
+      }
+    },
+    {
+      "id": "oim57x",
+      "parentId": "wua2j5",
+      "pathPart": "username",
+      "path": "/login/username"
+    },
+    {
+      "id": "op1iny",
+      "parentId": "li3c70",
+      "pathPart": "external-accounts",
+      "path": "/{accountid}/bank/external-accounts",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {},
+        "POST": {}
+      }
+    },
+    {
+      "id": "or4yoe",
+      "parentId": "5dyq1f",
+      "pathPart": "cancel",
+      "path": "/organization/{organizationid}/social/posts/{postid}/cancel",
+      "resourceMethods": {
+        "OPTIONS": {},
+        "POST": {}
+      }
+    },
+    {
+      "id": "owrlk6",
+      "parentId": "zhgznx",
+      "pathPart": "download",
+      "path": "/organization/{organizationid}/campaigns/{campaignid}/download"
+    },
+    {
+      "id": "p10p93",
+      "parentId": "t1057v",
+      "pathPart": "{pledgeid}",
+      "path": "/individual/{individualid}/give/pledge/{pledgeid}",
+      "resourceMethods": {
+        "DELETE": {},
+        "GET": {},
+        "OPTIONS": {},
+        "PUT": {}
+      }
+    },
+    {
+      "id": "p6eq6d",
+      "parentId": "rrpbmw",
+      "pathPart": "verifycode",
+      "path": "/{accountid}/mfa/verifycode",
+      "resourceMethods": {
+        "OPTIONS": {},
+        "POST": {}
+      }
+    },
+    {
+      "id": "p82ny8",
+      "parentId": "a6ffj7",
+      "pathPart": "{templateid}",
+      "path": "/store/print-on-demand/catalog/{templateid}",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {}
+      }
+    },
+    {
+      "id": "p8u701",
+      "parentId": "rrpbmw",
+      "pathPart": "enable",
+      "path": "/{accountid}/mfa/enable"
+    },
+    {
+      "id": "pa0pr2",
+      "parentId": "i16o6t",
+      "pathPart": "verify",
+      "path": "/login/mfa/verify"
+    },
+    {
+      "id": "pb1lyx",
+      "parentId": "xyh6e8",
+      "pathPart": "{walletid}",
+      "path": "/wallet/{walletid}"
+    },
+    {
+      "id": "pc9769",
+      "parentId": "kht01u",
+      "pathPart": "orders",
+      "path": "/{accountid}/orders",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {},
+        "PUT": {}
+      }
+    },
+    {
+      "id": "pcju0c",
+      "parentId": "7b2s40",
+      "pathPart": "{itemid}",
+      "path": "/organization/{organizationid}/storeitems/{itemid}",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {}
+      }
+    },
+    {
+      "id": "pd5f6i",
+      "parentId": "shnome",
+      "pathPart": "intent",
+      "path": "/give/onetime/intent",
+      "resourceMethods": {
+        "OPTIONS": {},
+        "POST": {}
+      }
+    },
+    {
+      "id": "pdqep8",
+      "parentId": "9am875",
+      "pathPart": "paypal",
+      "path": "/webhook/paypal",
+      "resourceMethods": {
+        "OPTIONS": {},
+        "POST": {}
+      }
+    },
+    {
+      "id": "pg68rb",
+      "parentId": "qr54l8",
+      "pathPart": "payments",
+      "path": "/organization/{organizationid}/crm/contacts/{contactid}/pledges/{pledgeid}/payments",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {},
+        "POST": {}
+      }
+    },
+    {
+      "id": "pibi8g",
+      "parentId": "tij249",
+      "pathPart": "status",
+      "path": "/organization/{organizationid}/onboarded/status",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {}
+      }
+    },
+    {
+      "id": "pozp21",
+      "parentId": "mex6km",
+      "pathPart": "{method}",
+      "path": "/{accountid}/wallet/setup/{method}",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {}
+      }
+    },
+    {
+      "id": "pu8p1j",
+      "parentId": "t9aq7x",
+      "pathPart": "session",
+      "path": "/{accountid}/onboarding/session",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {}
+      }
+    },
+    {
+      "id": "pvasui",
+      "parentId": "215trf",
+      "pathPart": "{groupid}",
+      "path": "/organization/{organizationid}/crm/contactgroups/{groupid}",
+      "resourceMethods": {
+        "DELETE": {},
+        "GET": {},
+        "OPTIONS": {},
+        "PUT": {}
+      }
+    },
+    {
+      "id": "pvw7t0",
+      "parentId": "53n5hn",
+      "pathPart": "print-on-demand-drafts",
+      "path": "/store/{storeid}/print-on-demand-drafts",
+      "resourceMethods": {
+        "OPTIONS": {},
+        "POST": {}
+      }
+    },
+    {
+      "id": "q1ww4o",
+      "parentId": "tmge02",
+      "pathPart": "location",
+      "path": "/organization/location"
+    },
+    {
+      "id": "q3k77u",
+      "parentId": "kht01u",
+      "pathPart": "give",
+      "path": "/{accountid}/give"
+    },
+    {
+      "id": "q3ydbk",
+      "parentId": "6xg7sf",
+      "pathPart": "dashboard",
+      "path": "/organization/{organizationid}/dashboard"
+    },
+    {
+      "id": "q5fk10",
+      "parentId": "u59cv6",
+      "pathPart": "{method}",
+      "path": "/wallet/setup/{method}",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {}
+      }
+    },
+    {
+      "id": "qbhhi8",
+      "parentId": "mzxl67",
+      "pathPart": "{userid}",
+      "path": "/user/{userid}"
+    },
+    {
+      "id": "qdjh9z",
+      "parentId": "6xg7sf",
+      "pathPart": "raffles",
+      "path": "/organization/{organizationid}/raffles",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {},
+        "POST": {}
+      }
+    },
+    {
+      "id": "qexywu",
+      "parentId": "1143y3",
+      "pathPart": "images",
+      "path": "/organization/{organizationid}/bulletin/images",
+      "resourceMethods": {
+        "DELETE": {},
+        "GET": {},
+        "OPTIONS": {},
+        "POST": {}
+      }
+    },
+    {
+      "id": "qj2za9",
+      "parentId": "rlauni",
+      "pathPart": "change",
+      "path": "/organization/{organizationid}/subscription/addons/change"
+    },
+    {
+      "id": "qr54l8",
+      "parentId": "dnnbie",
+      "pathPart": "{pledgeid}",
+      "path": "/organization/{organizationid}/crm/contacts/{contactid}/pledges/{pledgeid}",
+      "resourceMethods": {
+        "DELETE": {},
+        "GET": {},
+        "OPTIONS": {},
+        "PUT": {}
+      }
+    },
+    {
+      "id": "qrjt1y",
+      "parentId": "uqnduc",
+      "pathPart": "summary",
+      "path": "/organization/{organizationid}/subscription/summary",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {}
+      }
+    },
+    {
+      "id": "qvh6l5",
+      "parentId": "z63o0o",
+      "pathPart": "onboarded",
+      "path": "/individual/{individualid}/onboarded",
+      "resourceMethods": {
+        "OPTIONS": {},
+        "POST": {}
+      }
+    },
+    {
+      "id": "qy5vyv",
+      "parentId": "3yc9xo",
+      "pathPart": "{pickupid}",
+      "path": "/organization/{organizationid}/classes/{classid}/sessions/{sessionid}/pickups/{pickupid}",
+      "resourceMethods": {
+        "DELETE": {},
+        "GET": {},
+        "OPTIONS": {},
+        "PUT": {}
+      }
+    },
+    {
+      "id": "qyqog6",
+      "parentId": "5k14ua",
+      "pathPart": "platform-accounts",
+      "path": "/operations/platform-accounts"
+    },
+    {
+      "id": "r7jspy",
+      "parentId": "l3ck80",
+      "pathPart": "{fieldid}",
+      "path": "/organization/{organizationid}/classes/{classid}/fields/{fieldid}",
+      "resourceMethods": {
+        "DELETE": {},
+        "GET": {},
+        "OPTIONS": {},
+        "PUT": {}
+      }
+    },
+    {
+      "id": "r8e6vx",
+      "parentId": "vic79n",
+      "pathPart": "{messageid}",
+      "path": "/{accountid}/messages/{messageid}",
+      "resourceMethods": {
+        "DELETE": {},
+        "GET": {},
+        "OPTIONS": {}
+      }
+    },
+    {
+      "id": "r8hzu3",
+      "parentId": "zeva6e",
+      "pathPart": "assets",
+      "path": "/resources/assets",
+      "resourceMethods": {
+        "OPTIONS": {},
+        "POST": {}
+      }
+    },
+    {
+      "id": "r8smev",
+      "parentId": "k52106",
+      "pathPart": "complete",
+      "path": "/resources/videos/complete",
+      "resourceMethods": {
+        "OPTIONS": {},
+        "POST": {}
+      }
+    },
+    {
+      "id": "rhyrh2",
+      "parentId": "xzww61",
+      "pathPart": "tinyurl",
+      "path": "/data/tinyurl"
+    },
+    {
+      "id": "rlauni",
+      "parentId": "uqnduc",
+      "pathPart": "addons",
+      "path": "/organization/{organizationid}/subscription/addons",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {}
+      }
+    },
+    {
+      "id": "rlc243",
+      "parentId": "w5lbpa",
+      "pathPart": "{type}",
+      "path": "/utility/images/{type}",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {}
+      }
+    },
+    {
+      "id": "rmubw5",
+      "parentId": "kht01u",
+      "pathPart": "settings",
+      "path": "/{accountid}/settings"
+    },
+    {
+      "id": "rqmaoc",
+      "parentId": "i5mzwx",
+      "pathPart": "import",
+      "path": "/store/{storeid}/items/import",
+      "resourceMethods": {
+        "OPTIONS": {},
+        "POST": {}
+      }
+    },
+    {
+      "id": "rrpbmw",
+      "parentId": "kht01u",
+      "pathPart": "mfa",
+      "path": "/{accountid}/mfa"
+    },
+    {
+      "id": "rrt2tf",
+      "parentId": "jhu2dg",
+      "pathPart": "test",
+      "path": "/operations/marketing/test",
+      "resourceMethods": {
+        "OPTIONS": {},
+        "POST": {}
+      }
+    },
+    {
+      "id": "rx4mux",
+      "parentId": "ewnou9",
+      "pathPart": "commissions",
+      "path": "/{accountid}/referral/commissions",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {}
+      }
+    },
+    {
+      "id": "rxqrj4",
+      "parentId": "wdn3m3",
+      "pathPart": "info",
+      "path": "/individual/{individualid}/dashboard/info",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {}
+      }
+    },
+    {
+      "id": "ry5bu2",
+      "parentId": "l0l076",
+      "pathPart": "communities",
+      "path": "/organization/{organizationid}/member/communities",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {},
+        "PUT": {}
+      }
+    },
+    {
+      "id": "rzcqmm",
+      "parentId": "bit1k2",
+      "pathPart": "reset",
+      "path": "/campaign/{campaignid}/intakesettings/reset",
+      "resourceMethods": {
+        "OPTIONS": {},
+        "PUT": {}
+      }
+    },
+    {
+      "id": "rzwel1",
+      "parentId": "teblw5",
+      "pathPart": "exists",
+      "path": "/utility/file/exists",
+      "resourceMethods": {
+        "OPTIONS": {},
+        "POST": {}
+      }
+    },
+    {
+      "id": "s40gwu",
+      "parentId": "d80tzt",
+      "pathPart": "{storeid}",
+      "path": "/organization/{organizationid}/storeitems/store/{storeid}",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {}
+      }
+    },
+    {
+      "id": "s47sgx",
+      "parentId": "yjcex1",
+      "pathPart": "{ein}",
+      "path": "/utility/lookup/{ein}",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {}
+      }
+    },
+    {
+      "id": "s8e6hn",
+      "parentId": "5k14ua",
+      "pathPart": "donations-pledges",
+      "path": "/operations/donations-pledges",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {}
+      }
+    },
+    {
+      "id": "sgzh22",
+      "parentId": "y7w0sh",
+      "pathPart": "token-glossary",
+      "path": "/organization/{organizationid}/crm/token-glossary",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {}
+      }
+    },
+    {
+      "id": "shnome",
+      "parentId": "vg3zxa",
+      "pathPart": "onetime",
+      "path": "/give/onetime",
+      "resourceMethods": {
+        "OPTIONS": {},
+        "POST": {}
+      }
+    },
+    {
+      "id": "snqum4",
+      "parentId": "y4xqug",
+      "pathPart": "status",
+      "path": "/organization/tracking/email/{emailid}/status",
+      "resourceMethods": {
+        "OPTIONS": {},
+        "PUT": {}
+      }
+    },
+    {
+      "id": "soww9i",
+      "parentId": "90pvyf",
+      "pathPart": "scheduled-outreach",
+      "path": "/organization/{organizationid}/chats/scheduled-outreach",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {}
+      }
+    },
+    {
+      "id": "squso9",
+      "parentId": "6xg7sf",
+      "pathPart": "ticketattributes",
+      "path": "/organization/{organizationid}/ticketattributes",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {},
+        "POST": {}
+      }
+    },
+    {
+      "id": "sr7xcj",
+      "parentId": "m8ci9d",
+      "pathPart": "dashboard",
+      "path": "/organization/{organizationid}/community/dashboard"
+    },
+    {
+      "id": "sr9n6r",
+      "parentId": "5ltlosd1ne",
+      "pathPart": "qrcode",
+      "path": "/qrcode"
+    },
+    {
+      "id": "ssj124",
+      "parentId": "3sj5od",
+      "pathPart": "{bankaccountid}",
+      "path": "/{accountid}/wallet/{walletid}/bankaccount/{bankaccountid}",
+      "resourceMethods": {
+        "DELETE": {},
+        "GET": {},
+        "OPTIONS": {}
+      }
+    },
+    {
+      "id": "su5cm2",
+      "parentId": "md06vi",
+      "pathPart": "usage",
+      "path": "/organization/{organizationid}/promocodes/usage"
+    },
+    {
+      "id": "suwuew",
+      "parentId": "mc0z8c",
+      "pathPart": "{number}",
+      "path": "/organization/ein/{number}"
+    },
+    {
+      "id": "sv3pjx",
+      "parentId": "3lopwx",
+      "pathPart": "import",
+      "path": "/organization/{organizationid}/crm/contacts/import",
+      "resourceMethods": {
+        "OPTIONS": {},
+        "POST": {}
+      }
+    },
+    {
+      "id": "swxx0v",
+      "parentId": "jwzt38",
+      "pathPart": "forgot",
+      "path": "/login/sendcode/{username}/forgot",
+      "resourceMethods": {
+        "OPTIONS": {},
+        "POST": {}
+      }
+    },
+    {
+      "id": "sxqig2",
+      "parentId": "446j0o",
+      "pathPart": "menu",
+      "path": "/organization/subscription/addons/menu"
+    },
+    {
+      "id": "sztpqn",
+      "parentId": "pcju0c",
+      "pathPart": "inventory",
+      "path": "/organization/{organizationid}/storeitems/{itemid}/inventory",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {},
+        "PUT": {}
+      }
+    },
+    {
+      "id": "szxewq",
+      "parentId": "z63o0o",
+      "pathPart": "teams",
+      "path": "/individual/{individualid}/teams",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {},
+        "POST": {}
+      }
+    },
+    {
+      "id": "t1057v",
+      "parentId": "2qrm5e",
+      "pathPart": "pledge",
+      "path": "/individual/{individualid}/give/pledge",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {},
+        "POST": {}
+      }
+    },
+    {
+      "id": "t1x9jn",
+      "parentId": "yb0gmk",
+      "pathPart": "{year}",
+      "path": "/{accountid}/referral/redeem/history/{year}",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {}
+      }
+    },
+    {
+      "id": "t6rgss",
+      "parentId": "6aze0i",
+      "pathPart": "{status}",
+      "path": "/organization/{organizationid}/campaigns/bystatus/{status}",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {}
+      }
+    },
+    {
+      "id": "t9aq7x",
+      "parentId": "kht01u",
+      "pathPart": "onboarding",
+      "path": "/{accountid}/onboarding"
+    },
+    {
+      "id": "taslmx",
+      "parentId": "wfccaz",
+      "pathPart": "{staffid}",
+      "path": "/organization/{organizationid}/staffs/{staffid}",
+      "resourceMethods": {
+        "DELETE": {},
+        "GET": {},
+        "OPTIONS": {},
+        "PUT": {}
+      }
+    },
+    {
+      "id": "te7fay",
+      "parentId": "gxe314",
+      "pathPart": "forgot",
+      "path": "/password/forgot",
+      "resourceMethods": {
+        "OPTIONS": {},
+        "POST": {},
+        "PUT": {}
+      }
+    },
+    {
+      "id": "teblw5",
+      "parentId": "6w3tpk",
+      "pathPart": "file",
+      "path": "/utility/file"
+    },
+    {
+      "id": "tgn0kl",
+      "parentId": "tzhb8k",
+      "pathPart": "{artifactid}",
+      "path": "/organization/{organizationid}/community/{communityid}/artifacts/{type}/{artifactid}",
+      "resourceMethods": {
+        "DELETE": {},
+        "OPTIONS": {}
+      }
+    },
+    {
+      "id": "tij249",
+      "parentId": "6xg7sf",
+      "pathPart": "onboarded",
+      "path": "/organization/{organizationid}/onboarded",
+      "resourceMethods": {
+        "OPTIONS": {},
+        "POST": {}
+      }
+    },
+    {
+      "id": "tlb45y",
+      "parentId": "u18lx5",
+      "pathPart": "winners",
+      "path": "/organization/{organizationid}/raffles/{raffleid}/winners",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {}
+      }
+    },
+    {
+      "id": "tm9poy",
+      "parentId": "809905",
+      "pathPart": "schedules",
+      "path": "/organization/{organizationid}/crm/emails/schedules",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {},
+        "POST": {}
+      }
+    },
+    {
+      "id": "tmge02",
+      "parentId": "5ltlosd1ne",
+      "pathPart": "organization",
+      "path": "/organization",
+      "resourceMethods": {
+        "OPTIONS": {},
+        "POST": {}
+      }
+    },
+    {
+      "id": "tmtlu6",
+      "parentId": "sr9n6r",
+      "pathPart": "{qrcodeid}",
+      "path": "/qrcode/{qrcodeid}"
+    },
+    {
+      "id": "tn2yc1",
+      "parentId": "rx4mux",
+      "pathPart": "{status}",
+      "path": "/{accountid}/referral/commissions/{status}",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {}
+      }
+    },
+    {
+      "id": "tr8257",
+      "parentId": "22ax9b",
+      "pathPart": "{status}",
+      "path": "/give/spotlight/status/{status}",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {}
+      }
+    },
+    {
+      "id": "tv26tq",
+      "parentId": "k52106",
+      "pathPart": "start",
+      "path": "/resources/videos/start",
+      "resourceMethods": {
+        "OPTIONS": {},
+        "POST": {}
+      }
+    },
+    {
+      "id": "tvti4t",
+      "parentId": "wvvnee",
+      "pathPart": "consent",
+      "path": "/organization/{organizationid}/text-messages/consent"
+    },
+    {
+      "id": "tvtn59",
+      "parentId": "8kyct2",
+      "pathPart": "processorinfo",
+      "path": "/utility/{accountid}/processorinfo",
+      "resourceMethods": {
+        "GET": {}
+      }
+    },
+    {
+      "id": "tw2nqp",
+      "parentId": "suwuew",
+      "pathPart": "dashboard",
+      "path": "/organization/ein/{number}/dashboard"
+    },
+    {
+      "id": "tyjdfz",
+      "parentId": "ag1qrl",
+      "pathPart": "teams",
+      "path": "/individual/{individualid}/sponsorship/teams",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {},
+        "POST": {}
+      }
+    },
+    {
+      "id": "tzhb8k",
+      "parentId": "gkkzs1",
+      "pathPart": "{type}",
+      "path": "/organization/{organizationid}/community/{communityid}/artifacts/{type}",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {}
+      }
+    },
+    {
+      "id": "tzww1j",
+      "parentId": "8m7fu4",
+      "pathPart": "services",
+      "path": "/organization/{organizationid}/transportation/services",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {},
+        "POST": {}
+      }
+    },
+    {
+      "id": "u18lx5",
+      "parentId": "qdjh9z",
+      "pathPart": "{raffleid}",
+      "path": "/organization/{organizationid}/raffles/{raffleid}",
+      "resourceMethods": {
+        "DELETE": {},
+        "GET": {},
+        "OPTIONS": {},
+        "PUT": {}
+      }
+    },
+    {
+      "id": "u3jge6",
+      "parentId": "65qpfh",
+      "pathPart": "search",
+      "path": "/organization/{organizationid}/chats/conversations/search",
+      "resourceMethods": {
+        "OPTIONS": {},
+        "POST": {}
+      }
+    },
+    {
+      "id": "u53rnf",
+      "parentId": "q1ww4o",
+      "pathPart": "{locationid}",
+      "path": "/organization/location/{locationid}"
+    },
+    {
+      "id": "u59cv6",
+      "parentId": "xyh6e8",
+      "pathPart": "setup",
+      "path": "/wallet/setup"
+    },
+    {
+      "id": "u5mptd",
+      "parentId": "x0bzws",
+      "pathPart": "info",
+      "path": "/store/order/{orderid}/info",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {}
+      }
+    },
+    {
+      "id": "u8ndgz",
+      "parentId": "x4689z",
+      "pathPart": "event",
+      "path": "/ticket/event",
+      "resourceMethods": {
+        "OPTIONS": {},
+        "POST": {}
+      }
+    },
+    {
+      "id": "u9uc4l",
+      "parentId": "5dyq1f",
+      "pathPart": "analytics",
+      "path": "/organization/{organizationid}/social/posts/{postid}/analytics",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {}
+      }
+    },
+    {
+      "id": "ua0vz6",
+      "parentId": "2x4om9",
+      "pathPart": "documents",
+      "path": "/organization/{organizationid}/crm/contacts/{contactid}/documents",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {},
+        "POST": {}
+      }
+    },
+    {
+      "id": "uar8pk",
+      "parentId": "lqidmh",
+      "pathPart": "spotlights",
+      "path": "/organization/{organizationid}/community/{communityid}/member/spotlights",
+      "resourceMethods": {
+        "OPTIONS": {},
+        "POST": {}
+      }
+    },
+    {
+      "id": "ufj4x2",
+      "parentId": "sxqig2",
+      "pathPart": "items",
+      "path": "/organization/subscription/addons/menu/items",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {},
+        "POST": {}
+      }
+    },
+    {
+      "id": "ug5wx5",
+      "parentId": "6xg7sf",
+      "pathPart": "ticketorders",
+      "path": "/organization/{organizationid}/ticketorders",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {}
+      }
+    },
+    {
+      "id": "uge7mq",
+      "parentId": "2g3ji8",
+      "pathPart": "{attributeid}",
+      "path": "/organization/{organizationid}/storeitemattributes/{attributeid}",
+      "resourceMethods": {
+        "DELETE": {},
+        "GET": {},
+        "OPTIONS": {},
+        "PUT": {}
+      }
+    },
+    {
+      "id": "uggvj9",
+      "parentId": "38inlt",
+      "pathPart": "{fieldId}",
+      "path": "/ticket/event/{eventid}/fields/{fieldId}",
+      "resourceMethods": {
+        "DELETE": {},
+        "GET": {},
+        "OPTIONS": {},
+        "PUT": {}
+      }
+    },
+    {
+      "id": "ujfmib",
+      "parentId": "rrpbmw",
+      "pathPart": "sendcode",
+      "path": "/{accountid}/mfa/sendcode",
+      "resourceMethods": {
+        "OPTIONS": {},
+        "POST": {}
+      }
+    },
+    {
+      "id": "uoxx4j",
+      "parentId": "3lopwx",
+      "pathPart": "groups",
+      "path": "/organization/{organizationid}/crm/contacts/groups",
+      "resourceMethods": {
+        "OPTIONS": {},
+        "POST": {}
+      }
+    },
+    {
+      "id": "uqnduc",
+      "parentId": "6xg7sf",
+      "pathPart": "subscription",
+      "path": "/organization/{organizationid}/subscription",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {},
+        "PUT": {}
+      }
+    },
+    {
+      "id": "uvcsck",
+      "parentId": "szxewq",
+      "pathPart": "{teamid}",
+      "path": "/individual/{individualid}/teams/{teamid}",
+      "resourceMethods": {
+        "DELETE": {},
+        "GET": {},
+        "OPTIONS": {},
+        "PUT": {}
+      }
+    },
+    {
+      "id": "uw56i5",
+      "parentId": "ewnou9",
+      "pathPart": "program",
+      "path": "/{accountid}/referral/program"
+    },
+    {
+      "id": "uw7loo",
+      "parentId": "59urq6",
+      "pathPart": "{tickettypeid}",
+      "path": "/ticket/event/{eventid}/tickettypes/{tickettypeid}",
+      "resourceMethods": {
+        "DELETE": {},
+        "GET": {},
+        "OPTIONS": {},
+        "PUT": {}
+      }
+    },
+    {
+      "id": "uxo1u6",
+      "parentId": "zeva6e",
+      "pathPart": "faqs",
+      "path": "/resources/faqs",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {}
+      }
+    },
+    {
+      "id": "v0ld9y",
+      "parentId": "6xg7sf",
+      "pathPart": "storeorders",
+      "path": "/organization/{organizationid}/storeorders",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {}
+      }
+    },
+    {
+      "id": "v7v55s",
+      "parentId": "6w3tpk",
+      "pathPart": "image2string",
+      "path": "/utility/image2string",
+      "resourceMethods": {
+        "OPTIONS": {},
+        "POST": {}
+      }
+    },
+    {
+      "id": "vb83kw",
+      "parentId": "kht01u",
+      "pathPart": "email",
+      "path": "/{accountid}/email"
+    },
+    {
+      "id": "vbs04d",
+      "parentId": "mzxl67",
+      "pathPart": "contactus",
+      "path": "/user/contactus",
+      "resourceMethods": {
+        "OPTIONS": {},
+        "POST": {}
+      }
+    },
+    {
+      "id": "vbtmga",
+      "parentId": "5w2ptf",
+      "pathPart": "artwork",
+      "path": "/store/print-on-demand/artwork",
+      "resourceMethods": {
+        "OPTIONS": {},
+        "POST": {}
+      }
+    },
+    {
+      "id": "vg3zxa",
+      "parentId": "5ltlosd1ne",
+      "pathPart": "give",
+      "path": "/give"
+    },
+    {
+      "id": "vhl4yk",
+      "parentId": "6xg7sf",
+      "pathPart": "mailinglist",
+      "path": "/organization/{organizationid}/mailinglist",
+      "resourceMethods": {
+        "OPTIONS": {},
+        "POST": {}
+      }
+    },
+    {
+      "id": "vic79n",
+      "parentId": "kht01u",
+      "pathPart": "messages",
+      "path": "/{accountid}/messages",
+      "resourceMethods": {
+        "DELETE": {},
+        "GET": {},
+        "OPTIONS": {},
+        "POST": {}
+      }
+    },
+    {
+      "id": "vj0b4l",
+      "parentId": "gsir03",
+      "pathPart": "{month}",
+      "path": "/organization/{organizationid}/crm/emails/sent/{type}/{month}",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {}
+      }
+    },
+    {
+      "id": "vj6pne",
+      "parentId": "i5mzwx",
+      "pathPart": "{itemid}",
+      "path": "/store/{storeid}/items/{itemid}",
+      "resourceMethods": {
+        "DELETE": {},
+        "OPTIONS": {}
+      }
+    },
+    {
+      "id": "vlmcm0",
+      "parentId": "cv92pw",
+      "pathPart": "{templateid}",
+      "path": "/organization/{organizationid}/crm/emails/templates/{templateid}",
+      "resourceMethods": {
+        "DELETE": {},
+        "GET": {},
+        "OPTIONS": {},
+        "PUT": {}
+      }
+    },
+    {
+      "id": "vm1ifk",
+      "parentId": "3xnw8w",
+      "pathPart": "analytics",
+      "path": "/sms/analytics",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {}
+      }
+    },
+    {
+      "id": "vnqa8s",
+      "parentId": "6w3tpk",
+      "pathPart": "payment",
+      "path": "/utility/payment"
+    },
+    {
+      "id": "vnrfgu",
+      "parentId": "809905",
+      "pathPart": "trigger",
+      "path": "/organization/{organizationid}/crm/emails/trigger",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {},
+        "PUT": {}
+      }
+    },
+    {
+      "id": "vpsdm3",
+      "parentId": "u8ndgz",
+      "pathPart": "{eventid}",
+      "path": "/ticket/event/{eventid}",
+      "resourceMethods": {
+        "DELETE": {},
+        "OPTIONS": {},
+        "PUT": {}
+      }
+    },
+    {
+      "id": "vqrqgl",
+      "parentId": "215trf",
+      "pathPart": "types",
+      "path": "/organization/{organizationid}/crm/contactgroups/types"
+    },
+    {
+      "id": "vrfq47",
+      "parentId": "vg3zxa",
+      "pathPart": "spotlight",
+      "path": "/give/spotlight",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {},
+        "POST": {}
+      }
+    },
+    {
+      "id": "vux6pg",
+      "parentId": "y7w0sh",
+      "pathPart": "segmentation",
+      "path": "/organization/{organizationid}/crm/segmentation"
+    },
+    {
+      "id": "vvu786",
+      "parentId": "rmubw5",
+      "pathPart": "security",
+      "path": "/{accountid}/settings/security",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {}
+      }
+    },
+    {
+      "id": "vx5pei",
+      "parentId": "tzww1j",
+      "pathPart": "{serviceid}",
+      "path": "/organization/{organizationid}/transportation/services/{serviceid}",
+      "resourceMethods": {
+        "DELETE": {},
+        "GET": {},
+        "OPTIONS": {},
+        "PUT": {}
+      }
+    },
+    {
+      "id": "vxgu10",
+      "parentId": "tzww1j",
+      "pathPart": "info",
+      "path": "/organization/{organizationid}/transportation/services/info",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {}
+      }
+    },
+    {
+      "id": "vznixw",
+      "parentId": "8tuqxe",
+      "pathPart": "{actionid}",
+      "path": "/organization/{organizationid}/crm/emails/templates/actions/{actionid}",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {}
+      }
+    },
+    {
+      "id": "w4rkjf",
+      "parentId": "vnqa8s",
+      "pathPart": "intent",
+      "path": "/utility/payment/intent",
+      "resourceMethods": {
+        "OPTIONS": {},
+        "POST": {}
+      }
+    },
+    {
+      "id": "w5lbpa",
+      "parentId": "6w3tpk",
+      "pathPart": "images",
+      "path": "/utility/images"
+    },
+    {
+      "id": "w6y8cd",
+      "parentId": "wpbjdg",
+      "pathPart": "enrollment",
+      "path": "/organization/{organizationid}/classes/enrollment",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {}
+      }
+    },
+    {
+      "id": "w8pqbz",
+      "parentId": "zeva6e",
+      "pathPart": "featured",
+      "path": "/resources/featured",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {}
+      }
+    },
+    {
+      "id": "w90ltf",
+      "parentId": "o68ysf",
+      "pathPart": "{type}",
+      "path": "/individual/{individualid}/campaigns/sponsored/{campaignid}/download/{type}",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {}
+      }
+    },
+    {
+      "id": "w9gkf4",
+      "parentId": "jhu2dg",
+      "pathPart": "list",
+      "path": "/operations/marketing/list",
+      "resourceMethods": {
+        "OPTIONS": {},
+        "POST": {}
+      }
+    },
+    {
+      "id": "wa7xwn",
+      "parentId": "tij249",
+      "pathPart": "verified",
+      "path": "/organization/{organizationid}/onboarded/verified",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {}
+      }
+    },
+    {
+      "id": "wckjdq",
+      "parentId": "6id5ma",
+      "pathPart": "pixel",
+      "path": "/organization/tracking/email/pixel",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {}
+      }
+    },
+    {
+      "id": "wclx46",
+      "parentId": "gkafiz",
+      "pathPart": "status",
+      "path": "/organization/{organizationid}/classes/orders/status"
+    },
+    {
+      "id": "wcyk2o",
+      "parentId": "xzxifx",
+      "pathPart": "availability",
+      "path": "/organization/{organizationid}/classes/{classid}/availability",
+      "resourceMethods": {
+        "OPTIONS": {},
+        "POST": {}
+      }
+    },
+    {
+      "id": "wdn3m3",
+      "parentId": "z63o0o",
+      "pathPart": "dashboard",
+      "path": "/individual/{individualid}/dashboard"
+    },
+    {
+      "id": "wfccaz",
+      "parentId": "6xg7sf",
+      "pathPart": "staffs",
+      "path": "/organization/{organizationid}/staffs",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {},
+        "POST": {}
+      }
+    },
+    {
+      "id": "wixfft",
+      "parentId": "tm9poy",
+      "pathPart": "{scheduleid}",
+      "path": "/organization/{organizationid}/crm/emails/schedules/{scheduleid}",
+      "resourceMethods": {
+        "DELETE": {},
+        "GET": {},
+        "OPTIONS": {},
+        "PUT": {}
+      }
+    },
+    {
+      "id": "wkhcz1",
+      "parentId": "tmge02",
+      "pathPart": "communities",
+      "path": "/organization/communities"
+    },
+    {
+      "id": "wpbjdg",
+      "parentId": "6xg7sf",
+      "pathPart": "classes",
+      "path": "/organization/{organizationid}/classes",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {},
+        "POST": {}
+      }
+    },
+    {
+      "id": "wpc39w",
+      "parentId": "zeva6e",
+      "pathPart": "search",
+      "path": "/resources/search",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {}
+      }
+    },
+    {
+      "id": "wq2ufv",
+      "parentId": "q3k77u",
+      "pathPart": "recurring",
+      "path": "/{accountid}/give/recurring",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {},
+        "POST": {}
+      }
+    },
+    {
+      "id": "wua2j5",
+      "parentId": "5ltlosd1ne",
+      "pathPart": "login",
+      "path": "/login",
+      "resourceMethods": {
+        "OPTIONS": {},
+        "POST": {}
+      }
+    },
+    {
+      "id": "wuen1x",
+      "parentId": "mzxl67",
+      "pathPart": "username",
+      "path": "/user/username",
+      "resourceMethods": {
+        "OPTIONS": {},
+        "PUT": {}
+      }
+    },
+    {
+      "id": "wvvnee",
+      "parentId": "6xg7sf",
+      "pathPart": "text-messages",
+      "path": "/organization/{organizationid}/text-messages",
+      "resourceMethods": {
+        "GET": {},
+        "OPTIONS": {},
+        "POST": {}
+      }
+    }
+  ]
+}

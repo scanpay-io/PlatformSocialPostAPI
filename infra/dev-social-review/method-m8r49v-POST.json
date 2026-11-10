@@ -1,0 +1,58 @@
+{
+  "httpMethod": "POST",
+  "authorizationType": "COGNITO_USER_POOLS",
+  "authorizerId": "waut26",
+  "apiKeyRequired": false,
+  "requestParameters": {
+    "method.request.path.organizationid": true
+  },
+  "methodResponses": {
+    "200": {
+      "statusCode": "200",
+      "responseParameters": {
+        "method.response.header.Access-Control-Allow-Origin": false
+      },
+      "responseModels": {
+        "application/json": "Empty"
+      }
+    },
+    "400": {
+      "statusCode": "400",
+      "responseParameters": {
+        "method.response.header.Access-Control-Allow-Origin": false
+      }
+    }
+  },
+  "methodIntegration": {
+    "type": "AWS",
+    "httpMethod": "POST",
+    "uri": "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:145505076425:function:scanpay_create_social_post:${stageVariables.runwayAlias}/invocations",
+    "requestTemplates": {
+      "application/json": "{\r\n\"organization_id\": \"$input.params('organizationid')\",\r\n  \"resource_type\": $input.json('$.resource_type'),\r\n  \"resource_id\": $input.json('$.resource_id'),\r\n  \"outreach_item_id\": $input.json('$.outreach_item_id'),\r\n  \"content\": $input.json('$.content'),\r\n  \"destination_url\": $input.json('$.destination_url'),\r\n  \"platforms\": $input.json('$.platforms')\n#if($input.path('$').containsKey('meta_social'))\n  ,\"meta_social\":$input.json('$.meta_social')\n#end\n}"
+    },
+    "passthroughBehavior": "WHEN_NO_MATCH",
+    "contentHandling": "CONVERT_TO_TEXT",
+    "timeoutInMillis": 29000,
+    "cacheNamespace": "7a4gmh",
+    "cacheKeyParameters": [],
+    "integrationResponses": {
+      "200": {
+        "statusCode": "200",
+        "responseParameters": {
+          "method.response.header.Access-Control-Allow-Origin": "'*'"
+        }
+      },
+      "400": {
+        "statusCode": "400",
+        "selectionPattern": ".*\"Status\":400.*",
+        "responseParameters": {
+          "method.response.header.Access-Control-Allow-Origin": "'*'"
+        },
+        "responseTemplates": {
+          "application/json": "$input.path('$.errorMessage')\r\n"
+        }
+      }
+    },
+    "responseTransferMode": "BUFFERED"
+  }
+}

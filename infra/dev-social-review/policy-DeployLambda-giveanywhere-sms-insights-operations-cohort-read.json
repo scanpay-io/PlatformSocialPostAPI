@@ -1,0 +1,23 @@
+{
+  "RoleName": "DeployLambda",
+  "PolicyName": "giveanywhere-sms-insights-operations-cohort-read",
+  "PolicyDocument": {
+    "Version": "2012-10-17",
+    "Statement": [
+      {
+        "Action": "dynamodb:GetItem",
+        "Resource": "arn:aws:dynamodb:us-east-1:145505076425:table/TextMessage",
+        "Effect": "Allow"
+      },
+      {
+        "Action": "dynamodb:Query",
+        "Resource": [
+          "arn:aws:dynamodb:us-east-1:145505076425:table/TextMessage/index/AccountSentAt-index",
+          "arn:aws:dynamodb:us-east-1:145505076425:table/TextMessageClick/index/MessageID-index",
+          "arn:aws:dynamodb:us-east-1:145505076425:table/TransactionAmount/index/SmsMessageID-index"
+        ],
+        "Effect": "Allow"
+      }
+    ]
+  }
+}

@@ -1,0 +1,109 @@
+{
+  "run": "bdd470b6-383a-451d-9aca-e4b88ab82f44",
+  "org": "1d3a11d5-ece9-4a24-ab3a-1b601fa15861",
+  "post": "556d242f-c8b6-46c9-b888-6c4dd14c76d9",
+  "results": [
+    {
+      "name": "Temporary scoped fixture created (no provider publication)",
+      "passed": true,
+      "detail": {
+        "deliveries": 3,
+        "unpublished": 1
+      }
+    },
+    {
+      "name": "Public DEV click writes delivery attribution",
+      "passed": true
+    },
+    {
+      "name": "Public click retry succeeds with same event ID",
+      "passed": true
+    },
+    {
+      "name": "Caller cannot relabel platform",
+      "passed": true
+    },
+    {
+      "name": "Unpublished delivery rejected",
+      "passed": true
+    },
+    {
+      "name": "Wrong environment post rejected",
+      "passed": true
+    },
+    {
+      "name": "Persisted click has correct delivery, platform and DEV scope",
+      "passed": true
+    },
+    {
+      "name": "Post analytics aggregates two events / one visitor without counting retry",
+      "passed": true,
+      "detail": {
+        "version": "18",
+        "metrics": {
+          "published_deliveries": 3,
+          "tracked_published_deliveries": 2,
+          "tracking_coverage": {
+            "numerator": 2,
+            "denominator": 3,
+            "percentage": 66.67
+          },
+          "landing_events": 2,
+          "unique_browser_visitors": 1,
+          "unattributed_delivery_landings": 0,
+          "deliveries_with_landing": 2,
+          "posts_with_donation": 0,
+          "donations": 0,
+          "amount_raised_by_currency": {},
+          "donations_per_landing": {
+            "numerator": 0,
+            "denominator": 2,
+            "percentage": 0
+          },
+          "delivery_donation_attribution": "unavailable_post_only_payment_contract",
+          "deliveries": [
+            {
+              "delivery_id": "facebook-556d242f-c8b6-46c9-b888-6c4dd14c76d9",
+              "social_post_id": "556d242f-c8b6-46c9-b888-6c4dd14c76d9",
+              "platform": "facebook",
+              "published_at_utc": "2026-11-10T17:31:27.919Z",
+              "tracking_status": "tracked",
+              "landing_events": 1,
+              "donations": null
+            },
+            {
+              "delivery_id": "threads-556d242f-c8b6-46c9-b888-6c4dd14c76d9",
+              "social_post_id": "556d242f-c8b6-46c9-b888-6c4dd14c76d9",
+              "platform": "threads",
+              "published_at_utc": "2026-11-10T17:31:27.919Z",
+              "tracking_status": "tracked",
+              "landing_events": 1,
+              "donations": null
+            },
+            {
+              "delivery_id": "tiktok-556d242f-c8b6-46c9-b888-6c4dd14c76d9",
+              "social_post_id": "556d242f-c8b6-46c9-b888-6c4dd14c76d9",
+              "platform": "tiktok",
+              "published_at_utc": "2026-11-10T17:31:27.919Z",
+              "tracking_status": "untracked",
+              "landing_events": null,
+              "donations": null
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Verification interrupted",
+      "passed": false,
+      "detail": "Expected values to be strictly equal:\n\n400 !== 200\n"
+    },
+    {
+      "name": "Temporary fixture and click cleanup",
+      "passed": true,
+      "detail": {
+        "errors": []
+      }
+    }
+  ]
+}

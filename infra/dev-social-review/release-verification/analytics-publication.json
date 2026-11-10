@@ -1,0 +1,27 @@
+{
+  "latestModified": "2026-11-10T16:26:26.000+0000",
+  "latestCodeSha256": "V/8Ys08EeY1TiQIxMgSZf8mvT7kN+KOJ7YWeAb+7erI=",
+  "latestKeyConfigured": true,
+  "latestKeyDecodedBytes": 32,
+  "latestUpdateStatus": "Successful",
+  "publishedVersions": [
+    {
+      "version": "16",
+      "modified": "2026-11-04T20:55:58.000+0000",
+      "description": "Release 20261104-instagram-draft-001",
+      "keyConfigured": false
+    },
+    {
+      "version": "17",
+      "modified": "2026-11-06T04:23:15.000+0000",
+      "description": "Release social-20261105-001",
+      "keyConfigured": false
+    },
+    {
+      "version": "18",
+      "modified": "2026-11-10T15:11:16.000+0000",
+      "description": "Release social-20261110-001",
+      "keyConfigured": false
+    }
+  ]
+}

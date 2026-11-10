@@ -1,0 +1,52 @@
+{
+  "Stacks": [
+    {
+      "StackName": "giveanywhere-social-click-route",
+      "StackId": "arn:aws:cloudformation:us-east-1:145505076425:stack/giveanywhere-social-click-route/e5786910-bd90-11f1-9b75-126b5e1d784f",
+      "Parameters": [
+        {
+          "ParameterKey": "RootResourceId",
+          "ParameterValue": "5ltlosd1ne"
+        },
+        {
+          "ParameterKey": "RestApiId",
+          "ParameterValue": "6op50ujgu6"
+        },
+        {
+          "ParameterKey": "ClickLambdaArn",
+          "ParameterValue": "arn:aws:lambda:us-east-1:145505076425:function:scanpay_record_social_post_click"
+        }
+      ],
+      "StackStatus": "CREATE_COMPLETE"
+    },
+    {
+      "StackName": "platform-socialpost-dynamodb",
+      "StackId": "arn:aws:cloudformation:us-east-1:145505076425:stack/platform-socialpost-dynamodb/4acedae0-95ac-11f1-a64b-0e7c0f4679df",
+      "Parameters": [
+        {
+          "ParameterKey": "BillingMode",
+          "ParameterValue": "PAY_PER_REQUEST"
+        }
+      ],
+      "Outputs": [
+        {
+          "OutputKey": "SocialPostTableName",
+          "OutputValue": "SocialPost"
+        },
+        {
+          "OutputKey": "SocialConnectionTableName",
+          "OutputValue": "SocialConnection"
+        },
+        {
+          "OutputKey": "SocialConnectionTokenTableName",
+          "OutputValue": "SocialConnectionToken"
+        },
+        {
+          "OutputKey": "SocialPostDeliveryTableName",
+          "OutputValue": "SocialPostDelivery"
+        }
+      ],
+      "StackStatus": "UPDATE_COMPLETE"
+    }
+  ]
+}

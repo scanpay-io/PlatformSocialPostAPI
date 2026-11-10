@@ -1,0 +1,18 @@
+{
+  "RoleName": "DeployLambda",
+  "PolicyName": "giveanywhere-sms-insights-operations-send-replay",
+  "PolicyDocument": {
+    "Version": "2012-10-17",
+    "Statement": [
+      {
+        "Action": [
+          "dynamodb:GetItem",
+          "dynamodb:PutItem",
+          "dynamodb:UpdateItem"
+        ],
+        "Resource": "arn:aws:dynamodb:us-east-1:145505076425:table/TextMessageSendRequest",
+        "Effect": "Allow"
+      }
+    ]
+  }
+}

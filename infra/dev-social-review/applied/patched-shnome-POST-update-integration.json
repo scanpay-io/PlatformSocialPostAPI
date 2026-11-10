@@ -1,0 +1,32 @@
+{
+  "type": "AWS",
+  "httpMethod": "POST",
+  "uri": "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:145505076425:function:scanpay_one_time_pay:${stageVariables.runwayAlias}/invocations",
+  "requestTemplates": {
+    "application/json": "{\r\n#set($inputRoot = $input.path('$'))\r\n\"account_id\" : $input.json('$.account_id'), \r\n\"transaction_type_id\" : $input.json('$.transaction_type_id'),\r\n\"transaction_type\" : $input.json('$.transaction_type'),\r\n\"card\" : $input.json('$.card'),\r\n\"bank_account\": $input.json('$.bank_account'),\r\n\"payment_source_id\": $input.json('$.payment_source_id'),\r\n\"tip_amount\": $input.json('$.tip_amount'),\r\n\"amount\" : $input.json('$.amount'),\r\n\"allow_payer_cover_amount\": $input.json('$.allow_payer_cover_amount'),\r\n\"payer_cover_amount\": $input.json('$.payer_cover_amount'),\r\n\"payer_account_id\" : $input.json('$.payer_account_id'),\r\n\"payer_name\" : $input.json('$.payer_name'),\r\n\"payer_email\" : $input.json('$.payer_email'),\r\n\"payer_zip\" : $input.json('$.payer_zip'),\r\n\"payment_intent_id\" : $input.json('$.payment_intent_id'),\r\n\"sponsor_username\" : $input.json('$.sponsor_username'),\r\n\"no_share_giving\" : $input.json('$.no_share_giving'),\r\n\"existing_payment_source\" : $input.json('$.existing_payment_source'),\r\n\"key_values\" : $input.json('$.key_values'),\r\n\"action_id\" : $input.json('$.action_id'),\r\n\"email_id\" : $input.json('$.email_id') \r\n#if($inputRoot.containsKey('future_use'))\r\n,\"future_use\": \"$inputRoot.future_use\"\r\n#end\r\n#if($inputRoot.containsKey('payment_source_type'))\r\n,\"payment_source_type\": \"$inputRoot.payment_source_type\"\r\n#end\r\n#if($inputRoot.containsKey('recurring_frequency'))\r\n,\"recurring_frequency\": \"$inputRoot.recurring_frequency\"\r\n#end\r\n#if($inputRoot.containsKey('transaction_id'))\r\n,\"transaction_id\": \"$inputRoot.transaction_id\"\r\n#end\r\n#if($inputRoot.containsKey('create_account'))\r\n,\"create_account\": \"$inputRoot.create_account\"\r\n#end\r\n#if($inputRoot.containsKey('email_optin'))\r\n,\"email_optin\": \"$inputRoot.email_optin\"\r\n#end\r\n#if($inputRoot.containsKey('paypal_commerce'))\r\n,\"paypal_commerce\": $input.json('$.paypal_commerce')\r\n#end\r\n#if($inputRoot.containsKey('meta_data'))\r\n,\"meta_data\": $input.json('$.meta_data')\r\n#end\r\n#if($inputRoot.containsKey('additional_info'))\n,\"additional_info\": $input.json('$.additional_info')\n#end\n#if($inputRoot.containsKey('additional_information_version'))\n,\"additional_information_version\": $input.json('$.additional_information_version')\n#end\n#if($inputRoot.containsKey('sms_message_id'))\n,\"sms_message_id\": $input.json('$.sms_message_id')\n#end\n#if($inputRoot.containsKey('social_post_id'))\n,\"social_post_id\": $input.json('$.social_post_id')\n#end\n}"
+  },
+  "passthroughBehavior": "WHEN_NO_TEMPLATES",
+  "contentHandling": "CONVERT_TO_TEXT",
+  "timeoutInMillis": 29000,
+  "cacheNamespace": "shnome",
+  "cacheKeyParameters": [],
+  "integrationResponses": {
+    "200": {
+      "statusCode": "200",
+      "responseParameters": {
+        "method.response.header.Access-Control-Allow-Origin": "'*'"
+      }
+    },
+    "400": {
+      "statusCode": "400",
+      "selectionPattern": ".*\"Status\":400.*",
+      "responseParameters": {
+        "method.response.header.Access-Control-Allow-Origin": "'*'"
+      },
+      "responseTemplates": {
+        "application/json": "$input.path('$.errorMessage')"
+      }
+    }
+  },
+  "responseTransferMode": "BUFFERED"
+}

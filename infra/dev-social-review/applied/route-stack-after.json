@@ -1,0 +1,45 @@
+{
+  "Stacks": [
+    {
+      "StackId": "arn:aws:cloudformation:us-east-1:145505076425:stack/giveanywhere-social-analytics-dev/646a7bd0-dd23-11f1-a112-0eea6d44b4f9",
+      "StackName": "giveanywhere-social-analytics-dev",
+      "ChangeSetId": "arn:aws:cloudformation:us-east-1:145505076425:changeSet/social-cohort-approved-20261110/e263460d-8c69-476a-bb15-8e6c1d894ed5",
+      "Description": "Authenticated social cohort analytics on the existing social API resource.",
+      "Parameters": [
+        {
+          "ParameterKey": "AnalyticsLambdaArn",
+          "ParameterValue": "arn:aws:lambda:us-east-1:145505076425:function:scanpay_get_social_post_analytics"
+        },
+        {
+          "ParameterKey": "RestApiId",
+          "ParameterValue": "6op50ujgu6"
+        },
+        {
+          "ParameterKey": "CognitoAuthorizerId",
+          "ParameterValue": "waut26"
+        },
+        {
+          "ParameterKey": "SocialResourceId",
+          "ParameterValue": "huiirm"
+        }
+      ],
+      "CreationTime": "2026-11-10T16:25:50.414000+00:00",
+      "LastUpdatedTime": "2026-11-10T16:26:13.574000+00:00",
+      "RollbackConfiguration": {},
+      "StackStatus": "CREATE_COMPLETE",
+      "DisableRollback": false,
+      "NotificationARNs": [],
+      "Tags": [],
+      "EnableTerminationProtection": false,
+      "DriftInformation": {
+        "StackDriftStatus": "NOT_CHECKED"
+      },
+      "LastOperations": [
+        {
+          "OperationType": "CREATE_STACK",
+          "OperationId": "ce07cfdf-7e7e-4670-afc0-c0530a1a0096"
+        }
+      ]
+    }
+  ]
+}

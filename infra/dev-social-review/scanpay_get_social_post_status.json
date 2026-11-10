@@ -1,0 +1,17 @@
+{
+  "FunctionName": "scanpay_get_social_post_status",
+  "FunctionArn": "arn:aws:lambda:us-east-1:145505076425:function:scanpay_get_social_post_status:gany_dev",
+  "Version": "18",
+  "Role": "arn:aws:iam::145505076425:role/DeployLambda",
+  "Runtime": "dotnet10",
+  "LastModified": "2026-11-10T15:12:34.000+0000",
+  "CodeSha256": "APcJ/BLrn3+u06jq5jZKQ2QcV5pIdmlqSFlxAqIAwn4=",
+  "Timeout": 29,
+  "EnvironmentKeys": [
+    "account_number",
+    "runway_type",
+    "region"
+  ],
+  "CursorKeyConfigured": false,
+  "State": "Active"
+}

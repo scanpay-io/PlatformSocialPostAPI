@@ -1,0 +1,63 @@
+{
+  "httpMethod": "GET",
+  "authorizationType": "COGNITO_USER_POOLS",
+  "authorizerId": "waut26",
+  "apiKeyRequired": false,
+  "requestParameters": {
+    "method.request.path.organizationid": true,
+    "method.request.path.postid": true
+  },
+  "methodResponses": {
+    "200": {
+      "statusCode": "200",
+      "responseParameters": {
+        "method.response.header.Access-Control-Allow-Origin": false
+      },
+      "responseModels": {
+        "application/json": "Empty"
+      }
+    },
+    "400": {
+      "statusCode": "400",
+      "responseParameters": {
+        "method.response.header.Access-Control-Allow-Origin": false
+      },
+      "responseModels": {}
+    }
+  },
+  "methodIntegration": {
+    "type": "AWS",
+    "httpMethod": "POST",
+    "uri": "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:145505076425:function:scanpay_get_social_post_status:${stageVariables.runwayAlias}/invocations",
+    "requestTemplates": {
+      "application/json": "{\n\"requestContext\": {\"authorizer\": {\"claims\": {\"sub\": \"$util.escapeJavaScript($context.authorizer.claims.sub).replaceAll(\"\\\\'\",\"'\")\"}}},\n\"organization_id\": \"$input.params('organizationid')\",\n\"post_id\": \"$input.params('postid')\"\n}"
+    },
+    "passthroughBehavior": "NEVER",
+    "contentHandling": "CONVERT_TO_TEXT",
+    "timeoutInMillis": 29000,
+    "cacheNamespace": "ji0l5g",
+    "cacheKeyParameters": [],
+    "integrationResponses": {
+      "200": {
+        "statusCode": "200",
+        "responseParameters": {
+          "method.response.header.Access-Control-Allow-Origin": "'*'"
+        },
+        "responseTemplates": {
+          "application/json": null
+        }
+      },
+      "400": {
+        "statusCode": "400",
+        "selectionPattern": ".*\"Status\":400.*",
+        "responseParameters": {
+          "method.response.header.Access-Control-Allow-Origin": "'*'"
+        },
+        "responseTemplates": {
+          "application/json": "$input.path('$.errorMessage')\r\n"
+        }
+      }
+    },
+    "responseTransferMode": "BUFFERED"
+  }
+}

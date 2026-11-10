@@ -1,0 +1,26 @@
+{
+  "restApiId": "6op50ujgu6",
+  "stageName": "dev",
+  "patchOperations": [
+    {
+      "op": "replace",
+      "path": "/~1social~1posts~1clicks/POST/throttling/rateLimit",
+      "value": "50"
+    },
+    {
+      "op": "replace",
+      "path": "/~1social~1posts~1clicks/POST/throttling/burstLimit",
+      "value": "100"
+    },
+    {
+      "op": "replace",
+      "path": "/~1social~1analytics/GET/throttling/rateLimit",
+      "value": "10"
+    },
+    {
+      "op": "replace",
+      "path": "/~1social~1analytics/GET/throttling/burstLimit",
+      "value": "20"
+    }
+  ]
+}

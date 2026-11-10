@@ -1,0 +1,119 @@
+[
+  {
+    "resourceId": "5dyq1f",
+    "method": "DELETE",
+    "path": "/organization/{organizationid}/social/posts/{postid}",
+    "authorizationBefore": "COGNITO_USER_POOLS",
+    "authorizationAfter": "COGNITO_USER_POOLS",
+    "integration": "AWS (unchanged)",
+    "mapping": "5dyq1f-DELETE.after.vtl"
+  },
+  {
+    "resourceId": "5dyq1f",
+    "method": "GET",
+    "path": "/organization/{organizationid}/social/posts/{postid}",
+    "authorizationBefore": "NONE",
+    "authorizationAfter": "COGNITO_USER_POOLS",
+    "integration": "AWS (unchanged)",
+    "mapping": "5dyq1f-GET.after.vtl"
+  },
+  {
+    "resourceId": "5dyq1f",
+    "method": "PUT",
+    "path": "/organization/{organizationid}/social/posts/{postid}",
+    "authorizationBefore": "COGNITO_USER_POOLS",
+    "authorizationAfter": "COGNITO_USER_POOLS",
+    "integration": "AWS (unchanged)",
+    "mapping": "5dyq1f-PUT.after.vtl"
+  },
+  {
+    "resourceId": "hmrb05",
+    "method": "POST",
+    "path": "/organization/{organizationid}/social/posts/{postid}/publish",
+    "authorizationBefore": "COGNITO_USER_POOLS",
+    "authorizationAfter": "COGNITO_USER_POOLS",
+    "integration": "AWS (unchanged)",
+    "mapping": "hmrb05-POST.after.vtl"
+  },
+  {
+    "resourceId": "ji0l5g",
+    "method": "GET",
+    "path": "/organization/{organizationid}/social/posts/{postid}/status",
+    "authorizationBefore": "NONE",
+    "authorizationAfter": "COGNITO_USER_POOLS",
+    "integration": "AWS (unchanged)",
+    "mapping": "ji0l5g-GET.after.vtl"
+  },
+  {
+    "resourceId": "m8r49v",
+    "method": "GET",
+    "path": "/organization/{organizationid}/social/posts",
+    "authorizationBefore": "NONE",
+    "authorizationAfter": "COGNITO_USER_POOLS",
+    "integration": "AWS (unchanged)",
+    "mapping": "m8r49v-GET.after.vtl"
+  },
+  {
+    "resourceId": "m8r49v",
+    "method": "POST",
+    "path": "/organization/{organizationid}/social/posts",
+    "authorizationBefore": "COGNITO_USER_POOLS",
+    "authorizationAfter": "COGNITO_USER_POOLS",
+    "integration": "AWS (unchanged)",
+    "mapping": "m8r49v-POST.after.vtl"
+  },
+  {
+    "resourceId": "mmngv5",
+    "method": "POST",
+    "path": "/organization/{organizationid}/social/posts/{postid}/schedule",
+    "authorizationBefore": "COGNITO_USER_POOLS",
+    "authorizationAfter": "COGNITO_USER_POOLS",
+    "integration": "AWS (unchanged)",
+    "mapping": "mmngv5-POST.after.vtl"
+  },
+  {
+    "resourceId": "or4yoe",
+    "method": "POST",
+    "path": "/organization/{organizationid}/social/posts/{postid}/cancel",
+    "authorizationBefore": "COGNITO_USER_POOLS",
+    "authorizationAfter": "COGNITO_USER_POOLS",
+    "integration": "AWS (unchanged)",
+    "mapping": "or4yoe-POST.after.vtl"
+  },
+  {
+    "resourceId": "u9uc4l",
+    "method": "GET",
+    "path": "/organization/{organizationid}/social/posts/{postid}/analytics",
+    "authorizationBefore": "NONE",
+    "authorizationAfter": "COGNITO_USER_POOLS",
+    "integration": "AWS (unchanged)",
+    "mapping": "u9uc4l-GET.after.vtl"
+  },
+  {
+    "resourceId": "6zm71h",
+    "method": "GET",
+    "path": "/data/tinyurl/{shortcode}",
+    "authorizationBefore": "NONE",
+    "authorizationAfter": "NONE",
+    "integration": "AWS (unchanged)",
+    "mapping": "6zm71h-GET.after.vtl"
+  },
+  {
+    "resourceId": "0gh7xx",
+    "method": "GET",
+    "path": "/qrcode/{qrcodeid}/url",
+    "authorizationBefore": "NONE",
+    "authorizationAfter": "NONE",
+    "integration": "AWS (unchanged)",
+    "mapping": "0gh7xx-GET.after.vtl"
+  },
+  {
+    "resourceId": "shnome",
+    "method": "POST",
+    "path": "/give/onetime",
+    "authorizationBefore": "NONE",
+    "authorizationAfter": "NONE",
+    "integration": "AWS (unchanged)",
+    "mapping": "shnome-POST.after.vtl"
+  }
+]

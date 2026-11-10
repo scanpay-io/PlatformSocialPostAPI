@@ -1,0 +1,4 @@
+{
+  "Id": "arn:aws:cloudformation:us-east-1:145505076425:changeSet/social-cohort-approved-20261110/e675a308-6748-48a7-8335-0085b0b4cd9b",
+  "StackId": "arn:aws:cloudformation:us-east-1:145505076425:stack/platform-socialpost-dynamodb/4acedae0-95ac-11f1-a64b-0e7c0f4679df"
+}

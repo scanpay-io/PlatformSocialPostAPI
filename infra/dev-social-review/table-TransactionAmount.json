@@ -1,0 +1,303 @@
+{
+  "Table": {
+    "AttributeDefinitions": [
+      {
+        "AttributeName": "CreateDate",
+        "AttributeType": "S"
+      },
+      {
+        "AttributeName": "PayeeAccountID",
+        "AttributeType": "S"
+      },
+      {
+        "AttributeName": "PayoutDueEpochMs",
+        "AttributeType": "N"
+      },
+      {
+        "AttributeName": "PayoutLookupKey",
+        "AttributeType": "S"
+      },
+      {
+        "AttributeName": "PayoutStatusState",
+        "AttributeType": "S"
+      },
+      {
+        "AttributeName": "SmsAccountScopeKey",
+        "AttributeType": "S"
+      },
+      {
+        "AttributeName": "SmsMessageID",
+        "AttributeType": "S"
+      },
+      {
+        "AttributeName": "SocialPostID",
+        "AttributeType": "S"
+      },
+      {
+        "AttributeName": "SourceID",
+        "AttributeType": "S"
+      },
+      {
+        "AttributeName": "SponsorAccountID",
+        "AttributeType": "S"
+      },
+      {
+        "AttributeName": "TransactionID",
+        "AttributeType": "S"
+      }
+    ],
+    "TableName": "TransactionAmount",
+    "KeySchema": [
+      {
+        "AttributeName": "TransactionID",
+        "KeyType": "HASH"
+      }
+    ],
+    "TableStatus": "ACTIVE",
+    "CreationDateTime": "2025-01-30T19:14:08.925000-08:00",
+    "ProvisionedThroughput": {
+      "LastIncreaseDateTime": "2026-09-17T10:11:23.392000-07:00",
+      "LastDecreaseDateTime": "2026-09-17T22:11:57.947000-07:00",
+      "NumberOfDecreasesToday": 0,
+      "ReadCapacityUnits": 8,
+      "WriteCapacityUnits": 2
+    },
+    "TableSizeBytes": 9617299,
+    "ItemCount": 5966,
+    "TableArn": "arn:aws:dynamodb:us-east-1:145505076425:table/TransactionAmount",
+    "TableId": "757b9e95-0f2c-46b8-a877-2c1e435edfb6",
+    "GlobalSecondaryIndexes": [
+      {
+        "IndexName": "SourceID-index",
+        "KeySchema": [
+          {
+            "AttributeName": "SourceID",
+            "KeyType": "HASH"
+          }
+        ],
+        "Projection": {
+          "ProjectionType": "ALL"
+        },
+        "IndexStatus": "ACTIVE",
+        "ProvisionedThroughput": {
+          "NumberOfDecreasesToday": 0,
+          "ReadCapacityUnits": 8,
+          "WriteCapacityUnits": 2
+        },
+        "IndexSizeBytes": 9615374,
+        "ItemCount": 5966,
+        "IndexArn": "arn:aws:dynamodb:us-east-1:145505076425:table/TransactionAmount/index/SourceID-index",
+        "WarmThroughput": {
+          "ReadUnitsPerSecond": 8,
+          "WriteUnitsPerSecond": 2,
+          "Status": "ACTIVE"
+        }
+      },
+      {
+        "IndexName": "PayoutLookupKey-index",
+        "KeySchema": [
+          {
+            "AttributeName": "PayoutLookupKey",
+            "KeyType": "HASH"
+          },
+          {
+            "AttributeName": "PayoutDueEpochMs",
+            "KeyType": "RANGE"
+          }
+        ],
+        "Projection": {
+          "ProjectionType": "ALL"
+        },
+        "IndexStatus": "ACTIVE",
+        "ProvisionedThroughput": {
+          "NumberOfDecreasesToday": 0,
+          "ReadCapacityUnits": 8,
+          "WriteCapacityUnits": 2
+        },
+        "IndexSizeBytes": 3237048,
+        "ItemCount": 1568,
+        "IndexArn": "arn:aws:dynamodb:us-east-1:145505076425:table/TransactionAmount/index/PayoutLookupKey-index",
+        "WarmThroughput": {
+          "ReadUnitsPerSecond": 8,
+          "WriteUnitsPerSecond": 2,
+          "Status": "ACTIVE"
+        }
+      },
+      {
+        "IndexName": "PayoutStatusState-index",
+        "KeySchema": [
+          {
+            "AttributeName": "PayoutStatusState",
+            "KeyType": "HASH"
+          }
+        ],
+        "Projection": {
+          "ProjectionType": "ALL"
+        },
+        "IndexStatus": "ACTIVE",
+        "ProvisionedThroughput": {
+          "NumberOfDecreasesToday": 0,
+          "ReadCapacityUnits": 8,
+          "WriteCapacityUnits": 2
+        },
+        "IndexSizeBytes": 6645760,
+        "ItemCount": 3566,
+        "IndexArn": "arn:aws:dynamodb:us-east-1:145505076425:table/TransactionAmount/index/PayoutStatusState-index",
+        "WarmThroughput": {
+          "ReadUnitsPerSecond": 8,
+          "WriteUnitsPerSecond": 2,
+          "Status": "ACTIVE"
+        }
+      },
+      {
+        "IndexName": "SocialPostID-index",
+        "KeySchema": [
+          {
+            "AttributeName": "SocialPostID",
+            "KeyType": "HASH"
+          }
+        ],
+        "Projection": {
+          "ProjectionType": "ALL"
+        },
+        "IndexStatus": "ACTIVE",
+        "ProvisionedThroughput": {
+          "NumberOfDecreasesToday": 0,
+          "ReadCapacityUnits": 8,
+          "WriteCapacityUnits": 2
+        },
+        "IndexSizeBytes": 871646,
+        "ItemCount": 391,
+        "IndexArn": "arn:aws:dynamodb:us-east-1:145505076425:table/TransactionAmount/index/SocialPostID-index",
+        "WarmThroughput": {
+          "ReadUnitsPerSecond": 8,
+          "WriteUnitsPerSecond": 2,
+          "Status": "ACTIVE"
+        }
+      },
+      {
+        "IndexName": "SponsorAccountID-index",
+        "KeySchema": [
+          {
+            "AttributeName": "SponsorAccountID",
+            "KeyType": "HASH"
+          }
+        ],
+        "Projection": {
+          "ProjectionType": "ALL"
+        },
+        "IndexStatus": "ACTIVE",
+        "ProvisionedThroughput": {
+          "NumberOfDecreasesToday": 0,
+          "ReadCapacityUnits": 8,
+          "WriteCapacityUnits": 2
+        },
+        "IndexSizeBytes": 4751623,
+        "ItemCount": 2357,
+        "IndexArn": "arn:aws:dynamodb:us-east-1:145505076425:table/TransactionAmount/index/SponsorAccountID-index",
+        "WarmThroughput": {
+          "ReadUnitsPerSecond": 8,
+          "WriteUnitsPerSecond": 2,
+          "Status": "ACTIVE"
+        }
+      },
+      {
+        "IndexName": "PayeeAccountID-index",
+        "KeySchema": [
+          {
+            "AttributeName": "PayeeAccountID",
+            "KeyType": "HASH"
+          }
+        ],
+        "Projection": {
+          "ProjectionType": "ALL"
+        },
+        "IndexStatus": "ACTIVE",
+        "ProvisionedThroughput": {
+          "NumberOfDecreasesToday": 0,
+          "ReadCapacityUnits": 8,
+          "WriteCapacityUnits": 2
+        },
+        "IndexSizeBytes": 9391325,
+        "ItemCount": 5024,
+        "IndexArn": "arn:aws:dynamodb:us-east-1:145505076425:table/TransactionAmount/index/PayeeAccountID-index",
+        "WarmThroughput": {
+          "ReadUnitsPerSecond": 8,
+          "WriteUnitsPerSecond": 2,
+          "Status": "ACTIVE"
+        }
+      },
+      {
+        "IndexName": "SmsAccountScopeKey-index",
+        "KeySchema": [
+          {
+            "AttributeName": "SmsAccountScopeKey",
+            "KeyType": "HASH"
+          },
+          {
+            "AttributeName": "CreateDate",
+            "KeyType": "RANGE"
+          }
+        ],
+        "Projection": {
+          "ProjectionType": "ALL"
+        },
+        "IndexStatus": "ACTIVE",
+        "ProvisionedThroughput": {
+          "NumberOfDecreasesToday": 0,
+          "ReadCapacityUnits": 5,
+          "WriteCapacityUnits": 5
+        },
+        "IndexSizeBytes": 871646,
+        "ItemCount": 391,
+        "IndexArn": "arn:aws:dynamodb:us-east-1:145505076425:table/TransactionAmount/index/SmsAccountScopeKey-index",
+        "WarmThroughput": {
+          "ReadUnitsPerSecond": 5,
+          "WriteUnitsPerSecond": 5,
+          "Status": "ACTIVE"
+        }
+      },
+      {
+        "IndexName": "SmsMessageID-index",
+        "KeySchema": [
+          {
+            "AttributeName": "SmsMessageID",
+            "KeyType": "HASH"
+          }
+        ],
+        "Projection": {
+          "ProjectionType": "ALL"
+        },
+        "IndexStatus": "ACTIVE",
+        "ProvisionedThroughput": {
+          "NumberOfDecreasesToday": 0,
+          "ReadCapacityUnits": 5,
+          "WriteCapacityUnits": 5
+        },
+        "IndexSizeBytes": 794835,
+        "ItemCount": 359,
+        "IndexArn": "arn:aws:dynamodb:us-east-1:145505076425:table/TransactionAmount/index/SmsMessageID-index",
+        "WarmThroughput": {
+          "ReadUnitsPerSecond": 5,
+          "WriteUnitsPerSecond": 5,
+          "Status": "ACTIVE"
+        }
+      }
+    ],
+    "StreamSpecification": {
+      "StreamEnabled": true,
+      "StreamViewType": "NEW_IMAGE"
+    },
+    "LatestStreamLabel": "2025-07-14T03:35:33.265",
+    "LatestStreamArn": "arn:aws:dynamodb:us-east-1:145505076425:table/TransactionAmount/stream/2025-07-14T03:35:33.265",
+    "TableClassSummary": {
+      "TableClass": "STANDARD"
+    },
+    "DeletionProtectionEnabled": false,
+    "WarmThroughput": {
+      "ReadUnitsPerSecond": 64,
+      "WriteUnitsPerSecond": 2,
+      "Status": "ACTIVE"
+    }
+  }
+}

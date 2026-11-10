@@ -1,0 +1,17 @@
+{
+  "FunctionName": "scanpay_record_social_post_click",
+  "FunctionArn": "arn:aws:lambda:us-east-1:145505076425:function:scanpay_record_social_post_click:gany_dev",
+  "Version": "10",
+  "Role": "arn:aws:iam::145505076425:role/DeployLambda",
+  "Runtime": "dotnet10",
+  "LastModified": "2026-11-10T15:14:17.000+0000",
+  "CodeSha256": "woe4Yp947YxC/7OZFr8Aaph2rFj1rXMlpMgHrDEW+T4=",
+  "Timeout": 29,
+  "EnvironmentKeys": [
+    "account_number",
+    "runway_type",
+    "region"
+  ],
+  "CursorKeyConfigured": false,
+  "State": "Active"
+}

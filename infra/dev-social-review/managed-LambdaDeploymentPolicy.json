@@ -1,0 +1,48 @@
+{
+  "PolicyVersion": {
+    "Document": {
+      "Version": "2012-10-17",
+      "Statement": [
+        {
+          "Sid": "LambdaDeploymentPermissions",
+          "Effect": "Allow",
+          "Action": [
+            "lambda:CreateFunction",
+            "lambda:UpdateFunctionCode",
+            "lambda:UpdateFunctionConfiguration",
+            "lambda:PublishVersion",
+            "lambda:DeleteFunction",
+            "lambda:GetFunction",
+            "lambda:ListFunctions"
+          ],
+          "Resource": "arn:aws:lambda:*:145505076425:function:*"
+        },
+        {
+          "Sid": "IAMRolePermissions",
+          "Effect": "Allow",
+          "Action": [
+            "iam:GetRole",
+            "iam:PassRole",
+            "iam:ListRolePolicies",
+            "iam:ListAttachedRolePolicies"
+          ],
+          "Resource": "arn:aws:iam::145505076425:role/DeployLambda"
+        },
+        {
+          "Sid": "CloudWatchLogsPermissions",
+          "Effect": "Allow",
+          "Action": [
+            "logs:CreateLogGroup",
+            "logs:CreateLogStream",
+            "logs:PutLogEvents",
+            "logs:DescribeLogStreams"
+          ],
+          "Resource": "arn:aws:logs:*:145505076425:log-group:/aws/lambda/*"
+        }
+      ]
+    },
+    "VersionId": "v1",
+    "IsDefaultVersion": true,
+    "CreateDate": "2025-01-21T22:29:11+00:00"
+  }
+}

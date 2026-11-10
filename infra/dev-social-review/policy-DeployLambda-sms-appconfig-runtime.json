@@ -1,0 +1,26 @@
+{
+  "RoleName": "DeployLambda",
+  "PolicyName": "sms-appconfig-runtime",
+  "PolicyDocument": {
+    "Version": "2012-10-17",
+    "Statement": [
+      {
+        "Action": [
+          "dynamodb:GetItem"
+        ],
+        "Resource": "arn:aws:dynamodb:us-east-1:145505076425:table/AppConfig",
+        "Effect": "Allow"
+      },
+      {
+        "Action": [
+          "secretsmanager:GetSecretValue"
+        ],
+        "Resource": [
+          "arn:aws:secretsmanager:us-east-1:145505076425:secret:giveanywhere/sms/dev/analytics-cursor-key-sqkKgv",
+          "arn:aws:secretsmanager:us-east-1:145505076425:secret:giveanywhere/sms/prod/analytics-cursor-key-IsxP4w"
+        ],
+        "Effect": "Allow"
+      }
+    ]
+  }
+}

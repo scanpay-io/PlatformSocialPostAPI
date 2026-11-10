@@ -40,18 +40,18 @@ using var http = new HttpClient(new ProviderHttpHandler(async request =>
     if (path.EndsWith("/feed"))
     {
         Check(path == "/v25.0/456/feed" && request.Headers.Authorization?.Parameter == "page-token", "Facebook posts as the selected Page");
-        Check(form["message"] == "Support our campaign" && form["link"] == "https://example.org/give", "Facebook link contract");
+        Check(form["message"] == "Support our campaign" && form["link"] == "https://example.org/give?socialpostid=post&socialdeliveryid=facebook-post", "Facebook link contract");
         return Json("{'id':'456_789'}");
     }
     Check(request.Headers.Authorization?.Parameter == "user-token", "Instagram/Threads use their own user token");
     if (path.EndsWith("/media"))
     {
-        Check(host == "graph.instagram.com" && form["image_url"].EndsWith("photo.jpg") && form["caption"].Contains("/give"), "Instagram Login image payload");
+        Check(host == "graph.instagram.com" && form["image_url"].EndsWith("photo.jpg") && form["caption"].Contains("socialdeliveryid=instagram-post"), "Instagram Login image payload");
         return Json("{'id':'111'}");
     }
     if (path.EndsWith("/threads"))
     {
-        Check(host == "graph.threads.net" && form["media_type"] == "TEXT" && form["text"].Contains("/give"), "Threads text payload");
+        Check(host == "graph.threads.net" && form["media_type"] == "TEXT" && form["text"].Contains("socialdeliveryid=threads-post"), "Threads text payload");
         return Json("{'id':'222'}");
     }
     Check(form["creation_id"] == (host == "graph.instagram.com" ? "111" : "222"), "Publish uses saved container ID");

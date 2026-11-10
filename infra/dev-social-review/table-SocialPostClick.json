@@ -1,0 +1,75 @@
+{
+  "Table": {
+    "AttributeDefinitions": [
+      {
+        "AttributeName": "ClickID",
+        "AttributeType": "S"
+      },
+      {
+        "AttributeName": "SocialPostID",
+        "AttributeType": "S"
+      }
+    ],
+    "TableName": "SocialPostClick",
+    "KeySchema": [
+      {
+        "AttributeName": "ClickID",
+        "KeyType": "HASH"
+      }
+    ],
+    "TableStatus": "ACTIVE",
+    "CreationDateTime": "2026-10-29T07:45:27.558000-07:00",
+    "ProvisionedThroughput": {
+      "NumberOfDecreasesToday": 0,
+      "ReadCapacityUnits": 0,
+      "WriteCapacityUnits": 0
+    },
+    "TableSizeBytes": 0,
+    "ItemCount": 0,
+    "TableArn": "arn:aws:dynamodb:us-east-1:145505076425:table/SocialPostClick",
+    "TableId": "7b27c164-ff31-491a-9657-5321c061114e",
+    "BillingModeSummary": {
+      "BillingMode": "PAY_PER_REQUEST",
+      "LastUpdateToPayPerRequestDateTime": "2026-10-29T07:45:27.558000-07:00"
+    },
+    "GlobalSecondaryIndexes": [
+      {
+        "IndexName": "SocialPostID-index",
+        "KeySchema": [
+          {
+            "AttributeName": "SocialPostID",
+            "KeyType": "HASH"
+          }
+        ],
+        "Projection": {
+          "ProjectionType": "ALL"
+        },
+        "IndexStatus": "ACTIVE",
+        "ProvisionedThroughput": {
+          "NumberOfDecreasesToday": 0,
+          "ReadCapacityUnits": 0,
+          "WriteCapacityUnits": 0
+        },
+        "IndexSizeBytes": 0,
+        "ItemCount": 0,
+        "IndexArn": "arn:aws:dynamodb:us-east-1:145505076425:table/SocialPostClick/index/SocialPostID-index",
+        "WarmThroughput": {
+          "ReadUnitsPerSecond": 12000,
+          "WriteUnitsPerSecond": 4000,
+          "Status": "ACTIVE"
+        }
+      }
+    ],
+    "SSEDescription": {
+      "Status": "ENABLED",
+      "SSEType": "KMS",
+      "KMSMasterKeyArn": "arn:aws:kms:us-east-1:145505076425:key/bfeed3de-2afc-403b-a1a2-18f722cbf8ba"
+    },
+    "DeletionProtectionEnabled": false,
+    "WarmThroughput": {
+      "ReadUnitsPerSecond": 12000,
+      "WriteUnitsPerSecond": 4000,
+      "Status": "ACTIVE"
+    }
+  }
+}

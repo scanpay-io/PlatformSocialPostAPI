@@ -7,6 +7,12 @@ namespace ScanPay.SocialPostService
     [Alias("SocialPostDelivery")]
     public class SocialPostDeliveryDb
     {
+        // Always a string: unpublished deliveries must not write NULL into a GSI sort key.
+        public string PublishedAtKey { get => PublishedDateUtc?.ToUniversalTime().ToString("o") ?? "unpublished"; set { } }
+        public string TrackingUrl { get; set; } = "";
+        public string AppName { get; set; } = "";
+        public string Runway { get; set; } = "";
+        public string AccountScopeKey { get; set; } = "";
         // Zero identifies legacy deliveries; each restored draft starts a new attempt.
         public int PublishingAttempt { get; set; }
         public string ContainerID { get; set; } = "";

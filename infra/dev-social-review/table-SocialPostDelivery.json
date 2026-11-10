@@ -1,0 +1,195 @@
+{
+  "Table": {
+    "AttributeDefinitions": [
+      {
+        "AttributeName": "DeliveryID",
+        "AttributeType": "S"
+      },
+      {
+        "AttributeName": "OrganizationID",
+        "AttributeType": "S"
+      },
+      {
+        "AttributeName": "Platform",
+        "AttributeType": "S"
+      },
+      {
+        "AttributeName": "SocialConnectionID",
+        "AttributeType": "S"
+      },
+      {
+        "AttributeName": "SocialPostID",
+        "AttributeType": "S"
+      },
+      {
+        "AttributeName": "Status",
+        "AttributeType": "S"
+      }
+    ],
+    "TableName": "SocialPostDelivery",
+    "KeySchema": [
+      {
+        "AttributeName": "DeliveryID",
+        "KeyType": "HASH"
+      }
+    ],
+    "TableStatus": "ACTIVE",
+    "CreationDateTime": "2026-08-11T10:44:34.838000-07:00",
+    "ProvisionedThroughput": {
+      "NumberOfDecreasesToday": 0,
+      "ReadCapacityUnits": 0,
+      "WriteCapacityUnits": 0
+    },
+    "TableSizeBytes": 32687,
+    "ItemCount": 64,
+    "TableArn": "arn:aws:dynamodb:us-east-1:145505076425:table/SocialPostDelivery",
+    "TableId": "4b13bbe6-e0fb-4066-b8d7-692378490492",
+    "BillingModeSummary": {
+      "BillingMode": "PAY_PER_REQUEST",
+      "LastUpdateToPayPerRequestDateTime": "2026-08-11T10:44:34.838000-07:00"
+    },
+    "GlobalSecondaryIndexes": [
+      {
+        "IndexName": "Platform-index",
+        "KeySchema": [
+          {
+            "AttributeName": "Platform",
+            "KeyType": "HASH"
+          }
+        ],
+        "Projection": {
+          "ProjectionType": "ALL"
+        },
+        "IndexStatus": "ACTIVE",
+        "ProvisionedThroughput": {
+          "NumberOfDecreasesToday": 0,
+          "ReadCapacityUnits": 0,
+          "WriteCapacityUnits": 0
+        },
+        "IndexSizeBytes": 32687,
+        "ItemCount": 64,
+        "IndexArn": "arn:aws:dynamodb:us-east-1:145505076425:table/SocialPostDelivery/index/Platform-index",
+        "WarmThroughput": {
+          "ReadUnitsPerSecond": 12000,
+          "WriteUnitsPerSecond": 4000,
+          "Status": "ACTIVE"
+        }
+      },
+      {
+        "IndexName": "OrganizationID-index",
+        "KeySchema": [
+          {
+            "AttributeName": "OrganizationID",
+            "KeyType": "HASH"
+          }
+        ],
+        "Projection": {
+          "ProjectionType": "ALL"
+        },
+        "IndexStatus": "ACTIVE",
+        "ProvisionedThroughput": {
+          "NumberOfDecreasesToday": 0,
+          "ReadCapacityUnits": 0,
+          "WriteCapacityUnits": 0
+        },
+        "IndexSizeBytes": 32687,
+        "ItemCount": 64,
+        "IndexArn": "arn:aws:dynamodb:us-east-1:145505076425:table/SocialPostDelivery/index/OrganizationID-index",
+        "WarmThroughput": {
+          "ReadUnitsPerSecond": 12000,
+          "WriteUnitsPerSecond": 4000,
+          "Status": "ACTIVE"
+        }
+      },
+      {
+        "IndexName": "SocialConnectionID-index",
+        "KeySchema": [
+          {
+            "AttributeName": "SocialConnectionID",
+            "KeyType": "HASH"
+          }
+        ],
+        "Projection": {
+          "ProjectionType": "ALL"
+        },
+        "IndexStatus": "ACTIVE",
+        "ProvisionedThroughput": {
+          "NumberOfDecreasesToday": 0,
+          "ReadCapacityUnits": 0,
+          "WriteCapacityUnits": 0
+        },
+        "IndexSizeBytes": 32687,
+        "ItemCount": 64,
+        "IndexArn": "arn:aws:dynamodb:us-east-1:145505076425:table/SocialPostDelivery/index/SocialConnectionID-index",
+        "WarmThroughput": {
+          "ReadUnitsPerSecond": 12000,
+          "WriteUnitsPerSecond": 4000,
+          "Status": "ACTIVE"
+        }
+      },
+      {
+        "IndexName": "SocialPostID-index",
+        "KeySchema": [
+          {
+            "AttributeName": "SocialPostID",
+            "KeyType": "HASH"
+          }
+        ],
+        "Projection": {
+          "ProjectionType": "ALL"
+        },
+        "IndexStatus": "ACTIVE",
+        "ProvisionedThroughput": {
+          "NumberOfDecreasesToday": 0,
+          "ReadCapacityUnits": 0,
+          "WriteCapacityUnits": 0
+        },
+        "IndexSizeBytes": 32687,
+        "ItemCount": 64,
+        "IndexArn": "arn:aws:dynamodb:us-east-1:145505076425:table/SocialPostDelivery/index/SocialPostID-index",
+        "WarmThroughput": {
+          "ReadUnitsPerSecond": 12000,
+          "WriteUnitsPerSecond": 4000,
+          "Status": "ACTIVE"
+        }
+      },
+      {
+        "IndexName": "Status-index",
+        "KeySchema": [
+          {
+            "AttributeName": "Status",
+            "KeyType": "HASH"
+          }
+        ],
+        "Projection": {
+          "ProjectionType": "ALL"
+        },
+        "IndexStatus": "ACTIVE",
+        "ProvisionedThroughput": {
+          "NumberOfDecreasesToday": 0,
+          "ReadCapacityUnits": 0,
+          "WriteCapacityUnits": 0
+        },
+        "IndexSizeBytes": 32687,
+        "ItemCount": 64,
+        "IndexArn": "arn:aws:dynamodb:us-east-1:145505076425:table/SocialPostDelivery/index/Status-index",
+        "WarmThroughput": {
+          "ReadUnitsPerSecond": 12000,
+          "WriteUnitsPerSecond": 4000,
+          "Status": "ACTIVE"
+        }
+      }
+    ],
+    "SSEDescription": {
+      "Status": "ENABLED",
+      "SSEType": "KMS",
+      "KMSMasterKeyArn": "arn:aws:kms:us-east-1:145505076425:key/bfeed3de-2afc-403b-a1a2-18f722cbf8ba"
+    },
+    "DeletionProtectionEnabled": false,
+    "WarmThroughput": {
+      "ReadUnitsPerSecond": 12000,
+      "WriteUnitsPerSecond": 4000,
+      "Status": "ACTIVE"
+    }
+  }
+}
