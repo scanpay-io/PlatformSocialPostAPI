@@ -1,0 +1,142 @@
+{
+  "preparedAt": "2026-11-10T19:27:02.942Z",
+  "app": "intake",
+  "sourceCommit": "ff2746913cafa082cffdf68a727604701b0540ad",
+  "baselineCommit": "18fdd3fdc64f0f506afceb50f11009df6abea1b5",
+  "configuration": "production",
+  "artifactDirectory": "E:\\GiveAnywhere\\Platform\\PlatformSocialPostAPI\\tmp\\prod-intake-release\\dist\\prod-candidate\\browser",
+  "buildCommand": "node node_modules/@angular/cli/bin/ng.js build --configuration production --output-path dist/prod-candidate",
+  "main": "main-LGXNVZOV.js",
+  "indexSha256": "15e45d292269fcd166e538bbebfe010cf2dd2ce54ab67e8ba3988365bb789b2b",
+  "markers": {
+    "socialdeliveryid": true,
+    "social_delivery_id": true,
+    "socialat": true,
+    "social/posts/clicks": true,
+    "https://api.gogiveanywhere.com/prod": true
+  },
+  "files": [
+    {
+      "path": "assets/images/arrow.png",
+      "bytes": 207,
+      "sha256": "30199ffc3ee7d1c8688758ae137e1937304c79b426476df3834766f0619b877a"
+    },
+    {
+      "path": "assets/images/card.png",
+      "bytes": 318,
+      "sha256": "bbc506562672f8dd391cc0035f0b56c4447501d6500c947f351135884037c32d"
+    },
+    {
+      "path": "assets/images/favicon_new.png",
+      "bytes": 5481,
+      "sha256": "deef38be09bc9e2becb70600a8c4665612402730eb2c00163aa9948cacbac439"
+    },
+    {
+      "path": "assets/images/logo-2.png",
+      "bytes": 26120,
+      "sha256": "4567e1de70eec01eadcffe3a11893920e510153df833fc35f1773b249c628de8"
+    },
+    {
+      "path": "assets/images/paypal-logo.png",
+      "bytes": 599497,
+      "sha256": "cc9e33e78df54f3941463f0f7691c537c9680d627a17bd2c9f43d77e8e0ff35f"
+    },
+    {
+      "path": "assets/images/small-logo.png",
+      "bytes": 5000,
+      "sha256": "cf90cee01bfcf376fcc6dfa15b7c5a3bb83411bea6f13c1c766385a0bf89a596"
+    },
+    {
+      "path": "assets/images/venmobtn.png",
+      "bytes": 44492,
+      "sha256": "bd8d46142331597397e643b6c4bfa7854bd456b18660974a75b7f815292010cf"
+    },
+    {
+      "path": "assets/states.json",
+      "bytes": 2694,
+      "sha256": "a35ca714f648d0f95e72bf83795de9a13be00802df7b1d9304da083c27222025"
+    },
+    {
+      "path": "chunk-4Zd4Urfu.js",
+      "bytes": 468,
+      "sha256": "af9c3d8c93c954ba0d32c273e856eb0390392f7800ad50df4e57399ef2bc7f16"
+    },
+    {
+      "path": "chunk-B-9qDcbt.js",
+      "bytes": 36152,
+      "sha256": "1883a6847f3588b162ea40d2317ea5c748cec91188495bd587a400244fbac529"
+    },
+    {
+      "path": "chunk-BGIO90E-.js",
+      "bytes": 186718,
+      "sha256": "0c9eeb04041cf3c684625c5690521857fe9f4360ad3d3f45ca908de4a1074bd8"
+    },
+    {
+      "path": "chunk-BNh2Rqhn.js",
+      "bytes": 61900,
+      "sha256": "4abf764e5f4b1d1eefda249a35d27427bdfb60657c87d814532022280747c2f5"
+    },
+    {
+      "path": "chunk-Brm2pou-.js",
+      "bytes": 9842,
+      "sha256": "ee06d10cca6e94af58e99d49bb4369625f4f74925572f23e6e4e751707259c24"
+    },
+    {
+      "path": "chunk-BSbQQ93j.js",
+      "bytes": 118008,
+      "sha256": "d964e7a34d76a6f0d5b055511f6243ce259135647ad58f4ef4927656d5899787"
+    },
+    {
+      "path": "chunk-CyRAaRtC.js",
+      "bytes": 128794,
+      "sha256": "bb61b24b51ccc8ed38dae377f502d9641d7cf26bae13b043e26599b93cacca0e"
+    },
+    {
+      "path": "chunk-D3ie-xDJ.js",
+      "bytes": 9635,
+      "sha256": "0a4914c9b0deacc2a03c12439b0f7f912e5b2b11a5274b91e64b4653fa633a65"
+    },
+    {
+      "path": "chunk-DP_btzRI.js",
+      "bytes": 431925,
+      "sha256": "0b720a12e810a103c66b3b5f49a8659fb219d5929f730b5cbbad60b0175e297a"
+    },
+    {
+      "path": "chunk-E_PjGRmt.js",
+      "bytes": 573,
+      "sha256": "a4c0cdc32b49f4ec9a575680fe3cdea59901484e626435ccddfdeab0c94bc5df"
+    },
+    {
+      "path": "index.html",
+      "bytes": 5244,
+      "sha256": "15e45d292269fcd166e538bbebfe010cf2dd2ce54ab67e8ba3988365bb789b2b"
+    },
+    {
+      "path": "main-LGXNVZOV.js",
+      "bytes": 302096,
+      "sha256": "270fef70f362a872421dd146ac6f26bdac21dcb79876a228e6c74cf9ebfc44c7"
+    },
+    {
+      "path": "media/bootstrap-icons-CVBWLLHT.woff2",
+      "bytes": 134044,
+      "sha256": "6c75710364a1ca5604267716f6d28997b26319fdb078cf11e0b42ab66ff2ea61"
+    },
+    {
+      "path": "media/bootstrap-icons-VQNJTM6Q.woff",
+      "bytes": 180288,
+      "sha256": "f55513b7b591cb84a3b87ff0e34ea24d4831d6fedc22e54b911ca64b5b544a15"
+    },
+    {
+      "path": "polyfills-HZMECFBI.js",
+      "bytes": 36184,
+      "sha256": "6b29bec5f93906552bccc551f9213c9784ac381cbd32712bb46b6f68763a8d98"
+    },
+    {
+      "path": "styles-BDINRCCS.css",
+      "bytes": 332436,
+      "sha256": "39474247184f3bb9b5f8e281a9a00cd58edbb43bd71b26925fc0aeaaaa2ef82e"
+    }
+  ],
+  "publicationStatus": "SUPERSEDED_DO_NOT_PUBLISH",
+  "reason": "Concurrent measurement-health PROD release already includes these tracking changes; preserve current main-BUPUDX7E.js."
+}

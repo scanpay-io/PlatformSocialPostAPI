@@ -1,0 +1,2139 @@
+[
+  {
+    "path": "/organization/{organizationid}/social/posts/{postid}",
+    "method": "get",
+    "inSocialScope": true,
+    "before": {
+      "parameters": [
+        {
+          "name": "postid",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "name": "organizationid",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "200 response",
+          "headers": {
+            "Access-Control-Allow-Origin": {
+              "schema": {
+                "type": "string"
+              }
+            }
+          },
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Empty"
+              }
+            }
+          }
+        },
+        "400": {
+          "description": "400 response",
+          "headers": {
+            "Access-Control-Allow-Origin": {
+              "schema": {
+                "type": "string"
+              }
+            }
+          },
+          "content": {}
+        }
+      },
+      "x-amazon-apigateway-integration": {
+        "type": "aws",
+        "uri": "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:145505076425:function:scanpay_get_social_post:${stageVariables.runwayAlias}/invocations",
+        "httpMethod": "POST",
+        "responses": {
+          ".*\"Status\":400.*": {
+            "statusCode": "400",
+            "responseParameters": {
+              "method.response.header.Access-Control-Allow-Origin": "'*'"
+            },
+            "responseTemplates": {
+              "application/json": "{\n\"organization_id\": \"$input.params('organizationid')\",\n\"post_id\": \"$input.params('postid')\"\n}"
+            }
+          },
+          "default": {
+            "statusCode": "200",
+            "responseParameters": {
+              "method.response.header.Access-Control-Allow-Origin": "'*'"
+            }
+          }
+        },
+        "requestTemplates": {
+          "application/json": "{\n\"organization_id\": \"$input.params('organizationid')\",\n\"post_id\": \"$input.params('postid')\"\n}"
+        },
+        "passthroughBehavior": "when_no_match",
+        "timeoutInMillis": 29000,
+        "contentHandling": "CONVERT_TO_TEXT"
+      }
+    },
+    "after": {
+      "parameters": [
+        {
+          "name": "postid",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "name": "organizationid",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "200 response",
+          "headers": {
+            "Access-Control-Allow-Origin": {
+              "schema": {
+                "type": "string"
+              }
+            }
+          },
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Empty"
+              }
+            }
+          }
+        },
+        "400": {
+          "description": "400 response",
+          "headers": {
+            "Access-Control-Allow-Origin": {
+              "schema": {
+                "type": "string"
+              }
+            }
+          },
+          "content": {}
+        }
+      },
+      "security": [
+        {
+          "CognitoAuth": []
+        }
+      ],
+      "x-amazon-apigateway-integration": {
+        "uri": "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:145505076425:function:scanpay_get_social_post:${stageVariables.runwayAlias}/invocations",
+        "httpMethod": "POST",
+        "responses": {
+          ".*\"Status\":400.*": {
+            "statusCode": "400",
+            "responseParameters": {
+              "method.response.header.Access-Control-Allow-Origin": "'*'"
+            },
+            "responseTemplates": {
+              "application/json": "{\n\"organization_id\": \"$input.params('organizationid')\",\n\"post_id\": \"$input.params('postid')\"\n}"
+            }
+          },
+          "default": {
+            "statusCode": "200",
+            "responseParameters": {
+              "method.response.header.Access-Control-Allow-Origin": "'*'"
+            }
+          }
+        },
+        "requestTemplates": {
+          "application/json": "{\n\"requestContext\": {\"authorizer\": {\"claims\": {\"sub\": \"$util.escapeJavaScript($context.authorizer.claims.sub).replaceAll(\"\\\\'\",\"'\")\"}}},\n\"organization_id\": \"$input.params('organizationid')\",\n\"post_id\": \"$input.params('postid')\"\n}"
+        },
+        "passthroughBehavior": "never",
+        "timeoutInMillis": 29000,
+        "contentHandling": "CONVERT_TO_TEXT",
+        "type": "aws"
+      }
+    }
+  },
+  {
+    "path": "/organization/{organizationid}/social/posts/{postid}",
+    "method": "put",
+    "inSocialScope": true,
+    "before": {
+      "parameters": [
+        {
+          "name": "postid",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "name": "organizationid",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "200 response",
+          "headers": {
+            "Access-Control-Allow-Origin": {
+              "schema": {
+                "type": "string"
+              }
+            }
+          },
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Empty"
+              }
+            }
+          }
+        },
+        "400": {
+          "description": "400 response",
+          "headers": {
+            "Access-Control-Allow-Origin": {
+              "schema": {
+                "type": "string"
+              }
+            }
+          },
+          "content": {}
+        }
+      },
+      "security": [
+        {
+          "CognitoAuth": []
+        }
+      ],
+      "x-amazon-apigateway-integration": {
+        "type": "aws",
+        "uri": "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:145505076425:function:scanpay_update_social_post:${stageVariables.runwayAlias}/invocations",
+        "httpMethod": "POST",
+        "responses": {
+          ".*\"Status\":400.*": {
+            "statusCode": "400",
+            "responseParameters": {
+              "method.response.header.Access-Control-Allow-Origin": "'*'"
+            },
+            "responseTemplates": {
+              "application/json": "$input.path('$.errorMessage')\r\n"
+            }
+          },
+          "default": {
+            "statusCode": "200",
+            "responseParameters": {
+              "method.response.header.Access-Control-Allow-Origin": "'*'"
+            }
+          }
+        },
+        "requestTemplates": {
+          "application/json": "{\n\"organization_id\": \"$input.params('organizationid')\",\n\"post_id\": \"$input.params('postid')\",\n  \"content\": $input.json('$.content'),\n  \"destination_url\": $input.json('$.destination_url'),\n  \"platforms\": $input.json('$.platforms'),\n  \"status\": $input.json('$.status'),\n  \"scheduled_date_utc\": $input.json('$.scheduled_date_utc')\n#if($input.path('$').containsKey('meta_social'))\n  ,\"meta_social\":$input.json('$.meta_social')\n#end\n}"
+        },
+        "passthroughBehavior": "when_no_match",
+        "timeoutInMillis": 29000,
+        "contentHandling": "CONVERT_TO_TEXT"
+      }
+    },
+    "after": {
+      "parameters": [
+        {
+          "name": "postid",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "name": "organizationid",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "200 response",
+          "headers": {
+            "Access-Control-Allow-Origin": {
+              "schema": {
+                "type": "string"
+              }
+            }
+          },
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Empty"
+              }
+            }
+          }
+        },
+        "400": {
+          "description": "400 response",
+          "headers": {
+            "Access-Control-Allow-Origin": {
+              "schema": {
+                "type": "string"
+              }
+            }
+          },
+          "content": {}
+        }
+      },
+      "security": [
+        {
+          "CognitoAuth": []
+        }
+      ],
+      "x-amazon-apigateway-integration": {
+        "uri": "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:145505076425:function:scanpay_update_social_post:${stageVariables.runwayAlias}/invocations",
+        "httpMethod": "POST",
+        "responses": {
+          ".*\"Status\":400.*": {
+            "statusCode": "400",
+            "responseParameters": {
+              "method.response.header.Access-Control-Allow-Origin": "'*'"
+            },
+            "responseTemplates": {
+              "application/json": "$input.path('$.errorMessage')\r\n"
+            }
+          },
+          "default": {
+            "statusCode": "200",
+            "responseParameters": {
+              "method.response.header.Access-Control-Allow-Origin": "'*'"
+            }
+          }
+        },
+        "requestTemplates": {
+          "application/json": "{\n\"requestContext\": {\"authorizer\": {\"claims\": {\"sub\": \"$util.escapeJavaScript($context.authorizer.claims.sub).replaceAll(\"\\\\'\",\"'\")\"}}},\n\"organization_id\": \"$input.params('organizationid')\",\n\"post_id\": \"$input.params('postid')\",\n  \"content\": $input.json('$.content'),\n  \"destination_url\": $input.json('$.destination_url'),\n  \"platforms\": $input.json('$.platforms'),\n  \"status\": $input.json('$.status'),\n  \"scheduled_date_utc\": $input.json('$.scheduled_date_utc')\n#if($input.path('$').containsKey('meta_social'))\n  ,\"meta_social\":$input.json('$.meta_social')\n#end\n}"
+        },
+        "passthroughBehavior": "never",
+        "timeoutInMillis": 29000,
+        "contentHandling": "CONVERT_TO_TEXT",
+        "type": "aws"
+      }
+    }
+  },
+  {
+    "path": "/organization/{organizationid}/social/posts/{postid}",
+    "method": "delete",
+    "inSocialScope": true,
+    "before": {
+      "parameters": [
+        {
+          "name": "postid",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "name": "organizationid",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "200 response",
+          "headers": {
+            "Access-Control-Allow-Origin": {
+              "schema": {
+                "type": "string"
+              }
+            }
+          },
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Empty"
+              }
+            }
+          }
+        },
+        "400": {
+          "description": "400 response",
+          "headers": {
+            "Access-Control-Allow-Origin": {
+              "schema": {
+                "type": "string"
+              }
+            }
+          },
+          "content": {}
+        }
+      },
+      "security": [
+        {
+          "CognitoAuth": []
+        }
+      ],
+      "x-amazon-apigateway-integration": {
+        "type": "aws",
+        "uri": "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:145505076425:function:scanpay_delete_social_post:${stageVariables.runwayAlias}/invocations",
+        "httpMethod": "POST",
+        "responses": {
+          ".*\"Status\":400.*": {
+            "statusCode": "400",
+            "responseParameters": {
+              "method.response.header.Access-Control-Allow-Origin": "'*'"
+            },
+            "responseTemplates": {
+              "application/json": "$input.path('$.errorMessage')\r\n"
+            }
+          },
+          "default": {
+            "statusCode": "200",
+            "responseParameters": {
+              "method.response.header.Access-Control-Allow-Origin": "'*'"
+            }
+          }
+        },
+        "requestTemplates": {
+          "application/json": "{\n\"organization_id\": \"$input.params('organizationid')\",\n\"post_id\": \"$input.params('postid')\"\n}"
+        },
+        "passthroughBehavior": "when_no_match",
+        "timeoutInMillis": 29000,
+        "contentHandling": "CONVERT_TO_TEXT"
+      }
+    },
+    "after": {
+      "parameters": [
+        {
+          "name": "postid",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "name": "organizationid",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "200 response",
+          "headers": {
+            "Access-Control-Allow-Origin": {
+              "schema": {
+                "type": "string"
+              }
+            }
+          },
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Empty"
+              }
+            }
+          }
+        },
+        "400": {
+          "description": "400 response",
+          "headers": {
+            "Access-Control-Allow-Origin": {
+              "schema": {
+                "type": "string"
+              }
+            }
+          },
+          "content": {}
+        }
+      },
+      "security": [
+        {
+          "CognitoAuth": []
+        }
+      ],
+      "x-amazon-apigateway-integration": {
+        "uri": "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:145505076425:function:scanpay_delete_social_post:${stageVariables.runwayAlias}/invocations",
+        "httpMethod": "POST",
+        "responses": {
+          ".*\"Status\":400.*": {
+            "statusCode": "400",
+            "responseParameters": {
+              "method.response.header.Access-Control-Allow-Origin": "'*'"
+            },
+            "responseTemplates": {
+              "application/json": "$input.path('$.errorMessage')\r\n"
+            }
+          },
+          "default": {
+            "statusCode": "200",
+            "responseParameters": {
+              "method.response.header.Access-Control-Allow-Origin": "'*'"
+            }
+          }
+        },
+        "requestTemplates": {
+          "application/json": "{\n\"requestContext\": {\"authorizer\": {\"claims\": {\"sub\": \"$util.escapeJavaScript($context.authorizer.claims.sub).replaceAll(\"\\\\'\",\"'\")\"}}},\n\"organization_id\": \"$input.params('organizationid')\",\n\"post_id\": \"$input.params('postid')\"\n}"
+        },
+        "passthroughBehavior": "never",
+        "timeoutInMillis": 29000,
+        "contentHandling": "CONVERT_TO_TEXT",
+        "type": "aws"
+      }
+    }
+  },
+  {
+    "path": "/data/tinyurl/{shortcode}",
+    "method": "get",
+    "inSocialScope": true,
+    "before": {
+      "parameters": [
+        {
+          "name": "shortcode",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "200 response",
+          "headers": {
+            "Access-Control-Allow-Origin": {
+              "schema": {
+                "type": "string"
+              }
+            }
+          },
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Empty"
+              }
+            }
+          }
+        },
+        "400": {
+          "description": "400 response",
+          "headers": {
+            "Access-Control-Allow-Origin": {
+              "schema": {
+                "type": "string"
+              }
+            }
+          },
+          "content": {}
+        }
+      },
+      "x-amazon-apigateway-integration": {
+        "type": "aws",
+        "uri": "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:145505076425:function:scanpay_lookup_tinyurl:${stageVariables.runwayAlias}/invocations",
+        "httpMethod": "POST",
+        "responses": {
+          ".*\"Status\":400.*": {
+            "statusCode": "400",
+            "responseParameters": {
+              "method.response.header.Access-Control-Allow-Origin": "'*'"
+            },
+            "responseTemplates": {
+              "application/json": "$input.path('$.errorMessage')"
+            }
+          },
+          "default": {
+            "statusCode": "200",
+            "responseParameters": {
+              "method.response.header.Access-Control-Allow-Origin": "'*'"
+            }
+          }
+        },
+        "requestTemplates": {
+          "application/json": "{\r\n\"short_code\": \"$input.params('shortcode')\"\r\n}"
+        },
+        "passthroughBehavior": "when_no_match",
+        "timeoutInMillis": 29000,
+        "contentHandling": "CONVERT_TO_TEXT"
+      }
+    },
+    "after": {
+      "parameters": [
+        {
+          "name": "shortcode",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "200 response",
+          "headers": {
+            "Access-Control-Allow-Origin": {
+              "schema": {
+                "type": "string"
+              }
+            }
+          },
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Empty"
+              }
+            }
+          }
+        },
+        "400": {
+          "description": "400 response",
+          "headers": {
+            "Access-Control-Allow-Origin": {
+              "schema": {
+                "type": "string"
+              }
+            }
+          },
+          "content": {}
+        }
+      },
+      "x-amazon-apigateway-integration": {
+        "uri": "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:145505076425:function:scanpay_lookup_tinyurl:${stageVariables.runwayAlias}/invocations",
+        "httpMethod": "POST",
+        "responses": {
+          ".*\"Status\":400.*": {
+            "statusCode": "400",
+            "responseParameters": {
+              "method.response.header.Access-Control-Allow-Origin": "'*'"
+            },
+            "responseTemplates": {
+              "application/json": "$input.path('$.errorMessage')"
+            }
+          },
+          "default": {
+            "statusCode": "200",
+            "responseParameters": {
+              "method.response.header.Access-Control-Allow-Origin": "'*'"
+            }
+          }
+        },
+        "requestTemplates": {
+          "application/json": "{\r\n\"short_code\": \"$input.params('shortcode')\"\r\n#set($query = $input.params().querystring)\n#foreach($key in [\"socialpostid\", \"socialdeliveryid\"])\n#if($query.containsKey($key))\n,\"$key\": \"$util.escapeJavaScript($query.get($key)).replaceAll(\"\\\\'\",\"'\")\"\n#end\n#end\n}"
+        },
+        "passthroughBehavior": "when_no_match",
+        "timeoutInMillis": 29000,
+        "contentHandling": "CONVERT_TO_TEXT",
+        "type": "aws"
+      }
+    }
+  },
+  {
+    "path": "/organization/{organizationid}/social/posts/{postid}/status",
+    "method": "get",
+    "inSocialScope": true,
+    "before": {
+      "parameters": [
+        {
+          "name": "postid",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "name": "organizationid",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "200 response",
+          "headers": {
+            "Access-Control-Allow-Origin": {
+              "schema": {
+                "type": "string"
+              }
+            }
+          },
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Empty"
+              }
+            }
+          }
+        },
+        "400": {
+          "description": "400 response",
+          "headers": {
+            "Access-Control-Allow-Origin": {
+              "schema": {
+                "type": "string"
+              }
+            }
+          },
+          "content": {}
+        }
+      },
+      "x-amazon-apigateway-integration": {
+        "type": "aws",
+        "uri": "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:145505076425:function:scanpay_get_social_post_status:${stageVariables.runwayAlias}/invocations",
+        "httpMethod": "POST",
+        "responses": {
+          ".*\"Status\":400.*": {
+            "statusCode": "400",
+            "responseParameters": {
+              "method.response.header.Access-Control-Allow-Origin": "'*'"
+            },
+            "responseTemplates": {
+              "application/json": "$input.path('$.errorMessage')\r\n"
+            }
+          },
+          "default": {
+            "statusCode": "200",
+            "responseParameters": {
+              "method.response.header.Access-Control-Allow-Origin": "'*'"
+            }
+          }
+        },
+        "requestTemplates": {
+          "application/json": "{\n\"organization_id\": \"$input.params('organizationid')\",\n\"post_id\": \"$input.params('postid')\"\n}"
+        },
+        "passthroughBehavior": "when_no_match",
+        "timeoutInMillis": 29000,
+        "contentHandling": "CONVERT_TO_TEXT"
+      }
+    },
+    "after": {
+      "parameters": [
+        {
+          "name": "postid",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "name": "organizationid",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "200 response",
+          "headers": {
+            "Access-Control-Allow-Origin": {
+              "schema": {
+                "type": "string"
+              }
+            }
+          },
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Empty"
+              }
+            }
+          }
+        },
+        "400": {
+          "description": "400 response",
+          "headers": {
+            "Access-Control-Allow-Origin": {
+              "schema": {
+                "type": "string"
+              }
+            }
+          },
+          "content": {}
+        }
+      },
+      "security": [
+        {
+          "CognitoAuth": []
+        }
+      ],
+      "x-amazon-apigateway-integration": {
+        "uri": "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:145505076425:function:scanpay_get_social_post_status:${stageVariables.runwayAlias}/invocations",
+        "httpMethod": "POST",
+        "responses": {
+          ".*\"Status\":400.*": {
+            "statusCode": "400",
+            "responseParameters": {
+              "method.response.header.Access-Control-Allow-Origin": "'*'"
+            },
+            "responseTemplates": {
+              "application/json": "$input.path('$.errorMessage')\r\n"
+            }
+          },
+          "default": {
+            "statusCode": "200",
+            "responseParameters": {
+              "method.response.header.Access-Control-Allow-Origin": "'*'"
+            }
+          }
+        },
+        "requestTemplates": {
+          "application/json": "{\n\"requestContext\": {\"authorizer\": {\"claims\": {\"sub\": \"$util.escapeJavaScript($context.authorizer.claims.sub).replaceAll(\"\\\\'\",\"'\")\"}}},\n\"organization_id\": \"$input.params('organizationid')\",\n\"post_id\": \"$input.params('postid')\"\n}"
+        },
+        "passthroughBehavior": "never",
+        "timeoutInMillis": 29000,
+        "contentHandling": "CONVERT_TO_TEXT",
+        "type": "aws"
+      }
+    }
+  },
+  {
+    "path": "/qrcode/{qrcodeid}/url",
+    "method": "get",
+    "inSocialScope": true,
+    "before": {
+      "parameters": [
+        {
+          "name": "qrcodeid",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "200 response",
+          "headers": {
+            "Access-Control-Allow-Origin": {
+              "schema": {
+                "type": "string"
+              }
+            }
+          },
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Empty"
+              }
+            }
+          }
+        },
+        "400": {
+          "description": "400 response",
+          "headers": {
+            "Access-Control-Allow-Origin": {
+              "schema": {
+                "type": "string"
+              }
+            }
+          },
+          "content": {}
+        }
+      },
+      "x-amazon-apigateway-integration": {
+        "type": "aws",
+        "uri": "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:145505076425:function:scanpay_get_qrcode_url:${stageVariables.runwayAlias}/invocations",
+        "httpMethod": "POST",
+        "responses": {
+          ".*\"Status\":400.*": {
+            "statusCode": "400",
+            "responseParameters": {
+              "method.response.header.Access-Control-Allow-Origin": "'*'"
+            },
+            "responseTemplates": {
+              "application/json": "$input.path('$.errorMessage')\r\n"
+            }
+          },
+          "default": {
+            "statusCode": "200",
+            "responseParameters": {
+              "method.response.header.Access-Control-Allow-Origin": "'*'"
+            }
+          }
+        },
+        "requestTemplates": {
+          "application/json": "{\n\"qrcode_id\": \"$input.params('qrcodeid')\"\n}"
+        },
+        "passthroughBehavior": "when_no_templates",
+        "contentHandling": "CONVERT_TO_TEXT"
+      }
+    },
+    "after": {
+      "parameters": [
+        {
+          "name": "qrcodeid",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "200 response",
+          "headers": {
+            "Access-Control-Allow-Origin": {
+              "schema": {
+                "type": "string"
+              }
+            }
+          },
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Empty"
+              }
+            }
+          }
+        },
+        "400": {
+          "description": "400 response",
+          "headers": {
+            "Access-Control-Allow-Origin": {
+              "schema": {
+                "type": "string"
+              }
+            }
+          },
+          "content": {}
+        }
+      },
+      "x-amazon-apigateway-integration": {
+        "uri": "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:145505076425:function:scanpay_get_qrcode_url:${stageVariables.runwayAlias}/invocations",
+        "httpMethod": "POST",
+        "responses": {
+          ".*\"Status\":400.*": {
+            "statusCode": "400",
+            "responseParameters": {
+              "method.response.header.Access-Control-Allow-Origin": "'*'"
+            },
+            "responseTemplates": {
+              "application/json": "$input.path('$.errorMessage')\r\n"
+            }
+          },
+          "default": {
+            "statusCode": "200",
+            "responseParameters": {
+              "method.response.header.Access-Control-Allow-Origin": "'*'"
+            }
+          }
+        },
+        "requestTemplates": {
+          "application/json": "{\n\"qrcode_id\": \"$input.params('qrcodeid')\"\n#set($query = $input.params().querystring)\n#foreach($key in [\"socialpostid\", \"socialdeliveryid\"])\n#if($query.containsKey($key))\n,\"$key\": \"$util.escapeJavaScript($query.get($key)).replaceAll(\"\\\\'\",\"'\")\"\n#end\n#end\n}"
+        },
+        "passthroughBehavior": "when_no_templates",
+        "contentHandling": "CONVERT_TO_TEXT",
+        "type": "aws"
+      }
+    }
+  },
+  {
+    "path": "/organization/{organizationid}/social/posts/{postid}/publish",
+    "method": "post",
+    "inSocialScope": true,
+    "before": {
+      "parameters": [
+        {
+          "name": "postid",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "name": "organizationid",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "200 response",
+          "headers": {
+            "Access-Control-Allow-Origin": {
+              "schema": {
+                "type": "string"
+              }
+            }
+          },
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Empty"
+              }
+            }
+          }
+        },
+        "400": {
+          "description": "400 response",
+          "headers": {
+            "Access-Control-Allow-Origin": {
+              "schema": {
+                "type": "string"
+              }
+            }
+          },
+          "content": {}
+        }
+      },
+      "security": [
+        {
+          "CognitoAuth": []
+        }
+      ],
+      "x-amazon-apigateway-integration": {
+        "type": "aws",
+        "uri": "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:145505076425:function:scanpay_publish_social_post:${stageVariables.runwayAlias}/invocations",
+        "httpMethod": "POST",
+        "responses": {
+          ".*\"Status\":400.*": {
+            "statusCode": "400",
+            "responseParameters": {
+              "method.response.header.Access-Control-Allow-Origin": "'*'"
+            },
+            "responseTemplates": {
+              "application/json": "$input.path('$.errorMessage')\r\n"
+            }
+          },
+          "default": {
+            "statusCode": "200",
+            "responseParameters": {
+              "method.response.header.Access-Control-Allow-Origin": "'*'"
+            }
+          }
+        },
+        "requestTemplates": {
+          "application/json": "{\n\"organization_id\": \"$input.params('organizationid')\",\n\"post_id\": \"$input.params('postid')\"\n}"
+        },
+        "passthroughBehavior": "when_no_match",
+        "timeoutInMillis": 29000,
+        "contentHandling": "CONVERT_TO_TEXT"
+      }
+    },
+    "after": {
+      "parameters": [
+        {
+          "name": "postid",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "name": "organizationid",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "200 response",
+          "headers": {
+            "Access-Control-Allow-Origin": {
+              "schema": {
+                "type": "string"
+              }
+            }
+          },
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Empty"
+              }
+            }
+          }
+        },
+        "400": {
+          "description": "400 response",
+          "headers": {
+            "Access-Control-Allow-Origin": {
+              "schema": {
+                "type": "string"
+              }
+            }
+          },
+          "content": {}
+        }
+      },
+      "security": [
+        {
+          "CognitoAuth": []
+        }
+      ],
+      "x-amazon-apigateway-integration": {
+        "uri": "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:145505076425:function:scanpay_publish_social_post:${stageVariables.runwayAlias}/invocations",
+        "httpMethod": "POST",
+        "responses": {
+          ".*\"Status\":400.*": {
+            "statusCode": "400",
+            "responseParameters": {
+              "method.response.header.Access-Control-Allow-Origin": "'*'"
+            },
+            "responseTemplates": {
+              "application/json": "$input.path('$.errorMessage')\r\n"
+            }
+          },
+          "default": {
+            "statusCode": "200",
+            "responseParameters": {
+              "method.response.header.Access-Control-Allow-Origin": "'*'"
+            }
+          }
+        },
+        "requestTemplates": {
+          "application/json": "{\n\"requestContext\": {\"authorizer\": {\"claims\": {\"sub\": \"$util.escapeJavaScript($context.authorizer.claims.sub).replaceAll(\"\\\\'\",\"'\")\"}}},\n\"organization_id\": \"$input.params('organizationid')\",\n\"post_id\": \"$input.params('postid')\"\n}"
+        },
+        "passthroughBehavior": "never",
+        "timeoutInMillis": 29000,
+        "contentHandling": "CONVERT_TO_TEXT",
+        "type": "aws"
+      }
+    }
+  },
+  {
+    "path": "/organization/{organizationid}/social/posts/{postid}/schedule",
+    "method": "post",
+    "inSocialScope": true,
+    "before": {
+      "parameters": [
+        {
+          "name": "postid",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "name": "organizationid",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "200 response",
+          "headers": {
+            "Access-Control-Allow-Origin": {
+              "schema": {
+                "type": "string"
+              }
+            }
+          },
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Empty"
+              }
+            }
+          }
+        },
+        "400": {
+          "description": "400 response",
+          "headers": {
+            "Access-Control-Allow-Origin": {
+              "schema": {
+                "type": "string"
+              }
+            }
+          },
+          "content": {}
+        }
+      },
+      "security": [
+        {
+          "CognitoAuth": []
+        }
+      ],
+      "x-amazon-apigateway-integration": {
+        "type": "aws",
+        "uri": "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:145505076425:function:scanpay_schedule_social_post:${stageVariables.runwayAlias}/invocations",
+        "httpMethod": "POST",
+        "responses": {
+          ".*\"Status\":400.*": {
+            "statusCode": "400",
+            "responseParameters": {
+              "method.response.header.Access-Control-Allow-Origin": "'*'"
+            },
+            "responseTemplates": {
+              "application/json": "$input.path('$.errorMessage')\r\n"
+            }
+          },
+          "default": {
+            "statusCode": "200",
+            "responseParameters": {
+              "method.response.header.Access-Control-Allow-Origin": "'*'"
+            }
+          }
+        },
+        "requestTemplates": {
+          "application/json": "{\n\"organization_id\": \"$input.params('organizationid')\",\n\"post_id\": \"$input.params('postid')\",\n  \"scheduled_date_utc\": $input.json('$.scheduled_date_utc')\n\n}"
+        },
+        "passthroughBehavior": "when_no_match",
+        "timeoutInMillis": 29000,
+        "contentHandling": "CONVERT_TO_TEXT"
+      }
+    },
+    "after": {
+      "parameters": [
+        {
+          "name": "postid",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "name": "organizationid",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "200 response",
+          "headers": {
+            "Access-Control-Allow-Origin": {
+              "schema": {
+                "type": "string"
+              }
+            }
+          },
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Empty"
+              }
+            }
+          }
+        },
+        "400": {
+          "description": "400 response",
+          "headers": {
+            "Access-Control-Allow-Origin": {
+              "schema": {
+                "type": "string"
+              }
+            }
+          },
+          "content": {}
+        }
+      },
+      "security": [
+        {
+          "CognitoAuth": []
+        }
+      ],
+      "x-amazon-apigateway-integration": {
+        "uri": "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:145505076425:function:scanpay_schedule_social_post:${stageVariables.runwayAlias}/invocations",
+        "httpMethod": "POST",
+        "responses": {
+          ".*\"Status\":400.*": {
+            "statusCode": "400",
+            "responseParameters": {
+              "method.response.header.Access-Control-Allow-Origin": "'*'"
+            },
+            "responseTemplates": {
+              "application/json": "$input.path('$.errorMessage')\r\n"
+            }
+          },
+          "default": {
+            "statusCode": "200",
+            "responseParameters": {
+              "method.response.header.Access-Control-Allow-Origin": "'*'"
+            }
+          }
+        },
+        "requestTemplates": {
+          "application/json": "{\n\"requestContext\": {\"authorizer\": {\"claims\": {\"sub\": \"$util.escapeJavaScript($context.authorizer.claims.sub).replaceAll(\"\\\\'\",\"'\")\"}}},\n\"organization_id\": \"$input.params('organizationid')\",\n\"post_id\": \"$input.params('postid')\",\n  \"scheduled_date_utc\": $input.json('$.scheduled_date_utc')\n\n}"
+        },
+        "passthroughBehavior": "never",
+        "timeoutInMillis": 29000,
+        "contentHandling": "CONVERT_TO_TEXT",
+        "type": "aws"
+      }
+    }
+  },
+  {
+    "path": "/give/onetime",
+    "method": "post",
+    "inSocialScope": true,
+    "before": {
+      "responses": {
+        "200": {
+          "description": "200 response",
+          "headers": {
+            "Access-Control-Allow-Origin": {
+              "schema": {
+                "type": "string"
+              }
+            }
+          },
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Empty"
+              }
+            }
+          }
+        },
+        "400": {
+          "description": "400 response",
+          "headers": {
+            "Access-Control-Allow-Origin": {
+              "schema": {
+                "type": "string"
+              }
+            }
+          },
+          "content": {}
+        }
+      },
+      "x-amazon-apigateway-integration": {
+        "type": "aws",
+        "uri": "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:145505076425:function:scanpay_one_time_pay:${stageVariables.runwayAlias}/invocations",
+        "httpMethod": "POST",
+        "responses": {
+          ".*\"Status\":400.*": {
+            "statusCode": "400",
+            "responseParameters": {
+              "method.response.header.Access-Control-Allow-Origin": "'*'"
+            },
+            "responseTemplates": {
+              "application/json": "$input.path('$.errorMessage')"
+            }
+          },
+          "default": {
+            "statusCode": "200",
+            "responseParameters": {
+              "method.response.header.Access-Control-Allow-Origin": "'*'"
+            }
+          }
+        },
+        "requestTemplates": {
+          "application/json": "{\r\n#set($inputRoot = $input.path('$'))\r\n\"account_id\" : $input.json('$.account_id'), \r\n\"transaction_type_id\" : $input.json('$.transaction_type_id'),\r\n\"transaction_type\" : $input.json('$.transaction_type'),\r\n\"card\" : $input.json('$.card'),\r\n\"bank_account\": $input.json('$.bank_account'),\r\n\"payment_source_id\": $input.json('$.payment_source_id'),\r\n\"tip_amount\": $input.json('$.tip_amount'),\r\n\"amount\" : $input.json('$.amount'),\r\n\"allow_payer_cover_amount\": $input.json('$.allow_payer_cover_amount'),\r\n\"payer_cover_amount\": $input.json('$.payer_cover_amount'),\r\n\"payer_account_id\" : $input.json('$.payer_account_id'),\r\n\"payer_name\" : $input.json('$.payer_name'),\r\n\"payer_email\" : $input.json('$.payer_email'),\r\n\"payer_zip\" : $input.json('$.payer_zip'),\r\n\"payment_intent_id\" : $input.json('$.payment_intent_id'),\r\n\"sponsor_username\" : $input.json('$.sponsor_username'),\r\n\"no_share_giving\" : $input.json('$.no_share_giving'),\r\n\"existing_payment_source\" : $input.json('$.existing_payment_source'),\r\n\"key_values\" : $input.json('$.key_values'),\r\n\"action_id\" : $input.json('$.action_id'),\r\n\"email_id\" : $input.json('$.email_id') \r\n#if($inputRoot.containsKey('future_use'))\r\n,\"future_use\": \"$inputRoot.future_use\"\r\n#end\r\n#if($inputRoot.containsKey('payment_source_type'))\r\n,\"payment_source_type\": \"$inputRoot.payment_source_type\"\r\n#end\r\n#if($inputRoot.containsKey('recurring_frequency'))\r\n,\"recurring_frequency\": \"$inputRoot.recurring_frequency\"\r\n#end\r\n#if($inputRoot.containsKey('transaction_id'))\r\n,\"transaction_id\": \"$inputRoot.transaction_id\"\r\n#end\r\n#if($inputRoot.containsKey('create_account'))\r\n,\"create_account\": \"$inputRoot.create_account\"\r\n#end\r\n#if($inputRoot.containsKey('email_optin'))\r\n,\"email_optin\": \"$inputRoot.email_optin\"\r\n#end\r\n#if($inputRoot.containsKey('paypal_commerce'))\r\n,\"paypal_commerce\": $input.json('$.paypal_commerce')\r\n#end\r\n#if($inputRoot.containsKey('meta_data'))\r\n,\"meta_data\": $input.json('$.meta_data')\r\n#end\r\n#if($inputRoot.containsKey('additional_info'))\n,\"additional_info\": $input.json('$.additional_info')\n#end\n#if($inputRoot.containsKey('additional_information_version'))\n,\"additional_information_version\": $input.json('$.additional_information_version')\n#end\n#if($inputRoot.containsKey('sms_message_id'))\n,\"sms_message_id\": $input.json('$.sms_message_id')\n#end\n}"
+        },
+        "passthroughBehavior": "when_no_templates",
+        "contentHandling": "CONVERT_TO_TEXT"
+      }
+    },
+    "after": {
+      "responses": {
+        "200": {
+          "description": "200 response",
+          "headers": {
+            "Access-Control-Allow-Origin": {
+              "schema": {
+                "type": "string"
+              }
+            }
+          },
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Empty"
+              }
+            }
+          }
+        },
+        "400": {
+          "description": "400 response",
+          "headers": {
+            "Access-Control-Allow-Origin": {
+              "schema": {
+                "type": "string"
+              }
+            }
+          },
+          "content": {}
+        }
+      },
+      "x-amazon-apigateway-integration": {
+        "uri": "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:145505076425:function:scanpay_one_time_pay:${stageVariables.runwayAlias}/invocations",
+        "httpMethod": "POST",
+        "responses": {
+          ".*\"Status\":400.*": {
+            "statusCode": "400",
+            "responseParameters": {
+              "method.response.header.Access-Control-Allow-Origin": "'*'"
+            },
+            "responseTemplates": {
+              "application/json": "$input.path('$.errorMessage')"
+            }
+          },
+          "default": {
+            "statusCode": "200",
+            "responseParameters": {
+              "method.response.header.Access-Control-Allow-Origin": "'*'"
+            }
+          }
+        },
+        "requestTemplates": {
+          "application/json": "{\r\n#set($inputRoot = $input.path('$'))\r\n\"account_id\" : $input.json('$.account_id'), \r\n\"transaction_type_id\" : $input.json('$.transaction_type_id'),\r\n\"transaction_type\" : $input.json('$.transaction_type'),\r\n\"card\" : $input.json('$.card'),\r\n\"bank_account\": $input.json('$.bank_account'),\r\n\"payment_source_id\": $input.json('$.payment_source_id'),\r\n\"tip_amount\": $input.json('$.tip_amount'),\r\n\"amount\" : $input.json('$.amount'),\r\n\"allow_payer_cover_amount\": $input.json('$.allow_payer_cover_amount'),\r\n\"payer_cover_amount\": $input.json('$.payer_cover_amount'),\r\n\"payer_account_id\" : $input.json('$.payer_account_id'),\r\n\"payer_name\" : $input.json('$.payer_name'),\r\n\"payer_email\" : $input.json('$.payer_email'),\r\n\"payer_zip\" : $input.json('$.payer_zip'),\r\n\"payment_intent_id\" : $input.json('$.payment_intent_id'),\r\n\"sponsor_username\" : $input.json('$.sponsor_username'),\r\n\"no_share_giving\" : $input.json('$.no_share_giving'),\r\n\"existing_payment_source\" : $input.json('$.existing_payment_source'),\r\n\"key_values\" : $input.json('$.key_values'),\r\n\"action_id\" : $input.json('$.action_id'),\r\n\"email_id\" : $input.json('$.email_id') \r\n#if($inputRoot.containsKey('future_use'))\r\n,\"future_use\": \"$inputRoot.future_use\"\r\n#end\r\n#if($inputRoot.containsKey('payment_source_type'))\r\n,\"payment_source_type\": \"$inputRoot.payment_source_type\"\r\n#end\r\n#if($inputRoot.containsKey('recurring_frequency'))\r\n,\"recurring_frequency\": \"$inputRoot.recurring_frequency\"\r\n#end\r\n#if($inputRoot.containsKey('transaction_id'))\r\n,\"transaction_id\": \"$inputRoot.transaction_id\"\r\n#end\r\n#if($inputRoot.containsKey('create_account'))\r\n,\"create_account\": \"$inputRoot.create_account\"\r\n#end\r\n#if($inputRoot.containsKey('email_optin'))\r\n,\"email_optin\": \"$inputRoot.email_optin\"\r\n#end\r\n#if($inputRoot.containsKey('paypal_commerce'))\r\n,\"paypal_commerce\": $input.json('$.paypal_commerce')\r\n#end\r\n#if($inputRoot.containsKey('meta_data'))\r\n,\"meta_data\": $input.json('$.meta_data')\r\n#end\r\n#if($inputRoot.containsKey('additional_info'))\n,\"additional_info\": $input.json('$.additional_info')\n#end\n#if($inputRoot.containsKey('additional_information_version'))\n,\"additional_information_version\": $input.json('$.additional_information_version')\n#end\n#if($inputRoot.containsKey('sms_message_id'))\n,\"sms_message_id\": $input.json('$.sms_message_id')\n#end\n#if($inputRoot.containsKey('social_post_id'))\n,\"social_post_id\": $input.json('$.social_post_id')\n#end\n}"
+        },
+        "passthroughBehavior": "when_no_templates",
+        "contentHandling": "CONVERT_TO_TEXT",
+        "type": "aws"
+      }
+    }
+  },
+  {
+    "path": "/organization/{organizationid}/social/posts/{postid}/cancel",
+    "method": "post",
+    "inSocialScope": true,
+    "before": {
+      "parameters": [
+        {
+          "name": "postid",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "name": "organizationid",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "200 response",
+          "headers": {
+            "Access-Control-Allow-Origin": {
+              "schema": {
+                "type": "string"
+              }
+            }
+          },
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Empty"
+              }
+            }
+          }
+        },
+        "400": {
+          "description": "400 response",
+          "headers": {
+            "Access-Control-Allow-Origin": {
+              "schema": {
+                "type": "string"
+              }
+            }
+          },
+          "content": {}
+        }
+      },
+      "security": [
+        {
+          "CognitoAuth": []
+        }
+      ],
+      "x-amazon-apigateway-integration": {
+        "type": "aws",
+        "uri": "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:145505076425:function:scanpay_cancel_social_post:${stageVariables.runwayAlias}/invocations",
+        "httpMethod": "POST",
+        "responses": {
+          ".*\"Status\":400.*": {
+            "statusCode": "400",
+            "responseParameters": {
+              "method.response.header.Access-Control-Allow-Origin": "'*'"
+            },
+            "responseTemplates": {
+              "application/json": "$input.path('$.errorMessage')\r\n"
+            }
+          },
+          "default": {
+            "statusCode": "200",
+            "responseParameters": {
+              "method.response.header.Access-Control-Allow-Origin": "'*'"
+            }
+          }
+        },
+        "requestTemplates": {
+          "application/json": "{\n\"organization_id\": \"$input.params('organizationid')\",\n\"post_id\": \"$input.params('postid')\"\n}"
+        },
+        "passthroughBehavior": "when_no_match",
+        "timeoutInMillis": 29000,
+        "contentHandling": "CONVERT_TO_TEXT"
+      }
+    },
+    "after": {
+      "parameters": [
+        {
+          "name": "postid",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "name": "organizationid",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "200 response",
+          "headers": {
+            "Access-Control-Allow-Origin": {
+              "schema": {
+                "type": "string"
+              }
+            }
+          },
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Empty"
+              }
+            }
+          }
+        },
+        "400": {
+          "description": "400 response",
+          "headers": {
+            "Access-Control-Allow-Origin": {
+              "schema": {
+                "type": "string"
+              }
+            }
+          },
+          "content": {}
+        }
+      },
+      "security": [
+        {
+          "CognitoAuth": []
+        }
+      ],
+      "x-amazon-apigateway-integration": {
+        "uri": "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:145505076425:function:scanpay_cancel_social_post:${stageVariables.runwayAlias}/invocations",
+        "httpMethod": "POST",
+        "responses": {
+          ".*\"Status\":400.*": {
+            "statusCode": "400",
+            "responseParameters": {
+              "method.response.header.Access-Control-Allow-Origin": "'*'"
+            },
+            "responseTemplates": {
+              "application/json": "$input.path('$.errorMessage')\r\n"
+            }
+          },
+          "default": {
+            "statusCode": "200",
+            "responseParameters": {
+              "method.response.header.Access-Control-Allow-Origin": "'*'"
+            }
+          }
+        },
+        "requestTemplates": {
+          "application/json": "{\n\"requestContext\": {\"authorizer\": {\"claims\": {\"sub\": \"$util.escapeJavaScript($context.authorizer.claims.sub).replaceAll(\"\\\\'\",\"'\")\"}}},\n\"organization_id\": \"$input.params('organizationid')\",\n\"post_id\": \"$input.params('postid')\"\n}"
+        },
+        "passthroughBehavior": "never",
+        "timeoutInMillis": 29000,
+        "contentHandling": "CONVERT_TO_TEXT",
+        "type": "aws"
+      }
+    }
+  },
+  {
+    "path": "/organization/{organizationid}/social/posts/{postid}/analytics",
+    "method": "get",
+    "inSocialScope": true,
+    "before": {
+      "parameters": [
+        {
+          "name": "postid",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "name": "organizationid",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "200 response",
+          "headers": {
+            "Access-Control-Allow-Origin": {
+              "schema": {
+                "type": "string"
+              }
+            }
+          },
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Empty"
+              }
+            }
+          }
+        },
+        "400": {
+          "description": "400 response",
+          "headers": {
+            "Access-Control-Allow-Origin": {
+              "schema": {
+                "type": "string"
+              }
+            }
+          },
+          "content": {}
+        }
+      },
+      "x-amazon-apigateway-integration": {
+        "type": "aws",
+        "uri": "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:145505076425:function:scanpay_get_social_post_analytics:${stageVariables.runwayAlias}/invocations",
+        "httpMethod": "POST",
+        "responses": {
+          ".*\"Status\":400.*": {
+            "statusCode": "400",
+            "responseParameters": {
+              "method.response.header.Access-Control-Allow-Origin": "'*'"
+            },
+            "responseTemplates": {
+              "application/json": "$input.path('$.errorMessage')\r\n"
+            }
+          },
+          "default": {
+            "statusCode": "200",
+            "responseParameters": {
+              "method.response.header.Access-Control-Allow-Origin": "'*'"
+            }
+          }
+        },
+        "requestTemplates": {
+          "application/json": "{\n\"organization_id\": \"$input.params('organizationid')\",\n\"post_id\": \"$input.params('postid')\"\n}"
+        },
+        "passthroughBehavior": "when_no_match",
+        "timeoutInMillis": 29000,
+        "contentHandling": "CONVERT_TO_TEXT"
+      }
+    },
+    "after": {
+      "parameters": [
+        {
+          "name": "postid",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "name": "organizationid",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "200 response",
+          "headers": {
+            "Access-Control-Allow-Origin": {
+              "schema": {
+                "type": "string"
+              }
+            }
+          },
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Empty"
+              }
+            }
+          }
+        },
+        "400": {
+          "description": "400 response",
+          "headers": {
+            "Access-Control-Allow-Origin": {
+              "schema": {
+                "type": "string"
+              }
+            }
+          },
+          "content": {}
+        }
+      },
+      "security": [
+        {
+          "CognitoAuth": []
+        }
+      ],
+      "x-amazon-apigateway-integration": {
+        "uri": "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:145505076425:function:scanpay_get_social_post_analytics:${stageVariables.runwayAlias}/invocations",
+        "httpMethod": "POST",
+        "responses": {
+          ".*\"Status\":400.*": {
+            "statusCode": "400",
+            "responseParameters": {
+              "method.response.header.Access-Control-Allow-Origin": "'*'"
+            },
+            "responseTemplates": {
+              "application/json": "$input.path('$.errorMessage')\r\n"
+            }
+          },
+          "default": {
+            "statusCode": "200",
+            "responseParameters": {
+              "method.response.header.Access-Control-Allow-Origin": "'*'"
+            }
+          }
+        },
+        "requestTemplates": {
+          "application/json": "{\n\"queryStringParameters\": {\n#set($query = $input.params().querystring)\n#set($separator = \"\")\n#foreach($key in [\"contract\", \"post_id\", \"campaign_id\", \"from_utc\", \"to_utc\", \"outcome_before_utc\", \"view\", \"limit\", \"next_token\"])\n#if($query.containsKey($key))\n$separator\"$key\": \"$util.escapeJavaScript($query.get($key)).replaceAll(\"\\\\'\",\"'\")\"\n#set($separator = \",\")\n#end\n#end\n},\n\"requestContext\": {\"authorizer\": {\"claims\": {\"sub\": \"$util.escapeJavaScript($context.authorizer.claims.sub).replaceAll(\"\\\\'\",\"'\")\"}}},\n\"organization_id\": \"$input.params('organizationid')\",\n\"post_id\": \"$input.params('postid')\"\n}"
+        },
+        "passthroughBehavior": "never",
+        "timeoutInMillis": 29000,
+        "contentHandling": "CONVERT_TO_TEXT",
+        "type": "aws"
+      }
+    }
+  },
+  {
+    "path": "/organization/{organizationid}/social/posts",
+    "method": "get",
+    "inSocialScope": true,
+    "before": {
+      "parameters": [
+        {
+          "name": "organizationid",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "200 response",
+          "headers": {
+            "Access-Control-Allow-Origin": {
+              "schema": {
+                "type": "string"
+              }
+            }
+          },
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Empty"
+              }
+            }
+          }
+        },
+        "400": {
+          "description": "400 response",
+          "headers": {
+            "Access-Control-Allow-Origin": {
+              "schema": {
+                "type": "string"
+              }
+            }
+          },
+          "content": {}
+        }
+      },
+      "x-amazon-apigateway-integration": {
+        "type": "aws",
+        "uri": "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:145505076425:function:scanpay_get_social_posts:${stageVariables.runwayAlias}/invocations",
+        "httpMethod": "POST",
+        "responses": {
+          ".*\"Status\":400.*": {
+            "statusCode": "400",
+            "responseParameters": {
+              "method.response.header.Access-Control-Allow-Origin": "'*'"
+            },
+            "responseTemplates": {
+              "application/json": "$input.path('$.errorMessage')\r\n"
+            }
+          },
+          "default": {
+            "statusCode": "200",
+            "responseParameters": {
+              "method.response.header.Access-Control-Allow-Origin": "'*'"
+            }
+          }
+        },
+        "requestTemplates": {
+          "application/json": "{\n\"organization_id\": \"$input.params('organizationid')\"\n}"
+        },
+        "passthroughBehavior": "when_no_match",
+        "timeoutInMillis": 29000,
+        "contentHandling": "CONVERT_TO_TEXT"
+      }
+    },
+    "after": {
+      "parameters": [
+        {
+          "name": "organizationid",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "200 response",
+          "headers": {
+            "Access-Control-Allow-Origin": {
+              "schema": {
+                "type": "string"
+              }
+            }
+          },
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Empty"
+              }
+            }
+          }
+        },
+        "400": {
+          "description": "400 response",
+          "headers": {
+            "Access-Control-Allow-Origin": {
+              "schema": {
+                "type": "string"
+              }
+            }
+          },
+          "content": {}
+        }
+      },
+      "security": [
+        {
+          "CognitoAuth": []
+        }
+      ],
+      "x-amazon-apigateway-integration": {
+        "uri": "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:145505076425:function:scanpay_get_social_posts:${stageVariables.runwayAlias}/invocations",
+        "httpMethod": "POST",
+        "responses": {
+          ".*\"Status\":400.*": {
+            "statusCode": "400",
+            "responseParameters": {
+              "method.response.header.Access-Control-Allow-Origin": "'*'"
+            },
+            "responseTemplates": {
+              "application/json": "$input.path('$.errorMessage')\r\n"
+            }
+          },
+          "default": {
+            "statusCode": "200",
+            "responseParameters": {
+              "method.response.header.Access-Control-Allow-Origin": "'*'"
+            }
+          }
+        },
+        "requestTemplates": {
+          "application/json": "{\n\"requestContext\": {\"authorizer\": {\"claims\": {\"sub\": \"$util.escapeJavaScript($context.authorizer.claims.sub).replaceAll(\"\\\\'\",\"'\")\"}}},\n\"organization_id\": \"$input.params('organizationid')\"\n}"
+        },
+        "passthroughBehavior": "never",
+        "timeoutInMillis": 29000,
+        "contentHandling": "CONVERT_TO_TEXT",
+        "type": "aws"
+      }
+    }
+  },
+  {
+    "path": "/organization/{organizationid}/social/posts",
+    "method": "post",
+    "inSocialScope": true,
+    "before": {
+      "parameters": [
+        {
+          "name": "organizationid",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "200 response",
+          "headers": {
+            "Access-Control-Allow-Origin": {
+              "schema": {
+                "type": "string"
+              }
+            }
+          },
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Empty"
+              }
+            }
+          }
+        },
+        "400": {
+          "description": "400 response",
+          "headers": {
+            "Access-Control-Allow-Origin": {
+              "schema": {
+                "type": "string"
+              }
+            }
+          },
+          "content": {}
+        }
+      },
+      "security": [
+        {
+          "CognitoAuth": []
+        }
+      ],
+      "x-amazon-apigateway-integration": {
+        "type": "aws",
+        "uri": "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:145505076425:function:scanpay_create_social_post:${stageVariables.runwayAlias}/invocations",
+        "httpMethod": "POST",
+        "responses": {
+          ".*\"Status\":400.*": {
+            "statusCode": "400",
+            "responseParameters": {
+              "method.response.header.Access-Control-Allow-Origin": "'*'"
+            },
+            "responseTemplates": {
+              "application/json": "$input.path('$.errorMessage')\r\n"
+            }
+          },
+          "default": {
+            "statusCode": "200",
+            "responseParameters": {
+              "method.response.header.Access-Control-Allow-Origin": "'*'"
+            }
+          }
+        },
+        "requestTemplates": {
+          "application/json": "{\r\n\"organization_id\": \"$input.params('organizationid')\",\r\n  \"resource_type\": $input.json('$.resource_type'),\r\n  \"resource_id\": $input.json('$.resource_id'),\r\n  \"outreach_item_id\": $input.json('$.outreach_item_id'),\r\n  \"content\": $input.json('$.content'),\r\n  \"destination_url\": $input.json('$.destination_url'),\r\n  \"platforms\": $input.json('$.platforms')\n#if($input.path('$').containsKey('meta_social'))\n  ,\"meta_social\":$input.json('$.meta_social')\n#end\n}"
+        },
+        "passthroughBehavior": "when_no_match",
+        "timeoutInMillis": 29000,
+        "contentHandling": "CONVERT_TO_TEXT"
+      }
+    },
+    "after": {
+      "parameters": [
+        {
+          "name": "organizationid",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "200 response",
+          "headers": {
+            "Access-Control-Allow-Origin": {
+              "schema": {
+                "type": "string"
+              }
+            }
+          },
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Empty"
+              }
+            }
+          }
+        },
+        "400": {
+          "description": "400 response",
+          "headers": {
+            "Access-Control-Allow-Origin": {
+              "schema": {
+                "type": "string"
+              }
+            }
+          },
+          "content": {}
+        }
+      },
+      "security": [
+        {
+          "CognitoAuth": []
+        }
+      ],
+      "x-amazon-apigateway-integration": {
+        "uri": "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:145505076425:function:scanpay_create_social_post:${stageVariables.runwayAlias}/invocations",
+        "httpMethod": "POST",
+        "responses": {
+          ".*\"Status\":400.*": {
+            "statusCode": "400",
+            "responseParameters": {
+              "method.response.header.Access-Control-Allow-Origin": "'*'"
+            },
+            "responseTemplates": {
+              "application/json": "$input.path('$.errorMessage')\r\n"
+            }
+          },
+          "default": {
+            "statusCode": "200",
+            "responseParameters": {
+              "method.response.header.Access-Control-Allow-Origin": "'*'"
+            }
+          }
+        },
+        "requestTemplates": {
+          "application/json": "{\n\"requestContext\": {\"authorizer\": {\"claims\": {\"sub\": \"$util.escapeJavaScript($context.authorizer.claims.sub).replaceAll(\"\\\\'\",\"'\")\"}}},\r\n\"organization_id\": \"$input.params('organizationid')\",\r\n  \"resource_type\": $input.json('$.resource_type'),\r\n  \"resource_id\": $input.json('$.resource_id'),\r\n  \"outreach_item_id\": $input.json('$.outreach_item_id'),\r\n  \"content\": $input.json('$.content'),\r\n  \"destination_url\": $input.json('$.destination_url'),\r\n  \"platforms\": $input.json('$.platforms')\n#if($input.path('$').containsKey('meta_social'))\n  ,\"meta_social\":$input.json('$.meta_social')\n#end\n}"
+        },
+        "passthroughBehavior": "never",
+        "timeoutInMillis": 29000,
+        "contentHandling": "CONVERT_TO_TEXT",
+        "type": "aws"
+      }
+    }
+  },
+  {
+    "path": "/social/analytics",
+    "method": "get",
+    "inSocialScope": true,
+    "before": null,
+    "after": {
+      "security": [
+        {
+          "CognitoAuth": []
+        }
+      ],
+      "x-amazon-apigateway-integration": {
+        "uri": "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:145505076425:function:scanpay_get_social_post_analytics:${stageVariables.runwayAlias}/invocations",
+        "httpMethod": "POST",
+        "passthroughBehavior": "when_no_match",
+        "responseTransferMode": "BUFFERED",
+        "type": "aws_proxy"
+      }
+    }
+  },
+  {
+    "path": "/social/analytics",
+    "method": "options",
+    "inSocialScope": true,
+    "before": null,
+    "after": {
+      "responses": {
+        "200": {
+          "description": "200 response",
+          "headers": {
+            "Access-Control-Allow-Origin": {
+              "schema": {
+                "type": "string"
+              }
+            },
+            "Access-Control-Allow-Methods": {
+              "schema": {
+                "type": "string"
+              }
+            },
+            "Access-Control-Allow-Headers": {
+              "schema": {
+                "type": "string"
+              }
+            }
+          },
+          "content": {}
+        }
+      },
+      "x-amazon-apigateway-integration": {
+        "responses": {
+          "default": {
+            "statusCode": "200",
+            "responseParameters": {
+              "method.response.header.Access-Control-Allow-Methods": "'GET,OPTIONS'",
+              "method.response.header.Access-Control-Allow-Headers": "'Content-Type,Authorization,X-Authorization-SP'",
+              "method.response.header.Access-Control-Allow-Origin": "'*'"
+            }
+          }
+        },
+        "requestTemplates": {
+          "application/json": "{\"statusCode\":200}"
+        },
+        "passthroughBehavior": "when_no_match",
+        "type": "mock"
+      }
+    }
+  }
+]

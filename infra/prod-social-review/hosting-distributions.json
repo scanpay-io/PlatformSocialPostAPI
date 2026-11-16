@@ -1,0 +1,1884 @@
+{
+  "DistributionList": {
+    "Items": [
+      {
+        "Id": "EP3CSY54R3V37",
+        "ARN": "arn:aws:cloudfront::245092049965:distribution/EP3CSY54R3V37",
+        "ETag": "E1MO3WK267FT1Z",
+        "Status": "Deployed",
+        "LastModifiedTime": "2023-06-26T15:58:43.749000+00:00",
+        "DomainName": "du3ekjaqia80q.cloudfront.net",
+        "Aliases": {
+          "Quantity": 1,
+          "Items": [
+            "givenow.gogiveanywhere.com"
+          ]
+        },
+        "Origins": {
+          "Quantity": 1,
+          "Items": [
+            {
+              "Id": "givenow1.gogiveanywhere.com.s3-website-us-east-1.amazonaws.com",
+              "DomainName": "givenow1.gogiveanywhere.com.s3-website-us-east-1.amazonaws.com",
+              "OriginPath": "",
+              "CustomHeaders": {
+                "Quantity": 0
+              },
+              "CustomOriginConfig": {
+                "HTTPPort": 80,
+                "HTTPSPort": 443,
+                "OriginProtocolPolicy": "http-only",
+                "OriginSslProtocols": {
+                  "Quantity": 1,
+                  "Items": [
+                    "TLSv1.2"
+                  ]
+                },
+                "OriginReadTimeout": 30,
+                "OriginKeepaliveTimeout": 5
+              },
+              "ConnectionAttempts": 3,
+              "ConnectionTimeout": 10,
+              "OriginShield": {
+                "Enabled": false
+              },
+              "OriginAccessControlId": ""
+            }
+          ]
+        },
+        "OriginGroups": {
+          "Quantity": 0
+        },
+        "DefaultCacheBehavior": {
+          "TargetOriginId": "givenow1.gogiveanywhere.com.s3-website-us-east-1.amazonaws.com",
+          "TrustedSigners": {
+            "Enabled": false,
+            "Quantity": 0
+          },
+          "TrustedKeyGroups": {
+            "Enabled": false,
+            "Quantity": 0
+          },
+          "ViewerProtocolPolicy": "redirect-to-https",
+          "AllowedMethods": {
+            "Quantity": 2,
+            "Items": [
+              "HEAD",
+              "GET"
+            ],
+            "CachedMethods": {
+              "Quantity": 2,
+              "Items": [
+                "HEAD",
+                "GET"
+              ]
+            }
+          },
+          "SmoothStreaming": false,
+          "Compress": true,
+          "LambdaFunctionAssociations": {
+            "Quantity": 0
+          },
+          "FunctionAssociations": {
+            "Quantity": 0
+          },
+          "FieldLevelEncryptionId": "",
+          "CachePolicyId": "658327ea-f89d-4fab-a63d-7e88639e58f6",
+          "GrpcConfig": {
+            "Enabled": false
+          }
+        },
+        "CacheBehaviors": {
+          "Quantity": 0
+        },
+        "CustomErrorResponses": {
+          "Quantity": 0
+        },
+        "Comment": "",
+        "PriceClass": "PriceClass_All",
+        "Enabled": true,
+        "ViewerCertificate": {
+          "CloudFrontDefaultCertificate": false,
+          "ACMCertificateArn": "arn:aws:acm:us-east-1:245092049965:certificate/385abd5f-b406-4931-8945-882477163099",
+          "SSLSupportMethod": "sni-only",
+          "MinimumProtocolVersion": "TLSv1.2_2021",
+          "Certificate": "arn:aws:acm:us-east-1:245092049965:certificate/385abd5f-b406-4931-8945-882477163099",
+          "CertificateSource": "acm"
+        },
+        "Restrictions": {
+          "GeoRestriction": {
+            "RestrictionType": "none",
+            "Quantity": 0
+          }
+        },
+        "WebACLId": "",
+        "HttpVersion": "HTTP2",
+        "IsIPV6Enabled": true,
+        "AliasICPRecordals": [
+          {
+            "CNAME": "givenow.gogiveanywhere.com",
+            "ICPRecordalStatus": "APPROVED"
+          }
+        ],
+        "Staging": false,
+        "ConnectionMode": "direct"
+      },
+      {
+        "Id": "E1PIY8XCR3AMMP",
+        "ARN": "arn:aws:cloudfront::245092049965:distribution/E1PIY8XCR3AMMP",
+        "ETag": "E22L3IEN6WJLQA",
+        "Status": "Deployed",
+        "LastModifiedTime": "2023-05-30T03:25:15.865000+00:00",
+        "DomainName": "d2yd2qy4n72ift.cloudfront.net",
+        "Aliases": {
+          "Quantity": 1,
+          "Items": [
+            "stage.givenow.gogiveanywhere.com"
+          ]
+        },
+        "Origins": {
+          "Quantity": 1,
+          "Items": [
+            {
+              "Id": "givenow2.gogiveanywhere.com.s3-website-us-east-1.amazonaws.com",
+              "DomainName": "givenow2.gogiveanywhere.com.s3-website-us-east-1.amazonaws.com",
+              "OriginPath": "",
+              "CustomHeaders": {
+                "Quantity": 0
+              },
+              "CustomOriginConfig": {
+                "HTTPPort": 80,
+                "HTTPSPort": 443,
+                "OriginProtocolPolicy": "http-only",
+                "OriginSslProtocols": {
+                  "Quantity": 1,
+                  "Items": [
+                    "TLSv1.2"
+                  ]
+                },
+                "OriginReadTimeout": 30,
+                "OriginKeepaliveTimeout": 5
+              },
+              "ConnectionAttempts": 3,
+              "ConnectionTimeout": 10,
+              "OriginShield": {
+                "Enabled": false
+              },
+              "OriginAccessControlId": ""
+            }
+          ]
+        },
+        "OriginGroups": {
+          "Quantity": 0
+        },
+        "DefaultCacheBehavior": {
+          "TargetOriginId": "givenow2.gogiveanywhere.com.s3-website-us-east-1.amazonaws.com",
+          "TrustedSigners": {
+            "Enabled": false,
+            "Quantity": 0
+          },
+          "TrustedKeyGroups": {
+            "Enabled": false,
+            "Quantity": 0
+          },
+          "ViewerProtocolPolicy": "allow-all",
+          "AllowedMethods": {
+            "Quantity": 2,
+            "Items": [
+              "HEAD",
+              "GET"
+            ],
+            "CachedMethods": {
+              "Quantity": 2,
+              "Items": [
+                "HEAD",
+                "GET"
+              ]
+            }
+          },
+          "SmoothStreaming": false,
+          "Compress": true,
+          "LambdaFunctionAssociations": {
+            "Quantity": 0
+          },
+          "FunctionAssociations": {
+            "Quantity": 0
+          },
+          "FieldLevelEncryptionId": "",
+          "CachePolicyId": "658327ea-f89d-4fab-a63d-7e88639e58f6",
+          "GrpcConfig": {
+            "Enabled": false
+          }
+        },
+        "CacheBehaviors": {
+          "Quantity": 0
+        },
+        "CustomErrorResponses": {
+          "Quantity": 0
+        },
+        "Comment": "",
+        "PriceClass": "PriceClass_All",
+        "Enabled": true,
+        "ViewerCertificate": {
+          "CloudFrontDefaultCertificate": false,
+          "ACMCertificateArn": "arn:aws:acm:us-east-1:245092049965:certificate/439635a7-3a81-4bd8-a4eb-abf88cdd5168",
+          "SSLSupportMethod": "sni-only",
+          "MinimumProtocolVersion": "TLSv1.2_2021",
+          "Certificate": "arn:aws:acm:us-east-1:245092049965:certificate/439635a7-3a81-4bd8-a4eb-abf88cdd5168",
+          "CertificateSource": "acm"
+        },
+        "Restrictions": {
+          "GeoRestriction": {
+            "RestrictionType": "none",
+            "Quantity": 0
+          }
+        },
+        "WebACLId": "",
+        "HttpVersion": "HTTP2",
+        "IsIPV6Enabled": true,
+        "AliasICPRecordals": [
+          {
+            "CNAME": "stage.givenow.gogiveanywhere.com",
+            "ICPRecordalStatus": "APPROVED"
+          }
+        ],
+        "Staging": false,
+        "ConnectionMode": "direct"
+      },
+      {
+        "Id": "E3293012YDHW2L",
+        "ARN": "arn:aws:cloudfront::245092049965:distribution/E3293012YDHW2L",
+        "ETag": "E3L5TMISR713TB",
+        "Status": "Deployed",
+        "LastModifiedTime": "2026-10-31T18:11:09.508000+00:00",
+        "DomainName": "d1gzab1prr6pxw.cloudfront.net",
+        "Aliases": {
+          "Quantity": 2,
+          "Items": [
+            "gogiveanywhere.com",
+            "www.gogiveanywhere.com"
+          ]
+        },
+        "Origins": {
+          "Quantity": 1,
+          "Items": [
+            {
+              "Id": "gogiveanywhere1.com.s3-website-us-east-1.amazonaws.com",
+              "DomainName": "gogiveanywhere1.com.s3-website-us-east-1.amazonaws.com",
+              "OriginPath": "",
+              "CustomHeaders": {
+                "Quantity": 0
+              },
+              "CustomOriginConfig": {
+                "HTTPPort": 80,
+                "HTTPSPort": 443,
+                "OriginProtocolPolicy": "http-only",
+                "OriginSslProtocols": {
+                  "Quantity": 1,
+                  "Items": [
+                    "TLSv1.2"
+                  ]
+                },
+                "OriginReadTimeout": 30,
+                "OriginKeepaliveTimeout": 5
+              },
+              "ConnectionAttempts": 3,
+              "ConnectionTimeout": 10,
+              "OriginShield": {
+                "Enabled": false
+              },
+              "OriginAccessControlId": ""
+            }
+          ]
+        },
+        "OriginGroups": {
+          "Quantity": 0
+        },
+        "DefaultCacheBehavior": {
+          "TargetOriginId": "gogiveanywhere1.com.s3-website-us-east-1.amazonaws.com",
+          "TrustedSigners": {
+            "Enabled": false,
+            "Quantity": 0
+          },
+          "TrustedKeyGroups": {
+            "Enabled": false,
+            "Quantity": 0
+          },
+          "ViewerProtocolPolicy": "redirect-to-https",
+          "AllowedMethods": {
+            "Quantity": 2,
+            "Items": [
+              "HEAD",
+              "GET"
+            ],
+            "CachedMethods": {
+              "Quantity": 2,
+              "Items": [
+                "HEAD",
+                "GET"
+              ]
+            }
+          },
+          "SmoothStreaming": false,
+          "Compress": true,
+          "LambdaFunctionAssociations": {
+            "Quantity": 0
+          },
+          "FunctionAssociations": {
+            "Quantity": 0
+          },
+          "FieldLevelEncryptionId": "",
+          "CachePolicyId": "658327ea-f89d-4fab-a63d-7e88639e58f6",
+          "GrpcConfig": {
+            "Enabled": false
+          }
+        },
+        "CacheBehaviors": {
+          "Quantity": 0
+        },
+        "CustomErrorResponses": {
+          "Quantity": 1,
+          "Items": [
+            {
+              "ErrorCode": 404,
+              "ResponsePagePath": "/index.html",
+              "ResponseCode": "200",
+              "ErrorCachingMinTTL": 0
+            }
+          ]
+        },
+        "Comment": "",
+        "PriceClass": "PriceClass_All",
+        "Enabled": true,
+        "ViewerCertificate": {
+          "CloudFrontDefaultCertificate": false,
+          "ACMCertificateArn": "arn:aws:acm:us-east-1:245092049965:certificate/385abd5f-b406-4931-8945-882477163099",
+          "SSLSupportMethod": "sni-only",
+          "MinimumProtocolVersion": "TLSv1.2_2021",
+          "Certificate": "arn:aws:acm:us-east-1:245092049965:certificate/385abd5f-b406-4931-8945-882477163099",
+          "CertificateSource": "acm"
+        },
+        "Restrictions": {
+          "GeoRestriction": {
+            "RestrictionType": "none",
+            "Quantity": 0
+          }
+        },
+        "WebACLId": "",
+        "HttpVersion": "HTTP2",
+        "IsIPV6Enabled": true,
+        "AliasICPRecordals": [
+          {
+            "CNAME": "www.gogiveanywhere.com",
+            "ICPRecordalStatus": "APPROVED"
+          },
+          {
+            "CNAME": "gogiveanywhere.com",
+            "ICPRecordalStatus": "APPROVED"
+          }
+        ],
+        "Staging": false,
+        "ConnectionMode": "direct"
+      },
+      {
+        "Id": "EYXLHZQDOM7BL",
+        "ARN": "arn:aws:cloudfront::245092049965:distribution/EYXLHZQDOM7BL",
+        "ETag": "E1F091YITILSD6",
+        "Status": "Deployed",
+        "LastModifiedTime": "2026-10-23T21:31:58.266000+00:00",
+        "DomainName": "d333er2us9oi4g.cloudfront.net",
+        "Aliases": {
+          "Quantity": 1,
+          "Items": [
+            "stage.gogiveanywhere.com"
+          ]
+        },
+        "Origins": {
+          "Quantity": 1,
+          "Items": [
+            {
+              "Id": "gogiveanywhere2.com.s3-website-us-east-1.amazonaws.com",
+              "DomainName": "gogiveanywhere2.com.s3-website-us-east-1.amazonaws.com",
+              "OriginPath": "",
+              "CustomHeaders": {
+                "Quantity": 0
+              },
+              "CustomOriginConfig": {
+                "HTTPPort": 80,
+                "HTTPSPort": 443,
+                "OriginProtocolPolicy": "http-only",
+                "OriginSslProtocols": {
+                  "Quantity": 1,
+                  "Items": [
+                    "TLSv1.2"
+                  ]
+                },
+                "OriginReadTimeout": 30,
+                "OriginKeepaliveTimeout": 5
+              },
+              "ConnectionAttempts": 3,
+              "ConnectionTimeout": 10,
+              "OriginShield": {
+                "Enabled": false
+              },
+              "OriginAccessControlId": ""
+            }
+          ]
+        },
+        "OriginGroups": {
+          "Quantity": 0
+        },
+        "DefaultCacheBehavior": {
+          "TargetOriginId": "gogiveanywhere2.com.s3-website-us-east-1.amazonaws.com",
+          "TrustedSigners": {
+            "Enabled": false,
+            "Quantity": 0
+          },
+          "TrustedKeyGroups": {
+            "Enabled": false,
+            "Quantity": 0
+          },
+          "ViewerProtocolPolicy": "redirect-to-https",
+          "AllowedMethods": {
+            "Quantity": 2,
+            "Items": [
+              "HEAD",
+              "GET"
+            ],
+            "CachedMethods": {
+              "Quantity": 2,
+              "Items": [
+                "HEAD",
+                "GET"
+              ]
+            }
+          },
+          "SmoothStreaming": false,
+          "Compress": true,
+          "LambdaFunctionAssociations": {
+            "Quantity": 0
+          },
+          "FunctionAssociations": {
+            "Quantity": 0
+          },
+          "FieldLevelEncryptionId": "",
+          "CachePolicyId": "658327ea-f89d-4fab-a63d-7e88639e58f6",
+          "GrpcConfig": {
+            "Enabled": false
+          }
+        },
+        "CacheBehaviors": {
+          "Quantity": 0
+        },
+        "CustomErrorResponses": {
+          "Quantity": 2,
+          "Items": [
+            {
+              "ErrorCode": 403,
+              "ResponsePagePath": "/index.html",
+              "ResponseCode": "200",
+              "ErrorCachingMinTTL": 0
+            },
+            {
+              "ErrorCode": 404,
+              "ResponsePagePath": "/index.html",
+              "ResponseCode": "200",
+              "ErrorCachingMinTTL": 0
+            }
+          ]
+        },
+        "Comment": "",
+        "PriceClass": "PriceClass_All",
+        "Enabled": true,
+        "ViewerCertificate": {
+          "CloudFrontDefaultCertificate": false,
+          "ACMCertificateArn": "arn:aws:acm:us-east-1:245092049965:certificate/385abd5f-b406-4931-8945-882477163099",
+          "SSLSupportMethod": "sni-only",
+          "MinimumProtocolVersion": "TLSv1.2_2021",
+          "Certificate": "arn:aws:acm:us-east-1:245092049965:certificate/385abd5f-b406-4931-8945-882477163099",
+          "CertificateSource": "acm"
+        },
+        "Restrictions": {
+          "GeoRestriction": {
+            "RestrictionType": "none",
+            "Quantity": 0
+          }
+        },
+        "WebACLId": "",
+        "HttpVersion": "HTTP2",
+        "IsIPV6Enabled": true,
+        "AliasICPRecordals": [
+          {
+            "CNAME": "stage.gogiveanywhere.com",
+            "ICPRecordalStatus": "APPROVED"
+          }
+        ],
+        "Staging": false,
+        "ConnectionMode": "direct"
+      },
+      {
+        "Id": "E3DKB16SA1IKTN",
+        "ARN": "arn:aws:cloudfront::245092049965:distribution/E3DKB16SA1IKTN",
+        "ETag": "E5QN7R6ISOVNH",
+        "Status": "Deployed",
+        "LastModifiedTime": "2026-11-09T23:20:13.957000+00:00",
+        "DomainName": "d3rym4gtyz3h52.cloudfront.net",
+        "Aliases": {
+          "Quantity": 1,
+          "Items": [
+            "tinyurl.gogiveanywhere.com"
+          ]
+        },
+        "Origins": {
+          "Quantity": 1,
+          "Items": [
+            {
+              "Id": "tinyurl.gogiveanywhere.com.s3.us-east-1.amazonaws.com",
+              "DomainName": "tinyurl1gogiveanywherecom-env.eba-ussgsbpf.us-east-1.elasticbeanstalk.com",
+              "OriginPath": "",
+              "CustomHeaders": {
+                "Quantity": 0
+              },
+              "CustomOriginConfig": {
+                "HTTPPort": 80,
+                "HTTPSPort": 443,
+                "OriginProtocolPolicy": "http-only",
+                "OriginSslProtocols": {
+                  "Quantity": 4,
+                  "Items": [
+                    "SSLv3",
+                    "TLSv1",
+                    "TLSv1.1",
+                    "TLSv1.2"
+                  ]
+                },
+                "OriginReadTimeout": 30,
+                "OriginKeepaliveTimeout": 5
+              },
+              "ConnectionAttempts": 3,
+              "ConnectionTimeout": 10,
+              "OriginShield": {
+                "Enabled": false
+              },
+              "OriginAccessControlId": ""
+            }
+          ]
+        },
+        "OriginGroups": {
+          "Quantity": 0
+        },
+        "DefaultCacheBehavior": {
+          "TargetOriginId": "tinyurl.gogiveanywhere.com.s3.us-east-1.amazonaws.com",
+          "TrustedSigners": {
+            "Enabled": false,
+            "Quantity": 0
+          },
+          "TrustedKeyGroups": {
+            "Enabled": false,
+            "Quantity": 0
+          },
+          "ViewerProtocolPolicy": "allow-all",
+          "AllowedMethods": {
+            "Quantity": 2,
+            "Items": [
+              "HEAD",
+              "GET"
+            ],
+            "CachedMethods": {
+              "Quantity": 2,
+              "Items": [
+                "HEAD",
+                "GET"
+              ]
+            }
+          },
+          "SmoothStreaming": false,
+          "Compress": true,
+          "LambdaFunctionAssociations": {
+            "Quantity": 0
+          },
+          "FunctionAssociations": {
+            "Quantity": 1,
+            "Items": [
+              {
+                "FunctionARN": "arn:aws:cloudfront::245092049965:function/giveanywhere-sms-branded-redirect",
+                "EventType": "viewer-request"
+              }
+            ]
+          },
+          "FieldLevelEncryptionId": "",
+          "CachePolicyId": "658327ea-f89d-4fab-a63d-7e88639e58f6",
+          "GrpcConfig": {
+            "Enabled": false
+          }
+        },
+        "CacheBehaviors": {
+          "Quantity": 0
+        },
+        "CustomErrorResponses": {
+          "Quantity": 0
+        },
+        "Comment": "",
+        "PriceClass": "PriceClass_All",
+        "Enabled": true,
+        "ViewerCertificate": {
+          "CloudFrontDefaultCertificate": false,
+          "ACMCertificateArn": "arn:aws:acm:us-east-1:245092049965:certificate/385abd5f-b406-4931-8945-882477163099",
+          "SSLSupportMethod": "sni-only",
+          "MinimumProtocolVersion": "TLSv1.2_2021",
+          "Certificate": "arn:aws:acm:us-east-1:245092049965:certificate/385abd5f-b406-4931-8945-882477163099",
+          "CertificateSource": "acm"
+        },
+        "Restrictions": {
+          "GeoRestriction": {
+            "RestrictionType": "none",
+            "Quantity": 0
+          }
+        },
+        "WebACLId": "",
+        "HttpVersion": "HTTP2",
+        "IsIPV6Enabled": true,
+        "AliasICPRecordals": [
+          {
+            "CNAME": "tinyurl.gogiveanywhere.com",
+            "ICPRecordalStatus": "APPROVED"
+          }
+        ],
+        "Staging": false,
+        "ConnectionMode": "direct"
+      },
+      {
+        "Id": "E2Z3KOAOT8QQPR",
+        "ARN": "arn:aws:cloudfront::245092049965:distribution/E2Z3KOAOT8QQPR",
+        "ETag": "E1F83G8C2ARO7P",
+        "Status": "Deployed",
+        "LastModifiedTime": "2026-02-16T07:11:59.418000+00:00",
+        "DomainName": "d3hp1z4embbz8o.cloudfront.net",
+        "Aliases": {
+          "Quantity": 1,
+          "Items": [
+            "campaign.gogiveanywhere.com"
+          ]
+        },
+        "Origins": {
+          "Quantity": 1,
+          "Items": [
+            {
+              "Id": "prodorganizationfacebook-env-1.eba-nk4sqqmp.us-east-1.elasticbeanstalk.com-mlotidd7wz1",
+              "DomainName": "prodorganizationfacebook-env-1.eba-nk4sqqmp.us-east-1.elasticbeanstalk.com",
+              "OriginPath": "",
+              "CustomHeaders": {
+                "Quantity": 0
+              },
+              "CustomOriginConfig": {
+                "HTTPPort": 80,
+                "HTTPSPort": 443,
+                "OriginProtocolPolicy": "https-only",
+                "OriginSslProtocols": {
+                  "Quantity": 1,
+                  "Items": [
+                    "TLSv1.2"
+                  ]
+                },
+                "OriginReadTimeout": 30,
+                "OriginKeepaliveTimeout": 5,
+                "IpAddressType": "ipv4"
+              },
+              "ConnectionAttempts": 3,
+              "ConnectionTimeout": 10,
+              "OriginShield": {
+                "Enabled": false
+              },
+              "OriginAccessControlId": ""
+            }
+          ]
+        },
+        "OriginGroups": {
+          "Quantity": 0
+        },
+        "DefaultCacheBehavior": {
+          "TargetOriginId": "prodorganizationfacebook-env-1.eba-nk4sqqmp.us-east-1.elasticbeanstalk.com-mlotidd7wz1",
+          "TrustedSigners": {
+            "Enabled": false,
+            "Quantity": 0
+          },
+          "TrustedKeyGroups": {
+            "Enabled": false,
+            "Quantity": 0
+          },
+          "ViewerProtocolPolicy": "redirect-to-https",
+          "AllowedMethods": {
+            "Quantity": 7,
+            "Items": [
+              "HEAD",
+              "DELETE",
+              "POST",
+              "GET",
+              "OPTIONS",
+              "PUT",
+              "PATCH"
+            ],
+            "CachedMethods": {
+              "Quantity": 2,
+              "Items": [
+                "HEAD",
+                "GET"
+              ]
+            }
+          },
+          "SmoothStreaming": false,
+          "Compress": true,
+          "LambdaFunctionAssociations": {
+            "Quantity": 0
+          },
+          "FunctionAssociations": {
+            "Quantity": 0
+          },
+          "FieldLevelEncryptionId": "",
+          "CachePolicyId": "83da9c7e-98b4-4e11-a168-04f0df8e2c65",
+          "OriginRequestPolicyId": "216adef6-5c7f-47e4-b989-5492eafa07d3",
+          "GrpcConfig": {
+            "Enabled": false
+          }
+        },
+        "CacheBehaviors": {
+          "Quantity": 0
+        },
+        "CustomErrorResponses": {
+          "Quantity": 0
+        },
+        "Comment": "",
+        "PriceClass": "PriceClass_All",
+        "Enabled": true,
+        "ViewerCertificate": {
+          "CloudFrontDefaultCertificate": false,
+          "ACMCertificateArn": "arn:aws:acm:us-east-1:245092049965:certificate/59272d1e-6dd3-4e30-a08b-d9641c1eadfa",
+          "SSLSupportMethod": "sni-only",
+          "MinimumProtocolVersion": "TLSv1.2_2021",
+          "Certificate": "arn:aws:acm:us-east-1:245092049965:certificate/59272d1e-6dd3-4e30-a08b-d9641c1eadfa",
+          "CertificateSource": "acm"
+        },
+        "Restrictions": {
+          "GeoRestriction": {
+            "RestrictionType": "none",
+            "Quantity": 0
+          }
+        },
+        "WebACLId": "",
+        "HttpVersion": "HTTP2",
+        "IsIPV6Enabled": true,
+        "AliasICPRecordals": [
+          {
+            "CNAME": "campaign.gogiveanywhere.com",
+            "ICPRecordalStatus": "APPROVED"
+          }
+        ],
+        "Staging": false,
+        "ConnectionMode": "direct"
+      },
+      {
+        "Id": "E3FVP5VLJ0BFHH",
+        "ARN": "arn:aws:cloudfront::245092049965:distribution/E3FVP5VLJ0BFHH",
+        "ETag": "E3UN6WX5RRO2AG",
+        "Status": "Deployed",
+        "LastModifiedTime": "2026-02-17T06:38:50.991000+00:00",
+        "DomainName": "d12lbaeotpi8kq.cloudfront.net",
+        "Aliases": {
+          "Quantity": 1,
+          "Items": [
+            "stage.campaign.gogiveanywhere.com"
+          ]
+        },
+        "Origins": {
+          "Quantity": 1,
+          "Items": [
+            {
+              "Id": "stageorganizationfacebook-env-1.us-east-1.elasticbeanstalk.com-mlq8fbbfob4",
+              "DomainName": "stageorganizationfacebook-env-1.us-east-1.elasticbeanstalk.com",
+              "OriginPath": "",
+              "CustomHeaders": {
+                "Quantity": 0
+              },
+              "CustomOriginConfig": {
+                "HTTPPort": 80,
+                "HTTPSPort": 443,
+                "OriginProtocolPolicy": "https-only",
+                "OriginSslProtocols": {
+                  "Quantity": 1,
+                  "Items": [
+                    "TLSv1.2"
+                  ]
+                },
+                "OriginReadTimeout": 30,
+                "OriginKeepaliveTimeout": 5,
+                "IpAddressType": "ipv4"
+              },
+              "ConnectionAttempts": 3,
+              "ConnectionTimeout": 10,
+              "OriginShield": {
+                "Enabled": false
+              },
+              "OriginAccessControlId": ""
+            }
+          ]
+        },
+        "OriginGroups": {
+          "Quantity": 0
+        },
+        "DefaultCacheBehavior": {
+          "TargetOriginId": "stageorganizationfacebook-env-1.us-east-1.elasticbeanstalk.com-mlq8fbbfob4",
+          "TrustedSigners": {
+            "Enabled": false,
+            "Quantity": 0
+          },
+          "TrustedKeyGroups": {
+            "Enabled": false,
+            "Quantity": 0
+          },
+          "ViewerProtocolPolicy": "redirect-to-https",
+          "AllowedMethods": {
+            "Quantity": 7,
+            "Items": [
+              "HEAD",
+              "DELETE",
+              "POST",
+              "GET",
+              "OPTIONS",
+              "PUT",
+              "PATCH"
+            ],
+            "CachedMethods": {
+              "Quantity": 2,
+              "Items": [
+                "HEAD",
+                "GET"
+              ]
+            }
+          },
+          "SmoothStreaming": false,
+          "Compress": true,
+          "LambdaFunctionAssociations": {
+            "Quantity": 0
+          },
+          "FunctionAssociations": {
+            "Quantity": 0
+          },
+          "FieldLevelEncryptionId": "",
+          "CachePolicyId": "83da9c7e-98b4-4e11-a168-04f0df8e2c65",
+          "OriginRequestPolicyId": "216adef6-5c7f-47e4-b989-5492eafa07d3",
+          "GrpcConfig": {
+            "Enabled": false
+          }
+        },
+        "CacheBehaviors": {
+          "Quantity": 0
+        },
+        "CustomErrorResponses": {
+          "Quantity": 0
+        },
+        "Comment": "",
+        "PriceClass": "PriceClass_All",
+        "Enabled": true,
+        "ViewerCertificate": {
+          "CloudFrontDefaultCertificate": false,
+          "ACMCertificateArn": "arn:aws:acm:us-east-1:245092049965:certificate/a0024546-ebd8-4d2c-83a7-67e3a882830f",
+          "SSLSupportMethod": "sni-only",
+          "MinimumProtocolVersion": "TLSv1.2_2021",
+          "Certificate": "arn:aws:acm:us-east-1:245092049965:certificate/a0024546-ebd8-4d2c-83a7-67e3a882830f",
+          "CertificateSource": "acm"
+        },
+        "Restrictions": {
+          "GeoRestriction": {
+            "RestrictionType": "none",
+            "Quantity": 0
+          }
+        },
+        "WebACLId": "",
+        "HttpVersion": "HTTP2",
+        "IsIPV6Enabled": true,
+        "AliasICPRecordals": [
+          {
+            "CNAME": "stage.campaign.gogiveanywhere.com",
+            "ICPRecordalStatus": "APPROVED"
+          }
+        ],
+        "Staging": false,
+        "ConnectionMode": "direct"
+      },
+      {
+        "Id": "E34I0AS1P2W28H",
+        "ARN": "arn:aws:cloudfront::245092049965:distribution/E34I0AS1P2W28H",
+        "ETag": "E1VC38T7YXB528",
+        "Status": "Deployed",
+        "LastModifiedTime": "2026-08-29T20:50:51.489000+00:00",
+        "DomainName": "d27n3tsqeyrjnu.cloudfront.net",
+        "Aliases": {
+          "Quantity": 2,
+          "Items": [
+            "danielkim4fullerton.com",
+            "www.danielkim4fullerton.com"
+          ]
+        },
+        "Origins": {
+          "Quantity": 1,
+          "Items": [
+            {
+              "Id": "danielkim4fullerton.com.s3.us-east-1.amazonaws.com-mtetzmrwjhu",
+              "DomainName": "danielkim4fullerton.com.s3.us-east-1.amazonaws.com",
+              "OriginPath": "",
+              "CustomHeaders": {
+                "Quantity": 0
+              },
+              "S3OriginConfig": {
+                "OriginAccessIdentity": "",
+                "OriginReadTimeout": 30
+              },
+              "ConnectionAttempts": 3,
+              "ConnectionTimeout": 10,
+              "OriginShield": {
+                "Enabled": false
+              },
+              "OriginAccessControlId": "E1FH6QFMFDKW44"
+            }
+          ]
+        },
+        "OriginGroups": {
+          "Quantity": 0
+        },
+        "DefaultCacheBehavior": {
+          "TargetOriginId": "danielkim4fullerton.com.s3.us-east-1.amazonaws.com-mtetzmrwjhu",
+          "TrustedSigners": {
+            "Enabled": false,
+            "Quantity": 0
+          },
+          "TrustedKeyGroups": {
+            "Enabled": false,
+            "Quantity": 0
+          },
+          "ViewerProtocolPolicy": "redirect-to-https",
+          "AllowedMethods": {
+            "Quantity": 2,
+            "Items": [
+              "HEAD",
+              "GET"
+            ],
+            "CachedMethods": {
+              "Quantity": 2,
+              "Items": [
+                "HEAD",
+                "GET"
+              ]
+            }
+          },
+          "SmoothStreaming": false,
+          "Compress": true,
+          "LambdaFunctionAssociations": {
+            "Quantity": 0
+          },
+          "FunctionAssociations": {
+            "Quantity": 0
+          },
+          "FieldLevelEncryptionId": "",
+          "CachePolicyId": "658327ea-f89d-4fab-a63d-7e88639e58f6",
+          "GrpcConfig": {
+            "Enabled": false
+          }
+        },
+        "CacheBehaviors": {
+          "Quantity": 0
+        },
+        "CustomErrorResponses": {
+          "Quantity": 2,
+          "Items": [
+            {
+              "ErrorCode": 403,
+              "ResponsePagePath": "/index.html",
+              "ResponseCode": "200",
+              "ErrorCachingMinTTL": 0
+            },
+            {
+              "ErrorCode": 404,
+              "ResponsePagePath": "/index.html",
+              "ResponseCode": "200",
+              "ErrorCachingMinTTL": 0
+            }
+          ]
+        },
+        "Comment": "Daniel Kim for Fullerton campaign website",
+        "PriceClass": "PriceClass_All",
+        "Enabled": true,
+        "ViewerCertificate": {
+          "CloudFrontDefaultCertificate": false,
+          "ACMCertificateArn": "arn:aws:acm:us-east-1:245092049965:certificate/1481301e-8c2f-4f94-b239-59f54ef85e14",
+          "SSLSupportMethod": "sni-only",
+          "MinimumProtocolVersion": "TLSv1.2_2021",
+          "Certificate": "arn:aws:acm:us-east-1:245092049965:certificate/1481301e-8c2f-4f94-b239-59f54ef85e14",
+          "CertificateSource": "acm"
+        },
+        "Restrictions": {
+          "GeoRestriction": {
+            "RestrictionType": "none",
+            "Quantity": 0
+          }
+        },
+        "WebACLId": "arn:aws:wafv2:us-east-1:245092049965:global/webacl/CreatedByCloudFront-598fdc26/77dd1fb7-d32f-4378-b6e4-7409fe687a7c",
+        "HttpVersion": "HTTP2",
+        "IsIPV6Enabled": true,
+        "AliasICPRecordals": [
+          {
+            "CNAME": "www.danielkim4fullerton.com",
+            "ICPRecordalStatus": "APPROVED"
+          },
+          {
+            "CNAME": "danielkim4fullerton.com",
+            "ICPRecordalStatus": "APPROVED"
+          }
+        ],
+        "Staging": false,
+        "ConnectionMode": "direct"
+      },
+      {
+        "Id": "E1BFTF2T34ECF3",
+        "ARN": "arn:aws:cloudfront::245092049965:distribution/E1BFTF2T34ECF3",
+        "ETag": "E23ZP02F085DFQ",
+        "Status": "Deployed",
+        "LastModifiedTime": "2026-09-02T14:43:07.643000+00:00",
+        "DomainName": "d38lml085o721h.cloudfront.net",
+        "Aliases": {
+          "Quantity": 1,
+          "Items": [
+            "preview.gogiveanywhere.com"
+          ]
+        },
+        "Origins": {
+          "Quantity": 1,
+          "Items": [
+            {
+              "Id": "preview-giveanywhere-s3-website",
+              "DomainName": "preview.gogiveanywhere.com.s3-website-us-east-1.amazonaws.com",
+              "OriginPath": "",
+              "CustomHeaders": {
+                "Quantity": 0
+              },
+              "CustomOriginConfig": {
+                "HTTPPort": 80,
+                "HTTPSPort": 443,
+                "OriginProtocolPolicy": "http-only",
+                "OriginSslProtocols": {
+                  "Quantity": 1,
+                  "Items": [
+                    "TLSv1.2"
+                  ]
+                },
+                "OriginReadTimeout": 30,
+                "OriginKeepaliveTimeout": 5
+              },
+              "ConnectionAttempts": 3,
+              "ConnectionTimeout": 10,
+              "OriginShield": {
+                "Enabled": false
+              },
+              "OriginAccessControlId": ""
+            }
+          ]
+        },
+        "OriginGroups": {
+          "Quantity": 0
+        },
+        "DefaultCacheBehavior": {
+          "TargetOriginId": "preview-giveanywhere-s3-website",
+          "TrustedSigners": {
+            "Enabled": false,
+            "Quantity": 0
+          },
+          "TrustedKeyGroups": {
+            "Enabled": false,
+            "Quantity": 0
+          },
+          "ViewerProtocolPolicy": "redirect-to-https",
+          "AllowedMethods": {
+            "Quantity": 2,
+            "Items": [
+              "HEAD",
+              "GET"
+            ],
+            "CachedMethods": {
+              "Quantity": 2,
+              "Items": [
+                "HEAD",
+                "GET"
+              ]
+            }
+          },
+          "SmoothStreaming": false,
+          "Compress": true,
+          "LambdaFunctionAssociations": {
+            "Quantity": 0
+          },
+          "FunctionAssociations": {
+            "Quantity": 0
+          },
+          "FieldLevelEncryptionId": "",
+          "GrpcConfig": {
+            "Enabled": false
+          },
+          "ForwardedValues": {
+            "QueryString": false,
+            "Cookies": {
+              "Forward": "none"
+            },
+            "Headers": {
+              "Quantity": 0
+            },
+            "QueryStringCacheKeys": {
+              "Quantity": 0
+            }
+          },
+          "MinTTL": 0,
+          "DefaultTTL": 86400,
+          "MaxTTL": 31536000
+        },
+        "CacheBehaviors": {
+          "Quantity": 0
+        },
+        "CustomErrorResponses": {
+          "Quantity": 2,
+          "Items": [
+            {
+              "ErrorCode": 403,
+              "ResponsePagePath": "/index.html",
+              "ResponseCode": "200",
+              "ErrorCachingMinTTL": 0
+            },
+            {
+              "ErrorCode": 404,
+              "ResponsePagePath": "/index.html",
+              "ResponseCode": "200",
+              "ErrorCachingMinTTL": 0
+            }
+          ]
+        },
+        "Comment": "GiveAnywhere preview SPA - preview.gogiveanywhere.com",
+        "PriceClass": "PriceClass_100",
+        "Enabled": true,
+        "ViewerCertificate": {
+          "CloudFrontDefaultCertificate": false,
+          "ACMCertificateArn": "arn:aws:acm:us-east-1:245092049965:certificate/385abd5f-b406-4931-8945-882477163099",
+          "SSLSupportMethod": "sni-only",
+          "MinimumProtocolVersion": "TLSv1.2_2021",
+          "Certificate": "arn:aws:acm:us-east-1:245092049965:certificate/385abd5f-b406-4931-8945-882477163099",
+          "CertificateSource": "acm"
+        },
+        "Restrictions": {
+          "GeoRestriction": {
+            "RestrictionType": "none",
+            "Quantity": 0
+          }
+        },
+        "WebACLId": "",
+        "HttpVersion": "HTTP2",
+        "IsIPV6Enabled": true,
+        "AliasICPRecordals": [
+          {
+            "CNAME": "preview.gogiveanywhere.com",
+            "ICPRecordalStatus": "APPROVED"
+          }
+        ],
+        "Staging": false,
+        "ConnectionMode": "direct"
+      },
+      {
+        "Id": "ECEE2FGUSRR9F",
+        "ARN": "arn:aws:cloudfront::245092049965:distribution/ECEE2FGUSRR9F",
+        "ETag": "E3AEGXETSR30VB",
+        "Status": "Deployed",
+        "LastModifiedTime": "2026-11-05T08:44:45.577000+00:00",
+        "DomainName": "d8xllw39my6xe.cloudfront.net",
+        "Aliases": {
+          "Quantity": 0
+        },
+        "Origins": {
+          "Quantity": 1,
+          "Items": [
+            {
+              "Id": "test-preview.gogiveanywhere.com.s3.us-east-1.amazonaws.com-mufo1y6zqia",
+              "DomainName": "test-preview.gogiveanywhere.com.s3.us-east-1.amazonaws.com",
+              "OriginPath": "",
+              "CustomHeaders": {
+                "Quantity": 0
+              },
+              "S3OriginConfig": {
+                "OriginAccessIdentity": "",
+                "OriginReadTimeout": 30
+              },
+              "ConnectionAttempts": 3,
+              "ConnectionTimeout": 10,
+              "OriginShield": {
+                "Enabled": false
+              },
+              "OriginAccessControlId": "E2V1QEV3PUONF3"
+            }
+          ]
+        },
+        "OriginGroups": {
+          "Quantity": 0
+        },
+        "DefaultCacheBehavior": {
+          "TargetOriginId": "test-preview.gogiveanywhere.com.s3.us-east-1.amazonaws.com-mufo1y6zqia",
+          "TrustedSigners": {
+            "Enabled": false,
+            "Quantity": 0
+          },
+          "TrustedKeyGroups": {
+            "Enabled": false,
+            "Quantity": 0
+          },
+          "ViewerProtocolPolicy": "redirect-to-https",
+          "AllowedMethods": {
+            "Quantity": 2,
+            "Items": [
+              "HEAD",
+              "GET"
+            ],
+            "CachedMethods": {
+              "Quantity": 2,
+              "Items": [
+                "HEAD",
+                "GET"
+              ]
+            }
+          },
+          "SmoothStreaming": false,
+          "Compress": true,
+          "LambdaFunctionAssociations": {
+            "Quantity": 0
+          },
+          "FunctionAssociations": {
+            "Quantity": 0
+          },
+          "FieldLevelEncryptionId": "",
+          "CachePolicyId": "658327ea-f89d-4fab-a63d-7e88639e58f6",
+          "GrpcConfig": {
+            "Enabled": false
+          }
+        },
+        "CacheBehaviors": {
+          "Quantity": 0
+        },
+        "CustomErrorResponses": {
+          "Quantity": 2,
+          "Items": [
+            {
+              "ErrorCode": 403,
+              "ResponsePagePath": "/index.html",
+              "ResponseCode": "200",
+              "ErrorCachingMinTTL": 0
+            },
+            {
+              "ErrorCode": 404,
+              "ResponsePagePath": "/index.html",
+              "ResponseCode": "200",
+              "ErrorCachingMinTTL": 0
+            }
+          ]
+        },
+        "Comment": "",
+        "PriceClass": "PriceClass_All",
+        "Enabled": false,
+        "ViewerCertificate": {
+          "CloudFrontDefaultCertificate": true,
+          "SSLSupportMethod": "vip",
+          "MinimumProtocolVersion": "TLSv1",
+          "CertificateSource": "cloudfront"
+        },
+        "Restrictions": {
+          "GeoRestriction": {
+            "RestrictionType": "none",
+            "Quantity": 0
+          }
+        },
+        "WebACLId": "",
+        "HttpVersion": "HTTP2",
+        "IsIPV6Enabled": true,
+        "Staging": false,
+        "ConnectionMode": "direct"
+      },
+      {
+        "Id": "E265N8VAGXNJKS",
+        "ARN": "arn:aws:cloudfront::245092049965:distribution/E265N8VAGXNJKS",
+        "ETag": "E3UN6WX5RRO2AG",
+        "Status": "Deployed",
+        "LastModifiedTime": "2026-09-24T18:05:19.254000+00:00",
+        "DomainName": "d2x8uk9878te6t.cloudfront.net",
+        "Aliases": {
+          "Quantity": 8,
+          "Items": [
+            "www.pockta.net",
+            "www.pockta.com",
+            "pockta.com",
+            "pockta.net",
+            "www.lifepal.io",
+            "lifepal.io",
+            "scanpay.io",
+            "www.scanpay.io"
+          ]
+        },
+        "Origins": {
+          "Quantity": 1,
+          "Items": [
+            {
+              "Id": "holding-s3",
+              "DomainName": "domain-holding-245092049965-20260924.s3.us-east-1.amazonaws.com",
+              "OriginPath": "",
+              "CustomHeaders": {
+                "Quantity": 0
+              },
+              "S3OriginConfig": {
+                "OriginAccessIdentity": "",
+                "OriginReadTimeout": 30
+              },
+              "ConnectionAttempts": 3,
+              "ConnectionTimeout": 10,
+              "OriginShield": {
+                "Enabled": false
+              },
+              "OriginAccessControlId": "EJ7UD2SVCCYSN"
+            }
+          ]
+        },
+        "OriginGroups": {
+          "Quantity": 0
+        },
+        "DefaultCacheBehavior": {
+          "TargetOriginId": "holding-s3",
+          "TrustedSigners": {
+            "Enabled": false,
+            "Quantity": 0
+          },
+          "TrustedKeyGroups": {
+            "Enabled": false,
+            "Quantity": 0
+          },
+          "ViewerProtocolPolicy": "redirect-to-https",
+          "AllowedMethods": {
+            "Quantity": 2,
+            "Items": [
+              "HEAD",
+              "GET"
+            ],
+            "CachedMethods": {
+              "Quantity": 2,
+              "Items": [
+                "HEAD",
+                "GET"
+              ]
+            }
+          },
+          "SmoothStreaming": false,
+          "Compress": true,
+          "LambdaFunctionAssociations": {
+            "Quantity": 0
+          },
+          "FunctionAssociations": {
+            "Quantity": 0
+          },
+          "FieldLevelEncryptionId": "",
+          "CachePolicyId": "658327ea-f89d-4fab-a63d-7e88639e58f6",
+          "GrpcConfig": {
+            "Enabled": false
+          }
+        },
+        "CacheBehaviors": {
+          "Quantity": 0
+        },
+        "CustomErrorResponses": {
+          "Quantity": 0
+        },
+        "Comment": "Shared holding page for pockta.com, pockta.net, scanpay.io, lifepal.io",
+        "PriceClass": "PriceClass_100",
+        "Enabled": true,
+        "ViewerCertificate": {
+          "CloudFrontDefaultCertificate": false,
+          "ACMCertificateArn": "arn:aws:acm:us-east-1:245092049965:certificate/4da2aced-9390-42e1-a029-cb8c888b7783",
+          "SSLSupportMethod": "sni-only",
+          "MinimumProtocolVersion": "TLSv1.2_2021",
+          "Certificate": "arn:aws:acm:us-east-1:245092049965:certificate/4da2aced-9390-42e1-a029-cb8c888b7783",
+          "CertificateSource": "acm"
+        },
+        "Restrictions": {
+          "GeoRestriction": {
+            "RestrictionType": "none",
+            "Quantity": 0
+          }
+        },
+        "WebACLId": "",
+        "HttpVersion": "HTTP2",
+        "IsIPV6Enabled": true,
+        "AliasICPRecordals": [
+          {
+            "CNAME": "www.lifepal.io",
+            "ICPRecordalStatus": "APPROVED"
+          },
+          {
+            "CNAME": "www.pockta.net",
+            "ICPRecordalStatus": "APPROVED"
+          },
+          {
+            "CNAME": "www.pockta.com",
+            "ICPRecordalStatus": "APPROVED"
+          },
+          {
+            "CNAME": "lifepal.io",
+            "ICPRecordalStatus": "APPROVED"
+          },
+          {
+            "CNAME": "scanpay.io",
+            "ICPRecordalStatus": "APPROVED"
+          },
+          {
+            "CNAME": "pockta.com",
+            "ICPRecordalStatus": "APPROVED"
+          },
+          {
+            "CNAME": "www.scanpay.io",
+            "ICPRecordalStatus": "APPROVED"
+          },
+          {
+            "CNAME": "pockta.net",
+            "ICPRecordalStatus": "APPROVED"
+          }
+        ],
+        "Staging": false,
+        "ConnectionMode": "direct"
+      },
+      {
+        "Id": "EHXSR7BZ091X4",
+        "ARN": "arn:aws:cloudfront::245092049965:distribution/EHXSR7BZ091X4",
+        "ETag": "E23ZP02F085DFQ",
+        "Status": "Deployed",
+        "LastModifiedTime": "2026-10-02T04:45:44.290000+00:00",
+        "DomainName": "dkn944knh89vw.cloudfront.net",
+        "Aliases": {
+          "Quantity": 1,
+          "Items": [
+            "demo.gogiveanywhere.com"
+          ]
+        },
+        "Origins": {
+          "Quantity": 1,
+          "Items": [
+            {
+              "Id": "demo-giveanywhere-s3-website",
+              "DomainName": "demo.gogiveanywhere.com.s3-website-us-east-1.amazonaws.com",
+              "OriginPath": "",
+              "CustomHeaders": {
+                "Quantity": 0
+              },
+              "CustomOriginConfig": {
+                "HTTPPort": 80,
+                "HTTPSPort": 443,
+                "OriginProtocolPolicy": "http-only",
+                "OriginSslProtocols": {
+                  "Quantity": 1,
+                  "Items": [
+                    "TLSv1.2"
+                  ]
+                },
+                "OriginReadTimeout": 30,
+                "OriginKeepaliveTimeout": 5
+              },
+              "ConnectionAttempts": 3,
+              "ConnectionTimeout": 10,
+              "OriginShield": {
+                "Enabled": false
+              },
+              "OriginAccessControlId": ""
+            }
+          ]
+        },
+        "OriginGroups": {
+          "Quantity": 0
+        },
+        "DefaultCacheBehavior": {
+          "TargetOriginId": "demo-giveanywhere-s3-website",
+          "TrustedSigners": {
+            "Enabled": false,
+            "Quantity": 0
+          },
+          "TrustedKeyGroups": {
+            "Enabled": false,
+            "Quantity": 0
+          },
+          "ViewerProtocolPolicy": "redirect-to-https",
+          "AllowedMethods": {
+            "Quantity": 2,
+            "Items": [
+              "HEAD",
+              "GET"
+            ],
+            "CachedMethods": {
+              "Quantity": 2,
+              "Items": [
+                "HEAD",
+                "GET"
+              ]
+            }
+          },
+          "SmoothStreaming": false,
+          "Compress": true,
+          "LambdaFunctionAssociations": {
+            "Quantity": 0
+          },
+          "FunctionAssociations": {
+            "Quantity": 0
+          },
+          "FieldLevelEncryptionId": "",
+          "GrpcConfig": {
+            "Enabled": false
+          },
+          "ForwardedValues": {
+            "QueryString": false,
+            "Cookies": {
+              "Forward": "none"
+            },
+            "Headers": {
+              "Quantity": 0
+            },
+            "QueryStringCacheKeys": {
+              "Quantity": 0
+            }
+          },
+          "MinTTL": 0,
+          "DefaultTTL": 86400,
+          "MaxTTL": 31536000
+        },
+        "CacheBehaviors": {
+          "Quantity": 0
+        },
+        "CustomErrorResponses": {
+          "Quantity": 2,
+          "Items": [
+            {
+              "ErrorCode": 403,
+              "ResponsePagePath": "/index.html",
+              "ResponseCode": "200",
+              "ErrorCachingMinTTL": 0
+            },
+            {
+              "ErrorCode": 404,
+              "ResponsePagePath": "/index.html",
+              "ResponseCode": "200",
+              "ErrorCachingMinTTL": 0
+            }
+          ]
+        },
+        "Comment": "GiveAnywhere demo SPA - snapshot of preview",
+        "PriceClass": "PriceClass_100",
+        "Enabled": true,
+        "ViewerCertificate": {
+          "CloudFrontDefaultCertificate": false,
+          "ACMCertificateArn": "arn:aws:acm:us-east-1:245092049965:certificate/385abd5f-b406-4931-8945-882477163099",
+          "SSLSupportMethod": "sni-only",
+          "MinimumProtocolVersion": "TLSv1.2_2021",
+          "Certificate": "arn:aws:acm:us-east-1:245092049965:certificate/385abd5f-b406-4931-8945-882477163099",
+          "CertificateSource": "acm"
+        },
+        "Restrictions": {
+          "GeoRestriction": {
+            "RestrictionType": "none",
+            "Quantity": 0
+          }
+        },
+        "WebACLId": "",
+        "HttpVersion": "HTTP2",
+        "IsIPV6Enabled": true,
+        "AliasICPRecordals": [
+          {
+            "CNAME": "demo.gogiveanywhere.com",
+            "ICPRecordalStatus": "APPROVED"
+          }
+        ],
+        "Staging": false,
+        "ConnectionMode": "direct"
+      },
+      {
+        "Id": "E2H3I5YRYLIWSI",
+        "ARN": "arn:aws:cloudfront::245092049965:distribution/E2H3I5YRYLIWSI",
+        "ETag": "E23ZP02F085DFQ",
+        "Status": "Deployed",
+        "LastModifiedTime": "2026-10-26T17:10:18.868000+00:00",
+        "DomainName": "djxj9z2g62qrv.cloudfront.net",
+        "Aliases": {
+          "Quantity": 1,
+          "Items": [
+            "demo.givenow.gogiveanywhere.com"
+          ]
+        },
+        "Origins": {
+          "Quantity": 1,
+          "Items": [
+            {
+              "Id": "intake",
+              "DomainName": "giveanywhere-demo-companions-intakebucket-onvey7m3uidk.s3.us-east-1.amazonaws.com",
+              "OriginPath": "",
+              "CustomHeaders": {
+                "Quantity": 0
+              },
+              "S3OriginConfig": {
+                "OriginAccessIdentity": "",
+                "OriginReadTimeout": 30
+              },
+              "ConnectionAttempts": 3,
+              "ConnectionTimeout": 10,
+              "OriginShield": {
+                "Enabled": false
+              },
+              "OriginAccessControlId": "E3K1P7UR69X2K0"
+            }
+          ]
+        },
+        "OriginGroups": {
+          "Quantity": 0
+        },
+        "DefaultCacheBehavior": {
+          "TargetOriginId": "intake",
+          "TrustedSigners": {
+            "Enabled": false,
+            "Quantity": 0
+          },
+          "TrustedKeyGroups": {
+            "Enabled": false,
+            "Quantity": 0
+          },
+          "ViewerProtocolPolicy": "redirect-to-https",
+          "AllowedMethods": {
+            "Quantity": 3,
+            "Items": [
+              "HEAD",
+              "GET",
+              "OPTIONS"
+            ],
+            "CachedMethods": {
+              "Quantity": 2,
+              "Items": [
+                "HEAD",
+                "GET"
+              ]
+            }
+          },
+          "SmoothStreaming": false,
+          "Compress": true,
+          "LambdaFunctionAssociations": {
+            "Quantity": 0
+          },
+          "FunctionAssociations": {
+            "Quantity": 1,
+            "Items": [
+              {
+                "FunctionARN": "arn:aws:cloudfront::245092049965:function/giveanywhere-demo-companions-spa-routes",
+                "EventType": "viewer-request"
+              }
+            ]
+          },
+          "FieldLevelEncryptionId": "",
+          "ResponseHeadersPolicyId": "7b3ffacf-b40e-4686-b4b3-d876760479da",
+          "GrpcConfig": {
+            "Enabled": false
+          },
+          "ForwardedValues": {
+            "QueryString": false,
+            "Cookies": {
+              "Forward": "none"
+            },
+            "Headers": {
+              "Quantity": 0
+            },
+            "QueryStringCacheKeys": {
+              "Quantity": 0
+            }
+          },
+          "MinTTL": 0,
+          "DefaultTTL": 0,
+          "MaxTTL": 31536000
+        },
+        "CacheBehaviors": {
+          "Quantity": 0
+        },
+        "CustomErrorResponses": {
+          "Quantity": 0
+        },
+        "Comment": "GiveAnywhere DEMO intake - DEV backend",
+        "PriceClass": "PriceClass_100",
+        "Enabled": true,
+        "ViewerCertificate": {
+          "CloudFrontDefaultCertificate": false,
+          "ACMCertificateArn": "arn:aws:acm:us-east-1:245092049965:certificate/b1150879-ecf5-4133-ad55-95e80cee9b60",
+          "SSLSupportMethod": "sni-only",
+          "MinimumProtocolVersion": "TLSv1.2_2021",
+          "Certificate": "arn:aws:acm:us-east-1:245092049965:certificate/b1150879-ecf5-4133-ad55-95e80cee9b60",
+          "CertificateSource": "acm"
+        },
+        "Restrictions": {
+          "GeoRestriction": {
+            "RestrictionType": "none",
+            "Quantity": 0
+          }
+        },
+        "WebACLId": "",
+        "HttpVersion": "HTTP1_1",
+        "IsIPV6Enabled": true,
+        "AliasICPRecordals": [
+          {
+            "CNAME": "demo.givenow.gogiveanywhere.com",
+            "ICPRecordalStatus": "APPROVED"
+          }
+        ],
+        "Staging": false,
+        "ConnectionMode": "direct"
+      },
+      {
+        "Id": "E10V9JCF33F191",
+        "ARN": "arn:aws:cloudfront::245092049965:distribution/E10V9JCF33F191",
+        "ETag": "E23ZP02F085DFQ",
+        "Status": "Deployed",
+        "LastModifiedTime": "2026-10-26T17:16:27.808000+00:00",
+        "DomainName": "d2gxs30xuuix4m.cloudfront.net",
+        "Aliases": {
+          "Quantity": 1,
+          "Items": [
+            "demo.campaign.gogiveanywhere.com"
+          ]
+        },
+        "Origins": {
+          "Quantity": 1,
+          "Items": [
+            {
+              "Id": "ssr",
+              "DomainName": "demo-origin.campaign.gogiveanywhere.com",
+              "OriginPath": "",
+              "CustomHeaders": {
+                "Quantity": 0
+              },
+              "CustomOriginConfig": {
+                "HTTPPort": 80,
+                "HTTPSPort": 443,
+                "OriginProtocolPolicy": "https-only",
+                "OriginSslProtocols": {
+                  "Quantity": 1,
+                  "Items": [
+                    "TLSv1.2"
+                  ]
+                },
+                "OriginReadTimeout": 30,
+                "OriginKeepaliveTimeout": 5
+              },
+              "ConnectionAttempts": 3,
+              "ConnectionTimeout": 10,
+              "OriginShield": {
+                "Enabled": false
+              },
+              "OriginAccessControlId": ""
+            }
+          ]
+        },
+        "OriginGroups": {
+          "Quantity": 0
+        },
+        "DefaultCacheBehavior": {
+          "TargetOriginId": "ssr",
+          "TrustedSigners": {
+            "Enabled": false,
+            "Quantity": 0
+          },
+          "TrustedKeyGroups": {
+            "Enabled": false,
+            "Quantity": 0
+          },
+          "ViewerProtocolPolicy": "redirect-to-https",
+          "AllowedMethods": {
+            "Quantity": 3,
+            "Items": [
+              "HEAD",
+              "GET",
+              "OPTIONS"
+            ],
+            "CachedMethods": {
+              "Quantity": 2,
+              "Items": [
+                "HEAD",
+                "GET"
+              ]
+            }
+          },
+          "SmoothStreaming": false,
+          "Compress": true,
+          "LambdaFunctionAssociations": {
+            "Quantity": 0
+          },
+          "FunctionAssociations": {
+            "Quantity": 0
+          },
+          "FieldLevelEncryptionId": "",
+          "ResponseHeadersPolicyId": "7b3ffacf-b40e-4686-b4b3-d876760479da",
+          "GrpcConfig": {
+            "Enabled": false
+          },
+          "ForwardedValues": {
+            "QueryString": true,
+            "Cookies": {
+              "Forward": "all"
+            },
+            "Headers": {
+              "Quantity": 3,
+              "Items": [
+                "Authorization",
+                "Origin",
+                "Accept-Language"
+              ]
+            },
+            "QueryStringCacheKeys": {
+              "Quantity": 0
+            }
+          },
+          "MinTTL": 0,
+          "DefaultTTL": 0,
+          "MaxTTL": 0
+        },
+        "CacheBehaviors": {
+          "Quantity": 0
+        },
+        "CustomErrorResponses": {
+          "Quantity": 0
+        },
+        "Comment": "GiveAnywhere DEMO SSR - no response caching",
+        "PriceClass": "PriceClass_100",
+        "Enabled": true,
+        "ViewerCertificate": {
+          "CloudFrontDefaultCertificate": false,
+          "ACMCertificateArn": "arn:aws:acm:us-east-1:245092049965:certificate/b1150879-ecf5-4133-ad55-95e80cee9b60",
+          "SSLSupportMethod": "sni-only",
+          "MinimumProtocolVersion": "TLSv1.2_2021",
+          "Certificate": "arn:aws:acm:us-east-1:245092049965:certificate/b1150879-ecf5-4133-ad55-95e80cee9b60",
+          "CertificateSource": "acm"
+        },
+        "Restrictions": {
+          "GeoRestriction": {
+            "RestrictionType": "none",
+            "Quantity": 0
+          }
+        },
+        "WebACLId": "",
+        "HttpVersion": "HTTP1_1",
+        "IsIPV6Enabled": true,
+        "AliasICPRecordals": [
+          {
+            "CNAME": "demo.campaign.gogiveanywhere.com",
+            "ICPRecordalStatus": "APPROVED"
+          }
+        ],
+        "Staging": false,
+        "ConnectionMode": "direct"
+      }
+    ]
+  }
+}

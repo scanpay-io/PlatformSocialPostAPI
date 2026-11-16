@@ -1,0 +1,31 @@
+{
+  "checkedAt": "2026-11-10T18:07:07.246Z",
+  "bucket": "givenow2.gogiveanywhere.com",
+  "entryScripts": [
+    "polyfills-6QKGUS2I.js",
+    "main-YT6BLOG2.js"
+  ],
+  "assetsRead": 17,
+  "dependenciesComplete": true,
+  "matches": [
+    {
+      "file": "chunk-554VZCUS.js",
+      "socialStorage": false,
+      "deliveryQuery": false,
+      "deliveryPayload": false,
+      "clickRoute": false,
+      "smsStorage": false,
+      "devApi": true
+    },
+    {
+      "file": "chunk-IKFMLQM2.js",
+      "socialStorage": false,
+      "deliveryQuery": false,
+      "deliveryPayload": false,
+      "clickRoute": false,
+      "smsStorage": true,
+      "devApi": false
+    }
+  ],
+  "socialTrackingPresent": false
+}

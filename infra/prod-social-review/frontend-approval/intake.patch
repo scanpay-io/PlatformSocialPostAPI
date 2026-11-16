@@ -1,0 +1,275 @@
+diff --git a/src/app/app.component.ts b/src/app/app.component.ts
+index 53036e5..5da68c7 100644
+--- a/src/app/app.component.ts
++++ b/src/app/app.component.ts
+@@ -1,5 +1,14 @@
+ import { Component, ChangeDetectionStrategy } from '@angular/core';
+-import { RouterOutlet } from '@angular/router';
++import { RouterOutlet, Router, NavigationEnd } from '@angular/router';
++import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
++import { GiveNowService } from './core/give-now.service';
+ import { isConfigured } from '../environments/environment';
+ @Component({changeDetection: ChangeDetectionStrategy.Eager, selector: 'app-root', imports: [RouterOutlet], templateUrl: './app.component.html', styleUrl: './app.component.css'})
+-export class AppComponent { readonly configured = isConfigured; }
++export class AppComponent {
++  readonly configured = isConfigured;
++  constructor(giving: GiveNowService, router: Router) {
++    router.events.pipe(takeUntilDestroyed()).subscribe(event => {
++      if (event instanceof NavigationEnd) giving.captureAttribution(event.urlAfterRedirects);
++    });
++  }
++}
+diff --git a/src/app/core/give-now.service.spec.ts b/src/app/core/give-now.service.spec.ts
+index f8bd83c..8221da1 100644
+--- a/src/app/core/give-now.service.spec.ts
++++ b/src/app/core/give-now.service.spec.ts
+@@ -66,3 +66,45 @@ describe('giving API compatibility', () => {
+     expect(sessionStorage.getItem('intake.receipt')).toBeNull();
+   });
+ });
++
++describe('social and SMS payment attribution', () => {
++  const id = '11111111-2222-4333-8444-555555555555';
++  let service: GiveNowService;
++  let http: HttpTestingController;
++  beforeEach(() => {
++    sessionStorage.clear(); localStorage.clear(); history.replaceState({}, '', '/');
++    TestBed.configureTestingModule({providers:[provideHttpClient(),provideHttpClientTesting()]});
++    service=TestBed.inject(GiveNowService); http=TestBed.inject(HttpTestingController);
++  });
++  afterEach(() => { http.verify(); history.replaceState({}, '', '/'); });
++  it('adds social attribution while preserving payment fields and excluding old SMS', () => {
++    const url='/?data=6001:org:campaign:us&socialpostid='+id+'&socialdeliveryid=facebook-'+id;
++    history.replaceState({}, '', url); service.captureAttribution(url);
++    http.expectOne(environment.baseUrlGive+'social/posts/clicks').flush({}, {status:503,statusText:'Unavailable'});
++    const payload={account_id:'org',transaction_type:6001,transaction_type_id:'campaign',amount:25,sms_message_id:id,additional_info:[{datafield_id:'note',item_data:'test'}]};
++    service.postPaymentDetails(payload).subscribe();
++    http.expectOne(environment.baseUrlGive+'social/posts/clicks').flush({});
++    const request=http.expectOne(environment.baseUrlGive+'give/onetime');
++    expect(request.request.body.social_post_id).toBe(id);
++    expect(request.request.body.sms_message_id).toBeUndefined();
++    expect(request.request.body.additional_info).toEqual(payload.additional_info);
++    expect(payload.sms_message_id).toBe(id); request.flush({});
++  });
++  it('replaces social with SMS and SMS with a later social landing', () => {
++    const social='/?data=6000:org:fund:us&socialpostid='+id;
++    history.replaceState({}, '', social); service.captureAttribution(social);
++    http.expectOne(environment.baseUrlGive+'social/posts/clicks').flush({});
++    const sms='/?data=6000:org:fund:us&smsid='+id;
++    history.replaceState({}, '', sms); service.captureAttribution(sms);
++    http.expectOne(environment.baseUrlGive+'sms/clicks').flush({});
++    const payload={account_id:'org',transaction_type:6000,transaction_type_id:'fund',amount:25};
++    service.postPaymentDetails({...payload,social_post_id:id}).subscribe();
++    const first=http.expectOne(environment.baseUrlGive+'give/onetime');
++    expect(first.request.body.sms_message_id).toBe(id);expect(first.request.body.social_post_id).toBeUndefined();first.flush({});
++    history.replaceState({}, '', social); service.captureAttribution(social);
++    http.expectOne(environment.baseUrlGive+'social/posts/clicks').flush({});
++    service.postPaymentDetails(payload).subscribe();
++    const second=http.expectOne(environment.baseUrlGive+'give/onetime');
++    expect(second.request.body.social_post_id).toBe(id);expect(second.request.body.sms_message_id).toBeUndefined();second.flush({});
++  });
++});
+diff --git a/src/app/core/give-now.service.ts b/src/app/core/give-now.service.ts
+index 0234342..d743670 100644
+--- a/src/app/core/give-now.service.ts
++++ b/src/app/core/give-now.service.ts
+@@ -1,3 +1,4 @@
++import { SocialCheckoutAttribution } from './social-checkout-attribution';
+ import { SmsOfferingAttribution } from './sms-offering-attribution';
+ import { Injectable } from '@angular/core';
+ import { HttpClient } from '@angular/common/http';
+@@ -22,13 +23,26 @@ export class GiveNowService {
+   readonly receiptData$ = this.receipt.asObservable();
+   private paymentPending = false;
+   private readonly sms: SmsOfferingAttribution;
+-  constructor(private http: HttpClient, private common: CommonService) { this.sms = new SmsOfferingAttribution(http, this.base); }
++  private readonly social: SocialCheckoutAttribution;
++  constructor(private http: HttpClient, private common: CommonService) { this.sms = new SmsOfferingAttribution(http, this.base); this.social = new SocialCheckoutAttribution(http, this.base); }
++
++  captureAttribution(url: string): void {
++    const search = new URL(url, window.location.origin).search;
++    this.sms.capture(search);
++    this.social.capture(search);
++  }
+ 
+   postPaymentDetails(data: PaymentRequest): Observable<any> {
+     if (this.paymentPending) return throwError(() => new Error('A payment is already processing.'));
+     this.paymentPending = true;
+-    const fields = data['social_post_id'] ? {} : this.sms.fields(data.account_id, data.transaction_type_id, Number(data.transaction_type));
+-    return this.http.post(this.base + 'give/onetime', { ...data, ...fields }).pipe(finalize(() => this.paymentPending = false));
++    const sms = this.sms.fields(data.account_id, data.transaction_type_id, Number(data.transaction_type));
++    const social = this.social.fields(data.account_id, data.transaction_type_id, Number(data.transaction_type));
++    const body = { ...data };
++    if (sms['sms_message_id'] || social['social_post_id']) {
++      delete body['sms_message_id']; delete body['social_post_id'];
++      Object.assign(body, sms['sms_message_id'] ? sms : social);
++    }
++    return this.http.post(this.base + 'give/onetime', body).pipe(finalize(() => this.paymentPending = false));
+   }
+   getQRCodeURLInfo(id: string): Observable<any> { return this.http.get(this.base + `qrcode/${encodeURIComponent(id)}/info`); }
+   getTrackingData(id: string): Observable<any> { return this.http.get(this.base + `campaign/${encodeURIComponent(id)}/trackingcodes`); }
+diff --git a/src/app/core/social-checkout-attribution.spec.ts b/src/app/core/social-checkout-attribution.spec.ts
+new file mode 100644
+index 0000000..28b0777
+--- /dev/null
++++ b/src/app/core/social-checkout-attribution.spec.ts
+@@ -0,0 +1,71 @@
++import { TestBed } from '@angular/core/testing';
++import { HttpClient, provideHttpClient } from '@angular/common/http';
++import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
++import { SocialCheckoutAttribution } from './social-checkout-attribution';
++
++describe('social checkout attribution', () => {
++  const post = '11111111-2222-4333-8444-555555555555';
++  const base = 'https://example.org/dev/';
++  let http: HttpTestingController;
++  let tracking: SocialCheckoutAttribution;
++  const url = (delivery = 'facebook-' + post) => '?data=6001:org:campaign:us&socialpostid=' + post + '&socialdeliveryid=' + delivery;
++  beforeEach(() => {
++    sessionStorage.clear(); localStorage.clear(); history.replaceState({}, '', '/');
++    TestBed.configureTestingModule({providers:[provideHttpClient(), provideHttpClientTesting()]});
++    http = TestBed.inject(HttpTestingController);
++    tracking = new SocialCheckoutAttribution(TestBed.inject(HttpClient), base);
++  });
++  afterEach(() => { http.verify(); vi.restoreAllMocks(); history.replaceState({}, '', '/'); });
++  it('preserves handoff IDs, retries idempotently and binds payment to the checkout', () => {
++    const click = '22222222-2222-4333-8444-555555555555', visitor = '33333333-2222-4333-8444-555555555555';
++    const at = Date.now() - 23 * 3600000;
++    tracking.capture(url() + '&socialclickid=' + click + '&socialvisitorid=' + visitor + '&socialat=' + at);
++    const first = http.expectOne(base + 'social/posts/clicks');
++    expect(first.request.body).toEqual({ social_post_id:post, social_delivery_id:'facebook-'+post, click_id:click, visitor_id:visitor });
++    first.flush({}, {status:503,statusText:'Unavailable'});
++    expect(tracking.fields('org','campaign',6001)).toEqual({social_post_id:post});
++    const retry = http.expectOne(base + 'social/posts/clicks');
++    expect(retry.request.body).toEqual(first.request.body); retry.flush({});
++    tracking.capture(url()); http.expectNone(base + 'social/posts/clicks');
++    expect(tracking.fields('other','campaign',6001)).toEqual({});
++    expect(tracking.fields('org','other',6001)).toEqual({});
++    expect(tracking.fields('org','campaign',6000)).toEqual({});
++    expect(JSON.parse(sessionStorage.getItem('intake.social:'+base)!).at).toBe(at);
++  });
++  it('counts another delivery as a new landing with a stable visitor', () => {
++    tracking.capture(url()); const first = http.expectOne(base+'social/posts/clicks'); first.flush({});
++    tracking.capture(url('threads-'+post)+'&socialclickid='+first.request.body.click_id);
++    const second = http.expectOne(base+'social/posts/clicks');
++    expect(second.request.body.click_id).not.toBe(first.request.body.click_id);
++    expect(second.request.body.visitor_id).toBe(first.request.body.visitor_id); second.flush({});
++  });
++  it('does not renew expired attribution after navigation or reload', () => {
++    tracking.capture(url()); http.expectOne(base+'social/posts/clicks').flush({});
++    vi.spyOn(Date,'now').mockReturnValue(Date.now()+24*3600000+1);
++    tracking.capture(url()); expect(tracking.fields('org','campaign',6001)).toEqual({});
++    history.replaceState({}, '', '/'+url());
++    const restored = new SocialCheckoutAttribution(TestBed.inject(HttpClient), base);
++    expect(restored.fields('org','campaign',6001)).toEqual({});
++  });
++  it('isolates API environments and clears social when SMS arrives', () => {
++    tracking.capture(url()); http.expectOne(base+'social/posts/clicks').flush({});
++    const prod = new SocialCheckoutAttribution(TestBed.inject(HttpClient),'https://example.org/prod/');
++    expect(prod.fields('org','campaign',6001)).toEqual({});
++    tracking.capture(url()+'&smsid='+post);
++    expect(tracking.fields('org','campaign',6001)).toEqual({});
++  });
++  it('rejects malformed, wrong-post delivery and invalid timestamps without inheriting prior context', () => {
++    for (const query of [url('facebook-22222222-2222-4333-8444-555555555555'),url()+'&socialat=not-a-number',url()+'&socialat='+(Date.now()+60000),url()+'&socialat='+(Date.now()-25*3600000)]) {
++      tracking.capture(query); expect(tracking.fields('org','campaign',6001)).toEqual({});
++    }
++    tracking.capture(url()); http.expectOne(base+'social/posts/clicks').flush({});
++    tracking.capture('?socialpostid=invalid'); expect(tracking.fields('org','campaign',6001)).toEqual({});
++  });
++  it('retains in-memory attribution when browser storage is blocked', () => {
++    vi.spyOn(Storage.prototype,'getItem').mockImplementation(()=>{throw new Error('blocked');});
++    vi.spyOn(Storage.prototype,'setItem').mockImplementation(()=>{throw new Error('blocked');});
++    const isolated = new SocialCheckoutAttribution(TestBed.inject(HttpClient),base);
++    isolated.capture(url()); http.expectOne(base+'social/posts/clicks').flush({});
++    expect(isolated.fields('org','campaign',6001)).toEqual({social_post_id:post});
++  });
++});
+diff --git a/src/app/core/social-checkout-attribution.ts b/src/app/core/social-checkout-attribution.ts
+new file mode 100644
+index 0000000..82b315d
+--- /dev/null
++++ b/src/app/core/social-checkout-attribution.ts
+@@ -0,0 +1,82 @@
++import { HttpClient } from '@angular/common/http';
++import { timeout } from 'rxjs';
++
++const guid = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
++const lifetime = 24 * 60 * 60 * 1000;
++interface Attribution {
++  post: string; delivery: string; owner: string; target: string; type: string;
++  at: number; click: string; visitor: string; recorded: boolean;
++}
++
++// Client context is only a hint: the backend verifies post, delivery, tenant and environment.
++export class SocialCheckoutAttribution {
++  private value: Attribution | null = null;
++  private readonly recording = new Set<string>();
++  private readonly key: string;
++  constructor(private http: HttpClient, private base: string) {
++    this.key = 'intake.social:' + base;
++    try {
++      const saved = JSON.parse(sessionStorage.getItem(this.key) || 'null');
++      if (saved && guid.test(saved.post) && guid.test(saved.click) && guid.test(saved.visitor) &&
++          ['delivery', 'owner', 'target', 'type'].every(key => typeof saved[key] === 'string') &&
++          Number.isFinite(saved.at) && this.validDelivery(saved.delivery, saved.post)) this.value = saved;
++    } catch { /* Restricted storage must not block checkout. */ }
++    this.capture();
++  }
++  private validDelivery(delivery: string, post: string): boolean {
++    return !delivery || new RegExp('^(facebook|instagram|threads|x|linkedin|tiktok)-' + post + '(?:-[0-9]+)?$', 'i').test(delivery);
++  }
++  capture(search = window.location.search): void {
++    const query = new URLSearchParams(search);
++    // SMS wins if a malformed link contains both channels, matching the existing SMS flow.
++    if (query.has('smsid')) { this.value = null; this.persist(); return; }
++    if (query.has('socialpostid')) {
++      const post = (query.get('socialpostid') || '').toLowerCase();
++      const delivery = (query.get('socialdeliveryid') || '').toLowerCase();
++      const [type = '', owner = '', target = ''] = (query.get('data') || '').split(':');
++      const campaign = target || query.get('campaignId') || query.get('qrcode_id') || '';
++      if (!guid.test(post) || !this.validDelivery(delivery, post)) { this.value = null; this.persist(); return; }
++      const same = this.value?.post === post && this.value.delivery === delivery &&
++        (!campaign || this.value.target === campaign) && (!owner || this.value.owner === owner) && (!type || this.value.type === type);
++      if (!same) {
++        const at = query.has('socialat') ? Number(query.get('socialat')) : Date.now();
++        if (!Number.isFinite(at) || at > Date.now() || Date.now() - at >= lifetime) { this.value = null; this.persist(); return; }
++        let visitor = query.get('socialvisitorid') || '';
++        try { visitor ||= localStorage.getItem(this.key + ':visitor') || ''; } catch { /* Optional storage. */ }
++        if (!guid.test(visitor)) visitor = crypto.randomUUID();
++        try { localStorage.setItem(this.key + ':visitor', visitor); } catch { /* Optional storage. */ }
++        const supplied = query.get('socialclickid') || '';
++        const click = guid.test(supplied) && supplied !== this.value?.click ? supplied : crypto.randomUUID();
++        this.value = { post, delivery, owner, target: campaign, type, at, click, visitor, recorded: false };
++        this.persist();
++      }
++    }
++    const value = this.current();
++    if (!value || value.recorded || this.recording.has(value.click)) return;
++    this.recording.add(value.click);
++    this.http.post(this.base + 'social/posts/clicks', {
++      social_post_id: value.post, click_id: value.click, visitor_id: value.visitor,
++      ...(value.delivery ? { social_delivery_id: value.delivery } : {}),
++    }).pipe(timeout(5000)).subscribe({
++      next: () => { value.recorded = true; this.persist(); },
++      error: () => { this.recording.delete(value.click); },
++      complete: () => { this.recording.delete(value.click); },
++    });
++  }
++  fields(owner: string, target: string, type: number): Record<string, string> {
++    this.capture();
++    const value = this.current();
++    return value && value.target === target && (!value.owner || value.owner === owner) &&
++      (!value.type || value.type === String(type)) ? { social_post_id: value.post } : {};
++  }
++  private current(): Attribution | null {
++    // Keep the expired identity so the same URL cannot restart the attribution window.
++    return this.value && this.value.at <= Date.now() && Date.now() - this.value.at < lifetime ? this.value : null;
++  }
++  private persist(): void {
++    try {
++      if (this.value) sessionStorage.setItem(this.key, JSON.stringify(this.value));
++      else sessionStorage.removeItem(this.key);
++    } catch { /* Keep in-memory attribution when storage is unavailable. */ }
++  }
++}

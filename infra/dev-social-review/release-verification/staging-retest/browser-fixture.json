@@ -1,0 +1,22 @@
+{
+  "run": "f4c8f037-cbf6-4031-8a47-2d1755901cb0",
+  "post": "f92c47bb-3cae-4594-bbd4-5dab562d077d",
+  "click": "5a03a594-1370-49d9-849e-6ab1b929edca",
+  "visitor": "832ea70d-3e66-420e-a8ef-60196a76dcea",
+  "org": "1d3a11d5-ece9-4a24-ab3a-1b601fa15861",
+  "fund": "80982d62-07e9-4c3a-a9d3-cff45891c001",
+  "at": 1794335732178,
+  "created": [
+    {
+      "table": "SocialPost",
+      "key": "SocialPostID",
+      "id": "f92c47bb-3cae-4594-bbd4-5dab562d077d"
+    },
+    {
+      "table": "SocialPostDelivery",
+      "key": "DeliveryID",
+      "id": "facebook-f92c47bb-3cae-4594-bbd4-5dab562d077d"
+    }
+  ],
+  "url": "https://stage.givenow.gogiveanywhere.com/?data=6000%3A1d3a11d5-ece9-4a24-ab3a-1b601fa15861%3A80982d62-07e9-4c3a-a9d3-cff45891c001%3Aus&whitelabel=0&qrcode_id=80982d62-07e9-4c3a-a9d3-cff45891c001&organizationid=1d3a11d5-ece9-4a24-ab3a-1b601fa15861&socialpostid=f92c47bb-3cae-4594-bbd4-5dab562d077d&socialdeliveryid=facebook-f92c47bb-3cae-4594-bbd4-5dab562d077d&socialclickid=5a03a594-1370-49d9-849e-6ab1b929edca&socialvisitorid=832ea70d-3e66-420e-a8ef-60196a76dcea&socialat=1794335732178"
+}

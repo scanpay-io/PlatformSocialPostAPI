@@ -1,0 +1,16 @@
+{
+  "AWSTemplateFormatVersion": "2010-09-09",
+  "Description": "PROPOSED ONLY: PROD social analytics invocation permission. No API route or DEV resources modified.",
+  "Resources": {
+    "ProdSocialAnalyticsInvokePermission": {
+      "Type": "AWS::Lambda::Permission",
+      "Properties": {
+        "Action": "lambda:InvokeFunction",
+        "FunctionName": "arn:aws:lambda:us-east-1:145505076425:function:scanpay_get_social_post_analytics:gany_prod",
+        "Principal": "apigateway.amazonaws.com",
+        "SourceAccount": "145505076425",
+        "SourceArn": "arn:aws:execute-api:us-east-1:145505076425:6op50ujgu6/prod/GET/social/analytics"
+      }
+    }
+  }
+}

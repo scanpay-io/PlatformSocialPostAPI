@@ -152,6 +152,12 @@ namespace ScanPay.SocialPostService
                             post.Content.Trim(), delivery.TrackingUrl, options.ImageUrl);
                         SetPublished(delivery);
                     }
+                    else if (delivery.Platform == SocialPlatform.Threads && string.IsNullOrWhiteSpace(options.ImageUrl))
+                    {
+                        delivery.ExternalPostID = await client.PublishThreadsTextAsync(delivery.TargetAccountID,
+                            item.Token, Validate(SocialTracking.WithDestination(post, delivery.TrackingUrl), delivery.Platform));
+                        SetPublished(delivery);
+                    }
                     else
                     {
                         delivery.ContainerID = await client.CreateContainerAsync(delivery.Platform, delivery.TargetAccountID,

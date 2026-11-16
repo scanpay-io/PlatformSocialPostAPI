@@ -1,0 +1,4 @@
+{
+  "Id": "arn:aws:cloudformation:us-east-1:145505076425:changeSet/social-prod-approved-1794337806864/b89cc9d5-4a5d-4f3a-9443-468436ff35c2",
+  "StackId": "arn:aws:cloudformation:us-east-1:145505076425:stack/giveanywhere-social-analytics-prod-invoke/59192da0-dd3a-11f1-a0cd-12ffe4cf3121"
+}

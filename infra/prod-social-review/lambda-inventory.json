@@ -1,0 +1,1117 @@
+[
+  {
+    "name": "scanpay_delete_social_post",
+    "aliases": [
+      {
+        "AliasArn": "arn:aws:lambda:us-east-1:145505076425:function:scanpay_delete_social_post:development",
+        "Name": "development",
+        "FunctionVersion": "18",
+        "Description": "Release social-20261110-001",
+        "RevisionId": "dad5f6d0-d77c-4ea5-ae4b-b3d9c52829e1"
+      },
+      {
+        "AliasArn": "arn:aws:lambda:us-east-1:145505076425:function:scanpay_delete_social_post:gany_dev",
+        "Name": "gany_dev",
+        "FunctionVersion": "18",
+        "Description": "Release social-20261110-001",
+        "RevisionId": "cc7fab79-6621-4577-8fbd-eaad8041c28c"
+      },
+      {
+        "AliasArn": "arn:aws:lambda:us-east-1:145505076425:function:scanpay_delete_social_post:gany_prod",
+        "Name": "gany_prod",
+        "FunctionVersion": "17",
+        "Description": "Release social-20261105-001",
+        "RevisionId": "b03385d3-23af-40a2-8914-eb9ac7e9bdc7"
+      }
+    ],
+    "versions": {
+      "gany_dev": {
+        "version": "18",
+        "codeSha256": "l3rz4sv93H30hIiqPZpo8Ys9m/Tf+4O/APo+ReuoUnc=",
+        "lastModified": "2026-11-10T15:08:45.000+0000",
+        "handler": "ScanPay.Lambda.DeleteSocialPost::ScanPay.Lambda.DeleteSocialPost.Function::FunctionHandler",
+        "role": "arn:aws:iam::145505076425:role/DeployLambda",
+        "runtime": "dotnet10",
+        "environmentKeys": [
+          "account_number",
+          "runway_type",
+          "region"
+        ],
+        "cursorBytes": 0,
+        "configHash": "852f9aefe3da02f026c8a65429bb69f374b588f2e5b7c5b1870fd27defb25dfa"
+      },
+      "gany_prod": {
+        "version": "17",
+        "codeSha256": "b3m/8FZ7wZa68ZuRy6QXLLQ+ssNS2HA8yRsMxTPk5Tc=",
+        "lastModified": "2026-11-06T04:20:01.000+0000",
+        "handler": "ScanPay.Lambda.DeleteSocialPost::ScanPay.Lambda.DeleteSocialPost.Function::FunctionHandler",
+        "role": "arn:aws:iam::145505076425:role/DeployLambda",
+        "runtime": "dotnet10",
+        "environmentKeys": [
+          "account_number",
+          "runway_type",
+          "region"
+        ],
+        "cursorBytes": 0,
+        "configHash": "852f9aefe3da02f026c8a65429bb69f374b588f2e5b7c5b1870fd27defb25dfa"
+      }
+    },
+    "sameCode": false
+  },
+  {
+    "name": "scanpay_update_social_post",
+    "aliases": [
+      {
+        "AliasArn": "arn:aws:lambda:us-east-1:145505076425:function:scanpay_update_social_post:development",
+        "Name": "development",
+        "FunctionVersion": "18",
+        "Description": "Release social-20261110-001",
+        "RevisionId": "1f369923-6544-4e31-a581-a35891ca0bc6"
+      },
+      {
+        "AliasArn": "arn:aws:lambda:us-east-1:145505076425:function:scanpay_update_social_post:gany_dev",
+        "Name": "gany_dev",
+        "FunctionVersion": "18",
+        "Description": "Release social-20261110-001",
+        "RevisionId": "caaba1ab-4910-4c42-8b93-8c1fc665283f"
+      },
+      {
+        "AliasArn": "arn:aws:lambda:us-east-1:145505076425:function:scanpay_update_social_post:gany_prod",
+        "Name": "gany_prod",
+        "FunctionVersion": "17",
+        "Description": "Release social-20261105-001",
+        "RevisionId": "5c69b6ee-ceac-4bb0-be4d-7f138b449d6a"
+      }
+    ],
+    "versions": {
+      "gany_dev": {
+        "version": "18",
+        "codeSha256": "ojKPBWtmWPiRuDziac3yqrXBA8twrMvWvEKGPQ4PCpY=",
+        "lastModified": "2026-11-10T15:16:19.000+0000",
+        "handler": "ScanPay.Lambda.UpdateSocialPost::ScanPay.Lambda.UpdateSocialPost.Function::FunctionHandler",
+        "role": "arn:aws:iam::145505076425:role/DeployLambda",
+        "runtime": "dotnet10",
+        "environmentKeys": [
+          "account_number",
+          "runway_type",
+          "region"
+        ],
+        "cursorBytes": 0,
+        "configHash": "ddb38b1f1e4a261e725ac6cb5a0b54e4bd698e96c3a49e37f0c6224606d24791"
+      },
+      "gany_prod": {
+        "version": "17",
+        "codeSha256": "uCho26IeMj34GkDw3RpjfjAUg/NuV63zGPp8CKXyyMw=",
+        "lastModified": "2026-11-06T04:29:30.000+0000",
+        "handler": "ScanPay.Lambda.UpdateSocialPost::ScanPay.Lambda.UpdateSocialPost.Function::FunctionHandler",
+        "role": "arn:aws:iam::145505076425:role/DeployLambda",
+        "runtime": "dotnet10",
+        "environmentKeys": [
+          "account_number",
+          "runway_type",
+          "region"
+        ],
+        "cursorBytes": 0,
+        "configHash": "ddb38b1f1e4a261e725ac6cb5a0b54e4bd698e96c3a49e37f0c6224606d24791"
+      }
+    },
+    "sameCode": false
+  },
+  {
+    "name": "scanpay_create_social_post",
+    "aliases": [
+      {
+        "AliasArn": "arn:aws:lambda:us-east-1:145505076425:function:scanpay_create_social_post:development",
+        "Name": "development",
+        "FunctionVersion": "22",
+        "Description": "Release social-20261110-001",
+        "RevisionId": "b710916d-8ed1-43cf-999b-2e1556d5b315"
+      },
+      {
+        "AliasArn": "arn:aws:lambda:us-east-1:145505076425:function:scanpay_create_social_post:gany_dev",
+        "Name": "gany_dev",
+        "FunctionVersion": "22",
+        "Description": "Release social-20261110-001",
+        "RevisionId": "32175148-65d2-4f53-b5fb-19a72972f34e"
+      },
+      {
+        "AliasArn": "arn:aws:lambda:us-east-1:145505076425:function:scanpay_create_social_post:gany_prod",
+        "Name": "gany_prod",
+        "FunctionVersion": "21",
+        "Description": "Release social-20261105-001",
+        "RevisionId": "0a064753-4126-4886-a2ea-ac791fcdc3cc"
+      }
+    ],
+    "versions": {
+      "gany_dev": {
+        "version": "22",
+        "codeSha256": "YJzAmS9Yd9Chpxg2ibiGQwQYQhJkEGFWEtNdyKNPeQs=",
+        "lastModified": "2026-11-10T15:07:28.000+0000",
+        "handler": "ScanPay.Lambda.CreateSocialPost::ScanPay.Lambda.CreateSocialPost.Function::FunctionHandler",
+        "role": "arn:aws:iam::145505076425:role/DeployLambda",
+        "runtime": "dotnet10",
+        "environmentKeys": [
+          "account_number",
+          "runway_type",
+          "region"
+        ],
+        "cursorBytes": 0,
+        "configHash": "78437f71906f69ecba600128f683fbf836c8acbcb5d45177a8d7843b08b009fd"
+      },
+      "gany_prod": {
+        "version": "21",
+        "codeSha256": "rSrISUaBgDMNFRsv8ru4AnjSZLyMUDRdkpoWUpVyKp4=",
+        "lastModified": "2026-11-06T04:18:29.000+0000",
+        "handler": "ScanPay.Lambda.CreateSocialPost::ScanPay.Lambda.CreateSocialPost.Function::FunctionHandler",
+        "role": "arn:aws:iam::145505076425:role/DeployLambda",
+        "runtime": "dotnet10",
+        "environmentKeys": [
+          "account_number",
+          "runway_type",
+          "region"
+        ],
+        "cursorBytes": 0,
+        "configHash": "78437f71906f69ecba600128f683fbf836c8acbcb5d45177a8d7843b08b009fd"
+      }
+    },
+    "sameCode": false
+  },
+  {
+    "name": "scanpay_publish_social_post",
+    "aliases": [
+      {
+        "AliasArn": "arn:aws:lambda:us-east-1:145505076425:function:scanpay_publish_social_post:development",
+        "Name": "development",
+        "FunctionVersion": "20",
+        "Description": "Release social-20261110-001",
+        "RevisionId": "b0338d13-276d-4c72-821f-109b7fb3e700"
+      },
+      {
+        "AliasArn": "arn:aws:lambda:us-east-1:145505076425:function:scanpay_publish_social_post:gany_dev",
+        "Name": "gany_dev",
+        "FunctionVersion": "20",
+        "Description": "Release social-20261110-001",
+        "RevisionId": "19e1c70a-cd1d-4409-8353-f4fb99f312fe"
+      },
+      {
+        "AliasArn": "arn:aws:lambda:us-east-1:145505076425:function:scanpay_publish_social_post:gany_prod",
+        "Name": "gany_prod",
+        "FunctionVersion": "19",
+        "Description": "Release social-20261105-001",
+        "RevisionId": "fde0afcc-4a4d-4d30-82b2-741961583519"
+      }
+    ],
+    "versions": {
+      "gany_dev": {
+        "version": "20",
+        "codeSha256": "Q+UqJGub/ZCi3t171co/JEW0/DDE4x4ZVpSNCAT3AUg=",
+        "lastModified": "2026-11-10T15:13:30.000+0000",
+        "handler": "ScanPay.Lambda.PublishSocialPost::ScanPay.Lambda.PublishSocialPost.Function::FunctionHandler",
+        "role": "arn:aws:iam::145505076425:role/DeployLambda",
+        "runtime": "dotnet10",
+        "environmentKeys": [
+          "account_number",
+          "runway_type",
+          "region"
+        ],
+        "cursorBytes": 0,
+        "configHash": "474b70779185b3f5cd072e211580e1b7f6f95666368b389c16953d320f4adffb"
+      },
+      "gany_prod": {
+        "version": "19",
+        "codeSha256": "fuGJOErYOp22uc+RrnQQdgwtypxpvsZskTq3A9I0y5k=",
+        "lastModified": "2026-11-06T04:25:46.000+0000",
+        "handler": "ScanPay.Lambda.PublishSocialPost::ScanPay.Lambda.PublishSocialPost.Function::FunctionHandler",
+        "role": "arn:aws:iam::145505076425:role/DeployLambda",
+        "runtime": "dotnet10",
+        "environmentKeys": [
+          "account_number",
+          "runway_type",
+          "region"
+        ],
+        "cursorBytes": 0,
+        "configHash": "474b70779185b3f5cd072e211580e1b7f6f95666368b389c16953d320f4adffb"
+      }
+    },
+    "sameCode": false
+  },
+  {
+    "name": "scanpay_schedule_social_post",
+    "aliases": [
+      {
+        "AliasArn": "arn:aws:lambda:us-east-1:145505076425:function:scanpay_schedule_social_post:development",
+        "Name": "development",
+        "FunctionVersion": "19",
+        "Description": "Release social-20261110-001",
+        "RevisionId": "0733004a-ef52-48dc-8f11-76462924e410"
+      },
+      {
+        "AliasArn": "arn:aws:lambda:us-east-1:145505076425:function:scanpay_schedule_social_post:gany_dev",
+        "Name": "gany_dev",
+        "FunctionVersion": "19",
+        "Description": "Release social-20261110-001",
+        "RevisionId": "23623caf-3507-4c67-87de-4bfb113ff3a6"
+      },
+      {
+        "AliasArn": "arn:aws:lambda:us-east-1:145505076425:function:scanpay_schedule_social_post:gany_prod",
+        "Name": "gany_prod",
+        "FunctionVersion": "18",
+        "Description": "Release social-20261105-001",
+        "RevisionId": "7796dc60-da5a-4757-b2ec-cdb8b13884ea"
+      }
+    ],
+    "versions": {
+      "gany_dev": {
+        "version": "19",
+        "codeSha256": "eV/7lW0A+TZGERwg9YWcw69hTuPCRGJqTcZv3TTg5SY=",
+        "lastModified": "2026-11-10T15:14:50.000+0000",
+        "handler": "ScanPay.Lambda.ScheduleSocialPost::ScanPay.Lambda.ScheduleSocialPost.Function::FunctionHandler",
+        "role": "arn:aws:iam::145505076425:role/DeployLambda",
+        "runtime": "dotnet10",
+        "environmentKeys": [
+          "account_number",
+          "runway_type",
+          "region"
+        ],
+        "cursorBytes": 0,
+        "configHash": "2027730e443782eca2418b8ba74b838cce1c7459094a2ff486e1e6d5f19a2361"
+      },
+      "gany_prod": {
+        "version": "18",
+        "codeSha256": "tIwxlje9FhlnbqIQ+aXWdb+nkbQU/ODMbrEust5dqaU=",
+        "lastModified": "2026-11-06T04:27:31.000+0000",
+        "handler": "ScanPay.Lambda.ScheduleSocialPost::ScanPay.Lambda.ScheduleSocialPost.Function::FunctionHandler",
+        "role": "arn:aws:iam::145505076425:role/DeployLambda",
+        "runtime": "dotnet10",
+        "environmentKeys": [
+          "account_number",
+          "runway_type",
+          "region"
+        ],
+        "cursorBytes": 0,
+        "configHash": "2027730e443782eca2418b8ba74b838cce1c7459094a2ff486e1e6d5f19a2361"
+      }
+    },
+    "sameCode": false
+  },
+  {
+    "name": "scanpay_cancel_social_post",
+    "aliases": [
+      {
+        "AliasArn": "arn:aws:lambda:us-east-1:145505076425:function:scanpay_cancel_social_post:development",
+        "Name": "development",
+        "FunctionVersion": "19",
+        "Description": "Release social-20261110-001",
+        "RevisionId": "80f3b707-9276-4bde-806b-2ce8f16dbb11"
+      },
+      {
+        "AliasArn": "arn:aws:lambda:us-east-1:145505076425:function:scanpay_cancel_social_post:gany_dev",
+        "Name": "gany_dev",
+        "FunctionVersion": "19",
+        "Description": "Release social-20261110-001",
+        "RevisionId": "88421018-4031-4261-88f5-6c1e876358a3"
+      },
+      {
+        "AliasArn": "arn:aws:lambda:us-east-1:145505076425:function:scanpay_cancel_social_post:gany_prod",
+        "Name": "gany_prod",
+        "FunctionVersion": "18",
+        "Description": "Release social-20261105-001",
+        "RevisionId": "5dbfdbb0-a438-407e-94be-8277ce5e7a6c"
+      }
+    ],
+    "versions": {
+      "gany_dev": {
+        "version": "19",
+        "codeSha256": "9LRT5hX4PmVLer1CQzZl5Gwx2mNK5ESDPl/HeJmEL7M=",
+        "lastModified": "2026-11-10T15:06:50.000+0000",
+        "handler": "ScanPay.Lambda.CancelSocialPost::ScanPay.Lambda.CancelSocialPost.Function::FunctionHandler",
+        "role": "arn:aws:iam::145505076425:role/DeployLambda",
+        "runtime": "dotnet10",
+        "environmentKeys": [
+          "account_number",
+          "runway_type",
+          "region"
+        ],
+        "cursorBytes": 0,
+        "configHash": "0d056dbfdd887bf8faff1a7c98d24c3239f6d2843a6db7ee050ebcad3c16e73a"
+      },
+      "gany_prod": {
+        "version": "18",
+        "codeSha256": "2M34VwG9MSO+dTdUpEsDTIHdxemXcMTPYGUt31h0B/Q=",
+        "lastModified": "2026-11-06T04:17:41.000+0000",
+        "handler": "ScanPay.Lambda.CancelSocialPost::ScanPay.Lambda.CancelSocialPost.Function::FunctionHandler",
+        "role": "arn:aws:iam::145505076425:role/DeployLambda",
+        "runtime": "dotnet10",
+        "environmentKeys": [
+          "account_number",
+          "runway_type",
+          "region"
+        ],
+        "cursorBytes": 0,
+        "configHash": "0d056dbfdd887bf8faff1a7c98d24c3239f6d2843a6db7ee050ebcad3c16e73a"
+      }
+    },
+    "sameCode": false
+  },
+  {
+    "name": "scanpay_get_social_post",
+    "aliases": [
+      {
+        "AliasArn": "arn:aws:lambda:us-east-1:145505076425:function:scanpay_get_social_post:development",
+        "Name": "development",
+        "FunctionVersion": "17",
+        "Description": "Release social-20261110-001",
+        "RevisionId": "9c2d1681-5479-43d7-b72c-0589dc363b55"
+      },
+      {
+        "AliasArn": "arn:aws:lambda:us-east-1:145505076425:function:scanpay_get_social_post:gany_dev",
+        "Name": "gany_dev",
+        "FunctionVersion": "17",
+        "Description": "Release social-20261110-001",
+        "RevisionId": "5017910f-e638-4bc2-9999-9a4bd65aada6"
+      },
+      {
+        "AliasArn": "arn:aws:lambda:us-east-1:145505076425:function:scanpay_get_social_post:gany_prod",
+        "Name": "gany_prod",
+        "FunctionVersion": "16",
+        "Description": "Release social-20261105-001",
+        "RevisionId": "1941af6b-f838-41f2-b761-3b24c938cc7d"
+      }
+    ],
+    "versions": {
+      "gany_dev": {
+        "version": "17",
+        "codeSha256": "uGafTqnca3TU0/lBP7wkMVzo+UUsYwpsYl1EkRsCeQQ=",
+        "lastModified": "2026-11-10T15:10:38.000+0000",
+        "handler": "ScanPay.Lambda.GetSocialPost::ScanPay.Lambda.GetSocialPost.Function::FunctionHandler",
+        "role": "arn:aws:iam::145505076425:role/DeployLambda",
+        "runtime": "dotnet10",
+        "environmentKeys": [
+          "account_number",
+          "runway_type",
+          "region"
+        ],
+        "cursorBytes": 0,
+        "configHash": "6375ed6ac247baa8422b97cd5b150bf61b8962ee9ed833bf11af903005d16c63"
+      },
+      "gany_prod": {
+        "version": "16",
+        "codeSha256": "lglwcFPdt4k5e5KJtwiwlJMoRbQ2NQP5y1bbHem3AB8=",
+        "lastModified": "2026-11-06T04:22:30.000+0000",
+        "handler": "ScanPay.Lambda.GetSocialPost::ScanPay.Lambda.GetSocialPost.Function::FunctionHandler",
+        "role": "arn:aws:iam::145505076425:role/DeployLambda",
+        "runtime": "dotnet10",
+        "environmentKeys": [
+          "account_number",
+          "runway_type",
+          "region"
+        ],
+        "cursorBytes": 0,
+        "configHash": "6375ed6ac247baa8422b97cd5b150bf61b8962ee9ed833bf11af903005d16c63"
+      }
+    },
+    "sameCode": false
+  },
+  {
+    "name": "scanpay_get_social_post_status",
+    "aliases": [
+      {
+        "AliasArn": "arn:aws:lambda:us-east-1:145505076425:function:scanpay_get_social_post_status:development",
+        "Name": "development",
+        "FunctionVersion": "18",
+        "Description": "Release social-20261110-001",
+        "RevisionId": "2db53e0e-b853-4617-9f37-26f54489fdc0"
+      },
+      {
+        "AliasArn": "arn:aws:lambda:us-east-1:145505076425:function:scanpay_get_social_post_status:gany_dev",
+        "Name": "gany_dev",
+        "FunctionVersion": "18",
+        "Description": "Release social-20261110-001",
+        "RevisionId": "82b3244f-e6cd-4b27-845b-44eb3d9d93d7"
+      },
+      {
+        "AliasArn": "arn:aws:lambda:us-east-1:145505076425:function:scanpay_get_social_post_status:gany_prod",
+        "Name": "gany_prod",
+        "FunctionVersion": "17",
+        "Description": "Release social-20261105-001",
+        "RevisionId": "95155843-801b-4108-aac2-0e62df219899"
+      }
+    ],
+    "versions": {
+      "gany_dev": {
+        "version": "18",
+        "codeSha256": "APcJ/BLrn3+u06jq5jZKQ2QcV5pIdmlqSFlxAqIAwn4=",
+        "lastModified": "2026-11-10T15:12:34.000+0000",
+        "handler": "ScanPay.Lambda.GetSocialPostStatus::ScanPay.Lambda.GetSocialPostStatus.Function::FunctionHandler",
+        "role": "arn:aws:iam::145505076425:role/DeployLambda",
+        "runtime": "dotnet10",
+        "environmentKeys": [
+          "account_number",
+          "runway_type",
+          "region"
+        ],
+        "cursorBytes": 0,
+        "configHash": "80c469813932b86d7ec048f7ec04e60534b69f886c8631d2607d5c731fdec541"
+      },
+      "gany_prod": {
+        "version": "17",
+        "codeSha256": "EoAY8ckFS/I4BCGICrB5VXBVtXLBTanKdoBzTbN171U=",
+        "lastModified": "2026-11-06T04:25:00.000+0000",
+        "handler": "ScanPay.Lambda.GetSocialPostStatus::ScanPay.Lambda.GetSocialPostStatus.Function::FunctionHandler",
+        "role": "arn:aws:iam::145505076425:role/DeployLambda",
+        "runtime": "dotnet10",
+        "environmentKeys": [
+          "account_number",
+          "runway_type",
+          "region"
+        ],
+        "cursorBytes": 0,
+        "configHash": "80c469813932b86d7ec048f7ec04e60534b69f886c8631d2607d5c731fdec541"
+      }
+    },
+    "sameCode": false
+  },
+  {
+    "name": "scanpay_get_social_posts",
+    "aliases": [
+      {
+        "AliasArn": "arn:aws:lambda:us-east-1:145505076425:function:scanpay_get_social_posts:development",
+        "Name": "development",
+        "FunctionVersion": "17",
+        "Description": "Release social-20261110-001",
+        "RevisionId": "a73a3b1c-aaf1-46a8-9260-435e7e56228f"
+      },
+      {
+        "AliasArn": "arn:aws:lambda:us-east-1:145505076425:function:scanpay_get_social_posts:gany_dev",
+        "Name": "gany_dev",
+        "FunctionVersion": "17",
+        "Description": "Release social-20261110-001",
+        "RevisionId": "f31bb926-9b6e-4d69-ae69-c617d23041f2"
+      },
+      {
+        "AliasArn": "arn:aws:lambda:us-east-1:145505076425:function:scanpay_get_social_posts:gany_prod",
+        "Name": "gany_prod",
+        "FunctionVersion": "16",
+        "Description": "Release social-20261105-001",
+        "RevisionId": "db5b5151-7569-4d12-ab66-5959415b77d0"
+      }
+    ],
+    "versions": {
+      "gany_dev": {
+        "version": "17",
+        "codeSha256": "O4vC2YQrbqTCS+w5SKqm0cRi5Zjifw/+oyhGqlwwZAc=",
+        "lastModified": "2026-11-10T15:11:54.000+0000",
+        "handler": "ScanPay.Lambda.GetSocialPosts::ScanPay.Lambda.GetSocialPosts.Function::FunctionHandler",
+        "role": "arn:aws:iam::145505076425:role/DeployLambda",
+        "runtime": "dotnet10",
+        "environmentKeys": [
+          "account_number",
+          "runway_type",
+          "region"
+        ],
+        "cursorBytes": 0,
+        "configHash": "757aeed158a5c7f4e79ed240ea80d152b23db58822745e3c886a46b6aa7b68c9"
+      },
+      "gany_prod": {
+        "version": "16",
+        "codeSha256": "2SGF5b1vo7MHitqfTHUAHzxyWTuNRt0gYdztcHkmszs=",
+        "lastModified": "2026-11-06T04:24:09.000+0000",
+        "handler": "ScanPay.Lambda.GetSocialPosts::ScanPay.Lambda.GetSocialPosts.Function::FunctionHandler",
+        "role": "arn:aws:iam::145505076425:role/DeployLambda",
+        "runtime": "dotnet10",
+        "environmentKeys": [
+          "account_number",
+          "runway_type",
+          "region"
+        ],
+        "cursorBytes": 0,
+        "configHash": "757aeed158a5c7f4e79ed240ea80d152b23db58822745e3c886a46b6aa7b68c9"
+      }
+    },
+    "sameCode": false
+  },
+  {
+    "name": "scanpay_get_social_post_analytics",
+    "aliases": [
+      {
+        "AliasArn": "arn:aws:lambda:us-east-1:145505076425:function:scanpay_get_social_post_analytics:development",
+        "Name": "development",
+        "FunctionVersion": "19",
+        "Description": "Release social-20261110-001",
+        "RevisionId": "2fb100ea-b42d-4769-8560-970d8a0304e6"
+      },
+      {
+        "AliasArn": "arn:aws:lambda:us-east-1:145505076425:function:scanpay_get_social_post_analytics:gany_dev",
+        "Name": "gany_dev",
+        "FunctionVersion": "20",
+        "Description": "DEV social analytics cursor repair 2026-11-10",
+        "RevisionId": "592d837f-7b32-47ad-b09a-324686f0d235"
+      },
+      {
+        "AliasArn": "arn:aws:lambda:us-east-1:145505076425:function:scanpay_get_social_post_analytics:gany_prod",
+        "Name": "gany_prod",
+        "FunctionVersion": "19",
+        "Description": "Release social-20261105-001",
+        "RevisionId": "dedc891e-bd61-47b9-8246-dd1f03eaa248"
+      }
+    ],
+    "versions": {
+      "gany_dev": {
+        "version": "20",
+        "codeSha256": "Uq0OGZoD0MuMaCwPpqrlLCGlNR02aAtIgK0sDoDMzpE=",
+        "lastModified": "2026-11-10T18:01:29.000+0000",
+        "handler": "ScanPay.Lambda.GetSocialPostAnalytics::ScanPay.Lambda.GetSocialPostAnalytics.Function::FunctionHandler",
+        "role": "arn:aws:iam::145505076425:role/DeployLambda",
+        "runtime": "dotnet10",
+        "environmentKeys": [
+          "SOCIAL_ANALYTICS_CURSOR_KEY",
+          "account_number",
+          "runway_type",
+          "region"
+        ],
+        "cursorBytes": 32,
+        "configHash": "81ab79abc10aad0140e9a8961b7ad3dbe2e705f34da7233414f1b8ebba40be90"
+      },
+      "gany_prod": {
+        "version": "19",
+        "codeSha256": "Uq0OGZoD0MuMaCwPpqrlLCGlNR02aAtIgK0sDoDMzpE=",
+        "lastModified": "2026-11-10T17:54:40.000+0000",
+        "handler": "ScanPay.Lambda.GetSocialPostAnalytics::ScanPay.Lambda.GetSocialPostAnalytics.Function::FunctionHandler",
+        "role": "arn:aws:iam::145505076425:role/DeployLambda",
+        "runtime": "dotnet10",
+        "environmentKeys": [
+          "account_number",
+          "runway_type",
+          "region"
+        ],
+        "cursorBytes": 0,
+        "configHash": "c3ef134fc0334de8707371cd7e3ce7e7602431b5594adc2781107f00879bdda7"
+      }
+    },
+    "sameCode": true,
+    "cursorKeysSame": false
+  },
+  {
+    "name": "scanpay_one_time_pay",
+    "aliases": [
+      {
+        "AliasArn": "arn:aws:lambda:us-east-1:145505076425:function:scanpay_one_time_pay:development",
+        "Name": "development",
+        "FunctionVersion": "545",
+        "Description": "Release payment-20261105-001",
+        "RevisionId": "50d9f407-fd1a-42de-842d-b3c22c5f1ef2"
+      },
+      {
+        "AliasArn": "arn:aws:lambda:us-east-1:145505076425:function:scanpay_one_time_pay:gany_dev",
+        "Name": "gany_dev",
+        "FunctionVersion": "545",
+        "Description": "Release payment-20261105-001",
+        "RevisionId": "4cf43bdb-9368-4315-b161-21ee668b5e17"
+      },
+      {
+        "AliasArn": "arn:aws:lambda:us-east-1:145505076425:function:scanpay_one_time_pay:gany_prod",
+        "Name": "gany_prod",
+        "FunctionVersion": "545",
+        "Description": "Release payment-20261105-001",
+        "RevisionId": "28f1c2b2-ecdc-419d-9968-c1cb81d7218e"
+      }
+    ],
+    "versions": {
+      "gany_dev": {
+        "version": "545",
+        "codeSha256": "PC56xBQN2rwY6H1kI8FBtXZ3KTASxuFvp7QNeRs7UF0=",
+        "lastModified": "2026-11-10T15:41:49.000+0000",
+        "handler": "ScanPay.Lambda.OneTimePay::ScanPay.Lambda.OneTimePay.Function::FunctionHandler",
+        "role": "arn:aws:iam::145505076425:role/DeployLambda",
+        "runtime": "dotnet10",
+        "environmentKeys": [
+          "account_number",
+          "runway_type",
+          "region"
+        ],
+        "cursorBytes": 0,
+        "configHash": "5ead60bec082426fe8f748a5ea1deed2d38d808599e276aa9007b2da1be2d711"
+      },
+      "gany_prod": {
+        "version": "545",
+        "codeSha256": "PC56xBQN2rwY6H1kI8FBtXZ3KTASxuFvp7QNeRs7UF0=",
+        "lastModified": "2026-11-10T15:41:49.000+0000",
+        "handler": "ScanPay.Lambda.OneTimePay::ScanPay.Lambda.OneTimePay.Function::FunctionHandler",
+        "role": "arn:aws:iam::145505076425:role/DeployLambda",
+        "runtime": "dotnet10",
+        "environmentKeys": [
+          "account_number",
+          "runway_type",
+          "region"
+        ],
+        "cursorBytes": 0,
+        "configHash": "5ead60bec082426fe8f748a5ea1deed2d38d808599e276aa9007b2da1be2d711"
+      }
+    },
+    "sameCode": true
+  },
+  {
+    "name": "scanpay_record_social_post_click",
+    "aliases": [
+      {
+        "AliasArn": "arn:aws:lambda:us-east-1:145505076425:function:scanpay_record_social_post_click:development",
+        "Name": "development",
+        "FunctionVersion": "10",
+        "Description": "Release social-20261110-001",
+        "RevisionId": "a7731e0d-6bc7-4782-a814-a46e8717b164"
+      },
+      {
+        "AliasArn": "arn:aws:lambda:us-east-1:145505076425:function:scanpay_record_social_post_click:gany_dev",
+        "Name": "gany_dev",
+        "FunctionVersion": "10",
+        "Description": "Release social-20261110-001",
+        "RevisionId": "6bb3e000-54e6-47bd-97c2-6095993d90d8"
+      },
+      {
+        "AliasArn": "arn:aws:lambda:us-east-1:145505076425:function:scanpay_record_social_post_click:gany_prod",
+        "Name": "gany_prod",
+        "FunctionVersion": "9",
+        "Description": "Release social-20261105-001",
+        "RevisionId": "9ad9a4b4-52d6-4436-bd56-5b44237e44ed"
+      }
+    ],
+    "versions": {
+      "gany_dev": {
+        "version": "10",
+        "codeSha256": "woe4Yp947YxC/7OZFr8Aaph2rFj1rXMlpMgHrDEW+T4=",
+        "lastModified": "2026-11-10T15:14:17.000+0000",
+        "handler": "ScanPay.Lambda.RecordSocialPostClick::ScanPay.Lambda.RecordSocialPostClick.Function::FunctionHandler",
+        "role": "arn:aws:iam::145505076425:role/DeployLambda",
+        "runtime": "dotnet10",
+        "environmentKeys": [
+          "account_number",
+          "runway_type",
+          "region"
+        ],
+        "cursorBytes": 0,
+        "configHash": "62a71c06def8347430928518a944d4de5667beca4ab20ee1ec62568e38d1daa3"
+      },
+      "gany_prod": {
+        "version": "9",
+        "codeSha256": "OFTkUlPe1Sm5AFVjsLkPYjV+odBGQX/dae5P5wcZBqk=",
+        "lastModified": "2026-11-06T04:26:47.000+0000",
+        "handler": "ScanPay.Lambda.RecordSocialPostClick::ScanPay.Lambda.RecordSocialPostClick.Function::FunctionHandler",
+        "role": "arn:aws:iam::145505076425:role/DeployLambda",
+        "runtime": "dotnet10",
+        "environmentKeys": [
+          "account_number",
+          "runway_type",
+          "region"
+        ],
+        "cursorBytes": 0,
+        "configHash": "62a71c06def8347430928518a944d4de5667beca4ab20ee1ec62568e38d1daa3"
+      }
+    },
+    "sameCode": false
+  },
+  {
+    "name": "scanpay_complete_one_time_pay",
+    "aliases": [
+      {
+        "AliasArn": "arn:aws:lambda:us-east-1:145505076425:function:scanpay_complete_one_time_pay:development",
+        "Name": "development",
+        "FunctionVersion": "613",
+        "Description": "Release payment-20261105-001",
+        "RevisionId": "11ffd849-3a25-4236-82ee-98159b702de8"
+      },
+      {
+        "AliasArn": "arn:aws:lambda:us-east-1:145505076425:function:scanpay_complete_one_time_pay:gany_dev",
+        "Name": "gany_dev",
+        "FunctionVersion": "613",
+        "Description": "Release payment-20261105-001",
+        "RevisionId": "ae6b82cc-cdb8-4df7-926d-1e334c5f29e1"
+      },
+      {
+        "AliasArn": "arn:aws:lambda:us-east-1:145505076425:function:scanpay_complete_one_time_pay:gany_prod",
+        "Name": "gany_prod",
+        "FunctionVersion": "613",
+        "Description": "Release payment-20261105-001",
+        "RevisionId": "d94c015f-58bb-42a3-a2a0-f36a4bd71de9"
+      }
+    ],
+    "versions": {
+      "gany_dev": {
+        "version": "613",
+        "codeSha256": "betXmFIegO6RQ1MVyEJPTPamerLZACQsGxPF1dcGiX8=",
+        "lastModified": "2026-11-10T15:42:57.000+0000",
+        "handler": "ScanPay.Lambda.CompleteOneTimePay::ScanPay.Lambda.CompleteOneTimePay.Function::FunctionHandler",
+        "role": "arn:aws:iam::145505076425:role/DeployLambda",
+        "runtime": "dotnet10",
+        "environmentKeys": [
+          "account_number",
+          "runway_type",
+          "region"
+        ],
+        "cursorBytes": 0,
+        "configHash": "68550416ebef7b8eb769d1172dee3089e9a8f35d1a75eadd61fc978f1dbd9f8b"
+      },
+      "gany_prod": {
+        "version": "613",
+        "codeSha256": "betXmFIegO6RQ1MVyEJPTPamerLZACQsGxPF1dcGiX8=",
+        "lastModified": "2026-11-10T15:42:57.000+0000",
+        "handler": "ScanPay.Lambda.CompleteOneTimePay::ScanPay.Lambda.CompleteOneTimePay.Function::FunctionHandler",
+        "role": "arn:aws:iam::145505076425:role/DeployLambda",
+        "runtime": "dotnet10",
+        "environmentKeys": [
+          "account_number",
+          "runway_type",
+          "region"
+        ],
+        "cursorBytes": 0,
+        "configHash": "68550416ebef7b8eb769d1172dee3089e9a8f35d1a75eadd61fc978f1dbd9f8b"
+      }
+    },
+    "sameCode": true
+  },
+  {
+    "name": "scanpay_create_schedule_payment",
+    "aliases": [
+      {
+        "AliasArn": "arn:aws:lambda:us-east-1:145505076425:function:scanpay_create_schedule_payment:development",
+        "Name": "development",
+        "FunctionVersion": "185",
+        "Description": "Release payment-20261105-001",
+        "RevisionId": "94a405f7-93a3-4b22-8434-21208069f71e"
+      },
+      {
+        "AliasArn": "arn:aws:lambda:us-east-1:145505076425:function:scanpay_create_schedule_payment:gany_dev",
+        "Name": "gany_dev",
+        "FunctionVersion": "185",
+        "Description": "Release payment-20261105-001",
+        "RevisionId": "910b2a58-4426-4307-b165-cb02801ef1cb"
+      },
+      {
+        "AliasArn": "arn:aws:lambda:us-east-1:145505076425:function:scanpay_create_schedule_payment:gany_prod",
+        "Name": "gany_prod",
+        "FunctionVersion": "185",
+        "Description": "Release payment-20261105-001",
+        "RevisionId": "a68b110d-cc8f-4275-9d49-9fc831a8474f"
+      }
+    ],
+    "versions": {
+      "gany_dev": {
+        "version": "185",
+        "codeSha256": "OZ7ZkTVrfpU00D9r+Fwq3sSD1MDLwppnCf0XwiQZXT4=",
+        "lastModified": "2026-11-10T15:43:58.000+0000",
+        "handler": "ScanPay.Lambda.CreateSchedulePayment::ScanPay.Lambda.CreateSchedulePayment.Function::FunctionHandler",
+        "role": "arn:aws:iam::145505076425:role/DeployLambda",
+        "runtime": "dotnet10",
+        "environmentKeys": [
+          "account_number",
+          "runway_type",
+          "region"
+        ],
+        "cursorBytes": 0,
+        "configHash": "134fd505efdd8664b76ed33732f9bc82ad08e81598950754042349260f34520b"
+      },
+      "gany_prod": {
+        "version": "185",
+        "codeSha256": "OZ7ZkTVrfpU00D9r+Fwq3sSD1MDLwppnCf0XwiQZXT4=",
+        "lastModified": "2026-11-10T15:43:58.000+0000",
+        "handler": "ScanPay.Lambda.CreateSchedulePayment::ScanPay.Lambda.CreateSchedulePayment.Function::FunctionHandler",
+        "role": "arn:aws:iam::145505076425:role/DeployLambda",
+        "runtime": "dotnet10",
+        "environmentKeys": [
+          "account_number",
+          "runway_type",
+          "region"
+        ],
+        "cursorBytes": 0,
+        "configHash": "134fd505efdd8664b76ed33732f9bc82ad08e81598950754042349260f34520b"
+      }
+    },
+    "sameCode": true
+  },
+  {
+    "name": "scanpay_complete_payment",
+    "aliases": [
+      {
+        "AliasArn": "arn:aws:lambda:us-east-1:145505076425:function:scanpay_complete_payment:development",
+        "Name": "development",
+        "FunctionVersion": "52",
+        "Description": "Release payment-20261105-001",
+        "RevisionId": "8faeb3e0-e41d-4ea5-9fac-ff66b3d10060"
+      },
+      {
+        "AliasArn": "arn:aws:lambda:us-east-1:145505076425:function:scanpay_complete_payment:gany_dev",
+        "Name": "gany_dev",
+        "FunctionVersion": "52",
+        "Description": "Release payment-20261105-001",
+        "RevisionId": "c3d29613-6f63-4665-bd98-e167d450a3aa"
+      },
+      {
+        "AliasArn": "arn:aws:lambda:us-east-1:145505076425:function:scanpay_complete_payment:gany_prod",
+        "Name": "gany_prod",
+        "FunctionVersion": "52",
+        "Description": "Release payment-20261105-001",
+        "RevisionId": "cff5ef48-ab51-4fe6-8e5c-e298f317e1f8"
+      }
+    ],
+    "versions": {
+      "gany_dev": {
+        "version": "52",
+        "codeSha256": "h/6maR3mbhY57U6JSb3neyufH9xHCx6cqJVWE+BKP8M=",
+        "lastModified": "2026-11-10T16:02:03.000+0000",
+        "handler": "ScanPay.Lambda.CompletePayment::ScanPay.Lambda.CompletePayment.Function::FunctionHandler",
+        "role": "arn:aws:iam::145505076425:role/DeployLambda",
+        "runtime": "dotnet10",
+        "environmentKeys": [
+          "account_number",
+          "runway_type",
+          "region"
+        ],
+        "cursorBytes": 0,
+        "configHash": "5a19e9edbfb410f0398a5e9a3f0035d40f8b5daab5ece75611bdffcbc8dce751"
+      },
+      "gany_prod": {
+        "version": "52",
+        "codeSha256": "h/6maR3mbhY57U6JSb3neyufH9xHCx6cqJVWE+BKP8M=",
+        "lastModified": "2026-11-10T16:02:03.000+0000",
+        "handler": "ScanPay.Lambda.CompletePayment::ScanPay.Lambda.CompletePayment.Function::FunctionHandler",
+        "role": "arn:aws:iam::145505076425:role/DeployLambda",
+        "runtime": "dotnet10",
+        "environmentKeys": [
+          "account_number",
+          "runway_type",
+          "region"
+        ],
+        "cursorBytes": 0,
+        "configHash": "5a19e9edbfb410f0398a5e9a3f0035d40f8b5daab5ece75611bdffcbc8dce751"
+      }
+    },
+    "sameCode": true
+  },
+  {
+    "name": "scanpay_add_donor_pledge",
+    "aliases": [
+      {
+        "AliasArn": "arn:aws:lambda:us-east-1:145505076425:function:scanpay_add_donor_pledge:development",
+        "Name": "development",
+        "FunctionVersion": "62",
+        "Description": "Release crm-20261110-002",
+        "RevisionId": "0941f474-55c6-41ff-a4e6-f5c18e1c1bed"
+      },
+      {
+        "AliasArn": "arn:aws:lambda:us-east-1:145505076425:function:scanpay_add_donor_pledge:gany_dev",
+        "Name": "gany_dev",
+        "FunctionVersion": "62",
+        "Description": "Release crm-20261110-002",
+        "RevisionId": "19c0d882-a617-40e9-917b-d5424dbac33a"
+      },
+      {
+        "AliasArn": "arn:aws:lambda:us-east-1:145505076425:function:scanpay_add_donor_pledge:gany_prod",
+        "Name": "gany_prod",
+        "FunctionVersion": "61",
+        "Description": "Release crm-20261105-001",
+        "RevisionId": "7a33d1f1-8c95-48b3-9e62-31689f5b987f"
+      }
+    ],
+    "versions": {
+      "gany_dev": {
+        "version": "62",
+        "codeSha256": "09lAzixTnQh1/vPGydu1MIPcik46Wyit6HBMOcW+3JI=",
+        "lastModified": "2026-11-10T17:21:01.000+0000",
+        "handler": "ScanPay.Lambda.AddDonorPledge::ScanPay.Lambda.AddDonorPledge.Function::FunctionHandler",
+        "role": "arn:aws:iam::145505076425:role/DeployLambda",
+        "runtime": "dotnet10",
+        "environmentKeys": [
+          "account_number",
+          "runway_type",
+          "region"
+        ],
+        "cursorBytes": 0,
+        "configHash": "ac572bc8bce8be0181ec0f32fa9c8a6863d9adb8eee786ee31abeaf37cf0b6de"
+      },
+      "gany_prod": {
+        "version": "61",
+        "codeSha256": "RBFM1XsUQAU3lJMvKOElqyP5iI6dBBNMzYXVQWA99gk=",
+        "lastModified": "2026-11-10T15:49:23.000+0000",
+        "handler": "ScanPay.Lambda.AddDonorPledge::ScanPay.Lambda.AddDonorPledge.Function::FunctionHandler",
+        "role": "arn:aws:iam::145505076425:role/DeployLambda",
+        "runtime": "dotnet10",
+        "environmentKeys": [
+          "account_number",
+          "runway_type",
+          "region"
+        ],
+        "cursorBytes": 0,
+        "configHash": "ac572bc8bce8be0181ec0f32fa9c8a6863d9adb8eee786ee31abeaf37cf0b6de"
+      }
+    },
+    "sameCode": false
+  },
+  {
+    "name": "scanpay_lookup_tinyurl",
+    "aliases": [
+      {
+        "AliasArn": "arn:aws:lambda:us-east-1:145505076425:function:scanpay_lookup_tinyurl:development",
+        "Name": "development",
+        "FunctionVersion": "24",
+        "Description": "Release data-20261105-001",
+        "RevisionId": "565eca80-363c-4c4f-bfad-323e3ee43aa2"
+      },
+      {
+        "AliasArn": "arn:aws:lambda:us-east-1:145505076425:function:scanpay_lookup_tinyurl:gany_dev",
+        "Name": "gany_dev",
+        "FunctionVersion": "24",
+        "Description": "Release data-20261105-001",
+        "RevisionId": "1934fae8-867a-4fc1-8ab3-e98652b491bd"
+      },
+      {
+        "AliasArn": "arn:aws:lambda:us-east-1:145505076425:function:scanpay_lookup_tinyurl:gany_prod",
+        "Name": "gany_prod",
+        "FunctionVersion": "24",
+        "Description": "Release data-20261105-001",
+        "RevisionId": "7d09017e-659c-4178-9931-52dd9c03c30e"
+      }
+    ],
+    "versions": {
+      "gany_dev": {
+        "version": "24",
+        "codeSha256": "FKIb+Md3yLDAyZCaHUMzXfxWakvQYkhS4q5cNuGD3Tg=",
+        "lastModified": "2026-11-10T15:49:25.000+0000",
+        "handler": "ScanPay.Lambda.LookupTinyUrl::ScanPay.Lambda.LookupTinyUrl.Function::FunctionHandler",
+        "role": "arn:aws:iam::145505076425:role/DeployLambda",
+        "runtime": "dotnet10",
+        "environmentKeys": [
+          "account_number",
+          "runway_type",
+          "region"
+        ],
+        "cursorBytes": 0,
+        "configHash": "4ed16f0eb508108523d59ad8cf6faa7de2040778ed4c89f5139ec32e0e7932ac"
+      },
+      "gany_prod": {
+        "version": "24",
+        "codeSha256": "FKIb+Md3yLDAyZCaHUMzXfxWakvQYkhS4q5cNuGD3Tg=",
+        "lastModified": "2026-11-10T15:49:25.000+0000",
+        "handler": "ScanPay.Lambda.LookupTinyUrl::ScanPay.Lambda.LookupTinyUrl.Function::FunctionHandler",
+        "role": "arn:aws:iam::145505076425:role/DeployLambda",
+        "runtime": "dotnet10",
+        "environmentKeys": [
+          "account_number",
+          "runway_type",
+          "region"
+        ],
+        "cursorBytes": 0,
+        "configHash": "4ed16f0eb508108523d59ad8cf6faa7de2040778ed4c89f5139ec32e0e7932ac"
+      }
+    },
+    "sameCode": true
+  },
+  {
+    "name": "scanpay_process_schedule_pay",
+    "aliases": [
+      {
+        "AliasArn": "arn:aws:lambda:us-east-1:145505076425:function:scanpay_process_schedule_pay:development",
+        "Name": "development",
+        "FunctionVersion": "163",
+        "Description": "Release payment-20261105-001",
+        "RevisionId": "2e07d89b-2e50-41d1-99fb-2514f3921b4e"
+      },
+      {
+        "AliasArn": "arn:aws:lambda:us-east-1:145505076425:function:scanpay_process_schedule_pay:gany_dev",
+        "Name": "gany_dev",
+        "FunctionVersion": "163",
+        "Description": "Release payment-20261105-001",
+        "RevisionId": "a9140668-3f74-4068-b725-c33c34bf3f33"
+      },
+      {
+        "AliasArn": "arn:aws:lambda:us-east-1:145505076425:function:scanpay_process_schedule_pay:gany_prod",
+        "Name": "gany_prod",
+        "FunctionVersion": "163",
+        "Description": "Release payment-20261105-001",
+        "RevisionId": "94173ede-ed96-4a11-95a5-1ca94badd59f"
+      }
+    ],
+    "versions": {
+      "gany_dev": {
+        "version": "163",
+        "codeSha256": "Cyt7Tzr/Dz/zjPIJV4LCfq562p3LVL8SbQgGoaidWzA=",
+        "lastModified": "2026-11-10T16:05:31.000+0000",
+        "handler": "ScanPay.Lambda.ProcessSchedulePay::ScanPay.Lambda.ProcessSchedulePay.Function::FunctionHandler",
+        "role": "arn:aws:iam::145505076425:role/DeployLambda",
+        "runtime": "dotnet10",
+        "environmentKeys": [],
+        "cursorBytes": 0,
+        "configHash": "e01eed2d7071bc41025c592a8211054f82b14f8dd3732dd66ab42638d0e78378"
+      },
+      "gany_prod": {
+        "version": "163",
+        "codeSha256": "Cyt7Tzr/Dz/zjPIJV4LCfq562p3LVL8SbQgGoaidWzA=",
+        "lastModified": "2026-11-10T16:05:31.000+0000",
+        "handler": "ScanPay.Lambda.ProcessSchedulePay::ScanPay.Lambda.ProcessSchedulePay.Function::FunctionHandler",
+        "role": "arn:aws:iam::145505076425:role/DeployLambda",
+        "runtime": "dotnet10",
+        "environmentKeys": [],
+        "cursorBytes": 0,
+        "configHash": "e01eed2d7071bc41025c592a8211054f82b14f8dd3732dd66ab42638d0e78378"
+      }
+    },
+    "sameCode": true
+  },
+  {
+    "name": "scanpay_get_qrcode_url",
+    "aliases": [
+      {
+        "AliasArn": "arn:aws:lambda:us-east-1:145505076425:function:scanpay_get_qrcode_url:development",
+        "Name": "development",
+        "FunctionVersion": "40",
+        "Description": "Release qr-20261108-002",
+        "RevisionId": "12664293-9d59-40da-84a5-6c349bec6020"
+      },
+      {
+        "AliasArn": "arn:aws:lambda:us-east-1:145505076425:function:scanpay_get_qrcode_url:gany_dev",
+        "Name": "gany_dev",
+        "FunctionVersion": "40",
+        "Description": "Release qr-20261108-002",
+        "RevisionId": "a955192a-2023-4962-b1e2-69ef426d1f8d"
+      },
+      {
+        "AliasArn": "arn:aws:lambda:us-east-1:145505076425:function:scanpay_get_qrcode_url:gany_prod",
+        "Name": "gany_prod",
+        "FunctionVersion": "40",
+        "Description": "Release qr-20261108-002",
+        "RevisionId": "f62fd13c-4d84-41ae-935c-f10a9bc5ddaf"
+      }
+    ],
+    "versions": {
+      "gany_dev": {
+        "version": "40",
+        "codeSha256": "pWn+w4K0Br/jn/6CtuoHbClPV2OJ4+zI3Q66+dtQChs=",
+        "lastModified": "2026-11-10T15:50:30.000+0000",
+        "handler": "ScanPay.Lambda.GetQRUrl::ScanPay.Lambda.GetQRUrl.Function::FunctionHandler",
+        "role": "arn:aws:iam::145505076425:role/DeployLambda",
+        "runtime": "dotnet10",
+        "environmentKeys": [
+          "account_number",
+          "runway_type",
+          "region"
+        ],
+        "cursorBytes": 0,
+        "configHash": "6ae0250c324827890f9201acbe9d685191ac1c5bf8b00f839a275556ae415096"
+      },
+      "gany_prod": {
+        "version": "40",
+        "codeSha256": "pWn+w4K0Br/jn/6CtuoHbClPV2OJ4+zI3Q66+dtQChs=",
+        "lastModified": "2026-11-10T15:50:30.000+0000",
+        "handler": "ScanPay.Lambda.GetQRUrl::ScanPay.Lambda.GetQRUrl.Function::FunctionHandler",
+        "role": "arn:aws:iam::145505076425:role/DeployLambda",
+        "runtime": "dotnet10",
+        "environmentKeys": [
+          "account_number",
+          "runway_type",
+          "region"
+        ],
+        "cursorBytes": 0,
+        "configHash": "6ae0250c324827890f9201acbe9d685191ac1c5bf8b00f839a275556ae415096"
+      }
+    },
+    "sameCode": true
+  }
+]

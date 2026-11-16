@@ -1,0 +1,19 @@
+{
+  "restApiId": "6op50ujgu6",
+  "stageName": "prod",
+  "patchOperations": [
+    {
+      "op": "replace",
+      "path": "/deploymentId",
+      "value": "vrokob"
+    },
+    {
+      "op": "remove",
+      "path": "/~1social~1posts~1clicks/POST"
+    },
+    {
+      "op": "remove",
+      "path": "/~1social~1analytics/GET"
+    }
+  ]
+}

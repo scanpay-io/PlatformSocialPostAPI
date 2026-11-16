@@ -1,0 +1,27 @@
+{
+  "SocialPost": {
+    "total": 73,
+    "unscoped": 73,
+    "scoped": {},
+    "unscopedStatuses": {
+      "failed": 17,
+      "cancelled": 21,
+      "published": 14,
+      "queued": 4,
+      "draft": 16,
+      "submission_unknown": 1
+    }
+  },
+  "SocialPostDelivery": {
+    "total": 64,
+    "unscoped": 64,
+    "scoped": {},
+    "unscopedStatuses": {
+      "failed": 32,
+      "published": 14,
+      "queued": 4,
+      "cancelled": 13,
+      "submission_unknown": 1
+    }
+  }
+}

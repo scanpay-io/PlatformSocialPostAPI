@@ -1,0 +1,16 @@
+[
+  {
+    "name": "main-YT6BLOG2.js",
+    "status": 200,
+    "matchesOlderBundle": true,
+    "socialCapture": false,
+    "smsCapture": false
+  },
+  {
+    "name": "chunk-IKFMLQM2.js",
+    "status": 200,
+    "matchesOlderBundle": true,
+    "socialCapture": false,
+    "smsCapture": true
+  }
+]

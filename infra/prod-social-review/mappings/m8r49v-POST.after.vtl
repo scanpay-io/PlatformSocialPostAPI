@@ -1,0 +1,13 @@
+{
+"requestContext": {"authorizer": {"claims": {"sub": "$util.escapeJavaScript($context.authorizer.claims.sub).replaceAll("\\'","'")"}}},
+"organization_id": "$input.params('organizationid')",
+  "resource_type": $input.json('$.resource_type'),
+  "resource_id": $input.json('$.resource_id'),
+  "outreach_item_id": $input.json('$.outreach_item_id'),
+  "content": $input.json('$.content'),
+  "destination_url": $input.json('$.destination_url'),
+  "platforms": $input.json('$.platforms')
+#if($input.path('$').containsKey('meta_social'))
+  ,"meta_social":$input.json('$.meta_social')
+#end
+}

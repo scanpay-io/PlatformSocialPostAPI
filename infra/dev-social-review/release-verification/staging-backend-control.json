@@ -1,0 +1,8 @@
+{
+  "preflightStatus": 200,
+  "allowOrigin": "*",
+  "allowMethods": "POST,OPTIONS",
+  "allowHeaders": "Content-Type,Authorization,X-Authorization-SP,X-Api-Key",
+  "clickStatus": 200,
+  "response": "{\"status\":\"success\",\"message\":\" \",\"code\":200,\"data\":null,\"success\":true}"
+}

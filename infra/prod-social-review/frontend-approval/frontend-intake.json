@@ -1,0 +1,76 @@
+{
+  "origin": "https://givenow.gogiveanywhere.com/",
+  "checkedAt": "2026-11-10T19:27:53.025Z",
+  "indexLastModified": "Tue, 10 Nov 2026 19:25:09 GMT",
+  "files": [
+    {
+      "asset": "/chunk-Bojww-uA.js",
+      "sha256": "36bd9da7eef3be753cb16fd778d52d5610c01b8eab5e226c5eedd9dc8adae95d",
+      "markers": []
+    },
+    {
+      "asset": "/polyfills-BAP25QCF.js",
+      "sha256": "6b29bec5f93906552bccc551f9213c9784ac381cbd32712bb46b6f68763a8d98",
+      "markers": []
+    },
+    {
+      "asset": "/main-BUPUDX7E.js",
+      "sha256": "584f1a15931a4edd53474ab1d7c78acfae014daed8d8de682500a998c9f9ea25",
+      "markers": [
+        "intake.social:",
+        "social_delivery_id",
+        "social/posts/clicks"
+      ]
+    },
+    {
+      "asset": "/chunk-BC9eaHqk.js",
+      "sha256": "917b68a99b7227385bc37468101c0838a98c456285f5be5336c7cfa4ce718766",
+      "markers": []
+    },
+    {
+      "asset": "/chunk-DmTfAQo1.js",
+      "sha256": "a7737eeb4cc59fe57a9ac05316bca9bf03c1e7123a86b725527c5d8bf6726ee7",
+      "markers": []
+    },
+    {
+      "asset": "/chunk-D3VlQY8y.js",
+      "sha256": "f87897a96df5840cacd930db8c50f9487d27882253cd0fdac55904dfd18cfb73",
+      "markers": []
+    },
+    {
+      "asset": "/chunk-Bvwxj6-E.js",
+      "sha256": "fb5f381e4e667101529c2a206ad54189f1539b21e96e50af81101cc7c90d6e11",
+      "markers": []
+    },
+    {
+      "asset": "/chunk-fTAXQAfw.js",
+      "sha256": "1e853626a184ae7d5c393f0b16f3fb8681f50c9893ba0ee36c19ce2afc78a743",
+      "markers": []
+    },
+    {
+      "asset": "/chunk-H3dE-qPC.js",
+      "sha256": "a9dbfec4afa974e7dcc493882a40e14f9be9991797a242b4e374e67098aa5676",
+      "markers": []
+    },
+    {
+      "asset": "/chunk-B_AkFHlj.js",
+      "sha256": "759a6e61812dd93c7386898aa541e216cade725445e7a8064974c993373cde37",
+      "markers": []
+    },
+    {
+      "asset": "/chunk-Cfg6KrFo.js",
+      "sha256": "02eb460da6eec566568d290c79f6b066b1813ec7ab250e38a240d1c562bc9bc9",
+      "markers": []
+    },
+    {
+      "asset": "/chunk-utYiD7qP.js",
+      "sha256": "1340e7d2ca0d36b2f7a14012be3db38f1897637878dbe78ac31a482d6d7083e3",
+      "markers": []
+    }
+  ],
+  "foundMarkers": [
+    "intake.social:",
+    "social_delivery_id",
+    "social/posts/clicks"
+  ]
+}

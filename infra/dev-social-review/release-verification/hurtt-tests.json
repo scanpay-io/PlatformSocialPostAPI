@@ -1,7 +1,7 @@
 {
-  "run": "13f8577b-6845-4306-b975-1a3e237c7dfa",
+  "run": "8b849d11-1a34-4847-bb43-585a553aba17",
   "org": "1d3a11d5-ece9-4a24-ab3a-1b601fa15861",
-  "post": "4f2f1394-8cf9-441c-b922-de997b1ade14",
+  "post": "8bef9248-56c3-4375-be0d-f700985e0660",
   "results": [
     {
       "name": "Temporary scoped fixture created (no provider publication)",
@@ -39,7 +39,7 @@
       "name": "Post analytics aggregates two events / one visitor without counting retry",
       "passed": true,
       "detail": {
-        "version": "18",
+        "version": "20",
         "metrics": {
           "published_deliveries": 3,
           "tracked_published_deliveries": 2,
@@ -63,28 +63,28 @@
           "delivery_donation_attribution": "unavailable_post_only_payment_contract",
           "deliveries": [
             {
-              "delivery_id": "facebook-4f2f1394-8cf9-441c-b922-de997b1ade14",
-              "social_post_id": "4f2f1394-8cf9-441c-b922-de997b1ade14",
+              "delivery_id": "facebook-8bef9248-56c3-4375-be0d-f700985e0660",
+              "social_post_id": "8bef9248-56c3-4375-be0d-f700985e0660",
               "platform": "facebook",
-              "published_at_utc": "2026-11-10T17:34:27.069Z",
+              "published_at_utc": "2026-11-10T18:00:14.316Z",
               "tracking_status": "tracked",
               "landing_events": 1,
               "donations": null
             },
             {
-              "delivery_id": "threads-4f2f1394-8cf9-441c-b922-de997b1ade14",
-              "social_post_id": "4f2f1394-8cf9-441c-b922-de997b1ade14",
+              "delivery_id": "threads-8bef9248-56c3-4375-be0d-f700985e0660",
+              "social_post_id": "8bef9248-56c3-4375-be0d-f700985e0660",
               "platform": "threads",
-              "published_at_utc": "2026-11-10T17:34:27.069Z",
+              "published_at_utc": "2026-11-10T18:00:14.316Z",
               "tracking_status": "tracked",
               "landing_events": 1,
               "donations": null
             },
             {
-              "delivery_id": "tiktok-4f2f1394-8cf9-441c-b922-de997b1ade14",
-              "social_post_id": "4f2f1394-8cf9-441c-b922-de997b1ade14",
+              "delivery_id": "tiktok-8bef9248-56c3-4375-be0d-f700985e0660",
+              "social_post_id": "8bef9248-56c3-4375-be0d-f700985e0660",
               "platform": "tiktok",
-              "published_at_utc": "2026-11-10T17:34:27.069Z",
+              "published_at_utc": "2026-11-10T18:00:14.316Z",
               "tracking_status": "untracked",
               "landing_events": null,
               "donations": null
@@ -95,14 +95,10 @@
     },
     {
       "name": "Publication-date cohort query returns matching fixture totals",
-      "passed": false,
+      "passed": true,
       "detail": {
-        "status": 400,
-        "version": "18",
-        "error": {
-          "Status": 400,
-          "Message": "post_id must be a GUID and cannot be combined with cohort filters."
-        }
+        "status": 200,
+        "version": "20"
       }
     },
     {
@@ -119,15 +115,38 @@
     },
     {
       "name": "Signed pagination available on deployed DEV version",
-      "passed": false,
+      "passed": true,
       "detail": {
-        "status": 500,
-        "version": "18",
-        "error": {
-          "Status": 500,
-          "Message": "Configure a separate SOCIAL_ANALYTICS_CURSOR_KEY of at least 32 random bytes (base64) for each environment."
-        }
+        "status": 200,
+        "version": "20"
       }
+    },
+    {
+      "name": "Pagination advances and rejects tampered token",
+      "passed": true
+    },
+    {
+      "name": "Cohort pagination exhausts three unique deliveries with fixed cutoff",
+      "passed": true,
+      "detail": {
+        "pages": 3
+      }
+    },
+    {
+      "name": "Cursor replay is deterministic",
+      "passed": true
+    },
+    {
+      "name": "Cursor rejects changed page-size filter",
+      "passed": true
+    },
+    {
+      "name": "Cursor rejects changed campaign filter",
+      "passed": true
+    },
+    {
+      "name": "Cursor rejects changed outcome cutoff",
+      "passed": true
     },
     {
       "name": "Temporary fixture and click cleanup",

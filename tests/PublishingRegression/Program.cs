@@ -15,10 +15,33 @@ static SocialPostDb Post(params string[] platforms) => new()
 {
     SocialPostID = "post", OrganizationID = "org", Content = "Support our campaign", DestinationUrl = "https://example.org/give",
     Platforms = platforms.ToList(), MetaSocial = platforms.Select(p => new MetaSocialPostOptions
-    { Platform = p, ImageUrl = p == "instagram" ? "https://example.org/photo.jpg" : "" }).ToList()
+    { Platform = p, ImageUrl = p is "instagram" or "threads" ? "https://example.org/photo.jpg" : "" }).ToList()
 };
 static async Task<Dictionary<string, string>> Form(HttpRequestMessage request) => (await request.Content!.ReadAsStringAsync())
     .Split('&').Select(p => p.Split('=', 2)).ToDictionary(p => Uri.UnescapeDataString(p[0]), p => Uri.UnescapeDataString(p[1].Replace('+', ' ')));
+
+// Text-only publication uses one provider write, including blank/whitespace image inputs.
+foreach (string image in new[] { "", " ", null! })
+{
+    var textStore = MemoryStore.For("threads");
+    var textPost = Post("threads");
+    textPost.MetaSocial[0].ImageUrl = image;
+    int textWrites = 0;
+    using var textHttp = new HttpClient(new ProviderHttpHandler(async request =>
+    {
+        Check(request.Method == HttpMethod.Post && request.RequestUri!.AbsolutePath == "/v1.0/123/threads", "Text-only Threads never polls/publishes a container");
+        var form = await Form(request);
+        Check(form["media_type"] == "TEXT" && form["auto_publish_text"] == "true" && !form.ContainsKey("image_url"), "Blank image uses atomic text publish");
+        Check(form["text"].Contains("socialdeliveryid=threads-post"), "Text publishing retains attribution");
+        textWrites++;
+        return Json("{'id':'777'}");
+    }));
+    var textService = new MetaSocialPublishingService(new(textHttp), textStore);
+    await textService.PublishAsync(textPost, null!);
+    await textService.PublishAsync(textPost, null!);
+    await textService.RefreshStatusAsync(textPost, null!);
+    Check(textWrites == 1 && textPost.Status == "published" && textStore.Deliveries["threads-post"].ExternalPostID == "777", "Text-only success stores post ID without duplicate writes");
+}
 
 // Full multi-platform workflow: Page discovery, direct Facebook send, containers and status polling.
 var store = MemoryStore.For("facebook", "instagram", "threads");
@@ -51,7 +74,7 @@ using var http = new HttpClient(new ProviderHttpHandler(async request =>
     }
     if (path.EndsWith("/threads"))
     {
-        Check(host == "graph.threads.net" && form["media_type"] == "TEXT" && form["text"].Contains("socialdeliveryid=threads-post"), "Threads text payload");
+        Check(host == "graph.threads.net" && form["media_type"] == "IMAGE" && form["text"].Contains("socialdeliveryid=threads-post"), "Threads image container payload");
         return Json("{'id':'222'}");
     }
     Check(form["creation_id"] == (host == "graph.instagram.com" ? "111" : "222"), "Publish uses saved container ID");
@@ -111,6 +134,7 @@ foreach (bool databaseFailure in new[] { false, true })
     }));
     var failureService = new MetaSocialPublishingService(new(failureHttp), failureStore);
     var failurePost = Post("threads");
+    failurePost.MetaSocial[0].ImageUrl = string.Empty;
     await failureService.PublishAsync(failurePost, null!);
     await failureService.PublishAsync(failurePost, null!);
     Check(attempts == 1 && failurePost.Status == "submission_unknown", "Ambiguous initialization must not retry");

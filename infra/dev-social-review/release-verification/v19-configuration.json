@@ -1,0 +1,35 @@
+[
+  {
+    "alias": "$LATEST",
+    "version": "$LATEST",
+    "modified": "2026-11-10T17:54:40.000+0000",
+    "keyConfigured": false,
+    "environmentKeys": [
+      "account_number",
+      "runway_type",
+      "region"
+    ]
+  },
+  {
+    "alias": "gany_dev",
+    "version": "19",
+    "modified": "2026-11-10T17:54:40.000+0000",
+    "keyConfigured": false,
+    "environmentKeys": [
+      "account_number",
+      "runway_type",
+      "region"
+    ]
+  },
+  {
+    "alias": "gany_prod",
+    "version": "19",
+    "modified": "2026-11-10T17:54:40.000+0000",
+    "keyConfigured": false,
+    "environmentKeys": [
+      "account_number",
+      "runway_type",
+      "region"
+    ]
+  }
+]

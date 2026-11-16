@@ -1,0 +1,21 @@
+{
+  "pipelineExecution": {
+    "pipelineName": "GGA-Intake2.0PipeLine",
+    "pipelineVersion": 5,
+    "pipelineExecutionId": "12d8913c-dac3-47f1-a87c-9acce1da6fb0",
+    "status": "Succeeded",
+    "artifactRevisions": [
+      {
+        "name": "SourceArtifact",
+        "revisionId": "dd4d990d8cfbf2b3d36e9371746654b9efbf05c9",
+        "revisionSummary": "{\"ProviderType\":\"GitHub\",\"CommitMessage\":\"Fix staging deployment and add delivery-aware checkout tracking\"}",
+        "revisionUrl": "https://us-east-1.console.aws.amazon.com/codesuite/settings/connections/redirect?connectionArn=arn:aws:codeconnections:us-east-1:245092049965:connection/75da510e-16eb-4f35-8409-0f1dabc0e279&referenceType=COMMIT&FullRepositoryId=scanpay-io/Intake2.0&Commit=dd4d990d8cfbf2b3d36e9371746654b9efbf05c9"
+      }
+    ],
+    "trigger": {
+      "triggerType": "StartPipelineExecution",
+      "triggerDetail": "arn:aws:iam::245092049965:user/jmah322"
+    },
+    "executionMode": "QUEUED"
+  }
+}

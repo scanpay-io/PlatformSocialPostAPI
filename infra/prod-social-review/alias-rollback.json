@@ -1,0 +1,154 @@
+[
+  {
+    "functionName": "scanpay_delete_social_post",
+    "name": "gany_prod",
+    "functionVersion": "17",
+    "routingConfig": {
+      "AdditionalVersionWeights": {}
+    }
+  },
+  {
+    "functionName": "scanpay_update_social_post",
+    "name": "gany_prod",
+    "functionVersion": "17",
+    "routingConfig": {
+      "AdditionalVersionWeights": {}
+    }
+  },
+  {
+    "functionName": "scanpay_create_social_post",
+    "name": "gany_prod",
+    "functionVersion": "21",
+    "routingConfig": {
+      "AdditionalVersionWeights": {}
+    }
+  },
+  {
+    "functionName": "scanpay_publish_social_post",
+    "name": "gany_prod",
+    "functionVersion": "19",
+    "routingConfig": {
+      "AdditionalVersionWeights": {}
+    }
+  },
+  {
+    "functionName": "scanpay_schedule_social_post",
+    "name": "gany_prod",
+    "functionVersion": "18",
+    "routingConfig": {
+      "AdditionalVersionWeights": {}
+    }
+  },
+  {
+    "functionName": "scanpay_cancel_social_post",
+    "name": "gany_prod",
+    "functionVersion": "18",
+    "routingConfig": {
+      "AdditionalVersionWeights": {}
+    }
+  },
+  {
+    "functionName": "scanpay_get_social_post",
+    "name": "gany_prod",
+    "functionVersion": "16",
+    "routingConfig": {
+      "AdditionalVersionWeights": {}
+    }
+  },
+  {
+    "functionName": "scanpay_get_social_post_status",
+    "name": "gany_prod",
+    "functionVersion": "17",
+    "routingConfig": {
+      "AdditionalVersionWeights": {}
+    }
+  },
+  {
+    "functionName": "scanpay_get_social_posts",
+    "name": "gany_prod",
+    "functionVersion": "16",
+    "routingConfig": {
+      "AdditionalVersionWeights": {}
+    }
+  },
+  {
+    "functionName": "scanpay_get_social_post_analytics",
+    "name": "gany_prod",
+    "functionVersion": "19",
+    "routingConfig": {
+      "AdditionalVersionWeights": {}
+    }
+  },
+  {
+    "functionName": "scanpay_one_time_pay",
+    "name": "gany_prod",
+    "functionVersion": "545",
+    "routingConfig": {
+      "AdditionalVersionWeights": {}
+    }
+  },
+  {
+    "functionName": "scanpay_record_social_post_click",
+    "name": "gany_prod",
+    "functionVersion": "9",
+    "routingConfig": {
+      "AdditionalVersionWeights": {}
+    }
+  },
+  {
+    "functionName": "scanpay_complete_one_time_pay",
+    "name": "gany_prod",
+    "functionVersion": "613",
+    "routingConfig": {
+      "AdditionalVersionWeights": {}
+    }
+  },
+  {
+    "functionName": "scanpay_create_schedule_payment",
+    "name": "gany_prod",
+    "functionVersion": "185",
+    "routingConfig": {
+      "AdditionalVersionWeights": {}
+    }
+  },
+  {
+    "functionName": "scanpay_complete_payment",
+    "name": "gany_prod",
+    "functionVersion": "52",
+    "routingConfig": {
+      "AdditionalVersionWeights": {}
+    }
+  },
+  {
+    "functionName": "scanpay_add_donor_pledge",
+    "name": "gany_prod",
+    "functionVersion": "61",
+    "routingConfig": {
+      "AdditionalVersionWeights": {}
+    }
+  },
+  {
+    "functionName": "scanpay_lookup_tinyurl",
+    "name": "gany_prod",
+    "functionVersion": "24",
+    "routingConfig": {
+      "AdditionalVersionWeights": {}
+    }
+  },
+  {
+    "functionName": "scanpay_process_schedule_pay",
+    "name": "gany_prod",
+    "functionVersion": "163",
+    "routingConfig": {
+      "AdditionalVersionWeights": {}
+    }
+  },
+  {
+    "functionName": "scanpay_get_qrcode_url",
+    "name": "gany_prod",
+    "functionVersion": "40",
+    "routingConfig": {
+      "AdditionalVersionWeights": {}
+    }
+  }
+]

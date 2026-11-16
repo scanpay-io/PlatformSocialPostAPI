@@ -1,0 +1,73 @@
+{
+  "origin": "https://givenow.gogiveanywhere.com/",
+  "checkedAt": "2026-11-10T19:00:55.074Z",
+  "indexLastModified": "Mon, 09 Nov 2026 22:24:25 GMT",
+  "files": [
+    {
+      "asset": "/polyfills-BAP25QCF.js",
+      "sha256": "6b29bec5f93906552bccc551f9213c9784ac381cbd32712bb46b6f68763a8d98",
+      "markers": []
+    },
+    {
+      "asset": "/main-MU2ZDZW3.js",
+      "sha256": "54d719bc5e7e5ec31f5275f77dbced965c0d52ab404b89a34069806209b511fa",
+      "markers": []
+    },
+    {
+      "asset": "/chunk-KqDliGJH.js",
+      "sha256": "e03e97f0cc5ca0bbf05e4877e6ed72e4697f5ecb0c7dab888adfe0e06d0acb25",
+      "markers": []
+    },
+    {
+      "asset": "/chunk-DOs-Srn5.js",
+      "sha256": "b4b361e9bd9ed5b9000733b64935fa855d63702441d3daf7801237da842517df",
+      "markers": []
+    },
+    {
+      "asset": "/chunk-CZAkPa-x.js",
+      "sha256": "1f1ae0307dc5b4df92e2f2eff5f096a262833ae61124f247e61affc971e17a09",
+      "markers": []
+    },
+    {
+      "asset": "/chunk-DyFvKGpF.js",
+      "sha256": "ec5b098d0c2a55cb5cafa564eae524794bcc42f63765ad177f0c6572f113ecf0",
+      "markers": []
+    },
+    {
+      "asset": "/chunk-WKH8gyBI.js",
+      "sha256": "0a0542407953df985e1ab57368ed7aedf3784f5f9260199b10fec065df9a9a19",
+      "markers": []
+    },
+    {
+      "asset": "/chunk-obKyCgwb.js",
+      "sha256": "3fcad0b62182e4d3e0c265b956565c07915c100a0ea37b92a433871d89ee9f5c",
+      "markers": []
+    },
+    {
+      "asset": "/chunk-Be5OFPz_.js",
+      "sha256": "d4adcf406674e38bf2d968e510207d4c7f5ba0315476bd74810fc6d08f7ede9b",
+      "markers": []
+    },
+    {
+      "asset": "/chunk-Br0DyWKt.js",
+      "sha256": "0c00f9f0a7909a546661077f56244a6b8677e1cb3ed10f9120ec272342d48381",
+      "markers": []
+    },
+    {
+      "asset": "/chunk-BxmRE591.js",
+      "sha256": "30de9e183d0aeaecebd483f20f0ea1a4776342102b1d5f8410fa79916b163c70",
+      "markers": []
+    },
+    {
+      "asset": "/chunk-6UBBE3Iw.js",
+      "sha256": "84826ae451b198173c228d82adfa49ae792a972b381bce6813ae33a1c70a9dc5",
+      "markers": []
+    },
+    {
+      "asset": "/chunk-DRQXUAXI.js",
+      "sha256": "c5cd7a788caf3a1229bd2141979eaa1b7d291a39c24823cab4c8bafa3123c4ac",
+      "markers": []
+    }
+  ],
+  "foundMarkers": []
+}

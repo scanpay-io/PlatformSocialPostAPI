@@ -14,7 +14,7 @@
   "function-timeout": 29,
   "function-handler": "ScanPay.Lambda.GetSocialPostAnalytics::ScanPay.Lambda.GetSocialPostAnalytics.Function::FunctionHandler",
   "function-role": "arn:aws:iam::145505076425:role/DeployLambda",
-  "environment-variables": "\u0022account_number\u0022=\u0022145505076425\u0022;\u0022runway_type\u0022=\u0022development\u0022;\u0022region\u0022=\u0022us-east-1\u0022",
+  "append-environment-variables": "\u0022account_number\u0022=\u0022145505076425\u0022;\u0022runway_type\u0022=\u0022development\u0022;\u0022region\u0022=\u0022us-east-1\u0022",
   "tracing-mode": "PassThrough",
   "function-name": "scanpay_get_social_post_analytics",
   "function-subnets": "subnet-0c211233f4f47098b,subnet-00e95754ea47c10c5",

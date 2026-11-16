@@ -1,0 +1,142 @@
+{
+  "pipeline": {
+    "name": "GGA-Intake2.0PipeLine",
+    "roleArn": "arn:aws:iam::245092049965:role/service-role/AWSCodePipelineServiceRole-us-east-1-GGA-Intake2.0PipeLine",
+    "artifactStore": {
+      "type": "S3",
+      "location": "codepipeline-us-east-1-887226633439"
+    },
+    "stages": [
+      {
+        "name": "Source",
+        "actions": [
+          {
+            "name": "Source",
+            "actionTypeId": {
+              "category": "Source",
+              "owner": "AWS",
+              "provider": "CodeStarSourceConnection",
+              "version": "1"
+            },
+            "runOrder": 1,
+            "configuration": {
+              "BranchName": "main",
+              "ConnectionArn": "arn:aws:codeconnections:us-east-1:245092049965:connection/75da510e-16eb-4f35-8409-0f1dabc0e279",
+              "DetectChanges": "true",
+              "FullRepositoryId": "scanpay-io/Intake2.0",
+              "OutputArtifactFormat": "CODE_ZIP"
+            },
+            "outputArtifacts": [
+              {
+                "name": "SourceArtifact"
+              }
+            ],
+            "inputArtifacts": [],
+            "region": "us-east-1",
+            "namespace": "SourceVariables"
+          }
+        ],
+        "onFailure": {
+          "result": "RETRY",
+          "retryConfiguration": {
+            "retryMode": "ALL_ACTIONS"
+          }
+        }
+      },
+      {
+        "name": "Build",
+        "actions": [
+          {
+            "name": "Build",
+            "actionTypeId": {
+              "category": "Build",
+              "owner": "AWS",
+              "provider": "CodeBuild",
+              "version": "1"
+            },
+            "runOrder": 1,
+            "configuration": {
+              "ProjectName": "Intake2-0BuildProject"
+            },
+            "outputArtifacts": [
+              {
+                "name": "BuildArtifact"
+              }
+            ],
+            "inputArtifacts": [
+              {
+                "name": "SourceArtifact"
+              }
+            ],
+            "region": "us-east-1",
+            "namespace": "BuildVariables"
+          }
+        ],
+        "onFailure": {
+          "result": "RETRY",
+          "retryConfiguration": {
+            "retryMode": "ALL_ACTIONS"
+          }
+        }
+      },
+      {
+        "name": "Deploy",
+        "actions": [
+          {
+            "name": "Deploy",
+            "actionTypeId": {
+              "category": "Deploy",
+              "owner": "AWS",
+              "provider": "S3",
+              "version": "1"
+            },
+            "runOrder": 1,
+            "configuration": {
+              "BucketName": "givenow2.gogiveanywhere.com",
+              "Extract": "true"
+            },
+            "outputArtifacts": [],
+            "inputArtifacts": [
+              {
+                "name": "BuildArtifact"
+              }
+            ],
+            "region": "us-east-1",
+            "namespace": "DeployVariables"
+          }
+        ],
+        "onFailure": {
+          "result": "ROLLBACK"
+        }
+      }
+    ],
+    "version": 4,
+    "executionMode": "QUEUED",
+    "pipelineType": "V2",
+    "triggers": [
+      {
+        "providerType": "CodeStarSourceConnection",
+        "gitConfiguration": {
+          "sourceActionName": "Source",
+          "pullRequest": [
+            {
+              "events": [
+                "CLOSED"
+              ],
+              "branches": {
+                "includes": [
+                  "main"
+                ]
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "metadata": {
+    "pipelineArn": "arn:aws:codepipeline:us-east-1:245092049965:GGA-Intake2.0PipeLine",
+    "created": "2026-10-19T12:06:47.630000-07:00",
+    "updated": "2026-10-19T18:31:52.661000-07:00"
+  }
+}

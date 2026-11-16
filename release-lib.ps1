@@ -1,4 +1,20 @@
 # Shared release functions. Windows PowerShell 5.1 compatible.
+function Assert-RequiredFunctionEnvironment($Config) {
+ if($Config.FunctionName -ne 'scanpay_get_social_post_analytics'){return}
+ $key=$Config.Environment.Variables.SOCIAL_ANALYTICS_CURSOR_KEY
+ try { $valid=![string]::IsNullOrWhiteSpace($key) -and [Convert]::FromBase64String($key).Length -ge 32 }
+ catch { $valid=$false }
+ if(!$valid){throw 'Social analytics requires SOCIAL_ANALYTICS_CURSOR_KEY (base64, at least 32 bytes). Restore it before publishing or promoting a release; preserve live environment variables.'}
+}
+function Assert-AnalyticsPromotionEnvironment($Config, $Current, $Other) {
+ if($Config.FunctionName -ne 'scanpay_get_social_post_analytics'){return}
+ Assert-RequiredFunctionEnvironment $Config
+ $candidateKey=$Config.Environment.Variables.SOCIAL_ANALYTICS_CURSOR_KEY
+ $currentKey=$Current.Environment.Variables.SOCIAL_ANALYTICS_CURSOR_KEY
+ $otherKey=$Other.Environment.Variables.SOCIAL_ANALYTICS_CURSOR_KEY
+ if($otherKey -and $candidateKey -eq $otherKey){throw 'Analytics promotion would reuse the other environment cursor key. Publish an environment-specific version.'}
+ if($currentKey -and $candidateKey -ne $currentKey){throw 'Analytics promotion would rotate the existing environment cursor key. Preserve that key or use a separately approved key-rotation procedure.'}
+}
 function Write-Json($Path,$Value) {
  [IO.File]::WriteAllText($Path,($Value | ConvertTo-Json -Depth 60),[Text.UTF8Encoding]::new($false))
 }
@@ -100,6 +116,7 @@ function Publish-One($Entry,[string]$PlatformPath,$PlatformConfig,[string]$Direc
  if($Entry.Region -ne $script:Settings.Region){throw 'Release bucket must be in the same region as this Lambda; publish a separate regional release'}
  $live=Invoke-Aws @('lambda','get-function','--function-name',$Entry.FunctionName) $Entry.Region
  $current=$live.Configuration
+ Assert-RequiredFunctionEnvironment $current
  if($current.FunctionArn -notmatch (':'+$script:AccountId+':function:')){throw 'Function account mismatch'}
  $Entry.FunctionArn=$current.FunctionArn
  if($current.State -ne 'Active' -or $current.LastUpdateStatus -eq 'InProgress'){throw 'Function is not ready for a code update'}

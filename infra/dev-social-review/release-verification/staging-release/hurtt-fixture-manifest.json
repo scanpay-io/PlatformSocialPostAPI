@@ -1,0 +1,62 @@
+{
+  "run": "bbeed512-62e5-4dca-951d-c16c0d38f163",
+  "org": "1d3a11d5-ece9-4a24-ab3a-1b601fa15861",
+  "fixtures": [
+    {
+      "table": "SocialPost",
+      "key": "SocialPostID",
+      "id": "3d563826-6c67-42fa-ba00-6fba937314e4"
+    },
+    {
+      "table": "SocialPost",
+      "key": "SocialPostID",
+      "id": "ef37230a-f517-4e6c-9074-973720c17cfe"
+    },
+    {
+      "table": "SocialPostDelivery",
+      "key": "DeliveryID",
+      "id": "facebook-3d563826-6c67-42fa-ba00-6fba937314e4"
+    },
+    {
+      "table": "SocialPostDelivery",
+      "key": "DeliveryID",
+      "id": "threads-3d563826-6c67-42fa-ba00-6fba937314e4"
+    },
+    {
+      "table": "SocialPostDelivery",
+      "key": "DeliveryID",
+      "id": "tiktok-3d563826-6c67-42fa-ba00-6fba937314e4"
+    },
+    {
+      "table": "SocialPostDelivery",
+      "key": "DeliveryID",
+      "id": "instagram-3d563826-6c67-42fa-ba00-6fba937314e4"
+    }
+  ],
+  "clickKeys": [
+    {
+      "ClickID": "3d563826-6c67-42fa-ba00-6fba937314e4:0bcdbbde-8204-4925-bc07-78e753fc7224",
+      "SocialPostID": "3d563826-6c67-42fa-ba00-6fba937314e4"
+    },
+    {
+      "ClickID": "3d563826-6c67-42fa-ba00-6fba937314e4:0bcdbbde-8204-4925-bc07-78e753fc7224",
+      "SocialPostID": "3d563826-6c67-42fa-ba00-6fba937314e4"
+    },
+    {
+      "ClickID": "3d563826-6c67-42fa-ba00-6fba937314e4:5338ef74-a2e5-468c-9cd6-f5de2ca66111",
+      "SocialPostID": "3d563826-6c67-42fa-ba00-6fba937314e4"
+    },
+    {
+      "ClickID": "3d563826-6c67-42fa-ba00-6fba937314e4:c78b94b8-b3d0-46fb-be8d-6e4565e0aba7",
+      "SocialPostID": "3d563826-6c67-42fa-ba00-6fba937314e4"
+    },
+    {
+      "ClickID": "3d563826-6c67-42fa-ba00-6fba937314e4:b2992f5a-98ef-4514-8fe0-25e4f8f22a79",
+      "SocialPostID": "3d563826-6c67-42fa-ba00-6fba937314e4"
+    },
+    {
+      "ClickID": "ef37230a-f517-4e6c-9074-973720c17cfe:a009ae73-76e7-4b0b-b0d1-d172fbf2a2e7",
+      "SocialPostID": "ef37230a-f517-4e6c-9074-973720c17cfe"
+    }
+  ]
+}

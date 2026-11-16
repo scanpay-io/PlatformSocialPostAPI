@@ -1,0 +1,98 @@
+{
+  "checkedAt": "2026-11-10T18:52:23.059Z",
+  "post": "9bf3953f-0113-4f0e-89d1-8a7d882c6d58",
+  "clicks": [
+    {
+      "DeliveryID": {
+        "S": "instagram-9bf3953f-0113-4f0e-89d1-8a7d882c6d58"
+      },
+      "ClickID": {
+        "S": "9bf3953f-0113-4f0e-89d1-8a7d882c6d58:728abb79-4426-4e5c-80fb-4585cba4001a"
+      },
+      "VisitorID": {
+        "S": "452c3391-d206-4eab-93e6-6c76e3efb3ca"
+      },
+      "SocialPostID": {
+        "S": "9bf3953f-0113-4f0e-89d1-8a7d882c6d58"
+      },
+      "AccountScopeKey": {
+        "S": "gany:dev:1d3a11d5-ece9-4a24-ab3a-1b601fa15861"
+      }
+    },
+    {
+      "DeliveryID": {
+        "S": "facebook-9bf3953f-0113-4f0e-89d1-8a7d882c6d58"
+      },
+      "VisitorID": {
+        "S": "452c3391-d206-4eab-93e6-6c76e3efb3ca"
+      },
+      "ClickID": {
+        "S": "9bf3953f-0113-4f0e-89d1-8a7d882c6d58:7051e3fd-9f2b-4aa1-84ad-8f2f3d332956"
+      },
+      "SocialPostID": {
+        "S": "9bf3953f-0113-4f0e-89d1-8a7d882c6d58"
+      },
+      "AccountScopeKey": {
+        "S": "gany:dev:1d3a11d5-ece9-4a24-ab3a-1b601fa15861"
+      }
+    }
+  ],
+  "analytics": {
+    "status": "success",
+    "code": 200,
+    "contract": "cohort_v1",
+    "as_of_utc": "2026-11-10T18:52:23.5855788Z",
+    "outcome_before_utc": "2026-11-10T18:52:23.5855788Z",
+    "from_utc": null,
+    "to_utc": null,
+    "consistency": "eventual_current_transaction_state",
+    "revenue_basis": "post_attributed_successful_transactions_including_repeat_gifts",
+    "evaluated_records": 5,
+    "consumed_read_capacity_units": 2.5,
+    "next_token": "",
+    "analytics": {
+      "published_deliveries": 2,
+      "tracked_published_deliveries": 2,
+      "tracking_coverage": {
+        "numerator": 2,
+        "denominator": 2,
+        "percentage": 100
+      },
+      "landing_events": 2,
+      "unique_browser_visitors": 1,
+      "unattributed_delivery_landings": 0,
+      "deliveries_with_landing": 2,
+      "posts_with_donation": 0,
+      "donations": 0,
+      "amount_raised_by_currency": {},
+      "donations_per_landing": {
+        "numerator": 0,
+        "denominator": 2,
+        "percentage": 0
+      },
+      "delivery_donation_attribution": "unavailable_post_only_payment_contract",
+      "deliveries": [
+        {
+          "delivery_id": "facebook-9bf3953f-0113-4f0e-89d1-8a7d882c6d58",
+          "social_post_id": "9bf3953f-0113-4f0e-89d1-8a7d882c6d58",
+          "platform": "facebook",
+          "published_at_utc": "2026-11-10T18:47:30.179Z",
+          "tracking_status": "tracked",
+          "landing_events": 1,
+          "donations": null
+        },
+        {
+          "delivery_id": "instagram-9bf3953f-0113-4f0e-89d1-8a7d882c6d58",
+          "social_post_id": "9bf3953f-0113-4f0e-89d1-8a7d882c6d58",
+          "platform": "instagram",
+          "published_at_utc": "2026-11-10T18:47:30.179Z",
+          "tracking_status": "tracked",
+          "landing_events": 1,
+          "donations": null
+        }
+      ]
+    },
+    "deliveries": null
+  },
+  "status": 200
+}

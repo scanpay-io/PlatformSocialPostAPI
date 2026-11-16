@@ -1,0 +1,43 @@
+{
+  "hostingAccount": "245092049965",
+  "region": "us-east-1",
+  "frontends": [
+    {
+      "repository": "WebApps/Intake2.0",
+      "hostname": "givenow.gogiveanywhere.com",
+      "bucket": "givenow1.gogiveanywhere.com",
+      "distributionId": "EP3CSY54R3V37",
+      "trackingReferenceCommit": "dd4d990d8cfbf2b3d36e9371746654b9efbf05c9",
+      "build": "pnpm exec ng build --configuration production",
+      "output": "dist/intake/browser",
+      "mustNotUse": "intake2-buildspec.yml or scripts/deploy-stage.cjs (staging-only)",
+      "sourceGate": "Reconcile current deployed PROD source; selectively integrate tracking and SMS dependency rather than wholesale stage merge; record reviewed release commit and artifact hash"
+    },
+    {
+      "repository": "WebApps/Web2.0",
+      "hostname": "gogiveanywhere.com",
+      "bucket": "gogiveanywhere1.com",
+      "distributionId": "E3293012YDHW2L",
+      "sourceGate": "Use clean isolated release source with delivery/click/visitor/timestamp handoff; exclude unrelated dirty working-tree edits; confirm production output path and artifact manifest before upload"
+    }
+  ],
+  "publication": {
+    "order": [
+      "Capture current index and object version plus any build manifest for rollback",
+      "Upload reviewed production assets without deleting existing assets",
+      "Upload non-secret build manifest identifying commit/hash/environment",
+      "Upload index.html last",
+      "Invalidate /* on only the frontend distribution being released",
+      "Wait for invalidation; verify public index hash, API prod target, and tracking markers"
+    ],
+    "indexCacheControl": "no-cache,max-age=0,must-revalidate",
+    "assetCacheControl": "public,max-age=86400",
+    "changesNotIncluded": [
+      "DNS",
+      "CloudFront origin or policy",
+      "S3 bucket configuration",
+      "Staging pipeline",
+      "PROD pipeline creation or trigger modification"
+    ]
+  }
+}

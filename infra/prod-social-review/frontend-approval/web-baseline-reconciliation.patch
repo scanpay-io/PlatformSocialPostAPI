@@ -1,0 +1,760 @@
+diff --git a/src/app/core/api/api-error.ts b/src/app/core/api/api-error.ts
+index c6e8de5..14f51bb 100644
+--- a/src/app/core/api/api-error.ts
++++ b/src/app/core/api/api-error.ts
+@@ -1,4 +1,4 @@
+-import { structuredApiRejection } from './api-response';
++import { ApiResponseError, isApiRejection, structuredApiRejection } from './api-response';
+ import { stringValue } from '../../shared/forms/value-conversion';
+ export function errorMessage(
+   error: unknown,
+@@ -58,3 +58,20 @@ function nonblankErrorMessage(error: unknown, fallback: string, paths: readonly
+     .find((value) => value !== null && value !== undefined);
+   return typeof message === 'string' && message.trim() ? message : fallback;
+ }
++
++/** Only expose explicit client-validation responses, never HTTP transport diagnostics. */
++export function validationErrorMessage(error: unknown, fallback: string): string {
++  const rejection = structuredApiRejection(error);
++  if (rejection) return rejection.message;
++  if (!isApiRejection(error)) return fallback;
++  if (error instanceof ApiResponseError) return error.message.trim() || fallback;
++  const record = error as Record<string, unknown>;
++  const payload = record['error'];
++  const details = payload && typeof payload === 'object'
++    ? payload as Record<string, unknown>
++    : record;
++  // HttpErrorResponse.message describes transport failure, not the rejected input.
++  if (details['errorType'] || (details === record && 'error' in record)) return fallback;
++  const message = details['message'] ?? details['Message'];
++  return typeof message === 'string' && message.trim() ? message : fallback;
++}
+diff --git a/src/app/core/auth/auth-token.interceptor.spec.ts b/src/app/core/auth/auth-token.interceptor.spec.ts
+index 096436c..dccedb6 100644
+--- a/src/app/core/auth/auth-token.interceptor.spec.ts
++++ b/src/app/core/auth/auth-token.interceptor.spec.ts
+@@ -70,6 +70,21 @@ describe('authTokenInterceptor', () => {
+     expect(TestBed.inject(AuthSessionService).sessionTimedOut()).toBe(false);
+   });
+ 
++  it('preserves the session for an incorrect current password', () => {
++    api.put('/password', {}).subscribe({ error: () => {} });
++    http.expectOne('https://api.gogiveanywhere.com/dev/password')
++      .flush({ Message: 'Incorrect current password.' }, { status: 401, statusText: 'Unauthorized' });
++    expect(TestBed.inject(AuthSessionService).isAuthenticated()).toBe(true);
++    expect(TestBed.inject(AuthSessionService).sessionTimedOut()).toBe(false);
++  });
++
++  it('still expires a session for a genuine password endpoint authorization failure', () => {
++    api.put('/password', {}).subscribe({ error: () => {} });
++    http.expectOne('https://api.gogiveanywhere.com/dev/password')
++      .flush({ message: 'Unauthorized' }, { status: 401, statusText: 'Unauthorized' });
++    expect(TestBed.inject(AuthSessionService).sessionTimedOut()).toBe(true);
++  });
++
+   it('does not send the session token to external URLs or expire on their 401', () => {
+     TestBed.inject(HttpClient)
+       .get('https://example.com/file')
+diff --git a/src/app/core/auth/auth-token.interceptor.ts b/src/app/core/auth/auth-token.interceptor.ts
+index 76abd74..0626b5d 100644
+--- a/src/app/core/auth/auth-token.interceptor.ts
++++ b/src/app/core/auth/auth-token.interceptor.ts
+@@ -1,3 +1,4 @@
++import { validationErrorMessage } from '../api/api-error';
+ import { HttpErrorResponse, HttpInterceptorFn } from '@angular/common/http';
+ import { inject } from '@angular/core';
+ import { catchError, throwError } from 'rxjs';
+@@ -23,11 +24,14 @@ export const authTokenInterceptor: HttpInterceptorFn = (request, next) => {
+ 
+   return next(authenticatedRequest).pipe(
+     catchError((error: unknown) => {
++      const incorrectCurrentPassword = request.method === 'PUT' && path === '/password'
++        && validationErrorMessage(error, '') === 'Incorrect current password.';
+       if (
+         error instanceof HttpErrorResponse &&
+         error.status === 401 &&
+         token &&
+         !isLoginRequest &&
++        !incorrectCurrentPassword &&
+         authenticatedRequest.headers.get('Authorization') === `Bearer ${token}`
+       ) {
+         sessions.expireSession(token);
+diff --git a/src/app/core/auth/auth.service.ts b/src/app/core/auth/auth.service.ts
+index 49df751..7c22812 100644
+--- a/src/app/core/auth/auth.service.ts
++++ b/src/app/core/auth/auth.service.ts
+@@ -175,7 +175,7 @@ export class AuthService {
+         ...(request.emailId?.trim() ? { email_id: request.emailId.trim() } : {}),
+         ...(request.actionId?.trim() ? { action_id: request.actionId.trim() } : {}),
+       },
+-    );
++    ).pipe(map(assertApiSuccess));
+   }
+ 
+   registerIndividual(request: RegisterIndividualRequest): Observable<CreateIndividualResponse> {
+@@ -188,7 +188,7 @@ export class AuthService {
+         email: request.email,
+         referral_program_code: request.referralProgramCode?.trim() || null,
+       })
+-      .pipe(map((response) => ({ account_id: this.extractAccountId(response) })));
++      .pipe(map(assertApiSuccess), map((response) => ({ account_id: this.extractAccountId(response) })));
+   }
+ 
+   login(request: LoginRequest): Observable<AuthSession> {
+@@ -203,6 +203,7 @@ export class AuthService {
+         country_code: 'US',
+       })
+       .pipe(
++        map(assertApiSuccess),
+         map((response) => this.toAuthSession(response)),
+         tap((session) => this.sessions.setSession(session)),
+       );
+@@ -222,6 +223,7 @@ export class AuthService {
+         },
+       )
+       .pipe(
++        map(assertApiSuccess),
+         map((response) => this.toAuthSession(response)),
+         tap((session) => this.sessions.setSession(session)),
+       );
+diff --git a/src/app/features/auth/account-recovery.page.html b/src/app/features/auth/account-recovery.page.html
+index 243ad5b..0e9dba7 100644
+--- a/src/app/features/auth/account-recovery.page.html
++++ b/src/app/features/auth/account-recovery.page.html
+@@ -42,8 +42,10 @@
+           type="password"
+           autocomplete="new-password"
+           placeholder="New password"
++          [htmlAttributes]="{ 'aria-describedby': 'reset-password-rules' }"
+         ></ejs-textbox
+       ></label>
++      <app-password-requirements requirementsId="reset-password-rules" [password]="form.controls.password.value"></app-password-requirements>
+       <label
+         >Confirm new password<ejs-textbox
+           formControlName="confirmPassword"
+diff --git a/src/app/features/auth/account-recovery.page.ts b/src/app/features/auth/account-recovery.page.ts
+index fb6dc63..c4eae7a 100644
+--- a/src/app/features/auth/account-recovery.page.ts
++++ b/src/app/features/auth/account-recovery.page.ts
+@@ -1,14 +1,17 @@
++import { PasswordRequirementsComponent } from '../../shared/forms/password-requirements.component';
+ import { ButtonModule } from '@syncfusion/ej2-angular-buttons';
+ import { TextBoxModule } from '@syncfusion/ej2-angular-inputs';
+ import { ChangeDetectorRef, Component, inject } from '@angular/core';
+ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+ import { finalize } from 'rxjs';
++import { structuredApiRejection } from '../../core/api/api-response';
++import { validationErrorMessage } from '../../core/api/api-error';
+ import { AuthService } from '../../core/auth/auth.service';
+ 
+ @Component({
+   selector: 'app-account-recovery-page',
+-  imports: [ButtonModule, TextBoxModule, ReactiveFormsModule, RouterLink],
++  imports: [PasswordRequirementsComponent, ButtonModule, TextBoxModule, ReactiveFormsModule, RouterLink],
+   templateUrl: './account-recovery.page.html',
+   styleUrl: './account-recovery.page.css',
+ })
+@@ -91,6 +94,11 @@ export class AccountRecoveryPage {
+       next: (response) => {
+         const result =
+           response && typeof response === 'object' ? (response as Record<string, unknown>) : {};
++        const rejection = structuredApiRejection(result);
++        if (rejection) {
++          this.errorMessage = rejection.message;
++          return;
++        }
+         const codeSent = this.mode === 'password' && result['code_sent'] === true;
+         if (result['errorMessage'] || (result['success'] === false && !codeSent)) {
+           this.errorMessage = String(
+@@ -119,9 +127,10 @@ export class AccountRecoveryPage {
+         }
+         this.handleSuccess(value.username.trim());
+       },
+-      error: () =>
+-        (this.errorMessage =
+-          'We could not complete this request. Verify the information and try again.'),
++      error: (error: unknown) => {
++        const fallback = 'We could not complete this request. Verify the information and try again.';
++        this.errorMessage = validationErrorMessage(error, fallback);
++      },
+     });
+   }
+ 
+diff --git a/src/app/features/auth/account-validation-errors.spec.ts b/src/app/features/auth/account-validation-errors.spec.ts
+new file mode 100644
+index 0000000..83c5e20
+--- /dev/null
++++ b/src/app/features/auth/account-validation-errors.spec.ts
+@@ -0,0 +1,70 @@
++import { provideHttpClient } from '@angular/common/http';
++import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
++import { TestBed } from '@angular/core/testing';
++import { ActivatedRoute, convertToParamMap, provideRouter, Router } from '@angular/router';
++import { of } from 'rxjs';
++import { AuthSession } from '../../core/auth/auth-session.service';
++import { SignupPage } from './signup.page';
++import { MyAccountPage } from '../my-account/my-account.page';
++
++describe('Account validation error messages', () => {
++  beforeEach(() => TestBed.configureTestingModule({
++    imports: [SignupPage, MyAccountPage],
++    providers: [provideRouter([]), provideHttpClient(), provideHttpClientTesting(), {
++      provide: ActivatedRoute,
++      useValue: { data: of({ accountTab: 'security' }), snapshot: { queryParamMap: convertToParamMap({}), queryParams: {} } },
++    }],
++  }));
++  afterEach(() => { TestBed.inject(HttpTestingController).verify(); vi.restoreAllMocks(); });
++
++  for (const page of ['organization signup', 'individual signup', 'change password']) {
++    for (const format of ['legacy 200', 'legacy 502', 'plain 400', 'capitalized 400', 'unexpected 500', 'empty 400']) {
++      it(page + ' handles ' + format + ' without success or lost form values', async () => {
++        const router = TestBed.inject(Router);
++        const navigate = vi.spyOn(router, 'navigate').mockResolvedValue(true);
++        if (page === 'change password') {
++          vi.spyOn(MyAccountPage.prototype, 'ngOnInit').mockImplementation(function(this: MyAccountPage) { this.activeTab.set('security'); });
++        } else {
++          vi.spyOn(router, 'url', 'get').mockReturnValue(page === 'individual signup' ? '/signup/individualsignup' : '/signup/organizationsignup');
++        }
++        const fixture = page === 'change password' ? TestBed.createComponent(MyAccountPage) : TestBed.createComponent(SignupPage);
++        const instance = fixture.componentInstance;
++        if (instance instanceof MyAccountPage) {
++          vi.spyOn(instance, 'session').mockReturnValue({ accountId: 'test-account', accountType: 'individual' } as AuthSession);
++        }
++        await fixture.whenStable();
++        if (instance instanceof MyAccountPage) {
++          instance.passwordForm.patchValue({ currentPassword: 'Current1!', newPassword: 'Proposed1#' });
++          instance.changePassword();
++        } else {
++          instance.signupForm.patchValue({ username: 'test-account', email: 'test@example.org', ein: '123456789', password: 'Proposed1#' });
++          instance.onSubmit();
++        }
++        const message = page === 'change password' ? 'Incorrect current password.' : 'Username already exists.';
++        const payload = format.startsWith('legacy') ? { errorType: 'Exception', errorMessage: JSON.stringify({ Status: 400, Message: message }) }
++          : format === 'plain 400' ? { message }
++          : format === 'capitalized 400' ? { Message: message }
++          : format === 'empty 400' ? {} : { message: 'private server stack trace' };
++        const status = Number(format.split(' ').at(-1));
++        TestBed.inject(HttpTestingController).expectOne(request => request.method === (page === 'change password' ? 'PUT' : 'POST')).flush(payload, { status, statusText: 'Response' });
++        await fixture.whenStable();
++        const fallback = page === 'change password' ? 'Unable to change password.' : 'We could not create the account. Please confirm the information and try again.';
++        const expected = format === 'unexpected 500' || format === 'empty 400' ? fallback : message;
++        if (instance instanceof MyAccountPage) {
++          expect(instance.statusMessage()).toBe(expected);
++          expect(instance.statusType()).toBe('error');
++          expect(instance.passwordForm.controls.newPassword.value).toBe('Proposed1#');
++          expect(instance.loading()).toBe(false);
++        } else {
++          expect(instance.errorMessage).toBe(expected);
++          expect(instance.isSubmitting).toBe(false);
++          expect(instance.successMessage).toBe('');
++          expect(instance.signupForm.controls.password.value).toBe('Proposed1#');
++        }
++        expect(fixture.nativeElement.textContent).toContain(expected);
++        expect(fixture.nativeElement.textContent).not.toContain('private server stack trace');
++        expect(navigate).not.toHaveBeenCalled();
++      });
++    }
++  }
++});
+diff --git a/src/app/features/auth/login-validation-errors.spec.ts b/src/app/features/auth/login-validation-errors.spec.ts
+new file mode 100644
+index 0000000..2393896
+--- /dev/null
++++ b/src/app/features/auth/login-validation-errors.spec.ts
+@@ -0,0 +1,55 @@
++import { provideHttpClient } from '@angular/common/http';
++import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
++import { TestBed } from '@angular/core/testing';
++import { provideRouter, Router } from '@angular/router';
++import { AuthSessionService } from '../../core/auth/auth-session.service';
++import { LoginPage } from './login.page';
++
++describe('Login validation messages', () => {
++  beforeEach(() => {
++    localStorage.clear();
++    TestBed.configureTestingModule({ imports: [LoginPage], providers: [provideRouter([]), provideHttpClient(), provideHttpClientTesting()] });
++  });
++  afterEach(() => { TestBed.inject(HttpTestingController).verify(); localStorage.clear(); vi.restoreAllMocks(); });
++
++  for (const mode of ['password', 'mfa', 'new-password'] as const) {
++    for (const format of ['legacy 200', 'legacy 502', 'plain 401', 'capitalized 400', 'unexpected 500', 'empty 400']) {
++      it(mode + ' displays ' + format + ' without creating a session', async () => {
++        const fixture = TestBed.createComponent(LoginPage);
++        await fixture.whenStable();
++        const page = fixture.componentInstance;
++        const http = TestBed.inject(HttpTestingController);
++        const navigate = vi.spyOn(TestBed.inject(Router), 'navigateByUrl').mockResolvedValue(true);
++        page.loginForm.patchValue({ username: 'test-user', password: 'Current123!' });
++        if (mode !== 'password') {
++          page.onSubmit();
++          http.expectOne(r => r.url.endsWith('/login')).flush(mode === 'mfa'
++            ? { account_id: 'test-account', mfa_required_response: { session: 'challenge-session', mfa_type: 'SMS' } }
++            : { new_password_required_response: { session: 'challenge-session' } });
++          await fixture.whenStable();
++          expect(page.challengeMode).toBe(mode);
++          page.loginForm.patchValue({ otpCode: '012345', newPassword: 'Proposed123!', confirmPassword: 'Proposed123!' });
++        }
++        page.onSubmit();
++        const message = mode === 'mfa' ? 'Invalid verification code.' : mode === 'new-password' ? 'Password must have numeric characters.' : 'Incorrect username or password.';
++        const payload = format.startsWith('legacy') ? { errorType: 'Exception', errorMessage: JSON.stringify({ Status: 400, Message: message }) }
++          : format === 'plain 401' ? { message }
++          : format === 'capitalized 400' ? { Message: message }
++          : format === 'empty 400' ? {} : { message: 'private server stack trace' };
++        http.expectOne(r => r.method === 'POST').flush(payload, { status: Number(format.split(' ').at(-1)), statusText: 'Response' });
++        await fixture.whenStable();
++        const fallback = mode === 'mfa'
++          ? 'We could not verify that code. Try the latest code, or go back to login to start a new verification session.'
++          : 'We could not sign you in. Please check your username and password.';
++        expect(page.errorMessage).toBe(format === 'unexpected 500' || format === 'empty 400' ? fallback : message);
++        expect(fixture.nativeElement.textContent).toContain(page.errorMessage);
++        expect(page.isSubmitting).toBe(false);
++        expect(page.challengeMode).toBe(mode);
++        expect(page.successMessage).toBe('');
++        expect(TestBed.inject(AuthSessionService).session()).toBeNull();
++        expect(navigate).not.toHaveBeenCalled();
++        if (mode === 'mfa') expect(page.loginForm.controls.otpCode.value).toBe('');
++      });
++    }
++  }
++});
+diff --git a/src/app/features/auth/login.page.ts b/src/app/features/auth/login.page.ts
+index 183d1f7..84eb82e 100644
+--- a/src/app/features/auth/login.page.ts
++++ b/src/app/features/auth/login.page.ts
+@@ -1,3 +1,4 @@
++import { validationErrorMessage } from '../../core/api/api-error';
+ import { ChangeDetectorRef, Component, inject } from '@angular/core';
+ import { TextBoxComponent, TextBoxModule } from '@syncfusion/ej2-angular-inputs';
+ import { ButtonModule } from '@syncfusion/ej2-angular-buttons';
+@@ -91,8 +92,10 @@ export class LoginPage {
+             this.loginForm.controls.otpCode.reset();
+             if (error instanceof LoginChallengeError) this.handleLoginError(error);
+             else
+-              this.errorMessage =
+-                'We could not verify that code. Try the latest code, or go back to login to start a new verification session.';
++              this.errorMessage = validationErrorMessage(
++                error,
++                'We could not verify that code. Try the latest code, or go back to login to start a new verification session.',
++              );
+           },
+         });
+       return;
+@@ -200,7 +203,10 @@ export class LoginPage {
+       return;
+     }
+ 
+-    this.errorMessage = 'We could not sign you in. Please check your username and password.';
++    this.errorMessage = validationErrorMessage(
++      error,
++      'We could not sign you in. Please check your username and password.',
++    );
+   }
+ 
+   private isCurrentStepValid(): boolean {
+diff --git a/src/app/features/auth/password-checklists.spec.ts b/src/app/features/auth/password-checklists.spec.ts
+new file mode 100644
+index 0000000..af173de
+--- /dev/null
++++ b/src/app/features/auth/password-checklists.spec.ts
+@@ -0,0 +1,47 @@
++import { provideHttpClient } from '@angular/common/http';
++import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
++import { TestBed } from '@angular/core/testing';
++import { ActivatedRoute, convertToParamMap, provideRouter, Router } from '@angular/router';
++import { of } from 'rxjs';
++import { SignupPage } from './signup.page';
++import { MyAccountPage } from '../my-account/my-account.page';
++
++describe('Shared live password checklist', () => {
++  beforeEach(() => {
++    TestBed.configureTestingModule({
++      imports: [SignupPage, MyAccountPage],
++      providers: [provideRouter([]), provideHttpClient(), provideHttpClientTesting(), {
++        provide: ActivatedRoute,
++        useValue: { data: of({ accountTab: 'security' }), snapshot: { queryParamMap: convertToParamMap({}), queryParams: {} } },
++      }],
++    });
++  });
++  afterEach(() => { TestBed.inject(HttpTestingController).verify(); vi.restoreAllMocks(); });
++
++  for (const page of ['organization signup', 'individual signup', 'change password']) {
++    it('updates the five rules and validation on ' + page, async () => {
++      if (page === 'change password') {
++        vi.spyOn(MyAccountPage.prototype, 'ngOnInit').mockImplementation(function(this: MyAccountPage) { this.activeTab.set('security'); });
++      } else {
++        vi.spyOn(TestBed.inject(Router), 'url', 'get').mockReturnValue(page === 'individual signup' ? '/signup/individualsignup' : '/signup/organizationsignup');
++      }
++      const fixture = page === 'change password' ? TestBed.createComponent(MyAccountPage) : TestBed.createComponent(SignupPage);
++      await fixture.whenStable();
++      const controlName = page === 'change password' ? 'newPassword' : 'password';
++      const input = fixture.nativeElement.querySelector('input[formControlName="' + controlName + '"]') as HTMLInputElement;
++      const rules = () => Array.from(fixture.nativeElement.querySelectorAll('.platform-password-requirements li')) as HTMLElement[];
++      const control = fixture.componentInstance instanceof MyAccountPage ? fixture.componentInstance.passwordForm.controls.newPassword : fixture.componentInstance.signupForm.controls.password;
++      expect(rules()).toHaveLength(5);
++      expect(rules().filter(rule => rule.classList.contains('rule-met'))).toHaveLength(0);
++      for (const [password, met] of [['abcdefgh', 2], ['Abcdefgh', 3], ['Abcdefg1', 4], ['Abcdef1#', 5], ['', 0]] as const) {
++        input.value = password;
++        input.dispatchEvent(new Event('input', { bubbles: true }));
++        await fixture.whenStable();
++        expect(rules().filter(rule => rule.classList.contains('rule-met'))).toHaveLength(met);
++        expect(control.valid).toBe(met === 5);
++      }
++      expect(input.getAttribute('aria-describedby')).toContain(page === 'change password' ? 'password-requirements' : 'password-rules');
++      TestBed.inject(HttpTestingController).expectNone(request => request.method === 'POST' || request.method === 'PUT');
++    });
++  }
++});
+diff --git a/src/app/features/auth/password-reset-errors.spec.ts b/src/app/features/auth/password-reset-errors.spec.ts
+new file mode 100644
+index 0000000..b0859ba
+--- /dev/null
++++ b/src/app/features/auth/password-reset-errors.spec.ts
+@@ -0,0 +1,60 @@
++import { provideHttpClient } from '@angular/common/http';
++import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
++import { TestBed } from '@angular/core/testing';
++import { ActivatedRoute, convertToParamMap, provideRouter, Router } from '@angular/router';
++import { AccountRecoveryPage } from './account-recovery.page';
++
++describe('Password reset validation errors', () => {
++  beforeEach(() => TestBed.configureTestingModule({
++    imports: [AccountRecoveryPage],
++    providers: [provideRouter([]), provideHttpClient(), provideHttpClientTesting(), {
++      provide: ActivatedRoute,
++      useValue: { snapshot: { data: { recoveryMode: 'reset' }, queryParamMap: convertToParamMap({}) } },
++    }],
++  }));
++  afterEach(() => TestBed.inject(HttpTestingController).verify());
++
++  for (const transportStatus of [200, 400, 502]) {
++    it('shows the structured password requirement over HTTP ' + transportStatus, async () => {
++      const navigate = vi.spyOn(TestBed.inject(Router), 'navigate').mockResolvedValue(true);
++      const fixture = TestBed.createComponent(AccountRecoveryPage);
++      await fixture.whenStable();
++      fixture.componentInstance.form.patchValue({ username: 'test-user', code: '123456', password: 'NoNumbers!', confirmPassword: 'NoNumbers!' });
++      fixture.componentInstance.submit();
++      const request = TestBed.inject(HttpTestingController).expectOne(r => r.method === 'PUT' && r.url.endsWith('/password/forgot'));
++      const message = 'Password does not conform to policy: Password must have numeric characters';
++      request.flush({ errorType: 'Exception', errorMessage: JSON.stringify({ Status: 400, Message: message }) }, { status: transportStatus, statusText: 'Response' });
++      await fixture.whenStable();
++      expect(fixture.nativeElement.querySelector('.form-error').textContent).toContain(message);
++      expect(fixture.componentInstance.isSubmitting).toBe(false);
++      expect(navigate).not.toHaveBeenCalled();
++    });
++  }
++
++  it('updates every requirement while typing and when clearing the password', async () => {
++    const fixture = TestBed.createComponent(AccountRecoveryPage);
++    await fixture.whenStable();
++    const input = fixture.nativeElement.querySelector('input[formControlName="password"]') as HTMLInputElement;
++    const rules = () => Array.from(fixture.nativeElement.querySelectorAll('#reset-password-rules li')) as HTMLElement[];
++    expect(rules()).toHaveLength(5);
++    expect(rules().filter(rule => rule.classList.contains('rule-met'))).toHaveLength(0);
++    for (const [password, met] of [['abcdefgh', 2], ['Abcdefgh', 3], ['Abcdefg1', 4], ['Abcdef1!', 5], ['', 0]] as const) {
++      input.value = password;
++      input.dispatchEvent(new Event('input', { bubbles: true }));
++      await fixture.whenStable();
++      expect(rules().filter(rule => rule.classList.contains('rule-met'))).toHaveLength(met);
++    }
++    TestBed.inject(HttpTestingController).expectNone(r => r.method === 'PUT');
++  });
++
++  it('keeps unexpected server details out of the form', async () => {
++    const fixture = TestBed.createComponent(AccountRecoveryPage);
++    await fixture.whenStable();
++    fixture.componentInstance.form.patchValue({ username: 'test-user', code: '123456', password: 'Password123!', confirmPassword: 'Password123!' });
++    fixture.componentInstance.submit();
++    TestBed.inject(HttpTestingController).expectOne(r => r.method === 'PUT').flush({ message: 'private stack trace' }, { status: 500, statusText: 'Server error' });
++    await fixture.whenStable();
++    expect(fixture.nativeElement.querySelector('.form-error').textContent).toContain('We could not complete this request.');
++    expect(fixture.nativeElement.textContent).not.toContain('private stack trace');
++  });
++});
+diff --git a/src/app/features/auth/signup.page.css b/src/app/features/auth/signup.page.css
+index d70dad1..ffab5fe 100644
+--- a/src/app/features/auth/signup.page.css
++++ b/src/app/features/auth/signup.page.css
+@@ -82,19 +82,6 @@
+ .password-toggle {
+   flex: 0 0 40px;
+ }
+-.password-rules {
+-  padding: 0;
+-  list-style: none;
+-  font-size: 13px;
+-  color: #a22132;
+-  margin: 12px 0 0;
+-}
+-.password-rules li {
+-  margin: 5px 0;
+-}
+-.password-rules .rule-met {
+-  color: #087947;
+-}
+ .signup-codes {
+   display: flex;
+   flex-wrap: wrap;
+diff --git a/src/app/features/auth/signup.page.html b/src/app/features/auth/signup.page.html
+index 0902033..b3f142d 100644
+--- a/src/app/features/auth/signup.page.html
++++ b/src/app/features/auth/signup.page.html
+@@ -130,20 +130,7 @@
+                 ></i>
+               </button>
+             </div>
+-            @if (signupForm.controls.password.touched || signupForm.controls.password.value) {
+-              <ul id="password-rules" class="password-rules">
+-                @for (rule of passwordRules; track rule.label) {
+-                  <li [class.rule-met]="rule.valid">
+-                    <i
+-                      [class]="rule.valid ? 'bi bi-check-square-fill' : 'bi bi-x-square'"
+-                      aria-hidden="true"
+-                    ></i>
+-                    <span class="visually-hidden">{{ rule.valid ? 'Met:' : 'Required:' }}</span>
+-                    {{ rule.label }}
+-                  </li>
+-                }
+-              </ul>
+-            }
++            <app-password-requirements requirementsId="password-rules" [password]="signupForm.controls.password.value"></app-password-requirements>
+           </div>
+         </div>
+       </fieldset>
+diff --git a/src/app/features/auth/signup.page.ts b/src/app/features/auth/signup.page.ts
+index cd50530..bbc21a9 100644
+--- a/src/app/features/auth/signup.page.ts
++++ b/src/app/features/auth/signup.page.ts
+@@ -1,3 +1,6 @@
++import { validationErrorMessage } from '../../core/api/api-error';
++import { passwordPolicyValidator } from '../../shared/forms/password-policy';
++import { PasswordRequirementsComponent } from '../../shared/forms/password-requirements.component';
+ import { ChangeDetectorRef, Component, DestroyRef, inject } from '@angular/core';
+ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+@@ -17,7 +20,7 @@ import { QueryParamPreservationService } from '../../core/query-params/query-par
+ 
+ @Component({
+   selector: 'app-signup-page',
+-  imports: [ReactiveFormsModule, RouterLink, ButtonModule, TextBoxModule, DialogModule],
++  imports: [PasswordRequirementsComponent, ReactiveFormsModule, RouterLink, ButtonModule, TextBoxModule, DialogModule],
+   templateUrl: './signup.page.html',
+   styleUrl: './signup.page.css',
+ })
+@@ -49,8 +52,7 @@ export class SignupPage {
+       '',
+       [
+         Validators.required,
+-        Validators.minLength(8),
+-        Validators.pattern(/^(?=.*[0-9])(?=.*[A-Z])(?=.*[a-z])(?=.*[$@^!%*?&])[\s\S]+$/),
++        passwordPolicyValidator,
+       ],
+     ],
+     promoCode: [''],
+@@ -199,9 +201,11 @@ export class SignupPage {
+             queryParams,
+           });
+         },
+-        error: () => {
+-          this.errorMessage =
+-            'We could not create the account. Please confirm the information and try again.';
++        error: (error: unknown) => {
++          this.errorMessage = validationErrorMessage(
++            error,
++            'We could not create the account. Please confirm the information and try again.',
++          );
+         },
+       });
+   }
+@@ -286,20 +290,6 @@ export class SignupPage {
+       : '/assets/web-source/onboarding/register-org.png';
+   }
+ 
+-  get passwordRules(): { label: string; valid: boolean }[] {
+-    const password = this.signupForm.controls.password.value;
+-    return [
+-      { label: 'At least 8 characters', valid: password.length >= 8 },
+-      { label: 'At least 1 digit', valid: /[0-9]/.test(password) },
+-      { label: 'At least 1 uppercase letter', valid: /[A-Z]/.test(password) },
+-      { label: 'At least 1 lowercase letter', valid: /[a-z]/.test(password) },
+-      {
+-        label: 'At least 1 special character: $ @ ^ ! % * ? &',
+-        valid: /[$@^!%*?&]/.test(password),
+-      },
+-    ];
+-  }
+-
+   get codeDialogTitle(): string {
+     return this.codeDialog === 'promoCode'
+       ? 'Promo Code'
+diff --git a/src/app/features/my-account/my-account.page.html b/src/app/features/my-account/my-account.page.html
+index f7190d2..c0ae9dc 100644
+--- a/src/app/features/my-account/my-account.page.html
++++ b/src/app/features/my-account/my-account.page.html
+@@ -425,18 +425,11 @@
+                               formControlName="newPassword"
+                               type="password"
+                               placeholder="New Password"
++                              [htmlAttributes]="{ 'aria-describedby': 'password-requirements' }"
+                             ></ejs-textbox
+                           ></label>
++                          <app-password-requirements requirementsId="password-requirements" [password]="passwordForm.controls.newPassword.value"></app-password-requirements>
+                           <div class="security-card-action">
+-                            <div class="account-helper" id="password-requirements">
+-                              <strong>New password requirements</strong>
+-                              <ul>
+-                                <li>At least 8 characters</li>
+-                                <li>At least one uppercase letter and one lowercase letter</li>
+-                                <li>At least one number</li>
+-                                <li>At least one special character: $ &#64; ^ ! % * ? &amp;</li>
+-                              </ul>
+-                            </div>
+                             <button
+                               ejs-button
+                               type="submit"
+diff --git a/src/app/features/my-account/my-account.page.ts b/src/app/features/my-account/my-account.page.ts
+index 1c70813..df47f8e 100644
+--- a/src/app/features/my-account/my-account.page.ts
++++ b/src/app/features/my-account/my-account.page.ts
+@@ -1,3 +1,6 @@
++import { validationErrorMessage } from '../../core/api/api-error';
++import { passwordPolicyValidator } from '../../shared/forms/password-policy';
++import { PasswordRequirementsComponent } from '../../shared/forms/password-requirements.component';
+ import { organizationTimeZone } from '../event/event-time-zone';
+ import { recordValue, recordArray as arrayValue } from '../../shared/forms/value-conversion';
+ import { compareGridDates } from '../../shared/ui/grid-date-sort';
+@@ -107,6 +110,7 @@ const stateOptions = [
+ @Component({
+   selector: 'app-my-account-page',
+   imports: [
++    PasswordRequirementsComponent,
+     AccountWorkspaceHeaderComponent,
+     ReferralDashboardComponent,
+     ButtonModule,
+@@ -316,11 +320,7 @@ export class MyAccountPage implements OnInit {
+       '',
+       [
+         Validators.required,
+-        Validators.minLength(8),
+-        Validators.pattern(/[A-Z]/),
+-        Validators.pattern(/[a-z]/),
+-        Validators.pattern(/[0-9]/),
+-        Validators.pattern(/[$@^!%*?&]/),
++        passwordPolicyValidator,
+       ],
+     ],
+   });
+@@ -576,7 +576,7 @@ export class MyAccountPage implements OnInit {
+           this.passwordForm.reset();
+           this.setStatus('success', 'Password Has Been Changed Successfully');
+         },
+-        error: () => this.setStatus('error', 'Unable to change password.'),
++        error: (error: unknown) => this.setStatus('error', validationErrorMessage(error, 'Unable to change password.')),
+       });
+   }
+ 
+diff --git a/src/app/features/my-account/my-account.service.ts b/src/app/features/my-account/my-account.service.ts
+index 4674bc7..0fc4c33 100644
+--- a/src/app/features/my-account/my-account.service.ts
++++ b/src/app/features/my-account/my-account.service.ts
+@@ -1,7 +1,8 @@
++import { assertApiSuccess } from '../../core/api/api-response';
+ import { isOrganizationAccount } from '../../core/auth/auth-session.service';
+ import { organizationIdFor } from '../../core/auth/auth-session.service';
+ import { Injectable, signal } from '@angular/core';
+-import { Observable, tap } from 'rxjs';
++import { Observable, map, tap } from 'rxjs';
+ import { ApiClientService } from '../../core/api/api-client.service';
+ import { AuthSession } from '../../core/auth/auth-session.service';
+ 
+@@ -190,7 +191,7 @@ export class MyAccountService {
+       account_id: session.accountId,
+       password: currentPassword,
+       new_password: newPassword,
+-    });
++    }).pipe(map(assertApiSuccess));
+   }
+ 
+   setupMfa(session: AuthSession, mfaType = ''): Observable<MfaSetupResponse> {
+diff --git a/src/app/shared/forms/password-policy.ts b/src/app/shared/forms/password-policy.ts
+new file mode 100644
+index 0000000..7b253ff
+--- /dev/null
++++ b/src/app/shared/forms/password-policy.ts
+@@ -0,0 +1,17 @@
++import { ValidatorFn } from '@angular/forms';
++
++// Verified against the GoGiveAnywhere Cognito pool on 2026-11-10.
++export function passwordRequirements(password: string): ReadonlyArray<{ label: string; valid: boolean }> {
++  return [
++    { label: 'At least 8 characters', valid: Array.from(password).length >= 8 },
++    { label: 'At least one uppercase letter (A–Z)', valid: /[A-Z]/.test(password) },
++    { label: 'At least one lowercase letter (a–z)', valid: /[a-z]/.test(password) },
++    { label: 'At least one number (0–9)', valid: /[0-9]/.test(password) },
++    { label: 'At least one symbol (for example, ! @ # $)', valid: /[\x21-\x2f\x3a-\x40\x5b-\x60\x7b-\x7e]/.test(password) },
++  ];
++}
++
++export const passwordPolicyValidator: ValidatorFn = control =>
++  passwordRequirements(String(control.value ?? '')).every(rule => rule.valid)
++  ? null
++  : { passwordPolicy: true };
+diff --git a/src/app/shared/forms/password-requirements.component.css b/src/app/shared/forms/password-requirements.component.css
+new file mode 100644
+index 0000000..e69de29
+diff --git a/src/app/shared/forms/password-requirements.component.html b/src/app/shared/forms/password-requirements.component.html
+new file mode 100644
+index 0000000..b312e7c
+--- /dev/null
++++ b/src/app/shared/forms/password-requirements.component.html
+@@ -0,0 +1,12 @@
++<div class="platform-password-requirements" [id]="requirementsId">
++  <p>Password requirements</p>
++  <ul aria-live="polite" aria-atomic="true">
++    @for (rule of rules; track rule.label) {
++      <li [class.rule-met]="rule.valid">
++        <i [class]="rule.valid ? 'bi bi-check-circle-fill' : 'bi bi-circle'" aria-hidden="true"></i>
++        <span>{{ rule.valid ? 'Met:' : 'Required:' }}</span>
++        {{ rule.label }}
++      </li>
++    }
++  </ul>
++</div>
+diff --git a/src/app/shared/forms/password-requirements.component.ts b/src/app/shared/forms/password-requirements.component.ts
+new file mode 100644
+index 0000000..9cc31d6
+--- /dev/null
++++ b/src/app/shared/forms/password-requirements.component.ts
+@@ -0,0 +1,16 @@
++import { Component, Input } from '@angular/core';
++import { passwordRequirements } from './password-policy';
++
++@Component({
++  selector: 'app-password-requirements',
++  templateUrl: './password-requirements.component.html',
++  styleUrl: './password-requirements.component.css',
++})
++export class PasswordRequirementsComponent {
++  @Input() password = '';
++  @Input({ required: true }) requirementsId = '';
++
++  get rules() {
++    return passwordRequirements(this.password);
++  }
++}
+diff --git a/src/platform-ui.css b/src/platform-ui.css
+index c0463e5..ca279db 100644
+--- a/src/platform-ui.css
++++ b/src/platform-ui.css
+@@ -15529,3 +15529,11 @@ app-crm-workspace-navigation>.e-tab>.e-content {
+   .platform-sms-insight-details { grid-template-columns: 1fr; gap: 6px; }
+   .platform-sms-insights .platform-dialog-actions { flex-wrap: wrap; }
+ }
++
++/* Password requirements shared by account access forms. */
++app-password-requirements { display: block; }
++.platform-password-requirements { margin-top: 8px; font-size: 13px; color: #52617a; }
++.platform-password-requirements p { margin: 0 0 6px; font-weight: 600; }
++.platform-password-requirements ul { list-style: none; padding: 0; margin: 0; }
++.platform-password-requirements li { display: flex; align-items: baseline; gap: 8px; margin: 5px 0; }
++.platform-password-requirements .rule-met { color: #087947; }

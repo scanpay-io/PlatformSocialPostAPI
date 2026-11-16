@@ -1,0 +1,10 @@
+{
+  "checkedAt": "2026-11-10T19:15:19.658Z",
+  "devUnchanged": true,
+  "otherAliasesUnchanged": true,
+  "prodAnalyticsVersion": "21",
+  "devAnalyticsVersion": "20",
+  "distinctCursorKeys": true,
+  "prodCursorBytes": 32,
+  "prodDeployment": "iarb8e"
+}

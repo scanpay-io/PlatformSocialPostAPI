@@ -1,0 +1,12 @@
+[
+  {
+    "functionName": "scanpay_add_donor_pledge",
+    "alias": {
+      "AliasArn": "arn:aws:lambda:us-east-1:145505076425:function:scanpay_add_donor_pledge:gany_prod",
+      "Name": "gany_prod",
+      "FunctionVersion": "62",
+      "Description": "Release crm-20261110-002",
+      "RevisionId": "c053bd1a-0c9a-4f91-8854-f451d06124f2"
+    }
+  }
+]

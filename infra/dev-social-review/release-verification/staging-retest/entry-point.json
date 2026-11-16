@@ -1,0 +1,11 @@
+{
+  "checkedAt": "2026-11-10T18:35:27.972Z",
+  "status": 200,
+  "modified": "Mon, 09 Nov 2026 22:23:38 GMT",
+  "age": null,
+  "cache": "RefreshHit from cloudfront",
+  "scripts": [
+    "polyfills-6QKGUS2I.js",
+    "main-YT6BLOG2.js"
+  ]
+}

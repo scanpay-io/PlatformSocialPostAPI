@@ -1,0 +1,9 @@
+{
+"short_code": "$input.params('shortcode')"
+#set($query = $input.params().querystring)
+#foreach($key in ["socialpostid", "socialdeliveryid"])
+#if($query.containsKey($key))
+,"$key": "$util.escapeJavaScript($query.get($key)).replaceAll("\\'","'")"
+#end
+#end
+}

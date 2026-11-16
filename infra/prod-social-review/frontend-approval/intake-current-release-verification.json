@@ -1,0 +1,178 @@
+{
+  "checkedAt": "2026-11-10T19:28:30.846Z",
+  "status": "ALREADY_DEPLOYED_BY_CONCURRENT_RELEASE_NO_INTAKE_UPLOAD_NEEDED",
+  "artifactDirectory": "E:/GiveAnywhere/WebApps/Intake2.0/deployment/measurement-health-20261110/prod-build/browser",
+  "results": [
+    {
+      "path": "assets/images/arrow.png",
+      "status": 200,
+      "sha256": "30199ffc3ee7d1c8688758ae137e1937304c79b426476df3834766f0619b877a",
+      "matches": true
+    },
+    {
+      "path": "assets/images/card.png",
+      "status": 200,
+      "sha256": "bbc506562672f8dd391cc0035f0b56c4447501d6500c947f351135884037c32d",
+      "matches": true
+    },
+    {
+      "path": "assets/images/favicon_new.png",
+      "status": 200,
+      "sha256": "deef38be09bc9e2becb70600a8c4665612402730eb2c00163aa9948cacbac439",
+      "matches": true
+    },
+    {
+      "path": "assets/images/logo-2.png",
+      "status": 200,
+      "sha256": "4567e1de70eec01eadcffe3a11893920e510153df833fc35f1773b249c628de8",
+      "matches": true
+    },
+    {
+      "path": "assets/images/paypal-logo.png",
+      "status": 200,
+      "sha256": "cc9e33e78df54f3941463f0f7691c537c9680d627a17bd2c9f43d77e8e0ff35f",
+      "matches": true
+    },
+    {
+      "path": "assets/images/small-logo.png",
+      "status": 200,
+      "sha256": "cf90cee01bfcf376fcc6dfa15b7c5a3bb83411bea6f13c1c766385a0bf89a596",
+      "matches": true
+    },
+    {
+      "path": "assets/images/venmobtn.png",
+      "status": 200,
+      "sha256": "bd8d46142331597397e643b6c4bfa7854bd456b18660974a75b7f815292010cf",
+      "matches": true
+    },
+    {
+      "path": "assets/states.json",
+      "status": 200,
+      "sha256": "a35ca714f648d0f95e72bf83795de9a13be00802df7b1d9304da083c27222025",
+      "matches": true
+    },
+    {
+      "path": "chunk-BC9eaHqk.js",
+      "status": 200,
+      "sha256": "917b68a99b7227385bc37468101c0838a98c456285f5be5336c7cfa4ce718766",
+      "matches": true
+    },
+    {
+      "path": "chunk-Bojww-uA.js",
+      "status": 200,
+      "sha256": "36bd9da7eef3be753cb16fd778d52d5610c01b8eab5e226c5eedd9dc8adae95d",
+      "matches": true
+    },
+    {
+      "path": "chunk-Bvwxj6-E.js",
+      "status": 200,
+      "sha256": "fb5f381e4e667101529c2a206ad54189f1539b21e96e50af81101cc7c90d6e11",
+      "matches": true
+    },
+    {
+      "path": "chunk-B_AkFHlj.js",
+      "status": 200,
+      "sha256": "759a6e61812dd93c7386898aa541e216cade725445e7a8064974c993373cde37",
+      "matches": true
+    },
+    {
+      "path": "chunk-Cfg6KrFo.js",
+      "status": 200,
+      "sha256": "02eb460da6eec566568d290c79f6b066b1813ec7ab250e38a240d1c562bc9bc9",
+      "matches": true
+    },
+    {
+      "path": "chunk-D3VlQY8y.js",
+      "status": 200,
+      "sha256": "f87897a96df5840cacd930db8c50f9487d27882253cd0fdac55904dfd18cfb73",
+      "matches": true
+    },
+    {
+      "path": "chunk-DmTfAQo1.js",
+      "status": 200,
+      "sha256": "a7737eeb4cc59fe57a9ac05316bca9bf03c1e7123a86b725527c5d8bf6726ee7",
+      "matches": true
+    },
+    {
+      "path": "chunk-fTAXQAfw.js",
+      "status": 200,
+      "sha256": "1e853626a184ae7d5c393f0b16f3fb8681f50c9893ba0ee36c19ce2afc78a743",
+      "matches": true
+    },
+    {
+      "path": "chunk-H3dE-qPC.js",
+      "status": 200,
+      "sha256": "a9dbfec4afa974e7dcc493882a40e14f9be9991797a242b4e374e67098aa5676",
+      "matches": true
+    },
+    {
+      "path": "chunk-utYiD7qP.js",
+      "status": 200,
+      "sha256": "1340e7d2ca0d36b2f7a14012be3db38f1897637878dbe78ac31a482d6d7083e3",
+      "matches": true
+    },
+    {
+      "path": "index.html",
+      "status": 200,
+      "sha256": "ebbdb8b5da0069dec548f472e5ebe294c28e3070639ef484aaa1216a0f63b1bb",
+      "matches": true
+    },
+    {
+      "path": "main-BUPUDX7E.js",
+      "status": 200,
+      "sha256": "584f1a15931a4edd53474ab1d7c78acfae014daed8d8de682500a998c9f9ea25",
+      "matches": true
+    },
+    {
+      "path": "media/bootstrap-icons-CVBWLLHT.woff2",
+      "status": 200,
+      "sha256": "6c75710364a1ca5604267716f6d28997b26319fdb078cf11e0b42ab66ff2ea61",
+      "matches": true
+    },
+    {
+      "path": "media/bootstrap-icons-VQNJTM6Q.woff",
+      "status": 200,
+      "sha256": "f55513b7b591cb84a3b87ff0e34ea24d4831d6fedc22e54b911ca64b5b544a15",
+      "matches": true
+    },
+    {
+      "path": "polyfills-BAP25QCF.js",
+      "status": 200,
+      "sha256": "6b29bec5f93906552bccc551f9213c9784ac381cbd32712bb46b6f68763a8d98",
+      "matches": true
+    },
+    {
+      "path": "styles-BDINRCCS.css",
+      "status": 200,
+      "sha256": "39474247184f3bb9b5f8e281a9a00cd58edbb43bd71b26925fc0aeaaaa2ef82e",
+      "matches": true
+    }
+  ],
+  "sourceMatches": [
+    {
+      "path": "src/app/app.component.ts",
+      "matches": false,
+      "matchesIgnoringLineEndings": true
+    },
+    {
+      "path": "src/app/core/give-now.service.ts",
+      "matches": false,
+      "matchesIgnoringLineEndings": true
+    },
+    {
+      "path": "src/app/core/give-now.service.spec.ts",
+      "matches": false,
+      "matchesIgnoringLineEndings": true
+    },
+    {
+      "path": "src/app/core/social-checkout-attribution.ts",
+      "matches": false,
+      "matchesIgnoringLineEndings": true
+    },
+    {
+      "path": "src/app/core/social-checkout-attribution.spec.ts",
+      "matches": false,
+      "matchesIgnoringLineEndings": true
+    }
+  ]
+}

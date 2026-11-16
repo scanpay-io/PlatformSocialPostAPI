@@ -114,6 +114,19 @@ namespace ScanPay.SocialPostService
             return ID(result.Value<string>("post_id") ?? result.Value<string>("id") ?? "");
         }
 
+        public async Task<string> PublishThreadsTextAsync(string accountID, string token, string text)
+        {
+            // Text-only Threads supports atomic creation/publication; the returned ID is the post ID.
+            var result = await SendAsync(SocialPlatform.Threads, token, ID(accountID) + "/threads",
+                new Dictionary<string, string>
+                {
+                    ["media_type"] = "TEXT",
+                    ["text"] = text,
+                    ["auto_publish_text"] = "true"
+                });
+            return ID(result.Value<string>("id") ?? "");
+        }
+
         public async Task<string> CreateContainerAsync(string platform, string accountID, string token, string text, string imageUrl)
         {
             if (platform != SocialPlatform.Instagram && platform != SocialPlatform.Threads)

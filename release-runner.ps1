@@ -132,9 +132,17 @@ foreach($f in $manifest.Functions){
   $expected='arn:'+($identity.Arn -split ':')[1]+':lambda:'+$f.Region+':'+$script:AccountId+':function:'+$f.FunctionName
   if($f.FunctionArn -ne $expected -or $seen.ContainsKey($expected)){throw 'Invalid or duplicate manifest ARN'};$seen[$expected]=$true
   $v=Invoke-Aws @('lambda','get-function-configuration','--function-name',$f.FunctionArn,'--qualifier',$f.Version) $f.Region
+  Assert-RequiredFunctionEnvironment $v
   if($v.CodeSha256 -ne $f.CodeSha256 -or (Config-Hash $v) -ne $f.ConfigSha256){throw 'Published code/configuration checksum differs from manifest'}
   try{$prior=Invoke-Aws @('lambda','get-alias','--function-name',$f.FunctionArn,'--name',$AliasName) $f.Region}
   catch{if($_.Exception.Message -notmatch 'ResourceNotFoundException'){throw}}
+  if($f.FunctionName -eq 'scanpay_get_social_post_analytics' -and $AliasName -in @('gany_dev','gany_prod')){
+   $currentConfig=$null
+   if($prior){$currentConfig=Invoke-Aws @('lambda','get-function-configuration','--function-name',$f.FunctionArn,'--qualifier',$prior.FunctionVersion) $f.Region}
+   $otherAlias=if($AliasName -eq 'gany_prod'){'gany_dev'}else{'gany_prod'}
+   $otherConfig=Invoke-Aws @('lambda','get-function-configuration','--function-name',$f.FunctionArn,'--qualifier',$otherAlias) $f.Region
+   Assert-AnalyticsPromotionEnvironment $v $currentConfig $otherConfig
+  }
   if($prior){$row.PreviousVersion=$prior.FunctionVersion}
   $row.Status='Succeeded';$row.Detail='Preflight passed'
  } catch {$row.Detail=$_.Exception.Message}

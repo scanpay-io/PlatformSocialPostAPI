@@ -1,0 +1,10 @@
+{
+  "checkedAt": "2026-11-10T19:03:20.905Z",
+  "passed": true,
+  "lambdaConsumers": 19,
+  "existingVersionPromotions": 11,
+  "newAnalyticsVersionRequired": true,
+  "apiMethodChanges": 15,
+  "unrelatedMethodChanges": 0,
+  "cloudMutationsPerformed": false
+}

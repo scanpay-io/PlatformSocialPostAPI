@@ -1,0 +1,439 @@
+{
+  "scanpay_delete_social_post": [
+    {
+      "AliasArn": "arn:aws:lambda:us-east-1:145505076425:function:scanpay_delete_social_post:development",
+      "Name": "development",
+      "FunctionVersion": "18",
+      "Description": "Release social-20261110-001",
+      "RevisionId": "dad5f6d0-d77c-4ea5-ae4b-b3d9c52829e1"
+    },
+    {
+      "AliasArn": "arn:aws:lambda:us-east-1:145505076425:function:scanpay_delete_social_post:gany_dev",
+      "Name": "gany_dev",
+      "FunctionVersion": "18",
+      "Description": "Release social-20261110-001",
+      "RevisionId": "cc7fab79-6621-4577-8fbd-eaad8041c28c"
+    },
+    {
+      "AliasArn": "arn:aws:lambda:us-east-1:145505076425:function:scanpay_delete_social_post:gany_prod",
+      "Name": "gany_prod",
+      "FunctionVersion": "17",
+      "Description": "Release social-20261105-001",
+      "RevisionId": "b03385d3-23af-40a2-8914-eb9ac7e9bdc7"
+    }
+  ],
+  "scanpay_update_social_post": [
+    {
+      "AliasArn": "arn:aws:lambda:us-east-1:145505076425:function:scanpay_update_social_post:development",
+      "Name": "development",
+      "FunctionVersion": "18",
+      "Description": "Release social-20261110-001",
+      "RevisionId": "1f369923-6544-4e31-a581-a35891ca0bc6"
+    },
+    {
+      "AliasArn": "arn:aws:lambda:us-east-1:145505076425:function:scanpay_update_social_post:gany_dev",
+      "Name": "gany_dev",
+      "FunctionVersion": "18",
+      "Description": "Release social-20261110-001",
+      "RevisionId": "caaba1ab-4910-4c42-8b93-8c1fc665283f"
+    },
+    {
+      "AliasArn": "arn:aws:lambda:us-east-1:145505076425:function:scanpay_update_social_post:gany_prod",
+      "Name": "gany_prod",
+      "FunctionVersion": "17",
+      "Description": "Release social-20261105-001",
+      "RevisionId": "5c69b6ee-ceac-4bb0-be4d-7f138b449d6a"
+    }
+  ],
+  "scanpay_create_social_post": [
+    {
+      "AliasArn": "arn:aws:lambda:us-east-1:145505076425:function:scanpay_create_social_post:development",
+      "Name": "development",
+      "FunctionVersion": "22",
+      "Description": "Release social-20261110-001",
+      "RevisionId": "b710916d-8ed1-43cf-999b-2e1556d5b315"
+    },
+    {
+      "AliasArn": "arn:aws:lambda:us-east-1:145505076425:function:scanpay_create_social_post:gany_dev",
+      "Name": "gany_dev",
+      "FunctionVersion": "22",
+      "Description": "Release social-20261110-001",
+      "RevisionId": "32175148-65d2-4f53-b5fb-19a72972f34e"
+    },
+    {
+      "AliasArn": "arn:aws:lambda:us-east-1:145505076425:function:scanpay_create_social_post:gany_prod",
+      "Name": "gany_prod",
+      "FunctionVersion": "21",
+      "Description": "Release social-20261105-001",
+      "RevisionId": "0a064753-4126-4886-a2ea-ac791fcdc3cc"
+    }
+  ],
+  "scanpay_publish_social_post": [
+    {
+      "AliasArn": "arn:aws:lambda:us-east-1:145505076425:function:scanpay_publish_social_post:development",
+      "Name": "development",
+      "FunctionVersion": "20",
+      "Description": "Release social-20261110-001",
+      "RevisionId": "b0338d13-276d-4c72-821f-109b7fb3e700"
+    },
+    {
+      "AliasArn": "arn:aws:lambda:us-east-1:145505076425:function:scanpay_publish_social_post:gany_dev",
+      "Name": "gany_dev",
+      "FunctionVersion": "20",
+      "Description": "Release social-20261110-001",
+      "RevisionId": "19e1c70a-cd1d-4409-8353-f4fb99f312fe"
+    },
+    {
+      "AliasArn": "arn:aws:lambda:us-east-1:145505076425:function:scanpay_publish_social_post:gany_prod",
+      "Name": "gany_prod",
+      "FunctionVersion": "19",
+      "Description": "Release social-20261105-001",
+      "RevisionId": "fde0afcc-4a4d-4d30-82b2-741961583519"
+    }
+  ],
+  "scanpay_schedule_social_post": [
+    {
+      "AliasArn": "arn:aws:lambda:us-east-1:145505076425:function:scanpay_schedule_social_post:development",
+      "Name": "development",
+      "FunctionVersion": "19",
+      "Description": "Release social-20261110-001",
+      "RevisionId": "0733004a-ef52-48dc-8f11-76462924e410"
+    },
+    {
+      "AliasArn": "arn:aws:lambda:us-east-1:145505076425:function:scanpay_schedule_social_post:gany_dev",
+      "Name": "gany_dev",
+      "FunctionVersion": "19",
+      "Description": "Release social-20261110-001",
+      "RevisionId": "23623caf-3507-4c67-87de-4bfb113ff3a6"
+    },
+    {
+      "AliasArn": "arn:aws:lambda:us-east-1:145505076425:function:scanpay_schedule_social_post:gany_prod",
+      "Name": "gany_prod",
+      "FunctionVersion": "18",
+      "Description": "Release social-20261105-001",
+      "RevisionId": "7796dc60-da5a-4757-b2ec-cdb8b13884ea"
+    }
+  ],
+  "scanpay_cancel_social_post": [
+    {
+      "AliasArn": "arn:aws:lambda:us-east-1:145505076425:function:scanpay_cancel_social_post:development",
+      "Name": "development",
+      "FunctionVersion": "19",
+      "Description": "Release social-20261110-001",
+      "RevisionId": "80f3b707-9276-4bde-806b-2ce8f16dbb11"
+    },
+    {
+      "AliasArn": "arn:aws:lambda:us-east-1:145505076425:function:scanpay_cancel_social_post:gany_dev",
+      "Name": "gany_dev",
+      "FunctionVersion": "19",
+      "Description": "Release social-20261110-001",
+      "RevisionId": "88421018-4031-4261-88f5-6c1e876358a3"
+    },
+    {
+      "AliasArn": "arn:aws:lambda:us-east-1:145505076425:function:scanpay_cancel_social_post:gany_prod",
+      "Name": "gany_prod",
+      "FunctionVersion": "18",
+      "Description": "Release social-20261105-001",
+      "RevisionId": "5dbfdbb0-a438-407e-94be-8277ce5e7a6c"
+    }
+  ],
+  "scanpay_get_social_post": [
+    {
+      "AliasArn": "arn:aws:lambda:us-east-1:145505076425:function:scanpay_get_social_post:development",
+      "Name": "development",
+      "FunctionVersion": "17",
+      "Description": "Release social-20261110-001",
+      "RevisionId": "9c2d1681-5479-43d7-b72c-0589dc363b55"
+    },
+    {
+      "AliasArn": "arn:aws:lambda:us-east-1:145505076425:function:scanpay_get_social_post:gany_dev",
+      "Name": "gany_dev",
+      "FunctionVersion": "17",
+      "Description": "Release social-20261110-001",
+      "RevisionId": "5017910f-e638-4bc2-9999-9a4bd65aada6"
+    },
+    {
+      "AliasArn": "arn:aws:lambda:us-east-1:145505076425:function:scanpay_get_social_post:gany_prod",
+      "Name": "gany_prod",
+      "FunctionVersion": "16",
+      "Description": "Release social-20261105-001",
+      "RevisionId": "1941af6b-f838-41f2-b761-3b24c938cc7d"
+    }
+  ],
+  "scanpay_get_social_post_status": [
+    {
+      "AliasArn": "arn:aws:lambda:us-east-1:145505076425:function:scanpay_get_social_post_status:development",
+      "Name": "development",
+      "FunctionVersion": "18",
+      "Description": "Release social-20261110-001",
+      "RevisionId": "2db53e0e-b853-4617-9f37-26f54489fdc0"
+    },
+    {
+      "AliasArn": "arn:aws:lambda:us-east-1:145505076425:function:scanpay_get_social_post_status:gany_dev",
+      "Name": "gany_dev",
+      "FunctionVersion": "18",
+      "Description": "Release social-20261110-001",
+      "RevisionId": "82b3244f-e6cd-4b27-845b-44eb3d9d93d7"
+    },
+    {
+      "AliasArn": "arn:aws:lambda:us-east-1:145505076425:function:scanpay_get_social_post_status:gany_prod",
+      "Name": "gany_prod",
+      "FunctionVersion": "17",
+      "Description": "Release social-20261105-001",
+      "RevisionId": "95155843-801b-4108-aac2-0e62df219899"
+    }
+  ],
+  "scanpay_get_social_posts": [
+    {
+      "AliasArn": "arn:aws:lambda:us-east-1:145505076425:function:scanpay_get_social_posts:development",
+      "Name": "development",
+      "FunctionVersion": "17",
+      "Description": "Release social-20261110-001",
+      "RevisionId": "a73a3b1c-aaf1-46a8-9260-435e7e56228f"
+    },
+    {
+      "AliasArn": "arn:aws:lambda:us-east-1:145505076425:function:scanpay_get_social_posts:gany_dev",
+      "Name": "gany_dev",
+      "FunctionVersion": "17",
+      "Description": "Release social-20261110-001",
+      "RevisionId": "f31bb926-9b6e-4d69-ae69-c617d23041f2"
+    },
+    {
+      "AliasArn": "arn:aws:lambda:us-east-1:145505076425:function:scanpay_get_social_posts:gany_prod",
+      "Name": "gany_prod",
+      "FunctionVersion": "16",
+      "Description": "Release social-20261105-001",
+      "RevisionId": "db5b5151-7569-4d12-ab66-5959415b77d0"
+    }
+  ],
+  "scanpay_get_social_post_analytics": [
+    {
+      "AliasArn": "arn:aws:lambda:us-east-1:145505076425:function:scanpay_get_social_post_analytics:development",
+      "Name": "development",
+      "FunctionVersion": "19",
+      "Description": "Release social-20261110-001",
+      "RevisionId": "2fb100ea-b42d-4769-8560-970d8a0304e6"
+    },
+    {
+      "AliasArn": "arn:aws:lambda:us-east-1:145505076425:function:scanpay_get_social_post_analytics:gany_dev",
+      "Name": "gany_dev",
+      "FunctionVersion": "20",
+      "Description": "DEV social analytics cursor repair 2026-11-10",
+      "RevisionId": "592d837f-7b32-47ad-b09a-324686f0d235"
+    },
+    {
+      "AliasArn": "arn:aws:lambda:us-east-1:145505076425:function:scanpay_get_social_post_analytics:gany_prod",
+      "Name": "gany_prod",
+      "FunctionVersion": "19",
+      "Description": "Release social-20261105-001",
+      "RevisionId": "dedc891e-bd61-47b9-8246-dd1f03eaa248"
+    }
+  ],
+  "scanpay_one_time_pay": [
+    {
+      "AliasArn": "arn:aws:lambda:us-east-1:145505076425:function:scanpay_one_time_pay:development",
+      "Name": "development",
+      "FunctionVersion": "545",
+      "Description": "Release payment-20261105-001",
+      "RevisionId": "50d9f407-fd1a-42de-842d-b3c22c5f1ef2"
+    },
+    {
+      "AliasArn": "arn:aws:lambda:us-east-1:145505076425:function:scanpay_one_time_pay:gany_dev",
+      "Name": "gany_dev",
+      "FunctionVersion": "545",
+      "Description": "Release payment-20261105-001",
+      "RevisionId": "4cf43bdb-9368-4315-b161-21ee668b5e17"
+    },
+    {
+      "AliasArn": "arn:aws:lambda:us-east-1:145505076425:function:scanpay_one_time_pay:gany_prod",
+      "Name": "gany_prod",
+      "FunctionVersion": "545",
+      "Description": "Release payment-20261105-001",
+      "RevisionId": "28f1c2b2-ecdc-419d-9968-c1cb81d7218e"
+    }
+  ],
+  "scanpay_record_social_post_click": [
+    {
+      "AliasArn": "arn:aws:lambda:us-east-1:145505076425:function:scanpay_record_social_post_click:development",
+      "Name": "development",
+      "FunctionVersion": "10",
+      "Description": "Release social-20261110-001",
+      "RevisionId": "a7731e0d-6bc7-4782-a814-a46e8717b164"
+    },
+    {
+      "AliasArn": "arn:aws:lambda:us-east-1:145505076425:function:scanpay_record_social_post_click:gany_dev",
+      "Name": "gany_dev",
+      "FunctionVersion": "10",
+      "Description": "Release social-20261110-001",
+      "RevisionId": "6bb3e000-54e6-47bd-97c2-6095993d90d8"
+    },
+    {
+      "AliasArn": "arn:aws:lambda:us-east-1:145505076425:function:scanpay_record_social_post_click:gany_prod",
+      "Name": "gany_prod",
+      "FunctionVersion": "9",
+      "Description": "Release social-20261105-001",
+      "RevisionId": "9ad9a4b4-52d6-4436-bd56-5b44237e44ed"
+    }
+  ],
+  "scanpay_complete_one_time_pay": [
+    {
+      "AliasArn": "arn:aws:lambda:us-east-1:145505076425:function:scanpay_complete_one_time_pay:development",
+      "Name": "development",
+      "FunctionVersion": "613",
+      "Description": "Release payment-20261105-001",
+      "RevisionId": "11ffd849-3a25-4236-82ee-98159b702de8"
+    },
+    {
+      "AliasArn": "arn:aws:lambda:us-east-1:145505076425:function:scanpay_complete_one_time_pay:gany_dev",
+      "Name": "gany_dev",
+      "FunctionVersion": "613",
+      "Description": "Release payment-20261105-001",
+      "RevisionId": "ae6b82cc-cdb8-4df7-926d-1e334c5f29e1"
+    },
+    {
+      "AliasArn": "arn:aws:lambda:us-east-1:145505076425:function:scanpay_complete_one_time_pay:gany_prod",
+      "Name": "gany_prod",
+      "FunctionVersion": "613",
+      "Description": "Release payment-20261105-001",
+      "RevisionId": "d94c015f-58bb-42a3-a2a0-f36a4bd71de9"
+    }
+  ],
+  "scanpay_create_schedule_payment": [
+    {
+      "AliasArn": "arn:aws:lambda:us-east-1:145505076425:function:scanpay_create_schedule_payment:development",
+      "Name": "development",
+      "FunctionVersion": "185",
+      "Description": "Release payment-20261105-001",
+      "RevisionId": "94a405f7-93a3-4b22-8434-21208069f71e"
+    },
+    {
+      "AliasArn": "arn:aws:lambda:us-east-1:145505076425:function:scanpay_create_schedule_payment:gany_dev",
+      "Name": "gany_dev",
+      "FunctionVersion": "185",
+      "Description": "Release payment-20261105-001",
+      "RevisionId": "910b2a58-4426-4307-b165-cb02801ef1cb"
+    },
+    {
+      "AliasArn": "arn:aws:lambda:us-east-1:145505076425:function:scanpay_create_schedule_payment:gany_prod",
+      "Name": "gany_prod",
+      "FunctionVersion": "185",
+      "Description": "Release payment-20261105-001",
+      "RevisionId": "a68b110d-cc8f-4275-9d49-9fc831a8474f"
+    }
+  ],
+  "scanpay_complete_payment": [
+    {
+      "AliasArn": "arn:aws:lambda:us-east-1:145505076425:function:scanpay_complete_payment:development",
+      "Name": "development",
+      "FunctionVersion": "52",
+      "Description": "Release payment-20261105-001",
+      "RevisionId": "8faeb3e0-e41d-4ea5-9fac-ff66b3d10060"
+    },
+    {
+      "AliasArn": "arn:aws:lambda:us-east-1:145505076425:function:scanpay_complete_payment:gany_dev",
+      "Name": "gany_dev",
+      "FunctionVersion": "52",
+      "Description": "Release payment-20261105-001",
+      "RevisionId": "c3d29613-6f63-4665-bd98-e167d450a3aa"
+    },
+    {
+      "AliasArn": "arn:aws:lambda:us-east-1:145505076425:function:scanpay_complete_payment:gany_prod",
+      "Name": "gany_prod",
+      "FunctionVersion": "52",
+      "Description": "Release payment-20261105-001",
+      "RevisionId": "cff5ef48-ab51-4fe6-8e5c-e298f317e1f8"
+    }
+  ],
+  "scanpay_add_donor_pledge": [
+    {
+      "AliasArn": "arn:aws:lambda:us-east-1:145505076425:function:scanpay_add_donor_pledge:development",
+      "Name": "development",
+      "FunctionVersion": "62",
+      "Description": "Release crm-20261110-002",
+      "RevisionId": "0941f474-55c6-41ff-a4e6-f5c18e1c1bed"
+    },
+    {
+      "AliasArn": "arn:aws:lambda:us-east-1:145505076425:function:scanpay_add_donor_pledge:gany_dev",
+      "Name": "gany_dev",
+      "FunctionVersion": "62",
+      "Description": "Release crm-20261110-002",
+      "RevisionId": "19c0d882-a617-40e9-917b-d5424dbac33a"
+    },
+    {
+      "AliasArn": "arn:aws:lambda:us-east-1:145505076425:function:scanpay_add_donor_pledge:gany_prod",
+      "Name": "gany_prod",
+      "FunctionVersion": "61",
+      "Description": "Release crm-20261105-001",
+      "RevisionId": "7a33d1f1-8c95-48b3-9e62-31689f5b987f"
+    }
+  ],
+  "scanpay_lookup_tinyurl": [
+    {
+      "AliasArn": "arn:aws:lambda:us-east-1:145505076425:function:scanpay_lookup_tinyurl:development",
+      "Name": "development",
+      "FunctionVersion": "24",
+      "Description": "Release data-20261105-001",
+      "RevisionId": "565eca80-363c-4c4f-bfad-323e3ee43aa2"
+    },
+    {
+      "AliasArn": "arn:aws:lambda:us-east-1:145505076425:function:scanpay_lookup_tinyurl:gany_dev",
+      "Name": "gany_dev",
+      "FunctionVersion": "24",
+      "Description": "Release data-20261105-001",
+      "RevisionId": "1934fae8-867a-4fc1-8ab3-e98652b491bd"
+    },
+    {
+      "AliasArn": "arn:aws:lambda:us-east-1:145505076425:function:scanpay_lookup_tinyurl:gany_prod",
+      "Name": "gany_prod",
+      "FunctionVersion": "24",
+      "Description": "Release data-20261105-001",
+      "RevisionId": "7d09017e-659c-4178-9931-52dd9c03c30e"
+    }
+  ],
+  "scanpay_process_schedule_pay": [
+    {
+      "AliasArn": "arn:aws:lambda:us-east-1:145505076425:function:scanpay_process_schedule_pay:development",
+      "Name": "development",
+      "FunctionVersion": "163",
+      "Description": "Release payment-20261105-001",
+      "RevisionId": "2e07d89b-2e50-41d1-99fb-2514f3921b4e"
+    },
+    {
+      "AliasArn": "arn:aws:lambda:us-east-1:145505076425:function:scanpay_process_schedule_pay:gany_dev",
+      "Name": "gany_dev",
+      "FunctionVersion": "163",
+      "Description": "Release payment-20261105-001",
+      "RevisionId": "a9140668-3f74-4068-b725-c33c34bf3f33"
+    },
+    {
+      "AliasArn": "arn:aws:lambda:us-east-1:145505076425:function:scanpay_process_schedule_pay:gany_prod",
+      "Name": "gany_prod",
+      "FunctionVersion": "163",
+      "Description": "Release payment-20261105-001",
+      "RevisionId": "94173ede-ed96-4a11-95a5-1ca94badd59f"
+    }
+  ],
+  "scanpay_get_qrcode_url": [
+    {
+      "AliasArn": "arn:aws:lambda:us-east-1:145505076425:function:scanpay_get_qrcode_url:development",
+      "Name": "development",
+      "FunctionVersion": "40",
+      "Description": "Release qr-20261108-002",
+      "RevisionId": "12664293-9d59-40da-84a5-6c349bec6020"
+    },
+    {
+      "AliasArn": "arn:aws:lambda:us-east-1:145505076425:function:scanpay_get_qrcode_url:gany_dev",
+      "Name": "gany_dev",
+      "FunctionVersion": "40",
+      "Description": "Release qr-20261108-002",
+      "RevisionId": "a955192a-2023-4962-b1e2-69ef426d1f8d"
+    },
+    {
+      "AliasArn": "arn:aws:lambda:us-east-1:145505076425:function:scanpay_get_qrcode_url:gany_prod",
+      "Name": "gany_prod",
+      "FunctionVersion": "40",
+      "Description": "Release qr-20261108-002",
+      "RevisionId": "f62fd13c-4d84-41ae-935c-f10a9bc5ddaf"
+    }
+  ]
+}

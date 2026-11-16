@@ -1,0 +1,112 @@
+[
+  {
+    "functionName": "scanpay_get_social_post_analytics",
+    "alias": {
+      "AliasArn": "arn:aws:lambda:us-east-1:145505076425:function:scanpay_get_social_post_analytics:gany_prod",
+      "Name": "gany_prod",
+      "FunctionVersion": "21",
+      "Description": "Release social-20261105-001",
+      "RevisionId": "6732d405-c2e3-4162-a082-b825d4347cdc"
+    }
+  },
+  {
+    "functionName": "scanpay_delete_social_post",
+    "alias": {
+      "AliasArn": "arn:aws:lambda:us-east-1:145505076425:function:scanpay_delete_social_post:gany_prod",
+      "Name": "gany_prod",
+      "FunctionVersion": "18",
+      "Description": "Release social-20261105-001",
+      "RevisionId": "dec399c4-33dd-4ab6-be8e-e4eb789f265d"
+    }
+  },
+  {
+    "functionName": "scanpay_update_social_post",
+    "alias": {
+      "AliasArn": "arn:aws:lambda:us-east-1:145505076425:function:scanpay_update_social_post:gany_prod",
+      "Name": "gany_prod",
+      "FunctionVersion": "18",
+      "Description": "Release social-20261105-001",
+      "RevisionId": "cd1039fa-6f24-4572-87e5-c544bc168d95"
+    }
+  },
+  {
+    "functionName": "scanpay_create_social_post",
+    "alias": {
+      "AliasArn": "arn:aws:lambda:us-east-1:145505076425:function:scanpay_create_social_post:gany_prod",
+      "Name": "gany_prod",
+      "FunctionVersion": "22",
+      "Description": "Release social-20261105-001",
+      "RevisionId": "e44913e7-6c01-4367-93f5-2dd09faa3300"
+    }
+  },
+  {
+    "functionName": "scanpay_publish_social_post",
+    "alias": {
+      "AliasArn": "arn:aws:lambda:us-east-1:145505076425:function:scanpay_publish_social_post:gany_prod",
+      "Name": "gany_prod",
+      "FunctionVersion": "20",
+      "Description": "Release social-20261105-001",
+      "RevisionId": "ba6a1f0f-d2d5-4e3e-9202-de03447c0df1"
+    }
+  },
+  {
+    "functionName": "scanpay_schedule_social_post",
+    "alias": {
+      "AliasArn": "arn:aws:lambda:us-east-1:145505076425:function:scanpay_schedule_social_post:gany_prod",
+      "Name": "gany_prod",
+      "FunctionVersion": "19",
+      "Description": "Release social-20261105-001",
+      "RevisionId": "ffdbac3a-ea80-438f-8ba7-a36f99d09637"
+    }
+  },
+  {
+    "functionName": "scanpay_cancel_social_post",
+    "alias": {
+      "AliasArn": "arn:aws:lambda:us-east-1:145505076425:function:scanpay_cancel_social_post:gany_prod",
+      "Name": "gany_prod",
+      "FunctionVersion": "19",
+      "Description": "Release social-20261105-001",
+      "RevisionId": "f60fbf1b-a00c-4fd4-acb1-1c0296b04590"
+    }
+  },
+  {
+    "functionName": "scanpay_get_social_post",
+    "alias": {
+      "AliasArn": "arn:aws:lambda:us-east-1:145505076425:function:scanpay_get_social_post:gany_prod",
+      "Name": "gany_prod",
+      "FunctionVersion": "17",
+      "Description": "Release social-20261105-001",
+      "RevisionId": "8435433d-919f-4986-b751-18cf2d80cbfb"
+    }
+  },
+  {
+    "functionName": "scanpay_get_social_post_status",
+    "alias": {
+      "AliasArn": "arn:aws:lambda:us-east-1:145505076425:function:scanpay_get_social_post_status:gany_prod",
+      "Name": "gany_prod",
+      "FunctionVersion": "18",
+      "Description": "Release social-20261105-001",
+      "RevisionId": "19844d55-a2b8-4431-a723-912987f6b300"
+    }
+  },
+  {
+    "functionName": "scanpay_get_social_posts",
+    "alias": {
+      "AliasArn": "arn:aws:lambda:us-east-1:145505076425:function:scanpay_get_social_posts:gany_prod",
+      "Name": "gany_prod",
+      "FunctionVersion": "17",
+      "Description": "Release social-20261105-001",
+      "RevisionId": "92881d99-8350-4518-ab54-f5c64f3a4408"
+    }
+  },
+  {
+    "functionName": "scanpay_record_social_post_click",
+    "alias": {
+      "AliasArn": "arn:aws:lambda:us-east-1:145505076425:function:scanpay_record_social_post_click:gany_prod",
+      "Name": "gany_prod",
+      "FunctionVersion": "10",
+      "Description": "Release social-20261105-001",
+      "RevisionId": "24710426-341d-4c0c-bc2c-a753cb6132c0"
+    }
+  }
+]

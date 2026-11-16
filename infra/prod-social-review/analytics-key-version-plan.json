@@ -1,0 +1,22 @@
+{
+  "functionName": "scanpay_get_social_post_analytics",
+  "sourceCodeVersion": "20",
+  "expectedCodeSha256": "Uq0OGZoD0MuMaCwPpqrlLCGlNR02aAtIgK0sDoDMzpE=",
+  "currentProdVersion": "19",
+  "doNotPromoteDevVersion": "20",
+  "requiredNewVersion": "Assigned by AWS after approved publication",
+  "environment": {
+    "base": "Copy existing PROD v19 environment; preserve all existing entries",
+    "add": "SOCIAL_ANALYTICS_CURSOR_KEY = base64(32 cryptographically random bytes)",
+    "constraints": [
+      "Must differ from DEV key",
+      "Never log, persist, or put plaintext key in review artifacts",
+      "Guard every $LATEST mutation using freshly read RevisionId",
+      "Capture and restore original $LATEST configuration after publishing the PROD version",
+      "Recheck DEV alias/version/key fingerprint unchanged before and after",
+      "Verify promoted immutable PROD version contains the intended distinct key"
+    ]
+  },
+  "publishGate": "Exact package hash and complete runtime configuration compared before publication; no source rebuild required because DEV v20 and PROD v19 code hashes match",
+  "futureDeploymentGate": "A valid-size key check alone does not enforce per-environment key separation. Before any promotion compare target key with other-environment keys and the environment release manifest; do not promote a DEV analytics version to PROD."
+}

@@ -1,0 +1,146 @@
+diff --git a/src/app/core/query-params/query-param-preservation.service.ts b/src/app/core/query-params/query-param-preservation.service.ts
+index 703c57e..acfe0e0 100644
+--- a/src/app/core/query-params/query-param-preservation.service.ts
++++ b/src/app/core/query-params/query-param-preservation.service.ts
+@@ -9,6 +9,10 @@ export const preservedQueryParamNames = [
+   'iswhitelabel',
+   'emailid',
+   'socialpostid',
++  'socialdeliveryid',
++  'socialat',
++  'socialclickid',
++  'socialvisitorid',
+   'smsid',
+   'smsclickid',
+   'smsvisitorid',
+diff --git a/src/app/core/query-params/social-attribution.service.spec.ts b/src/app/core/query-params/social-attribution.service.spec.ts
+index 59a4c57..c21a102 100644
+--- a/src/app/core/query-params/social-attribution.service.spec.ts
++++ b/src/app/core/query-params/social-attribution.service.spec.ts
+@@ -27,12 +27,13 @@ describe('Social attribution', () => {
+   });
+ 
+   it('does not attribute another campaign and keeps URL queries and fragments', () => {
++    vi.spyOn(Date, 'now').mockReturnValue(1000);
+     const service = new SocialAttributionService();
+     service.capture(postId, 'campaign');
+     expect(service.donationFields('other')).toEqual({});
+     expect(
+       service.checkoutUrl('https://example.org/give?payeraccountid=donor#payment', 'campaign'),
+-    ).toBe('https://example.org/give?payeraccountid=donor&socialpostid=' + postId + '#payment');
++    ).toBe('https://example.org/give?payeraccountid=donor&socialpostid=' + postId + '&socialat=1000#payment');
+   });
+ 
+   it('rejects malformed IDs and replaces attribution on a different valid social link', () => {
+@@ -135,3 +136,33 @@ describe('SMS attribution', () => {
+     expect(service.donationFields('campaign')).toEqual({});
+   });
+ });
++
++describe('Social delivery tracking', () => {
++  beforeEach(() => { sessionStorage.clear(); localStorage.clear(); });
++  afterEach(() => vi.restoreAllMocks());
++
++  it('preserves a delivery and original timestamp through checkout', () => {
++    vi.spyOn(Date, 'now').mockReturnValue(1000 + 23 * 3600000);
++    const service = new SocialAttributionService();
++    service.capture(postId, 'campaign', 'social', 1000, 'facebook-' + postId);
++    const checkout = new URL(service.checkoutUrl('https://example.org/give', 'campaign'));
++    expect(checkout.searchParams.get('socialdeliveryid')).toBe('facebook-' + postId);
++    expect(checkout.searchParams.get('socialat')).toBe('1000');
++  });
++
++  it('records a different delivery of the same post as a new landing', async () => {
++    const events = new Subject<NavigationStart>();
++    const serializer = new DefaultUrlSerializer();
++    const service = new SocialAttributionService();
++    const record = vi.fn().mockResolvedValue(undefined);
++    service.initialize({ url: '/', events, parseUrl: (url: string) => serializer.parse(url) } as unknown as Router, record);
++    events.next(new NavigationStart(1, '/give?socialpostid=' + postId + '&socialdeliveryid=facebook-' + postId));
++    await new Promise(resolve => setTimeout(resolve, 0));
++    events.next(new NavigationStart(2, '/give?socialpostid=' + postId + '&socialdeliveryid=threads-' + postId));
++    await new Promise(resolve => setTimeout(resolve, 0));
++    expect(record).toHaveBeenCalledTimes(2);
++    expect(record.mock.calls[0][0].social_delivery_id).toBe('facebook-' + postId);
++    expect(record.mock.calls[1][0].social_delivery_id).toBe('threads-' + postId);
++    expect(record.mock.calls[1][0].click_id).not.toBe(record.mock.calls[0][0].click_id);
++  });
++});
+diff --git a/src/app/core/query-params/social-attribution.service.ts b/src/app/core/query-params/social-attribution.service.ts
+index d0ebe27..abd0093 100644
+--- a/src/app/core/query-params/social-attribution.service.ts
++++ b/src/app/core/query-params/social-attribution.service.ts
+@@ -10,6 +10,7 @@ interface SocialAttribution {
+   clickId?: string;
+   visitorId?: string;
+   clickRecorded?: boolean;
++  deliveryId?: string;
+ }
+ 
+ const storageKey = 'giveanywhere.social-attribution';
+@@ -41,12 +42,13 @@ export class SocialAttributionService {
+         tree.queryParams['smsid'] || tree.queryParams['socialpostid'],
+         tree.queryParams['campaignId'] || tree.queryParams['qrcode_id'] || pathCampaign || '',
+         tree.queryParams['smsid'] ? 'sms' : 'social',
+-        Number(tree.queryParams['smsat']) || undefined,
++        Number(tree.queryParams[tree.queryParams['smsid'] ? 'smsat' : 'socialat']) || undefined,
++        tree.queryParams['socialdeliveryid'],
+       );
+       const attribution = this.current();
+       const recorder = attribution?.channel === 'sms' ? recordSmsClick : recordClick;
+       if (!recorder || !attribution || attribution.clickRecorded) return;
+-      const recordingKey = (attribution.channel || 'social') + ':' + attribution.postId;
++      const recordingKey = (attribution.channel || 'social') + ':' + attribution.postId + ':' + (attribution.deliveryId || '');
+       if (recording.has(recordingKey)) return;
+       const suppliedClick = tree.queryParams[attribution.channel === 'sms' ? 'smsclickid' : 'socialclickid'];
+       const suppliedVisitor = tree.queryParams[attribution.channel === 'sms' ? 'smsvisitorid' : 'socialvisitorid'];
+@@ -54,7 +56,8 @@ export class SocialAttributionService {
+       attribution.visitorId ||= typeof suppliedVisitor === 'string' && guid.test(suppliedVisitor) ? suppliedVisitor : this.visitorId();
+       this.persist();
+       recording.add(recordingKey);
+-      void recorder({ [attribution.channel === 'sms' ? 'sms_message_id' : 'social_post_id']: attribution.postId, click_id: attribution.clickId, visitor_id: attribution.visitorId })
++      void recorder({ [attribution.channel === 'sms' ? 'sms_message_id' : 'social_post_id']: attribution.postId, click_id: attribution.clickId, visitor_id: attribution.visitorId,
++        ...(attribution.channel !== 'sms' && attribution.deliveryId ? { social_delivery_id: attribution.deliveryId } : {}) })
+         .then(() => { attribution.clickRecorded = true; this.persist(); })
+         .catch(() => { /* Tracking failure must not block checkout. Retry on later navigation. */ })
+         .finally(() => { recording.delete(recordingKey); });
+@@ -77,13 +80,17 @@ export class SocialAttributionService {
+       );
+   }
+ 
+-  capture(postId: unknown, campaignId = '', channel: 'social' | 'sms' = 'social', capturedAt = Date.now()): void {
++  capture(postId: unknown, campaignId = '', channel: 'social' | 'sms' = 'social', capturedAt = Date.now(), deliveryId?: unknown): void {
+     if (typeof postId !== 'string' || !guid.test(postId)) return;
+     const normalized = postId.toLowerCase();
++    const delivery = channel === 'social' && typeof deliveryId === 'string' &&
++      /^(facebook|instagram|threads|x|linkedin|tiktok)-[0-9a-f-]{36}(?:-[0-9]+)?$/i.test(deliveryId)
++      ? deliveryId.toLowerCase() : undefined;
+     // Internal links carrying the same ID must not extend the attribution window.
+-    if (this.current()?.postId === normalized && (this.attribution?.channel || 'social') === channel) return;
++    if (this.current()?.postId === normalized && (this.attribution?.channel || 'social') === channel &&
++        (!delivery || this.attribution?.deliveryId === delivery)) return;
+     if (capturedAt > Date.now() || Date.now() - capturedAt >= attributionLifetime) return;
+-    this.attribution = { postId: normalized, channel, campaignId, capturedAt };
++    this.attribution = { postId: normalized, channel, campaignId, capturedAt, deliveryId: delivery };
+     this.persist();
+   }
+ 
+@@ -109,7 +116,7 @@ export class SocialAttributionService {
+     const fields = this.donationFields(campaignId);
+     const smsId = fields['sms_message_id'];
+     if (smsId) {
+-      for (const key of ['socialpostid', 'socialclickid', 'socialvisitorid']) url.searchParams.delete(key);
++      for (const key of ['socialpostid', 'socialclickid', 'socialvisitorid', 'socialdeliveryid', 'socialat']) url.searchParams.delete(key);
+       url.searchParams.set('smsid', smsId);
+       url.searchParams.set('smsat', String(this.attribution!.capturedAt));
+       if (this.attribution?.clickId) url.searchParams.set('smsclickid', this.attribution.clickId);
+@@ -119,6 +126,9 @@ export class SocialAttributionService {
+     if (postId) {
+       for (const key of ['smsid', 'smsclickid', 'smsvisitorid', 'smsat']) url.searchParams.delete(key);
+       url.searchParams.set('socialpostid', postId);
++      url.searchParams.set('socialat', String(this.attribution!.capturedAt));
++      if (this.attribution?.deliveryId) url.searchParams.set('socialdeliveryid', this.attribution.deliveryId);
++      else url.searchParams.delete('socialdeliveryid');
+       if (this.attribution?.clickId) url.searchParams.set('socialclickid', this.attribution.clickId);
+       if (this.attribution?.visitorId) url.searchParams.set('socialvisitorid', this.attribution.visitorId);
+     }

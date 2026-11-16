@@ -1,0 +1,13 @@
+{
+  "manifest": {
+    "revision": "dd4d990d8cfbf2b3d36e9371746654b9efbf05c9",
+    "environment": "development",
+    "hostname": "stage.givenow.gogiveanywhere.com",
+    "indexSha256": "113d39bc086fbef05ee07e5ae4da7455bc4a0d44be43ea48b846c37334d20da5",
+    "builtAt": "2026-11-10T18:50:11.811Z"
+  },
+  "main": "main-3BL5C4OC.js",
+  "devAnalyticsVersion": "20",
+  "cursorBytes": 32,
+  "checkedAt": "2026-11-10T18:51:10.375Z"
+}

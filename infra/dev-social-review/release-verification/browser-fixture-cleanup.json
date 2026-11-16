@@ -1,0 +1,7 @@
+{
+  "run": "027a6856-d6a0-438b-9ffe-d17adc9e61fb",
+  "fixtureRowsRemoved": 2,
+  "clickRowsRemoved": 1,
+  "verified": true,
+  "controlClickAbsentOnConsistentRead": true
+}

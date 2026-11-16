@@ -1,0 +1,76 @@
+[
+  {
+    "name": "scanpay_delete_social_post",
+    "differingFields": [],
+    "devConfigSha256": "6498f77a172a6c9a8c0dedf2964bff6529139537d5788808a6d3801aeb513539",
+    "prodConfigSha256": "6498f77a172a6c9a8c0dedf2964bff6529139537d5788808a6d3801aeb513539"
+  },
+  {
+    "name": "scanpay_update_social_post",
+    "differingFields": [],
+    "devConfigSha256": "07b3f495e42d2ece58fbbf31d61c19a557a30c495d843fc23935655dc9e4958e",
+    "prodConfigSha256": "07b3f495e42d2ece58fbbf31d61c19a557a30c495d843fc23935655dc9e4958e"
+  },
+  {
+    "name": "scanpay_create_social_post",
+    "differingFields": [],
+    "devConfigSha256": "983300a7f0846f7800ca7cfc97a0ba9b1bd266889e8a69bca3f031f0dce896b0",
+    "prodConfigSha256": "983300a7f0846f7800ca7cfc97a0ba9b1bd266889e8a69bca3f031f0dce896b0"
+  },
+  {
+    "name": "scanpay_publish_social_post",
+    "differingFields": [],
+    "devConfigSha256": "ff809a9eded95d4d4866ee452a7d2ff3ed3e4da00585f2b4e81be20214fd9352",
+    "prodConfigSha256": "ff809a9eded95d4d4866ee452a7d2ff3ed3e4da00585f2b4e81be20214fd9352"
+  },
+  {
+    "name": "scanpay_schedule_social_post",
+    "differingFields": [],
+    "devConfigSha256": "3de81e3492a70833586d73dcbfd87d794a1503d03dc8114018c5fe1dea2c81fd",
+    "prodConfigSha256": "3de81e3492a70833586d73dcbfd87d794a1503d03dc8114018c5fe1dea2c81fd"
+  },
+  {
+    "name": "scanpay_cancel_social_post",
+    "differingFields": [],
+    "devConfigSha256": "0ded8b92b501c774fca20a192a1ef3978df7e188c3ac5ef11dc5d89fbfa1916b",
+    "prodConfigSha256": "0ded8b92b501c774fca20a192a1ef3978df7e188c3ac5ef11dc5d89fbfa1916b"
+  },
+  {
+    "name": "scanpay_get_social_post",
+    "differingFields": [],
+    "devConfigSha256": "2c9a3059735ce9ef142417f4c012506545b4a5a0326f7b4c76f56b3aa7d58d6b",
+    "prodConfigSha256": "2c9a3059735ce9ef142417f4c012506545b4a5a0326f7b4c76f56b3aa7d58d6b"
+  },
+  {
+    "name": "scanpay_get_social_post_status",
+    "differingFields": [],
+    "devConfigSha256": "36c50f346a52d61a8a216829427702594435dfb7117fce10e952a21b6807a5e7",
+    "prodConfigSha256": "36c50f346a52d61a8a216829427702594435dfb7117fce10e952a21b6807a5e7"
+  },
+  {
+    "name": "scanpay_get_social_posts",
+    "differingFields": [],
+    "devConfigSha256": "bc5f3bf8bfe8be1f68e4376b3c3b669a5f0ba2f6425c1182dd76a0a3a8e4ed16",
+    "prodConfigSha256": "bc5f3bf8bfe8be1f68e4376b3c3b669a5f0ba2f6425c1182dd76a0a3a8e4ed16"
+  },
+  {
+    "name": "scanpay_get_social_post_analytics",
+    "differingFields": [
+      "Environment"
+    ],
+    "devConfigSha256": "91b64874ec416f0a5a8a3088a4558c2f428d11e57c83122753ac44cefb199c57",
+    "prodConfigSha256": "8368abd8777513e4b2a641e4350cd9f780968f425de92be6af78aea7ff55acd6"
+  },
+  {
+    "name": "scanpay_record_social_post_click",
+    "differingFields": [],
+    "devConfigSha256": "5f033625d0af27539a5f06bb5074898511806d9b4a45483425db0266805dd279",
+    "prodConfigSha256": "5f033625d0af27539a5f06bb5074898511806d9b4a45483425db0266805dd279"
+  },
+  {
+    "name": "scanpay_add_donor_pledge",
+    "differingFields": [],
+    "devConfigSha256": "2b313fb8a184674c818b664852572220373322993e4e00a285524dd641a03748",
+    "prodConfigSha256": "2b313fb8a184674c818b664852572220373322993e4e00a285524dd641a03748"
+  }
+]

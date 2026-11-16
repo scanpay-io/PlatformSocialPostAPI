@@ -1,0 +1,42 @@
+{
+  "version": "21",
+  "status": 200,
+  "body": {
+    "status": "success",
+    "code": 200,
+    "contract": "cohort_v1",
+    "as_of_utc": "2026-11-10T19:15:54.0662865Z",
+    "outcome_before_utc": "2026-11-10T19:15:54.0662865Z",
+    "from_utc": "2026-11-10T00:00:00Z",
+    "to_utc": "2026-11-10T19:15:50.732Z",
+    "consistency": "eventual_current_transaction_state",
+    "revenue_basis": "post_attributed_successful_transactions_including_repeat_gifts",
+    "evaluated_records": 0,
+    "consumed_read_capacity_units": 0.5,
+    "next_token": "",
+    "analytics": {
+      "published_deliveries": 0,
+      "tracked_published_deliveries": 0,
+      "tracking_coverage": {
+        "numerator": 0,
+        "denominator": 0,
+        "percentage": null
+      },
+      "landing_events": 0,
+      "unique_browser_visitors": 0,
+      "unattributed_delivery_landings": 0,
+      "deliveries_with_landing": 0,
+      "posts_with_donation": 0,
+      "donations": 0,
+      "amount_raised_by_currency": {},
+      "donations_per_landing": {
+        "numerator": 0,
+        "denominator": 0,
+        "percentage": null
+      },
+      "delivery_donation_attribution": "unavailable_post_only_payment_contract",
+      "deliveries": null
+    },
+    "deliveries": null
+  }
+}

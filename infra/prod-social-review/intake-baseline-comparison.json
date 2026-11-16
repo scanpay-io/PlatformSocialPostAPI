@@ -1,0 +1,68 @@
+[
+  {
+    "live": "/polyfills-BAP25QCF.js",
+    "bytes": 36184,
+    "exact": "polyfills-HZMECFBI.js",
+    "normalized": "polyfills-HZMECFBI.js"
+  },
+  {
+    "live": "/main-MU2ZDZW3.js",
+    "bytes": 476911,
+    "normalized": "main-XKGBD5WD.js"
+  },
+  {
+    "live": "/chunk-KqDliGJH.js",
+    "bytes": 9863,
+    "normalized": "chunk-BpOVMoCA.js"
+  },
+  {
+    "live": "/chunk-DOs-Srn5.js",
+    "bytes": 9633,
+    "normalized": "chunk-FNkffVzC.js"
+  },
+  {
+    "live": "/chunk-CZAkPa-x.js",
+    "bytes": 128751,
+    "normalized": "chunk-Qbj1NfnL.js"
+  },
+  {
+    "live": "/chunk-DyFvKGpF.js",
+    "bytes": 117994,
+    "normalized": "chunk-BJsKTyYL.js"
+  },
+  {
+    "live": "/chunk-WKH8gyBI.js",
+    "bytes": 36173,
+    "normalized": "chunk-DNgnkNLp.js"
+  },
+  {
+    "live": "/chunk-obKyCgwb.js",
+    "bytes": 465,
+    "normalized": "chunk-Bme3muQL.js"
+  },
+  {
+    "live": "/chunk-Be5OFPz_.js",
+    "bytes": 7297,
+    "normalized": "chunk-CER2DdXZ.js"
+  },
+  {
+    "live": "/chunk-Br0DyWKt.js",
+    "bytes": 572,
+    "normalized": "chunk-IST_Z5sg.js"
+  },
+  {
+    "live": "/chunk-BxmRE591.js",
+    "bytes": 4926,
+    "normalized": "chunk-kIPijo5T.js"
+  },
+  {
+    "live": "/chunk-6UBBE3Iw.js",
+    "bytes": 61797,
+    "normalized": "chunk-CGHIxB-N.js"
+  },
+  {
+    "live": "/chunk-DRQXUAXI.js",
+    "bytes": 431894,
+    "normalized": "chunk-YqV6i2eo.js"
+  }
+]
