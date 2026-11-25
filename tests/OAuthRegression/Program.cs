@@ -14,6 +14,35 @@ void Check(bool condition, string description)
     checks++;
 }
 
+string? oldXScopes = Environment.GetEnvironmentVariable("SOCIAL_X_SCOPES");
+string? oldCommonScopes = Environment.GetEnvironmentVariable("SOCIAL_POST_SCOPES");
+try
+{
+    const string expected = "tweet.read tweet.write users.read offline.access";
+    Environment.SetEnvironmentVariable("SOCIAL_X_SCOPES", null);
+    Environment.SetEnvironmentVariable("SOCIAL_POST_SCOPES", null);
+    Check((string)Call("ResolveScopes", null, "x")! == expected, "X defaults must remain space-delimited");
+    foreach (string configured in new[] { "tweet.read,tweet.write,users.read,offline.access", expected, " tweet.read, tweet.write\tusers.read\r\noffline.access,tweet.read " })
+    {
+        var provider = new SocialServiceProvider { Scopes = configured };
+        string scope = (string)Call("ResolveScopes", provider, "x")!;
+        Check(scope == expected, "X cloud scopes must normalize commas and whitespace without duplicates");
+        string url = (string)Call("BuildAuthorizeUrl", "x", "client", "https://stage.gogiveanywhere.com/social/connections/callback", scope, "state")!;
+        Check(url.Contains("scope=tweet.read%20tweet.write%20users.read%20offline.access&"), "X authorization must send space-separated permissions, not encoded commas");
+        Environment.SetEnvironmentVariable("SOCIAL_X_SCOPES", configured);
+        Check((string)Call("ResolveScopes", null, "x")! == expected, "X environment scopes must normalize separators");
+    }
+    Environment.SetEnvironmentVariable("SOCIAL_X_SCOPES", null);
+    Environment.SetEnvironmentVariable("SOCIAL_POST_SCOPES", "tweet.read,users.read");
+    Check((string)Call("ResolveScopes", null, "x")! == "tweet.read users.read", "X shared scope fallback must normalize separators");
+    Check((string)Call("ResolveScopes", new SocialServiceProvider { Scopes = "tweet.read,media.write" }, "x")! == "tweet.read media.write", "X configured permissions must be preserved without adding defaults");
+}
+finally
+{
+    Environment.SetEnvironmentVariable("SOCIAL_X_SCOPES", oldXScopes);
+    Environment.SetEnvironmentVariable("SOCIAL_POST_SCOPES", oldCommonScopes);
+}
+
 Check(SocialPlatform.IsValid("threads"), "Threads must pass connection/post validation");
 Check(SocialPlatform.IsValid("THREADS"), "Platform validation must ignore case");
 Check(!SocialPlatform.IsValid("unknown"), "Unknown platforms must remain invalid");

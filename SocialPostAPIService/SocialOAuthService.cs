@@ -662,6 +662,20 @@ namespace ScanPay.SocialPostService
                     ? provider!.Scopes
                     : GetSetting(platform, "SCOPES", DefaultScopes(platform));
 
+            if (platform == SocialPlatform.X)
+            {
+                // Cloud/environment settings may use commas, but X OAuth 2.0
+                // requires space-delimited scope names in the authorization URL.
+                var permissions = new List<string>();
+                foreach (string permission in scope.Split(
+                    new[] { ',', ' ', '\t', '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries))
+                {
+                    if (!permissions.Contains(permission))
+                        permissions.Add(permission);
+                }
+                return string.Join(" ", permissions);
+            }
+
             if (platform == SocialPlatform.LinkedIn)
             {
                 var permissions = new HashSet<string>(scope.Split(new[] { ',', ' ', '\t', '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries));
