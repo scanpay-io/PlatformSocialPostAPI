@@ -171,6 +171,16 @@ namespace ScanPay.SocialPostService
                 await DbCRUD<SocialPostDb>.SaveAsync(post, context);
                 return post;
             }
+            catch (SocialProviderRejectionException rejection)
+            {
+                delivery.Status = SocialPostDeliveryStatus.Failed;
+                delivery.ErrorCode = rejection.StatusCode.ToString();
+                delivery.ErrorMessage = rejection.Message;
+                await DbCRUD<SocialPostDeliveryDb>.SaveAsync(delivery, context);
+                post.Status = SocialPostStatus.Failed;
+                await DbCRUD<SocialPostDb>.SaveAsync(post, context);
+                throw ResponseStatusFactory.BadRequest(rejection.Message);
+            }
             catch
             {
                 delivery.Status = "submission_unknown";

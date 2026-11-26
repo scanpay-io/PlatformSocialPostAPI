@@ -14,6 +14,11 @@ namespace ScanPay.SocialPostService
 {
     public record SocialPage(string ID, string Name);
     public record SocialPublishedResult(string ID, string Url);
+    public sealed class SocialProviderRejectionException : Exception
+    {
+        public int StatusCode { get; }
+        public SocialProviderRejectionException(int statusCode, string message) : base(message) => StatusCode = statusCode;
+    }
 
     public class TextSocialProviderClient
     {
@@ -33,7 +38,7 @@ namespace ScanPay.SocialPostService
             return request;
         }
 
-        private static void EnsureSuccess(HttpResponseMessage response, string platform)
+        private static void EnsureSuccess(HttpResponseMessage response, string platform, bool publishing = false)
         {
             if (response.IsSuccessStatusCode) return;
             string reason = response.StatusCode switch
@@ -44,7 +49,11 @@ namespace ScanPay.SocialPostService
                 HttpStatusCode.TooManyRequests => "The platform rate limit was reached. Wait before trying again.",
                 _ => "The platform rejected the request. Check the content and application permissions."
             };
-            throw ResponseStatusFactory.BadRequest($"{platform}: {reason}");
+            string message = $"{platform}: {reason}";
+            if (publishing && response.StatusCode is HttpStatusCode.BadRequest or HttpStatusCode.Unauthorized or
+                HttpStatusCode.Forbidden or HttpStatusCode.PaymentRequired or HttpStatusCode.UnprocessableEntity or HttpStatusCode.TooManyRequests)
+                throw new SocialProviderRejectionException((int)response.StatusCode, message);
+            throw ResponseStatusFactory.BadRequest(message);
         }
 
         private async Task<JObject> GetAsync(string url, string token, bool linkedIn)
@@ -133,7 +142,7 @@ namespace ScanPay.SocialPostService
                 linkedIn ? "https://api.linkedin.com/rest/posts" : "https://api.x.com/2/tweets", token, linkedIn);
             request.Content = new StringContent(PostBody(platform, text, pageUrn).ToString(), Encoding.UTF8, "application/json");
             using var response = await client.SendAsync(request);
-            EnsureSuccess(response, linkedIn ? "LinkedIn" : "X");
+            EnsureSuccess(response, linkedIn ? "LinkedIn" : "X", publishing: true);
             string? id;
             if (linkedIn)
                 id = response.Headers.TryGetValues("x-restli-id", out var ids) ? ids.FirstOrDefault() : null;

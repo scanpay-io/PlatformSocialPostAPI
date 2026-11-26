@@ -81,5 +81,21 @@ using var missingIdHttp = new HttpClient(new ProviderHttpHandler(_ => Task.FromR
 bool missingIdRejected = false;
 try { await new TextSocialProviderClient(missingIdHttp).PublishAsync("linkedin", "secret-token", "Approved post", "urn:li:organization:123"); } catch { missingIdRejected = true; }
 Check(missingIdRejected);
+foreach (var status in new[] { HttpStatusCode.PaymentRequired, HttpStatusCode.Forbidden, HttpStatusCode.TooManyRequests })
+{
+    using var rejectedHttp = new HttpClient(new ProviderHttpHandler(_ => Task.FromResult(new HttpResponseMessage(status))));
+    bool definiteRejection = false;
+    try { await new TextSocialProviderClient(rejectedHttp).PublishAsync("x", "secret-token", "Test", ""); }
+    catch (SocialProviderRejectionException error)
+    {
+        definiteRejection = error.StatusCode == (int)status && error.Message.StartsWith("X:") && !error.Message.Contains("secret-token");
+    }
+    Check(definiteRejection);
+}
+using var serverFailureHttp = new HttpClient(new ProviderHttpHandler(_ => Task.FromResult(new HttpResponseMessage(HttpStatusCode.InternalServerError))));
+bool uncertainFailure = false;
+try { await new TextSocialProviderClient(serverFailureHttp).PublishAsync("x", "secret-token", "Test", ""); }
+catch (Exception error) { uncertainFailure = error is not SocialProviderRejectionException; }
+Check(uncertainFailure);
 Console.WriteLine($"LinkedIn regression passed: {checks} checks.");
 
