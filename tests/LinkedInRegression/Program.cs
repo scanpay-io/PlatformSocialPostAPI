@@ -17,6 +17,21 @@ Reject(() => OAuth("ValidateLinkedInAuthorization", scopes, 0));
 var state = SocialOAuthState.Create("org", "secret", "linkedin");
 SocialOAuthState.Validate(state, "org", "secret", "linkedin"); checks++;
 Reject(() => SocialOAuthState.Validate(state, "other-org", "secret", "linkedin"));
+// X must retain the selected account and explicit approval through JSON storage.
+var xRequest = JsonConvert.DeserializeObject<CreateSocialPostRequest>("{'platforms':['x'],'content':'Approved X post','text_social':{'connection_id':'x-connection','consent':true}}")!;
+var xPost = JsonConvert.DeserializeObject<SocialPostDb>(JsonConvert.SerializeObject(new SocialPostDb
+{
+    Platforms = xRequest.Platforms, Content = xRequest.Content, TextSocial = xRequest.TextSocial
+}))!;
+Check(TextSocialPublishingService.Validate(xPost) == "Approved X post");
+Check(xPost.TextSocial!.ConnectionID == "x-connection" && xPost.TextSocial.Consent);
+xPost.TextSocial.Consent = false;
+Reject(() => TextSocialPublishingService.Validate(xPost));
+xPost.TextSocial.Consent = true;
+xPost.TextSocial.ConnectionID = " ";
+Reject(() => TextSocialPublishingService.Validate(xPost));
+xPost.TextSocial = null;
+Reject(() => TextSocialPublishingService.Validate(xPost));
 var post = new SocialPostDb { Platforms = new() { "linkedin" }, Content = new string('a', 3000), TextSocial = new() { ConnectionID = "connection", LinkedInPageUrn = "urn:li:organization:123", Consent = true } };
 Check(TextSocialPublishingService.Validate(post).Length == 3000);
 post.DestinationUrl = "https://example.org/give";

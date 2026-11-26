@@ -99,9 +99,12 @@ namespace ScanPay.SocialPostService
         public static string Validate(SocialPostDb post)
         {
             var options = post.TextSocial;
-            if (post.Platforms.Count != 1 || !Supports(post.Platforms[0]) || options == null ||
-                string.IsNullOrWhiteSpace(options.ConnectionID) || !options.Consent)
-                throw ResponseStatusFactory.BadRequest("Select one connected account and confirm the post before publishing.");
+            if (post.Platforms.Count != 1 || !Supports(post.Platforms[0]))
+                throw ResponseStatusFactory.BadRequest("Select X or LinkedIn as the only platform for this post.");
+            if (options == null || string.IsNullOrWhiteSpace(options.ConnectionID))
+                throw ResponseStatusFactory.BadRequest("Select a connected account in the X or LinkedIn composer and create the post again.");
+            if (!options.Consent)
+                throw ResponseStatusFactory.BadRequest("Confirm the post before publishing.");
             if (post.Platforms[0] == SocialPlatform.LinkedIn)
             {
                 if (!Regex.IsMatch(options.LinkedInPageUrn ?? "", @"^urn:li:organization:[0-9]+$"))
