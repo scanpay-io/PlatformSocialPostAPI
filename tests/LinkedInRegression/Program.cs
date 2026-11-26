@@ -18,13 +18,22 @@ var state = SocialOAuthState.Create("org", "secret", "linkedin");
 SocialOAuthState.Validate(state, "org", "secret", "linkedin"); checks++;
 Reject(() => SocialOAuthState.Validate(state, "other-org", "secret", "linkedin"));
 // X must retain the selected account and explicit approval through JSON storage.
-var xRequest = JsonConvert.DeserializeObject<CreateSocialPostRequest>("{'platforms':['x'],'content':'Approved X post','text_social':{'connection_id':'x-connection','consent':true}}")!;
+var xRequest = JsonConvert.DeserializeObject<CreateSocialPostRequest>("{'platforms':['x'],'content':'Approved X post','text_social':{'platform':'x','connection_id':'x-connection','consent':true}}")!;
 var xPost = JsonConvert.DeserializeObject<SocialPostDb>(JsonConvert.SerializeObject(new SocialPostDb
 {
     Platforms = xRequest.Platforms, Content = xRequest.Content, TextSocial = xRequest.TextSocial
 }))!;
 Check(TextSocialPublishingService.Validate(xPost) == "Approved X post");
 Check(xPost.TextSocial!.ConnectionID == "x-connection" && xPost.TextSocial.Consent);
+var storedX = ScanPay.Utility.Model.DbCRUD<SocialPostDb>.FromStorageAttributes(
+    ScanPay.Utility.Model.DbCRUD<SocialPostDb>.ToStorageAttributes(xPost));
+Check(storedX.TextSocial!.Platform == "x" && storedX.TextSocial.ConnectionID == "x-connection" && storedX.TextSocial.Consent);
+xPost.TextSocial.Platform = "linkedin";
+Reject(() => TextSocialPublishingService.Validate(xPost));
+xPost.TextSocial.Platform = "x";
+xPost.TextSocial.AdditionalOptions = new Dictionary<string, JToken> { ["image_url"] = new JValue("https://example.org/a.jpg") };
+Reject(() => TextSocialPublishingService.Validate(xPost));
+xPost.TextSocial.AdditionalOptions = null;
 xPost.TextSocial.Consent = false;
 Reject(() => TextSocialPublishingService.Validate(xPost));
 xPost.TextSocial.Consent = true;

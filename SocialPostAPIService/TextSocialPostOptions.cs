@@ -6,6 +6,9 @@ namespace ScanPay.SocialPostService
 {
     public class TextSocialPostOptions
     {
+        [JsonProperty("platform")]
+        public string Platform { get; set; } = "";
+
         // Preserve unsupported input so attachments cannot be silently dropped.
         [JsonExtensionData]
         public IDictionary<string, JToken>? AdditionalOptions { get; set; }

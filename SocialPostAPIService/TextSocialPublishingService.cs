@@ -105,6 +105,10 @@ namespace ScanPay.SocialPostService
                 throw ResponseStatusFactory.BadRequest("Select a connected account in the X or LinkedIn composer and create the post again.");
             if (!options.Consent)
                 throw ResponseStatusFactory.BadRequest("Confirm the post before publishing.");
+            if (!string.IsNullOrEmpty(options.Platform) && options.Platform != post.Platforms[0])
+                throw ResponseStatusFactory.BadRequest("The publishing settings must match the selected platform.");
+            if (options.AdditionalOptions?.Count > 0)
+                throw ResponseStatusFactory.BadRequest("X and LinkedIn support text and links only. Remove media attachments or unsupported publishing settings.");
             if (post.Platforms[0] == SocialPlatform.LinkedIn)
             {
                 if (!Regex.IsMatch(options.LinkedInPageUrn ?? "", @"^urn:li:organization:[0-9]+$"))
